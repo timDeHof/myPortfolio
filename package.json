@@ -1,0 +1,53 @@
+{
+  "version": "1.0.0",
+  "source": "./index.html",
+  "type": "module",
+  "name": "modern-portfolio-spa",
+  "description": "A modern single-page portfolio application built with React, TypeScript, and best practices",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@radix-ui/react-separator": "^1.1.0",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-toast": "^1.1.5",
+    "@tanstack/react-query": "^5.17.19",
+    "@tanstack/react-query-devtools": "^5.17.19",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "2.1.1",
+    "framer-motion": "^10.16.16",
+    "lucide-react": "^0.453.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-helmet-async": "^2.0.4",
+    "react-intersection-observer": "^9.5.3",
+    "react-router-dom": "^6.8.1",
+    "tailwind-merge": "2.5.4",
+    "zustand": "^4.4.7",
+    "mini-svg-data-uri": "^1.4.4",
+    "@emailjs/browser": "^4.3.3"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.1.2",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "@vitejs/plugin-react": "4.3.4",
+    "autoprefixer": "^10.4.21",
+    "esbuild": "0.24.0",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "globals": "15.12.0",
+    "postcss": "^8.5.4",
+    "tailwindcss": "3.4.16",
+    "vite": "6.0.4",
+    "vitest": "^1.0.4"
+  }
+}
