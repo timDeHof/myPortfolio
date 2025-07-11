@@ -195,7 +195,7 @@ export const HomePage: React.FC = () => {
           return (
             <motion.div
               key={index}
-              className="absolute z-10 opacity-20 dark:opacity-30"
+              className="absolute z-10 opacity-20 dark:opacity-30 hidden lg:block"
               style={{ left: item.x, top: item.y }}
               initial={{ opacity: 0, scale: 0, rotate: -180 }}
               animate={{ 
@@ -224,7 +224,7 @@ export const HomePage: React.FC = () => {
           return (
             <motion.div
               key={`bg-${index}`}
-              className="absolute z-5 opacity-10 dark:opacity-20 text-blue-600 dark:text-blue-400"
+              className="absolute z-5 opacity-10 dark:opacity-20 text-blue-600 dark:text-blue-400 hidden md:block"
               style={{ left: item.x, top: item.y }}
               initial={{ opacity: 0, scale: 0 }}
               animate={{ 
@@ -245,7 +245,7 @@ export const HomePage: React.FC = () => {
         })}
         
         {/* Main content with glassmorphism card - All content now contained within */}
-        <div className="container mx-auto px-4 text-center relative z-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -257,11 +257,11 @@ export const HomePage: React.FC = () => {
               initial={{ opacity: 0, scale: 0.9, y: 50 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2 }}
-              className="relative backdrop-blur-xl bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl max-w-5xl mx-auto"
+              className="relative backdrop-blur-xl bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 lg:p-16 shadow-2xl max-w-5xl mx-auto touch-manipulation"
             >
               {/* Glassmorphism overlay effects */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/20 via-transparent to-white/5 dark:from-white/10 dark:via-transparent dark:to-white/5"></div>
-              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-500/20 via-teal-500/20 to-purple-500/20 blur-lg -z-10"></div>
+              <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white/20 via-transparent to-white/5 dark:from-white/10 dark:via-transparent dark:to-white/5"></div>
+              <div className="absolute -inset-1 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-blue-500/20 via-teal-500/20 to-purple-500/20 blur-lg -z-10"></div>
               
               <div className="relative z-10">
                 {/* Enhanced greeting with animation */}
@@ -271,13 +271,13 @@ export const HomePage: React.FC = () => {
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="mb-4"
                 >
-                  <span className="inline-block px-4 py-2 bg-gradient-to-r from-blue-100 to-teal-100 dark:from-blue-900/50 dark:to-teal-900/50 text-blue-800 dark:text-blue-300 rounded-full text-sm font-medium border border-blue-200 dark:border-blue-700">
+                  <span className="inline-block px-3 py-2 sm:px-4 bg-gradient-to-r from-blue-100 to-teal-100 dark:from-blue-900/50 dark:to-teal-900/50 text-blue-800 dark:text-blue-300 rounded-full text-xs sm:text-sm font-medium border border-blue-200 dark:border-blue-700 touch-manipulation">
                     👋 Welcome to my digital space
                   </span>
                 </motion.div>
                 
                 <motion.h1 
-                  className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-gray-100 mb-6"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 leading-tight"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.6 }}
@@ -293,7 +293,7 @@ export const HomePage: React.FC = () => {
                     </span>
                     {/* Animated underline */}
                     <motion.div
-                      className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-700 via-teal-700 to-purple-700 dark:from-blue-400 dark:via-teal-400 dark:to-purple-400 rounded-full"
+                      className="absolute -bottom-1 sm:-bottom-2 left-0 right-0 h-0.5 sm:h-1 bg-gradient-to-r from-blue-700 via-teal-700 to-purple-700 dark:from-blue-400 dark:via-teal-400 dark:to-purple-400 rounded-full"
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: 1 }}
                       transition={{ duration: 0.8, delay: 1.2 }}
@@ -306,12 +306,12 @@ export const HomePage: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.8 }}
-                  className="max-w-3xl mx-auto mb-8"
+                  className="max-w-3xl mx-auto mb-6 sm:mb-8"
                 >
-                  <div className="backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-2xl p-6 border border-white/30 dark:border-white/20">
+                  <div className="backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/30 dark:border-white/20">
                     <TextGenerateEffect 
                       words="Transforming Your Business Challenges into Powerful Web Applications"
-                     className="text-xl md:text-2xl text-gray-800 dark:text-gray-200 font-medium text-center flex items-center justify-center"
+                     className="text-lg sm:text-xl md:text-2xl text-gray-800 dark:text-gray-200 font-medium text-center flex items-center justify-center leading-relaxed"
                     />
                   </div>
                 </motion.div>
@@ -321,25 +321,36 @@ export const HomePage: React.FC = () => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 1 }}
-                  className="flex flex-col sm:flex-row gap-4 justify-center"
+                  className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center"
                 >
                   <motion.div
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
+                    className="w-full sm:w-auto"
                   >
-                    <Button asChild size="lg" className="bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white shadow-lg hover:shadow-xl backdrop-blur-sm border border-blue-600 dark:border-blue-500">
+                    <Button 
+                      asChild 
+                      size="lg" 
+                      className="w-full sm:w-auto min-h-[48px] bg-blue-700 hover:bg-blue-800 active:bg-blue-900 dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800 text-white shadow-lg hover:shadow-xl backdrop-blur-sm border border-blue-600 dark:border-blue-500 touch-manipulation transform transition-all duration-200"
+                    >
                       <Link to="/projects">
-                        <Code className="mr-2 h-4 w-4" />
+                        <Code className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                         View My Work
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                       </Link>
                     </Button>
                   </motion.div>
                   <motion.div
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
+                    className="w-full sm:w-auto"
                   >
-                    <Button variant="outline" size="lg" asChild className="backdrop-blur-sm bg-white/20 dark:bg-white/10 border-white/40 dark:border-white/30 text-gray-800 dark:text-gray-200 hover:bg-white/30 dark:hover:bg-white/20 shadow-lg">
+                    <Button 
+                      variant="outline" 
+                      size="lg" 
+                      asChild 
+                      className="w-full sm:w-auto min-h-[48px] backdrop-blur-sm bg-white/20 dark:bg-white/10 border-white/40 dark:border-white/30 text-gray-800 dark:text-gray-200 hover:bg-white/30 dark:hover:bg-white/20 active:bg-white/40 dark:active:bg-white/30 shadow-lg touch-manipulation transform transition-all duration-200"
+                    >
                       <Link to="/contact">Get In Touch</Link>
                     </Button>
                   </motion.div>
@@ -350,20 +361,32 @@ export const HomePage: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 1.2 }}
-                  className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-400"
+                  className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-600 dark:text-gray-400"
                 >
-                  <div className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-4 py-2 border border-white/30 dark:border-white/20">
-                    <Star className="h-4 w-4 mr-2 text-yellow-500" />
+                  <motion.div 
+                    className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-3 sm:px-4 py-2 border border-white/30 dark:border-white/20 touch-manipulation"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Star className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-yellow-500" />
                     <span>GitHub Active</span>
-                  </div>
-                  <div className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-4 py-2 border border-white/30 dark:border-white/20">
-                    <Coffee className="h-4 w-4 mr-2 text-teal-600 dark:text-teal-400" />
+                  </motion.div>
+                  <motion.div 
+                    className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-3 sm:px-4 py-2 border border-white/30 dark:border-white/20 touch-manipulation"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Coffee className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-teal-600 dark:text-teal-400" />
                     <span>3+ Years Experience</span>
-                  </div>
-                  <div className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-4 py-2 border border-white/30 dark:border-white/20">
-                    <Rocket className="h-4 w-4 mr-2 text-purple-600 dark:text-purple-400" />
+                  </motion.div>
+                  <motion.div 
+                    className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-3 sm:px-4 py-2 border border-white/30 dark:border-white/20 touch-manipulation"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Rocket className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-purple-600 dark:text-purple-400" />
                     <span>Always Learning</span>
-                  </div>
+                  </motion.div>
                 </motion.div>
               </div>
             </motion.div>
