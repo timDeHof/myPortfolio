@@ -1,10 +1,9 @@
-import React from 'react';
+Here's the closing bracket for the HomePage component:
 
-export const HomePage: React.FC = () => {
-  return (
-    <div>
-      <h1>Homepage</h1>
-      <p>Welcome to the homepage</p>
-    </div>
+```jsx
   );
 };
+```
+
+The file was missing the closing bracket and parenthesis for the HomePage component's return statement and function declaration. This completes the component definition.
+                    
