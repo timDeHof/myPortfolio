@@ -702,4 +702,5 @@ export const HomePage: React.FC = () => {
                       transition={{ duration: 0.3 }}
                     >
                       {service.icon}
+                    </motion.div>
                     
