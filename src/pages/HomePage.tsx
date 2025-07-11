@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Code, Palette, Zap, Wrench, Star, Coffee, Lightbulb, Rocket, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowRight, Code, Palette, Zap, Wrench, Star, Coffee, Lightbulb, Rocket, ChevronDown, ChevronUp, CheckCircle, Target } from 'lucide-react';
 import { SEOHead } from '../components/common/SEOHead';
 import { AnimatedSection } from '../components/common/AnimatedSection';
 import { Button } from '../components/ui/button';
@@ -526,6 +526,268 @@ export const HomePage: React.FC = () => {
         </motion.button>
       </section>
 
+      {/* Features Section with accessible colors */}
+      <AnimatedSection className="py-24 bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/30 dark:from-slate-800 dark:via-blue-900/20 dark:to-teal-900/20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <span className="inline-block px-4 py-2 bg-gradient-to-r from-blue-100 to-teal-100 dark:from-blue-900/50 dark:to-teal-900/50 text-blue-800 dark:text-blue-300 rounded-full text-sm font-medium border border-blue-200 dark:border-blue-700 mb-6">
+                💼 Professional Services
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-teal-800 dark:from-gray-100 dark:via-blue-400 dark:to-teal-400 bg-clip-text text-transparent mb-6">
+                How I Help Your Business Succeed
+              </h2>
+              <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                From concept to deployment, I provide comprehensive web development services 
+                that transform your business ideas into powerful, user-friendly applications.
+              </p>
+            </motion.div>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            {services.map((service, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                className="group"
+              >
+                <Card className={`h-full hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 ${service.bgColor} ${service.borderColor} border-2 overflow-hidden`}>
+                  <CardContent className="p-8 relative">
+                    {/* Background decoration */}
+                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${service.color} opacity-5 rounded-full -translate-y-8 translate-x-8 group-hover:opacity-10 transition-opacity duration-500`} />
+                    
+                    {/* Icon with enhanced styling */}
+                    <motion.div
+                      className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-6 shadow-xl text-white text-4xl bg-gradient-to-br ${service.color}`}
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {service.icon}
+                    </motion.div>
+                    
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                      {service.title}
+                    </h3>
+                    
+                    <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                      {service.description}
+                    </p>
+
+                    {/* What You Get Section */}
+                    <div className="mb-6">
+                      <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3 uppercase tracking-wide">
+                        What You Get:
+                      </h4>
+                      <ul className="space-y-2">
+                        {service.benefits.map((benefit, i) => (
+                          <motion.li
+                            key={i}
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: i * 0.1 }}
+                            viewport={{ once: true }}
+                            className="flex items-start text-sm text-gray-600 dark:text-gray-300"
+                          >
+                            <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400 mt-0.5 mr-2 flex-shrink-0" />
+                            <span>{benefit}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Process Steps */}
+                    <div className="mb-6">
+                      <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-3 uppercase tracking-wide">
+                        My Process:
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {service.process.map((step, i) => (
+                          <motion.span
+                            key={i}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.3, delay: i * 0.1 }}
+                            viewport={{ once: true }}
+                            className="px-3 py-1 bg-gradient-to-r from-white to-gray-50 dark:from-gray-700 dark:to-gray-600 text-xs font-medium text-gray-700 dark:text-gray-300 rounded-full border border-gray-200 dark:border-gray-600"
+                          >
+                            {i + 1}. {step}
+                          </motion.span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Hover Effect Call-to-Action */}
+                    <motion.div 
+                      className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      initial={{ y: 10 }}
+                      whileInView={{ y: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+                          Ready to get started? Let's discuss your project.
+                        </p>
+                      </div>
+                    </motion.div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Development Philosophy Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="mt-20"
+          >
+            <div className="text-center mb-12">
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                My Development Philosophy
+              </h3>
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                A systematic approach that ensures quality, transparency, and exceptional results.
+              </p>
+            </div>
+
+            {/* Process Timeline */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              {[
+                { 
+                  step: '01', 
+                  title: 'Discovery', 
+                  description: 'Understanding your business goals and technical requirements',
+                  icon: <Target className="h-6 w-6" />,
+                  color: 'bg-blue-700 dark:bg-blue-600'
+                },
+                { 
+                  step: '02', 
+                  title: 'Design', 
+                  description: 'Creating user-centered designs and technical architecture',
+                  icon: <Palette className="h-6 w-6" />,
+                  color: 'bg-teal-700 dark:bg-teal-600'
+                },
+                { 
+                  step: '03', 
+                  title: 'Development', 
+                  description: 'Building with modern technologies and best practices',
+                  icon: <Code className="h-6 w-6" />,
+                  color: 'bg-purple-700 dark:bg-purple-600'
+                },
+                { 
+                  step: '04', 
+                  title: 'Deployment', 
+                  description: 'Testing, optimization, and seamless launch',
+                  icon: <Rocket className="h-6 w-6" />,
+                  color: 'bg-orange-700 dark:bg-orange-600'
+                }
+              ].map((phase, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="text-center group cursor-pointer"
+                >
+                  <div className="relative mb-4">
+                    <motion.div
+                      className={`w-16 h-16 ${phase.color} text-white rounded-2xl flex items-center justify-center text-xl font-bold mx-auto shadow-lg group-hover:shadow-xl transition-shadow duration-300`}
+                      whileHover={{ rotate: 8 }}
+                    >
+                      {phase.step}
+                    </motion.div>
+                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-blue-600 to-teal-600 dark:from-blue-400 dark:to-teal-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {phase.icon}
+                    </div>
+                    {index < 3 && (
+                      <div className="hidden lg:block absolute top-8 left-full w-12 h-0.5 bg-gradient-to-r from-gray-300 to-transparent dark:from-gray-600"></div>
+                    )}
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors">
+                    {phase.title}
+                  </h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                    {phase.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Value Proposition Metrics */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <Card className="bg-gradient-to-br from-blue-50 via-teal-50 to-purple-50 dark:from-blue-900/20 dark:via-teal-900/20 dark:to-purple-900/20 border-gray-200 dark:border-slate-600 shadow-xl">
+                <CardContent className="p-8">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <motion.div whileHover={{ scale: 1.05 }}>
+                      <div className="text-3xl font-bold bg-gradient-to-r from-blue-700 to-cyan-700 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent mb-2">
+                        100%
+                      </div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">Custom Solutions</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">No templates or shortcuts</div>
+                    </motion.div>
+                    <motion.div whileHover={{ scale: 1.05 }}>
+                      <div className="text-3xl font-bold bg-gradient-to-r from-teal-700 to-emerald-700 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent mb-2">
+                        &lt;24h
+                      </div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">Response Time</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Quick communication always</div>
+                    </motion.div>
+                    <motion.div whileHover={{ scale: 1.05 }}>
+                      <div className="text-3xl font-bold bg-gradient-to-r from-purple-700 to-pink-700 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-2">
+                        3+
+                      </div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">Years Experience</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">Engineering + Development</div>
+                    </motion.div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Call to Action */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center mt-12"
+            >
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button asChild size="lg" className="bg-gradient-to-r from-blue-700 via-teal-700 to-purple-700 hover:from-blue-800 hover:via-teal-800 hover:to-purple-800 dark:from-blue-600 dark:via-teal-600 dark:to-purple-600 dark:hover:from-blue-700 dark:hover:via-teal-700 dark:hover:to-purple-700 text-white">
+                  <Link to="/contact">
+                    <ArrowRight className="mr-2 h-4 w-4" />
+                    Start Your Project
+                  </Link>
+                </Button>
+                <Button variant="outline" asChild size="lg" className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+                  <Link to="/services">
+                    <Wrench className="mr-2 h-4 w-4" />
+                    View All Services
+                  </Link>
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </AnimatedSection>
+
       {/* Enhanced Technical Expertise Section with accessible colors */}
       <AnimatedSection className="py-20 bg-gradient-to-br from-white to-gray-50 dark:from-slate-900 dark:to-slate-800">
         <div className="container mx-auto px-4">
@@ -656,50 +918,6 @@ export const HomePage: React.FC = () => {
           </motion.div>
         </div>
       </AnimatedSection>
-
-      {/* Features Section with accessible colors */}
-      <AnimatedSection className="py-24 bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/30 dark:from-slate-800 dark:via-blue-900/20 dark:to-teal-900/20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <span className="inline-block px-4 py-2 bg-gradient-to-r from-blue-100 to-teal-100 dark:from-blue-900/50 dark:to-teal-900/50 text-blue-800 dark:text-blue-300 rounded-full text-sm font-medium border border-blue-200 dark:border-blue-700 mb-6">
-                💼 Professional Services
-              </span>
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-teal-800 dark:from-gray-100 dark:via-blue-400 dark:to-teal-400 bg-clip-text text-transparent mb-6">
-                How I Help Your Business Succeed
-              </h2>
-              <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                From concept to deployment, I provide comprehensive web development services 
-                that transform your business ideas into powerful, user-friendly applications.
-              </p>
-            </motion.div>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="group"
-              >
-                <Card className={`h-full hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 ${service.bgColor} ${service.borderColor} border-2 overflow-hidden`}>
-                  <CardContent className="p-8 relative">
-                    {/* Background decoration */}
-                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${service.color} opacity-5 rounded-full -translate-y-8 translate-x-8 group-hover:opacity-10 transition-opacity duration-500`} />
-                    
-                    {/* Icon with enhanced styling */}
-                    <motion.div
-                      className={`inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br ${service.color} text-white rounded-2xl mb-6 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300 relative z-10`}
-                      whileHover={{ rotate: 5, scale: 1.1 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {service.icon}
-                    
+    </>
+  );
+};
