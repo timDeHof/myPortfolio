@@ -244,7 +244,7 @@ export const HomePage: React.FC = () => {
           );
         })}
         
-        {/* Main content with glassmorphism card */}
+        {/* Main content with glassmorphism card - All content now contained within */}
         <div className="container mx-auto px-4 text-center relative z-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -368,25 +368,6 @@ export const HomePage: React.FC = () => {
               </div>
             </motion.div>
             
-            <div className="max-w-3xl mx-auto mb-8">
-              <TextGenerateEffect 
-                words="Full-Stack Developer & Engineer crafting innovative web solutions with modern technologies and best practices."
-                className="text-xl md:text-2xl text-gray-700 dark:text-gray-300"
-              />
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white">
-                <Link to="/projects">
-                  <Code className="mr-2 h-4 w-4" />
-                  View My Work
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild className="border-teal-700 dark:border-teal-400 text-teal-700 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20">
-                <Link to="/contact">Get In Touch</Link>
-              </Button>
-            </div>
           </motion.div>
         </div>
         
