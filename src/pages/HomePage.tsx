@@ -41,21 +41,52 @@ const backgroundElements = [
   { icon: Rocket, delay: 3, x: "92%", y: "12%", duration: 6, scale: 0.9 },
 ];
 
-const features = [
+// Enhanced services with detailed processes and benefits
+const services = [
   {
-    icon: <Code className="h-8 w-8" />,
+    icon: <Code className="h-10 w-10" />,
     title: 'Full-Stack Development',
-    description: 'End-to-end web application development with modern technologies.',
+    description: 'Complete web application development from database to user interface.',
+    benefits: [
+      'Custom React applications with TypeScript',
+      'Scalable Node.js backend architecture', 
+      'Database design and optimization',
+      'API development and integration'
+    ],
+    process: ['Planning & Architecture', 'Development & Testing', 'Deployment & Optimization'],
+    color: 'from-blue-700 to-cyan-700 dark:from-blue-400 dark:to-cyan-400',
+    bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+    borderColor: 'border-blue-200 dark:border-blue-700'
   },
   {
-    icon: <Palette className="h-8 w-8" />,
+    icon: <Palette className="h-10 w-10" />,
     title: 'UI/UX Design',
-    description: 'Creating intuitive and engaging user interfaces that delight users.',
+    description: 'Designing user-centered interfaces that convert visitors into customers.',
+    benefits: [
+      'Responsive design for all devices',
+      'Accessibility compliance (WCAG AA)',
+      'Modern design systems and components',
+      'User experience optimization'
+    ],
+    process: ['User Research', 'Design & Prototyping', 'Testing & Refinement'],
+    color: 'from-teal-700 to-emerald-700 dark:from-teal-400 dark:to-emerald-400',
+    bgColor: 'bg-teal-50 dark:bg-teal-900/20',
+    borderColor: 'border-teal-200 dark:border-teal-700'
   },
   {
-    icon: <Zap className="h-8 w-8" />,
+    icon: <Zap className="h-10 w-10" />,
     title: 'Performance Optimization',
-    description: 'Building fast, efficient applications with cutting-edge optimization techniques.',
+    description: 'Ensuring your applications load fast and perform flawlessly under load.',
+    benefits: [
+      'Core Web Vitals optimization',
+      'SEO-friendly architecture',
+      'Efficient caching strategies',
+      'Continuous monitoring and improvements'
+    ],
+    process: ['Performance Audit', 'Optimization Implementation', 'Monitoring & Maintenance'],
+    color: 'from-purple-700 to-pink-700 dark:from-purple-400 dark:to-pink-400',
+    bgColor: 'bg-purple-50 dark:bg-purple-900/20',
+    borderColor: 'border-purple-200 dark:border-purple-700'
   },
 ];
 
@@ -627,131 +658,48 @@ export const HomePage: React.FC = () => {
       </AnimatedSection>
 
       {/* Features Section with accessible colors */}
-      <AnimatedSection className="py-20 bg-gray-50 dark:bg-slate-800">
+      <AnimatedSection className="py-24 bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/30 dark:from-slate-800 dark:via-blue-900/20 dark:to-teal-900/20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-              What I Do
-            </h2>
-            <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
-              I specialize in creating modern, efficient, and user-friendly web applications
-              that solve real-world problems.
-            </p>
+          <div className="text-center mb-20">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <span className="inline-block px-4 py-2 bg-gradient-to-r from-blue-100 to-teal-100 dark:from-blue-900/50 dark:to-teal-900/50 text-blue-800 dark:text-blue-300 rounded-full text-sm font-medium border border-blue-200 dark:border-blue-700 mb-6">
+                💼 Professional Services
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-teal-800 dark:from-gray-100 dark:via-blue-400 dark:to-teal-400 bg-clip-text text-transparent mb-6">
+                How I Help Your Business Succeed
+              </h2>
+              <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                From concept to deployment, I provide comprehensive web development services 
+                that transform your business ideas into powerful, user-friendly applications.
+              </p>
+            </motion.div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            {services.map((service, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
                 viewport={{ once: true }}
+                className="group"
               >
-                <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white dark:bg-slate-700 border-gray-200 dark:border-slate-600">
-                  <CardContent className="p-6 text-center">
-                    <div className={`inline-flex items-center justify-center w-16 h-16 ${
-                      index === 0 ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-400' :
-                      index === 1 ? 'bg-teal-100 dark:bg-teal-900 text-teal-700 dark:text-teal-400' :
-                      'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-400'
-                    } rounded-full mb-4`}>
-                      {feature.icon}
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-700 dark:text-gray-300">{feature.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </AnimatedSection>
-
-      {/* About Section with accessible colors */}
-      <AnimatedSection className="py-20 bg-white dark:bg-slate-900">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-                From Engineering to Code
-              </h2>
-              <div className="space-y-4 text-gray-700 dark:text-gray-300">
-                <p>
-                  With a background in mechanical engineering and 3D printing, I bring a unique 
-                  perspective to web development. This combination of technical precision and 
-                  creative problem-solving helps me build efficient, scalable solutions.
-                </p>
-                <p>
-                  My engineering experience taught me the importance of systematic thinking, 
-                  attention to detail, and optimization—qualities I now apply to every line 
-                  of code I write.
-                </p>
-                <p>
-                  I'm passionate about continuous learning and staying current with the latest 
-                  technologies and best practices in the ever-evolving world of web development.
-                </p>
-              </div>
-              <div className="mt-8">
-                <Button asChild className="bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white">
-                  <Link to="/about">
-                    Learn More About Me
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-            <div className="relative">
-              <Card className="p-8 bg-gradient-to-br from-blue-50 via-teal-50 to-purple-50 dark:from-blue-900/20 dark:via-teal-900/20 dark:to-purple-900/20 border-0">
-                <CardContent className="p-0">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Core Strengths</h3>
-                  <ul className="space-y-3">
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 bg-blue-700 dark:bg-blue-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                      <span className="text-gray-700 dark:text-gray-300">Full-stack web application development</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 bg-teal-700 dark:bg-teal-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                      <span className="text-gray-700 dark:text-gray-300">Modern React and TypeScript expertise</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 bg-teal-700 dark:bg-teal-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                      <span className="text-gray-700 dark:text-gray-300">Backend development with Node.js</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 bg-teal-700 dark:bg-teal-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                      <span className="text-gray-700 dark:text-gray-300">Database design and optimization</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 bg-purple-700 dark:bg-purple-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                      <span className="text-gray-700 dark:text-gray-300">Engineering-driven problem solving</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </AnimatedSection>
-
-      {/* CTA Section with accessible colors */}
-      <AnimatedSection className="py-20 bg-gradient-to-r from-blue-700 via-teal-700 to-purple-700 dark:from-blue-600 dark:via-teal-600 dark:to-purple-600 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Work Together?
-          </h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Let's discuss your next project and bring your ideas to life with modern web technologies.
-          </p>
-          <Button size="lg" variant="secondary" asChild className="bg-white text-teal-700 hover:bg-gray-100">
-            <Link to="/contact">
-              Start a Project
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      </AnimatedSection>
-    </>
-  );
-};
+                <Card className={`h-full hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 ${service.bgColor} ${service.borderColor} border-2 overflow-hidden`}>
+                  <CardContent className="p-8 relative">
+                    {/* Background decoration */}
+                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${service.color} opacity-5 rounded-full -translate-y-8 translate-x-8 group-hover:opacity-10 transition-opacity duration-500`} />
+                    
+                    {/* Icon with enhanced styling */}
+                    <motion.div
+                      className={`inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br ${service.color} text-white rounded-2xl mb-6 shadow-lg group-hover:shadow-xl group-hover:scale-110 transition-all duration-300 relative z-10`}
+                      whileHover={{ rotate: 5, scale: 1.1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {service.icon}
+                    
