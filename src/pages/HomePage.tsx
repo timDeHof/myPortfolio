@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Code, Palette, Zap, Wrench } from 'lucide-react';
+import { ArrowRight, Code, Palette, Zap, Wrench, Star, Coffee, Lightbulb, Rocket } from 'lucide-react';
 import { SEOHead } from '../components/common/SEOHead';
 import { AnimatedSection } from '../components/common/AnimatedSection';
 import { Button } from '../components/ui/button';
@@ -22,6 +22,24 @@ import {
   FigmaIcon
 } from '../components/common/TechnologyIcons';
 import { pageSEO } from '../utils/seo';
+
+// Floating icons data for glassmorphism hero
+const floatingIcons = [
+  { Icon: ReactIcon, delay: 0, x: "10%", y: "20%", duration: 4 },
+  { Icon: TypeScriptIcon, delay: 0.5, x: "80%", y: "15%", duration: 5 },
+  { Icon: NodeJSIcon, delay: 1, x: "15%", y: "70%", duration: 4.5 },
+  { Icon: TailwindIcon, delay: 1.5, x: "85%", y: "65%", duration: 6 },
+  { Icon: GitIcon, delay: 2, x: "5%", y: "45%", duration: 5.5 },
+  { Icon: PostgreSQLIcon, delay: 2.5, x: "90%", y: "40%", duration: 4.8 },
+];
+
+// Floating background elements
+const backgroundElements = [
+  { icon: Star, delay: 0, x: "5%", y: "10%", duration: 8, scale: 0.8 },
+  { icon: Coffee, delay: 1, x: "95%", y: "80%", duration: 7, scale: 0.6 },
+  { icon: Lightbulb, delay: 2, x: "8%", y: "85%", duration: 9, scale: 0.7 },
+  { icon: Rocket, delay: 3, x: "92%", y: "12%", duration: 6, scale: 0.9 },
+];
 
 const features = [
   {
@@ -149,23 +167,206 @@ export const HomePage: React.FC = () => {
     <>
       <SEOHead seo={pageSEO.home} />
       
-      {/* Hero Section - Clean and Light */}
-      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-teal-50 dark:from-slate-900 dark:via-slate-800 dark:to-teal-900 relative overflow-hidden">
-        {/* Subtle background pattern */}
-        <div className="absolute inset-0 bg-grid-gray-100/50 dark:bg-grid-gray-100/50" />
+      {/* Modern Glassmorphism Hero Section */}
+      <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-teal-50 via-purple-50 to-indigo-100 dark:from-slate-900 dark:via-blue-900 dark:via-teal-900 dark:to-purple-900">
+          <motion.div
+            className="absolute inset-0 opacity-30"
+            animate={{
+              background: [
+                "radial-gradient(circle at 20% 50%, rgb(59 130 246 / 0.15) 0%, transparent 50%)",
+                "radial-gradient(circle at 80% 20%, rgb(16 185 129 / 0.15) 0%, transparent 50%)",
+                "radial-gradient(circle at 40% 80%, rgb(139 92 246 / 0.15) 0%, transparent 50%)",
+                "radial-gradient(circle at 20% 50%, rgb(59 130 246 / 0.15) 0%, transparent 50%)",
+              ],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+        </div>
         
-        <div className="container mx-auto px-4 text-center relative z-10">
+        {/* Floating tech icons */}
+        {floatingIcons.map((item, index) => {
+          const IconComponent = item.Icon;
+          return (
+            <motion.div
+              key={index}
+              className="absolute z-10 opacity-20 dark:opacity-30"
+              style={{ left: item.x, top: item.y }}
+              initial={{ opacity: 0, scale: 0, rotate: -180 }}
+              animate={{ 
+                opacity: [0.2, 0.4, 0.2], 
+                scale: [0.8, 1.2, 0.8],
+                rotate: [0, 360],
+                y: [-10, 10, -10],
+              }}
+              transition={{
+                duration: item.duration,
+                delay: item.delay,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <div className="p-4 rounded-2xl bg-white/10 dark:bg-white/5 backdrop-blur-sm border border-white/20 dark:border-white/10 shadow-lg">
+                <IconComponent size={32} />
+              </div>
+            </motion.div>
+          );
+        })}
+        
+        {/* Floating background elements */}
+        {backgroundElements.map((item, index) => {
+          const IconComponent = item.icon;
+          return (
+            <motion.div
+              key={`bg-${index}`}
+              className="absolute z-5 opacity-10 dark:opacity-20 text-blue-600 dark:text-blue-400"
+              style={{ left: item.x, top: item.y }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ 
+                opacity: [0.1, 0.3, 0.1], 
+                scale: [item.scale * 0.8, item.scale * 1.2, item.scale * 0.8],
+                rotate: [0, 180, 360],
+              }}
+              transition={{
+                duration: item.duration,
+                delay: item.delay,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <IconComponent size={24} />
+            </motion.div>
+          );
+        })}
+        
+        {/* Main content with glassmorphism card */}
+        <div className="container mx-auto px-4 text-center relative z-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            className="relative"
           >
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-              Hi, I'm{' '}
-              <span className="bg-gradient-to-r from-blue-700 via-teal-700 to-purple-700 dark:from-blue-400 dark:via-teal-400 dark:to-purple-400 bg-clip-text text-transparent">
-                Tim DeHof
-              </span>
-            </h1>
+            {/* Glassmorphism container */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 50 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="relative backdrop-blur-xl bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 rounded-3xl p-8 md:p-12 shadow-2xl max-w-5xl mx-auto"
+            >
+              {/* Glassmorphism overlay effects */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/20 via-transparent to-white/5 dark:from-white/10 dark:via-transparent dark:to-white/5"></div>
+              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-500/20 via-teal-500/20 to-purple-500/20 blur-lg -z-10"></div>
+              
+              <div className="relative z-10">
+                {/* Enhanced greeting with animation */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="mb-4"
+                >
+                  <span className="inline-block px-4 py-2 bg-gradient-to-r from-blue-100 to-teal-100 dark:from-blue-900/50 dark:to-teal-900/50 text-blue-800 dark:text-blue-300 rounded-full text-sm font-medium border border-blue-200 dark:border-blue-700">
+                    👋 Welcome to my digital space
+                  </span>
+                </motion.div>
+                
+                <motion.h1 
+                  className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-gray-100 mb-6"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                >
+                  Hi, I'm{' '}
+                  <motion.span
+                    className="relative inline-block"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <span className="bg-gradient-to-r from-blue-700 via-teal-700 to-purple-700 dark:from-blue-400 dark:via-teal-400 dark:to-purple-400 bg-clip-text text-transparent">
+                      Tim DeHof
+                    </span>
+                    {/* Animated underline */}
+                    <motion.div
+                      className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-700 via-teal-700 to-purple-700 dark:from-blue-400 dark:via-teal-400 dark:to-purple-400 rounded-full"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.8, delay: 1.2 }}
+                    />
+                  </motion.span>
+                </motion.h1>
+                
+                {/* Enhanced tagline with glassmorphism */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                  className="max-w-3xl mx-auto mb-8"
+                >
+                  <div className="backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-2xl p-6 border border-white/30 dark:border-white/20">
+                    <TextGenerateEffect 
+                      words="Full-Stack Developer & Engineer crafting innovative web solutions with modern technologies and best practices."
+                      className="text-xl md:text-2xl text-gray-800 dark:text-gray-200 font-medium"
+                    />
+                  </div>
+                </motion.div>
+                
+                {/* Action buttons with enhanced styling */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 1 }}
+                  className="flex flex-col sm:flex-row gap-4 justify-center"
+                >
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Button asChild size="lg" className="bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white shadow-lg hover:shadow-xl backdrop-blur-sm border border-blue-600 dark:border-blue-500">
+                      <Link to="/projects">
+                        <Code className="mr-2 h-4 w-4" />
+                        View My Work
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Button variant="outline" size="lg" asChild className="backdrop-blur-sm bg-white/20 dark:bg-white/10 border-white/40 dark:border-white/30 text-gray-800 dark:text-gray-200 hover:bg-white/30 dark:hover:bg-white/20 shadow-lg">
+                      <Link to="/contact">Get In Touch</Link>
+                    </Button>
+                  </motion.div>
+                </motion.div>
+                
+                {/* Social proof indicators */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 1.2 }}
+                  className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600 dark:text-gray-400"
+                >
+                  <div className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-4 py-2 border border-white/30 dark:border-white/20">
+                    <Star className="h-4 w-4 mr-2 text-yellow-500" />
+                    <span>GitHub Active</span>
+                  </div>
+                  <div className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-4 py-2 border border-white/30 dark:border-white/20">
+                    <Coffee className="h-4 w-4 mr-2 text-teal-600 dark:text-teal-400" />
+                    <span>3+ Years Experience</span>
+                  </div>
+                  <div className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-4 py-2 border border-white/30 dark:border-white/20">
+                    <Rocket className="h-4 w-4 mr-2 text-purple-600 dark:text-purple-400" />
+                    <span>Always Learning</span>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
             
             <div className="max-w-3xl mx-auto mb-8">
               <TextGenerateEffect 
@@ -188,6 +389,26 @@ export const HomePage: React.FC = () => {
             </div>
           </motion.div>
         </div>
+        
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.5 }}
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-6 h-10 border-2 border-white/40 dark:border-white/30 rounded-full flex justify-center backdrop-blur-sm bg-white/10 dark:bg-white/5"
+          >
+            <motion.div
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="w-1 h-3 bg-white/60 dark:bg-white/50 rounded-full mt-2"
+            />
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Enhanced Technical Expertise Section with accessible colors */}
