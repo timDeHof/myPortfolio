@@ -311,7 +311,7 @@ export const HomePage: React.FC = () => {
                   <div className="backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-2xl p-6 border border-white/30 dark:border-white/20">
                     <TextGenerateEffect 
                       words="Full-Stack Developer & Engineer crafting innovative web solutions with modern technologies and best practices."
-                     className="text-xl md:text-2xl text-gray-800 dark:text-gray-200 font-medium text-center"
+                     className="text-xl md:text-2xl text-gray-800 dark:text-gray-200 font-medium text-center flex items-center"
                     />
                   </div>
                 </motion.div>
