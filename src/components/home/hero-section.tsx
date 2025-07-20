@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { Code, ArrowRight, Star, Coffee, Rocket, ChevronDown, ArrowUp } from 'lucide-react';
-import { Button } from '../ui/button';
-import { TextGenerateEffect } from '../ui/aceternity/text-generate-effect';
+import { motion } from "framer-motion";
+import { ArrowRight, ArrowUp, ChevronDown, Code, Coffee, Rocket, Star } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
+import { TextGenerateEffect } from "../ui/aceternity/text-generate-effect";
+import { Button } from "../ui/button";
 // Floating icons configuration
-import { floatingIcons } from './floatingIcons';
+import { floatingIcons } from "./floating-icons";
 
 // Background elements
 const backgroundElements = [
-  { icon: Code, x: '5%', y: '10%' },
-  { icon: Star, x: '95%', y: '25%' },
-  { icon: Coffee, x: '8%', y: '60%' },
-  { icon: Rocket, x: '92%', y: '70%' },
-  { icon: ArrowRight, x: '12%', y: '30%' },
-  { icon: Code, x: '88%', y: '85%' },
+  { icon: Code, x: "5%", y: "10%" },
+  { icon: Star, x: "95%", y: "25%" },
+  { icon: Coffee, x: "8%", y: "60%" },
+  { icon: Rocket, x: "92%", y: "70%" },
+  { icon: ArrowRight, x: "12%", y: "30%" },
+  { icon: Code, x: "88%", y: "85%" },
 ];
 
 export const HeroSection: React.FC = () => {
@@ -31,17 +31,17 @@ export const HeroSection: React.FC = () => {
       setShowBackToTop(scrolled > threshold);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToContent = () => {
-    const nextSection = document.querySelector('#services-section');
-    nextSection?.scrollIntoView({ behavior: 'smooth' });
+    const nextSection = document.querySelector("#services-section");
+    nextSection?.scrollIntoView({ behavior: "smooth" });
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -59,13 +59,13 @@ export const HeroSection: React.FC = () => {
               opacity: [0.2, 0.4, 0.2],
               scale: [0.8, 1.2, 0.8],
               rotate: [0, 360],
-              y: [0, -20, 0]
+              y: [0, -20, 0],
             }}
             transition={{
               duration: 8,
               repeat: Infinity,
               delay: index * 0.5,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
           >
             <IconComponent size={48} />
@@ -85,13 +85,13 @@ export const HeroSection: React.FC = () => {
             animate={{
               opacity: [0.1, 0.3, 0.1],
               scale: [1, 1.5, 1],
-              rotate: [0, 180, 360]
+              rotate: [0, 180, 360],
             }}
             transition={{
               duration: 12,
               repeat: Infinity,
               delay: index * 0.8,
-              ease: "linear"
+              ease: "linear",
             }}
           >
             <IconComponent size={32} />
@@ -162,7 +162,7 @@ export const HeroSection: React.FC = () => {
                 <div className="backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/30 dark:border-white/20">
                   <TextGenerateEffect
                     words="Transforming Your Business Challenges into Powerful Web Applications"
-                   className="text-lg sm:text-xl md:text-2xl text-gray-800 dark:text-gray-200 font-medium text-center flex items-center justify-center leading-relaxed"
+                    className="text-lg sm:text-xl md:text-2xl text-gray-800 dark:text-gray-200 font-medium text-center flex items-center justify-center leading-relaxed"
                   />
                 </div>
               </motion.div>
