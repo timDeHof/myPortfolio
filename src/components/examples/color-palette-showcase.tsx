@@ -1,34 +1,35 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Card, CardContent } from '../ui/card';
-import { accessibleColors, colorUsageGuide, accessibleGradients } from '../../utils/colorPalette';
+import { motion } from "framer-motion";
+import React from "react";
+
+import { colorUsageGuide } from "../../utils/colorPalette";
+import { Card, CardContent } from "../ui/card";
 
 export const ColorPaletteShowcase: React.FC = () => {
   const currentColors = [
-    { name: 'Primary Blue', color: 'bg-blue-700', usage: 'Main brand color, primary actions' },
-    { name: 'Success Green', color: 'bg-green-700', usage: 'Success states, positive feedback' },
-    { name: 'Creative Purple', color: 'bg-purple-700', usage: 'Creative sections, innovation' },
-    { name: 'Professional Slate', color: 'bg-slate-700', usage: 'Text, neutral elements' }
+    { name: "Primary Blue", color: "bg-blue-700", usage: "Main brand color, primary actions" },
+    { name: "Success Green", color: "bg-green-700", usage: "Success states, positive feedback" },
+    { name: "Creative Purple", color: "bg-purple-700", usage: "Creative sections, innovation" },
+    { name: "Professional Slate", color: "bg-slate-700", usage: "Text, neutral elements" },
   ];
 
   const extendedColors = [
-    { name: 'Warm Amber', color: 'bg-amber-700', usage: 'Warnings, warm highlights' },
-    { name: 'Ocean Teal', color: 'bg-teal-700', usage: 'Tech sections, professional' },
-    { name: 'Sky Blue', color: 'bg-sky-700', usage: 'Cloud services, lighter alternative' },
-    { name: 'Deep Indigo', color: 'bg-indigo-700', usage: 'Premium features, enterprise' },
-    { name: 'Fresh Emerald', color: 'bg-emerald-700', usage: 'Environmental, growth' },
-    { name: 'Vibrant Orange', color: 'bg-orange-700', usage: 'Energy, call-to-action' },
-    { name: 'Royal Violet', color: 'bg-violet-700', usage: 'Luxury, innovation' },
-    { name: 'Modern Cyan', color: 'bg-cyan-700', usage: 'Data visualization, tech' }
+    { name: "Warm Amber", color: "bg-amber-700", usage: "Warnings, warm highlights" },
+    { name: "Ocean Teal", color: "bg-teal-700", usage: "Tech sections, professional" },
+    { name: "Sky Blue", color: "bg-sky-700", usage: "Cloud services, lighter alternative" },
+    { name: "Deep Indigo", color: "bg-indigo-700", usage: "Premium features, enterprise" },
+    { name: "Fresh Emerald", color: "bg-emerald-700", usage: "Environmental, growth" },
+    { name: "Vibrant Orange", color: "bg-orange-700", usage: "Energy, call-to-action" },
+    { name: "Royal Violet", color: "bg-violet-700", usage: "Luxury, innovation" },
+    { name: "Modern Cyan", color: "bg-cyan-700", usage: "Data visualization, tech" },
   ];
 
   const gradientExamples = [
-    { name: 'Ocean Breeze', gradient: 'from-cyan-700 to-blue-700', usage: 'Hero sections, tech' },
-    { name: 'Warm Sunset', gradient: 'from-orange-700 to-pink-700', usage: 'Creative, energetic' },
-    { name: 'Forest Night', gradient: 'from-emerald-700 to-slate-700', usage: 'Professional, nature' },
-    { name: 'Royal Gold', gradient: 'from-indigo-700 to-amber-700', usage: 'Premium, luxury' },
-    { name: 'Mystic Purple', gradient: 'from-violet-700 to-fuchsia-700', usage: 'Creative, innovative' },
-    { name: 'Tech Glow', gradient: 'from-teal-700 to-indigo-700', usage: 'Technology, modern' }
+    { name: "Ocean Breeze", gradient: "from-cyan-700 to-blue-700", usage: "Hero sections, tech" },
+    { name: "Warm Sunset", gradient: "from-orange-700 to-pink-700", usage: "Creative, energetic" },
+    { name: "Forest Night", gradient: "from-emerald-700 to-slate-700", usage: "Professional, nature" },
+    { name: "Royal Gold", gradient: "from-indigo-700 to-amber-700", usage: "Premium, luxury" },
+    { name: "Mystic Purple", gradient: "from-violet-700 to-fuchsia-700", usage: "Creative, innovative" },
+    { name: "Tech Glow", gradient: "from-teal-700 to-indigo-700", usage: "Technology, modern" },
   ];
 
   return (
@@ -138,15 +139,16 @@ export const ColorPaletteShowcase: React.FC = () => {
                 <Card className="hover:shadow-lg transition-shadow">
                   <CardContent className="p-6">
                     <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-4 capitalize">
-                      {category.replace(/([A-Z])/g, ' $1').trim()}
+                      {category.replace(/([A-Z])/g, " $1").trim()}
                     </h4>
                     <div className="flex flex-wrap gap-2">
-                      {colors.map((color, colorIndex) => (
+                      {colors.map((color) => (
                         <div
-                          key={colorIndex}
+                          key={color}
                           className={`w-8 h-8 bg-${color} rounded border border-gray-200`}
                           title={color}
-                        ></div>
+                        >
+                        </div>
                       ))}
                     </div>
                   </CardContent>
