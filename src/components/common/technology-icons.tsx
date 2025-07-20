@@ -1,12 +1,13 @@
-import React from 'react';
+/* eslint-disable unused-imports/no-unused-vars */
+import React from "react";
 
-interface IconProps {
+type IconProps = {
   className?: string;
   size?: number;
-}
+};
 
 export const ReactIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
- <svg
+  <svg
     width={size}
     height={size}
     viewBox="0 0 0.96 0.96"
@@ -44,7 +45,7 @@ export const ReactIcon: React.FC<IconProps> = ({ className = "", size = 24, ...p
 );
 
 export const TypeScriptIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
-   <svg
+  <svg
     xmlns="http://www.w3.org/2000/svg"
     aria-label="TypeScript"
     viewBox="0 0 24 24"
@@ -64,7 +65,7 @@ export const TypeScriptIcon: React.FC<IconProps> = ({ className = "", size = 24,
 );
 
 export const NextJSIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
-   <svg
+  <svg
     width={size}
     height={size}
     viewBox="0 0 24 24"
@@ -112,7 +113,7 @@ export const FramerIcon: React.FC<IconProps> = ({ className = "", size = 24, ...
 );
 
 export const NodeJSIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
-   <svg
+  <svg
     width={size}
     height={size}
     viewBox="0 0 0.96 0.96"
@@ -136,7 +137,7 @@ export const NodeJSIcon: React.FC<IconProps> = ({ className = "", size = 24, ...
 );
 
 export const ExpressIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
-   <svg
+  <svg
     width={size}
     height={size}
     viewBox="0 0 24 24"
@@ -151,7 +152,7 @@ export const ExpressIcon: React.FC<IconProps> = ({ className = "", size = 24, ..
 );
 
 export const PostgreSQLIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
-<svg
+  <svg
     width={size}
     height={size}
     viewBox="-0.364 0 24 24"
@@ -178,20 +179,24 @@ export const PostgreSQLIcon: React.FC<IconProps> = ({ className = "", size = 24,
 
 export const MongoDBIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" className={className} {...props}>
-    <path d="M17.193 9.555c-1.264-5.58-4.252-7.414-4.573-8.115-.28-.394-.53-.954-.735-1.44-.036.495-.055.685-.523 1.184-.723.566-4.438 3.682-4.74 10.02-.282 5.912 4.27 9.435 4.888 9.884l.07.05A73.49 73.49 0 0111.91 24h.481c.114-1.032.284-2.056.51-3.07.417-.296.604-.463.85-.693a11.342 11.342 0 003.639-8.464c.01-.814-.103-1.662-.197-2.218zm-5.336 8.195s0-8.291.275-8.29c.213 0 .49 10.695.49 10.695-.381-.045-.765-1.76-.765-2.405z"
-          fill="#47A248"/>
+    <path
+      d="M17.193 9.555c-1.264-5.58-4.252-7.414-4.573-8.115-.28-.394-.53-.954-.735-1.44-.036.495-.055.685-.523 1.184-.723.566-4.438 3.682-4.74 10.02-.282 5.912 4.27 9.435 4.888 9.884l.07.05A73.49 73.49 0 0111.91 24h.481c.114-1.032.284-2.056.51-3.07.417-.296.604-.463.85-.693a11.342 11.342 0 003.639-8.464c.01-.814-.103-1.662-.197-2.218zm-5.336 8.195s0-8.291.275-8.29c.213 0 .49 10.695.49 10.695-.381-.045-.765-1.76-.765-2.405z"
+      fill="#47A248"
+    />
   </svg>
 );
 
 export const GitIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" className={className} {...props}>
-    <path d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.658 2.66c.645-.223 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.719.719-1.881.719-2.6 0-.539-.541-.674-1.337-.404-1.996L12.86 8.955v6.525c.176.086.342.203.488.348.713.721.713 1.883 0 2.6-.719.721-1.889.721-2.609 0-.719-.719-.719-1.879 0-2.598.182-.18.387-.316.605-.406V8.835c-.217-.091-.424-.222-.6-.401-.545-.545-.676-1.342-.396-2.009L7.636 3.7.45 10.881c-.6.605-.6 1.584 0 2.189l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582 0-2.187"
-          fill="#F05032"/>
+    <path
+      d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.658 2.66c.645-.223 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.719.719-1.881.719-2.6 0-.539-.541-.674-1.337-.404-1.996L12.86 8.955v6.525c.176.086.342.203.488.348.713.721.713 1.883 0 2.6-.719.721-1.889.721-2.609 0-.719-.719-.719-1.879 0-2.598.182-.18.387-.316.605-.406V8.835c-.217-.091-.424-.222-.6-.401-.545-.545-.676-1.342-.396-2.009L7.636 3.7.45 10.881c-.6.605-.6 1.584 0 2.189l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582 0-2.187"
+      fill="#F05032"
+    />
   </svg>
 );
 
 export const DockerIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
- <svg
+  <svg
     width={size}
     height={size}
     className={className}
@@ -208,7 +213,7 @@ export const DockerIcon: React.FC<IconProps> = ({ className = "", size = 24, ...
 );
 
 export const AWSIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
-<svg
+  <svg
     width={size}
     height={size}
     viewBox="0 -4.828 24 24"
@@ -346,7 +351,7 @@ export const MechanicalIcon: React.FC<IconProps> = ({ className = "", size = 24,
 );
 
 export const PrintingIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
- <svg
+  <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 183.75 183.75"
     xmlSpace="preserve"
@@ -363,7 +368,7 @@ export const PrintingIcon: React.FC<IconProps> = ({ className = "", size = 24, .
 );
 
 export const PuzzleIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
-    <svg
+  <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     xmlSpace="preserve"
@@ -389,13 +394,13 @@ export const PuzzleIcon: React.FC<IconProps> = ({ className = "", size = 24, ...
 
 export const TeamIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" className={className} fill="#E74C3C" {...props}>
-    <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-    <path d="M6 8a2 2 0 11-4 0 2 2 0 014 0zM1.49 15.326a.78.78 0 01-.358-.442 3 3 0 014.308-3.516 6.484 6.484 0 00-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 01-2.07-.655zM22 8a2 2 0 11-4 0 2 2 0 014 0zM22.51 15.326a4.97 4.97 0 01-2.07.655c.04-.212.048-.432.025-.654a6.484 6.484 0 00-1.905-3.959 3 3 0 014.308 3.516c-.073.126-.18.246-.358.442z"/>
+    <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+    <path d="M6 8a2 2 0 11-4 0 2 2 0 014 0zM1.49 15.326a.78.78 0 01-.358-.442 3 3 0 014.308-3.516 6.484 6.484 0 00-1.905 3.959c-.023.222-.014.442.025.654a4.97 4.97 0 01-2.07-.655zM22 8a2 2 0 11-4 0 2 2 0 014 0zM22.51 15.326a4.97 4.97 0 01-2.07.655c.04-.212.048-.432.025-.654a6.484 6.484 0 00-1.905-3.959 3 3 0 014.308 3.516c-.073.126-.18.246-.358.442z" />
   </svg>
 );
 
 export const SystemIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
-   <svg
+  <svg
     width={size}
     height={size}
     className={className}
@@ -426,6 +431,6 @@ export const APIIcon: React.FC<IconProps> = ({ className = "", size = 24, ...pro
 
 export const VercelIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" className={className} {...props}>
-    <path d="M12 2L2 19.777h20L12 2z" fill="#000000"/>
+    <path d="M12 2L2 19.777h20L12 2z" fill="#000000" />
   </svg>
 );
