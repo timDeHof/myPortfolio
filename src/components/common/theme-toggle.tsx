@@ -1,19 +1,20 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Sun, Moon, Monitor } from 'lucide-react';
-import { useTheme } from '../../hooks/useTheme';
-import { Button } from '../ui/button';
+import { motion } from "framer-motion";
+import { Monitor, Moon, Sun } from "lucide-react";
+import React from "react";
+
+import { useTheme } from "../../hooks/use-theme";
+import { Button } from "../ui/button";
 
 export const ThemeToggle: React.FC = () => {
   const { theme, effectiveTheme, toggleTheme } = useTheme();
 
   const getIcon = () => {
     switch (theme) {
-      case 'light':
+      case "light":
         return <Sun className="h-4 w-4" />;
-      case 'dark':
+      case "dark":
         return <Moon className="h-4 w-4" />;
-      case 'system':
+      case "system":
         return <Monitor className="h-4 w-4" />;
       default:
         return <Sun className="h-4 w-4" />;
@@ -22,14 +23,14 @@ export const ThemeToggle: React.FC = () => {
 
   const getLabel = () => {
     switch (theme) {
-      case 'light':
-        return 'Light mode';
-      case 'dark':
-        return 'Dark mode';
-      case 'system':
+      case "light":
+        return "Light mode";
+      case "dark":
+        return "Dark mode";
+      case "system":
         return `System (${effectiveTheme})`;
       default:
-        return 'Light mode';
+        return "Light mode";
     }
   };
 
@@ -40,20 +41,20 @@ export const ThemeToggle: React.FC = () => {
         size="sm"
         onClick={toggleTheme}
         className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-        aria-label={`Switch to ${theme === 'light' ? 'dark' : theme === 'dark' ? 'system' : 'light'} mode`}
+        aria-label={`Switch to ${theme === "light" ? "dark" : theme === "dark" ? "system" : "light"} mode`}
       >
         <motion.div
           key={theme}
           initial={{ scale: 0.5, opacity: 0, rotate: -90 }}
           animate={{ scale: 1, opacity: 1, rotate: 0 }}
           exit={{ scale: 0.5, opacity: 0, rotate: 90 }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
           className="flex items-center justify-center"
         >
           {getIcon()}
         </motion.div>
       </Button>
-      
+
       {/* Tooltip */}
       <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
         {getLabel()}
