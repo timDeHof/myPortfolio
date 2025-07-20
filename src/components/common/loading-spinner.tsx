@@ -1,14 +1,14 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import React from 'react';
 
-interface LoadingSpinnerProps {
+type LoadingSpinnerProps = {
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   color?: 'blue' | 'teal' | 'purple' | 'gray';
 }
 
-export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ 
-  size = 'md', 
+export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+  size = 'md',
   className = '',
   color = 'blue'
 }) => {

@@ -1,20 +1,21 @@
-import React from 'react';
-import { Card, CardContent } from '../ui/card';
+import React from "react";
 
-interface RepositoryCardSkeletonProps {
+import { Card, CardContent } from "../ui/card";
+
+type RepositoryCardSkeletonProps = {
   index?: number;
-}
+};
 
 export const RepositoryCardSkeleton: React.FC<RepositoryCardSkeletonProps> = ({ index = 0 }) => {
   return (
-    <div 
+    <div
       className="animate-pulse"
       style={{ animationDelay: `${index * 100}ms` }}
     >
       <Card className="h-full overflow-hidden bg-white border-gray-200">
         {/* Image skeleton */}
         <div className="h-48 bg-gray-200" />
-        
+
         <CardContent className="p-6">
           {/* Header with title and stats */}
           <div className="flex items-start justify-between mb-3">
@@ -24,7 +25,7 @@ export const RepositoryCardSkeleton: React.FC<RepositoryCardSkeletonProps> = ({ 
               <div className="h-4 bg-gray-200 rounded w-8"></div>
             </div>
           </div>
-          
+
           {/* Description lines */}
           <div className="space-y-2 mb-4">
             <div className="h-4 bg-gray-200 rounded w-full"></div>
@@ -53,9 +54,9 @@ export const RepositoryCardSkeleton: React.FC<RepositoryCardSkeletonProps> = ({ 
 };
 
 // Grid of skeleton cards
-interface RepositorySkeletonGridProps {
+type RepositorySkeletonGridProps = {
   count?: number;
-}
+};
 
 export const RepositorySkeletonGrid: React.FC<RepositorySkeletonGridProps> = ({ count = 6 }) => {
   return (
