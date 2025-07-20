@@ -12,6 +12,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.3.3",
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.1.5",
@@ -21,19 +22,19 @@
     "clsx": "2.1.1",
     "framer-motion": "^10.16.16",
     "lucide-react": "^0.453.0",
+    "mini-svg-data-uri": "^1.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.4",
     "react-intersection-observer": "^9.5.3",
     "react-router-dom": "^6.8.1",
     "tailwind-merge": "2.5.4",
-    "zustand": "^4.4.7",
-    "mini-svg-data-uri": "^1.4.4",
-    "@emailjs/browser": "^4.3.3"
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
+    "@types/node": "^24.0.15",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0",
     "@typescript-eslint/eslint-plugin": "^6.14.0",

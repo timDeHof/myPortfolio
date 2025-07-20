@@ -4,15 +4,22 @@ import { Link } from 'react-router-dom';
 import { Code, ArrowRight, Star, Coffee, Rocket, ChevronDown, ArrowUp } from 'lucide-react';
 import { Button } from '../ui/button';
 import { TextGenerateEffect } from '../ui/aceternity/text-generate-effect';
-import { 
-  ReactIcon, 
-  TypeScriptIcon, 
-  NextJSIcon, 
-  TailwindIcon, 
+import {
+  ReactIcon,
+  TypeScriptIcon,
+  NextJSIcon,
+  TailwindIcon,
+  FramerIcon,
   NodeJSIcon,
+  ExpressIcon,
   PostgreSQLIcon,
+  MongoDBIcon,
   GitIcon,
-  FigmaIcon
+  DockerIcon,
+  AWSIcon,
+  VercelIcon,
+  FigmaIcon,
+  APIIcon
 } from '../common/TechnologyIcons';
 
 // Floating icons configuration
@@ -21,10 +28,17 @@ const floatingIcons = [
   { Icon: TypeScriptIcon, x: '85%', y: '15%' },
   { Icon: NextJSIcon, x: '15%', y: '70%' },
   { Icon: TailwindIcon, x: '80%', y: '60%' },
+  { Icon: FramerIcon, x: '92%', y: '25%' },
   { Icon: NodeJSIcon, x: '5%', y: '45%' },
+  { Icon: ExpressIcon, x: '88%', y: '80%' },
   { Icon: PostgreSQLIcon, x: '90%', y: '40%' },
+  { Icon: MongoDBIcon, x: '8%', y: '75%' },
   { Icon: GitIcon, x: '20%', y: '85%' },
+  { Icon: DockerIcon, x: '25%', y: '10%' },
+  { Icon: AWSIcon, x: '70%', y: '25%' },
+  { Icon: VercelIcon, x: '12%', y: '55%' },
   { Icon: FigmaIcon, x: '75%', y: '80%' },
+  { Icon: APIIcon, x: '65%', y: '12%' },
 ];
 
 // Background elements
@@ -45,7 +59,7 @@ export const HeroSection: React.FC = () => {
     const handleScroll = () => {
       const scrolled = window.scrollY;
       const threshold = window.innerHeight * 0.8;
-      
+
       setShowScrollIndicator(scrolled < 100);
       setShowBackToTop(scrolled > threshold);
     };
@@ -74,8 +88,8 @@ export const HeroSection: React.FC = () => {
             className="absolute z-10 opacity-20 dark:opacity-30 hidden lg:block"
             style={{ left: item.x, top: item.y }}
             initial={{ opacity: 0, scale: 0, rotate: -180 }}
-            animate={{ 
-              opacity: [0.2, 0.4, 0.2], 
+            animate={{
+              opacity: [0.2, 0.4, 0.2],
               scale: [0.8, 1.2, 0.8],
               rotate: [0, 360],
               y: [0, -20, 0]
@@ -101,7 +115,7 @@ export const HeroSection: React.FC = () => {
             className="absolute z-5 opacity-10 dark:opacity-20 text-blue-600 dark:text-blue-400 hidden md:block"
             style={{ left: item.x, top: item.y }}
             initial={{ opacity: 0, scale: 0 }}
-            animate={{ 
+            animate={{
               opacity: [0.1, 0.3, 0.1],
               scale: [1, 1.5, 1],
               rotate: [0, 180, 360]
@@ -117,7 +131,7 @@ export const HeroSection: React.FC = () => {
           </motion.div>
         );
       })}
-      
+
       {/* Main content with glassmorphism card */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
         <motion.div
@@ -135,7 +149,7 @@ export const HeroSection: React.FC = () => {
             {/* Glassmorphism overlay effects */}
             <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white/20 via-transparent to-white/5 dark:from-white/10 dark:via-transparent dark:to-white/5"></div>
             <div className="absolute -inset-1 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-blue-500/20 via-teal-500/20 to-purple-500/20 blur-lg -z-10"></div>
-            
+
             <div className="relative z-10">
               {/* Enhanced greeting with animation */}
               <motion.div
@@ -148,8 +162,8 @@ export const HeroSection: React.FC = () => {
                   👋 Welcome to my digital space
                 </span>
               </motion.div>
-              
-              <motion.h1 
+
+              <motion.h1
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 leading-tight"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -179,7 +193,7 @@ export const HeroSection: React.FC = () => {
                 className="max-w-3xl mx-auto mb-6 sm:mb-8"
               >
                 <div className="backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/30 dark:border-white/20">
-                  <TextGenerateEffect 
+                  <TextGenerateEffect
                     words="Transforming Your Business Challenges into Powerful Web Applications"
                    className="text-lg sm:text-xl md:text-2xl text-gray-800 dark:text-gray-200 font-medium text-center flex items-center justify-center leading-relaxed"
                   />
@@ -198,9 +212,9 @@ export const HeroSection: React.FC = () => {
                   whileTap={{ scale: 0.95 }}
                   className="w-full sm:w-auto"
                 >
-                  <Button 
-                    asChild 
-                    size="lg" 
+                  <Button
+                    asChild
+                    size="lg"
                     className="w-full sm:w-auto min-h-[48px] bg-blue-700 hover:bg-blue-800 active:bg-blue-900 dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800 text-white shadow-lg hover:shadow-xl backdrop-blur-sm border border-blue-600 dark:border-blue-500 touch-manipulation transform transition-all duration-200"
                   >
                     <Link to="/projects">
@@ -215,10 +229,10 @@ export const HeroSection: React.FC = () => {
                   whileTap={{ scale: 0.95 }}
                   className="w-full sm:w-auto"
                 >
-                  <Button 
-                    variant="outline" 
-                    size="lg" 
-                    asChild 
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    asChild
                     className="w-full sm:w-auto min-h-[48px] backdrop-blur-sm bg-white/20 dark:bg-white/10 border-white/40 dark:border-white/30 text-gray-800 dark:text-gray-200 hover:bg-white/30 dark:hover:bg-white/20 active:bg-white/40 dark:active:bg-white/30 shadow-lg touch-manipulation transform transition-all duration-200"
                   >
                     <Link to="/contact">Get In Touch</Link>
@@ -233,7 +247,7 @@ export const HeroSection: React.FC = () => {
                 transition={{ duration: 0.8, delay: 1.2 }}
                 className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-600 dark:text-gray-400"
               >
-                <motion.div 
+                <motion.div
                   className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-3 sm:px-4 py-2 border border-white/30 dark:border-white/20 touch-manipulation"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -241,7 +255,7 @@ export const HeroSection: React.FC = () => {
                   <Star className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-yellow-500" />
                   <span>GitHub Active</span>
                 </motion.div>
-                <motion.div 
+                <motion.div
                   className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-3 sm:px-4 py-2 border border-white/30 dark:border-white/20 touch-manipulation"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -249,7 +263,7 @@ export const HeroSection: React.FC = () => {
                   <Coffee className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-teal-600 dark:text-teal-400" />
                   <span>3+ Years Experience</span>
                 </motion.div>
-                <motion.div 
+                <motion.div
                   className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-3 sm:px-4 py-2 border border-white/30 dark:border-white/20 touch-manipulation"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -303,7 +317,7 @@ export const HeroSection: React.FC = () => {
           aria-label="Back to top"
         >
           <ArrowUp className="h-5 w-5" />
-          
+
           {/* Tooltip */}
           <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
             Back to top
