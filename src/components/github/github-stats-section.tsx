@@ -1,8 +1,9 @@
-import React from 'react';
-import { AnimatedSection } from '../common/AnimatedSection';
-import { GitHubStatsCard } from './GitHubStatsCard';
-import { LanguageChart } from './LanguageChart';
-import { ContributionCalendar } from './ContributionCalendar';
+import React from "react";
+
+import { AnimatedSection } from "../common/animated-section";
+import { ContributionCalendar } from "./contribution-calendar";
+import { GitHubStatsCard } from "./github-stats-card";
+import { LanguageChart } from "./language-chart";
 
 export const GitHubStatsSection: React.FC = () => {
   return (
