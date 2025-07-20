@@ -9,10 +9,17 @@ import {
   TypeScriptIcon, 
   NextJSIcon, 
   TailwindIcon, 
+  FramerIcon,
   NodeJSIcon,
+  ExpressIcon,
   PostgreSQLIcon,
+  MongoDBIcon,
   GitIcon,
-  FigmaIcon
+  DockerIcon,
+  AWSIcon,
+  VercelIcon,
+  FigmaIcon,
+  APIIcon
 } from '../common/TechnologyIcons';
 
 // Floating icons configuration
@@ -21,10 +28,17 @@ const floatingIcons = [
   { Icon: TypeScriptIcon, x: '85%', y: '15%' },
   { Icon: NextJSIcon, x: '15%', y: '70%' },
   { Icon: TailwindIcon, x: '80%', y: '60%' },
+  { Icon: FramerIcon, x: '92%', y: '25%' },
   { Icon: NodeJSIcon, x: '5%', y: '45%' },
+  { Icon: ExpressIcon, x: '88%', y: '80%' },
   { Icon: PostgreSQLIcon, x: '90%', y: '40%' },
+  { Icon: MongoDBIcon, x: '8%', y: '75%' },
   { Icon: GitIcon, x: '20%', y: '85%' },
+  { Icon: DockerIcon, x: '25%', y: '10%' },
+  { Icon: AWSIcon, x: '70%', y: '25%' },
+  { Icon: VercelIcon, x: '12%', y: '55%' },
   { Icon: FigmaIcon, x: '75%', y: '80%' },
+  { Icon: APIIcon, x: '65%', y: '12%' },
 ];
 
 // Background elements
