@@ -1,19 +1,22 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
+import { motion } from "framer-motion";
+import React from "react";
 
-interface AnimatedSectionProps {
+import { useIntersectionObserver } from "../../hooks/use-intersectio-observer";
+
+type AnimatedSectionProps = {
+  id?: string;
   children: React.ReactNode;
   className?: string;
   delay?: number;
-  direction?: 'up' | 'down' | 'left' | 'right';
-}
+  direction?: "up" | "down" | "left" | "right";
+};
 
 export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   children,
-  className = '',
+  className = "",
   delay = 0,
-  direction = 'up',
+  direction = "up",
+  id,
 }) => {
   const { ref, isIntersecting } = useIntersectionObserver({
     threshold: 0.1,
@@ -35,9 +38,10 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
       transition={{
         duration: 0.6,
         delay,
-        ease: 'easeOut',
+        ease: "easeOut",
       }}
       className={className}
+      id={id} // Added id prop to motion.section
     >
       {children}
     </motion.section>
