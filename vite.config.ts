@@ -10,6 +10,7 @@ export default defineConfig({
     alias: {
       "@": resolve(__dirname, "./src"),
     },
+    extensions: [".js", ".ts", ".jsx", ".tsx", ".json"],
   },
   build: {
     rollupOptions: {
