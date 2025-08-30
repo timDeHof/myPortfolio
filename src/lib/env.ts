@@ -1,5 +1,7 @@
-import {z} from 'zod';
-import tryParseEnv from './try-parse-env';
+import { z } from "zod";
+
+import tryParseEnv from "./try-parse-env";
+
 const EnvSchema = z.object({
   NODE_ENV: z.string(),
   VITE_EMAILJS_SERVICE_ID: z.string(),
