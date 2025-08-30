@@ -1,3 +1,3 @@
-export { Layout } from './layout';
-export { Navigation } from './navigation';
-export { Footer } from './footer';
+export { Layout } from './layout.tsx';
+export { Navigation } from './navigation.tsx';
+export { Footer } from './footer.tsx';
