@@ -12,6 +12,7 @@
     "useDefineForClassFields": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "allowImportingTsExtensions": false,
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
