@@ -3,6 +3,7 @@ import React, { Suspense } from "react";
 import { LoadingSpinner } from "../components/common/loading-spinner";
 import { SEOHead } from "../components/common/seo-head";
 import { pageSEO } from "../utils/seo";
+import { generatePersonSchema, generateWebsiteSchema } from "../utils/structured-data";
 
 // Lazy load components for better performances
 const HeroSection = React.lazy(() =>
@@ -28,9 +29,20 @@ const SectionLoader: React.FC<{ name: string }> = ({ name }) => (
 );
 
 export const HomePage: React.FC = () => {
+  // Generate structured data for the home page
+  const structuredData = {
+    "@graph": [
+      generatePersonSchema(),
+      generateWebsiteSchema()
+    ]
+  };
+
   return (
     <>
-      <SEOHead seo={pageSEO.home} />
+      <SEOHead 
+        seo={pageSEO.home} 
+        structuredData={structuredData}
+      />
 
       {/* Hero Section */}
       <Suspense fallback={<SectionLoader name="Hero Section" />}>

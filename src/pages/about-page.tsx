@@ -277,7 +277,7 @@ export const AboutPage: React.FC = () => {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 via-teal-800 to-purple-800 dark:from-gray-100 dark:via-blue-400 dark:via-teal-400 dark:to-purple-400 bg-clip-text text-transparent mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 via-teal-800 to-purple-800 dark:from-gray-100 dark:via-blue-400 dark:via-purple-400 dark:to-purple-400 bg-clip-text text-transparent mb-6">
                 Skills & Technologies
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">

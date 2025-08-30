@@ -5,6 +5,7 @@ import React from "react";
 import { AnimatedSection } from "../components/common/animated-section";
 import { RepositorySkeletonGrid } from "../components/common/repository-card-skeleton";
 import { SEOHead } from "../components/common/seo-head";
+import { SectionSEO } from "../components/common/section-seo";
 import { GitHubRepositoryCard } from "../components/projects/github-repository-card";
 import { ProjectTypeFilter } from "../components/projects/project-type-filter";
 import { RepositoryFilter } from "../components/projects/repository-filter";
@@ -12,7 +13,8 @@ import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { useGitHubRepositories } from "../hooks/queries/use-github-repositories";
 import { useRepositoryFiltering } from "../hooks/queries/use-repository-filtering";
-import { pageSEO } from "../utils/seo";
+import { pageSEO, generateProjectSEO } from "../utils/seo";
+import { generateBreadcrumbSchema } from "../utils/structured-data";
 
 export const ProjectsPage: React.FC = () => {
   // TanStack Query for repositories
@@ -100,12 +102,49 @@ export const ProjectsPage: React.FC = () => {
     }
   };
 
+  // Generate structured data for projects page
+  const structuredData = {
+    "@graph": [
+      generateBreadcrumbSchema([
+        { name: 'Home', url: '/' },
+        { name: 'Projects', url: '/projects' }
+      ]),
+      {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Tim DeHof - Projects Portfolio",
+        "description": "A collection of web development projects and open-source contributions",
+        "url": `${window.location.origin}/projects`,
+        "mainEntity": {
+          "@type": "ItemList",
+          "numberOfItems": repositories.length,
+          "itemListElement": filteredRepositories.slice(0, 10).map((repo, index) => ({
+            "@type": "SoftwareSourceCode",
+            "position": index + 1,
+            "name": repo.name,
+            "description": repo.description,
+            "url": repo.html_url,
+            "programmingLanguage": repo.language,
+            "author": {
+              "@type": "Person",
+              "name": "Tim DeHof"
+            }
+          }))
+        }
+      }
+    ]
+  };
+
   return (
     <>
-      <SEOHead seo={pageSEO.projects} />
+      <SEOHead 
+        seo={pageSEO.projects} 
+        structuredData={structuredData}
+      />
 
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-teal-900 dark:to-blue-900">
+        <SectionSEO section="portfolio" />
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
