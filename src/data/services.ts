@@ -1,4 +1,4 @@
-import { ServiceCard } from '../types';
+import type { ServiceCard } from "../types";
 
 export const services: ServiceCard[] = [
   {

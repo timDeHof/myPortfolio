@@ -1,50 +1,33 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ExternalLink, Github, Star, GitFork, Calendar, Code, Users } from 'lucide-react';
-import { Card, CardContent } from '../ui/card';
-import { Button } from '../ui/button';
-import { useGitHubRepositoryLanguages } from '../../hooks/queries/useGitHubRepositories';
-import { GitHubRepository, getTopLanguages, formatDate, getRepositoryImage } from '../../services/api/github';
+import { motion } from "framer-motion";
+import { Calendar, Code, ExternalLink, GitFork, Github, Star, Users } from "lucide-react";
+import React from "react";
 
-interface GitHubRepositoryCardProps {
+import type { GitHubRepository } from "../../services/api/github";
+
+import { useGitHubRepositoryLanguages } from "../../hooks/queries/use-github-repositories";
+import { formatDate, getRepositoryImage, getTopLanguages } from "../../services/api/github";
+import { Button } from "../ui/button";
+import { Card, CardContent } from "../ui/card";
+
+type GitHubRepositoryCardProps = {
   repository: GitHubRepository;
   index: number;
-}
+};
 
 export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = ({ repository, index }) => {
-  // Enhanced logging for card rendering
-  console.log(`🃏 GitHubRepositoryCard rendering:`, {
-    index,
-    id: repository.id,
-    name: repository.name,
-    language: repository.language,
-    stars: repository.stargazers_count,
-    fork: repository.fork
-  });
-
   // Use TanStack Query for languages
-  const { 
-    data: repoLanguages = {}, 
+  const {
+    data: repoLanguages = {},
     isLoading: loadingLanguages,
-    error: languagesError 
   } = useGitHubRepositoryLanguages(repository.languages_url);
-
-  // Log language loading state
-  console.log(`🔤 Languages for ${repository.name}:`, {
-    loading: loadingLanguages,
-    languages: repoLanguages,
-    error: languagesError?.message,
-    fallbackLanguage: repository.language
-  });
 
   const languages = getTopLanguages(repoLanguages);
   const imageUrl = getRepositoryImage(repository.name);
 
   // Fallback to repository.language if languages API fails
-  const displayLanguages = languages.length > 0 ? languages : 
-    (repository.language ? [repository.language] : []);
-
-  console.log(`🎨 Final display languages for ${repository.name}:`, displayLanguages);
+  const displayLanguages = languages.length > 0
+    ? languages
+    : (repository.language ? [repository.language] : []);
 
   return (
     <motion.div
@@ -61,7 +44,7 @@ export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = ({ repo
             className="h-48 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
             style={{ backgroundImage: `url(${imageUrl})` }}
           />
-          
+
           {/* Project Type Badge */}
           {repository.fork && (
             <div className="absolute top-3 right-3 flex items-center space-x-1 bg-orange-100 dark:bg-orange-900/50 text-orange-800 dark:text-orange-300 px-2 py-1 rounded-full text-xs font-medium border border-orange-200 dark:border-orange-700">
@@ -69,7 +52,7 @@ export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = ({ repo
               <span>Contribution</span>
             </div>
           )}
-          
+
           {!repository.fork && (
             <div className="absolute top-3 right-3 flex items-center space-x-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 px-2 py-1 rounded-full text-xs font-medium border border-blue-200 dark:border-blue-700">
               <Users className="h-3 w-3" />
@@ -77,7 +60,7 @@ export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = ({ repo
             </div>
           )}
         </div>
-        
+
         <CardContent className="p-6">
           {/* Header with title and stats */}
           <div className="flex items-start justify-between mb-3">
@@ -104,36 +87,40 @@ export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = ({ repo
               )}
             </div>
           </div>
-          
+
           {/* Description */}
           <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 min-h-[4.5rem]">
-            {repository.description || 'No description available.'}
+            {repository.description || "No description available."}
           </p>
 
           {/* Languages */}
           <div className="mb-4">
-            {loadingLanguages ? (
-              <div className="flex space-x-2">
-                <div className="h-6 w-16 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
-                <div className="h-6 w-12 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
-              </div>
-            ) : displayLanguages.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
-                {displayLanguages.map((language) => (
-                  <span
-                    key={language}
-                    className="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 text-xs rounded-full font-medium flex items-center border border-blue-200 dark:border-blue-700"
-                  >
-                    <Code className="h-3 w-3 mr-1" />
-                    {language}
-                  </span>
-                ))}
-              </div>
-            ) : (
-              <div className="text-xs text-gray-500 dark:text-gray-400">
-                No language information available
-              </div>
-            )}
+            {loadingLanguages
+              ? (
+                  <div className="flex space-x-2">
+                    <div className="h-6 w-16 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
+                    <div className="h-6 w-12 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
+                  </div>
+                )
+              : displayLanguages.length > 0
+                ? (
+                    <div className="flex flex-wrap gap-2">
+                      {displayLanguages.map(language => (
+                        <span
+                          key={language}
+                          className="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 text-xs rounded-full font-medium flex items-center border border-blue-200 dark:border-blue-700"
+                        >
+                          <Code className="h-3 w-3 mr-1" />
+                          {language}
+                        </span>
+                      ))}
+                    </div>
+                  )
+                : (
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                      No language information available
+                    </div>
+                  )}
           </div>
 
           {/* Project Type Info */}
@@ -149,7 +136,10 @@ export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = ({ repo
           {/* Last updated */}
           <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
             <Calendar className="h-4 w-4 mr-1" />
-            <span>Updated {formatDate(repository.updated_at)}</span>
+            <span>
+              Updated
+              {formatDate(repository.updated_at)}
+            </span>
           </div>
 
           {/* Action buttons */}
@@ -161,7 +151,7 @@ export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = ({ repo
                 rel="noopener noreferrer"
               >
                 <Github className="h-4 w-4 mr-2" />
-                {repository.fork ? 'View Fork' : 'Source'}
+                {repository.fork ? "View Fork" : "Source"}
               </a>
             </Button>
             {repository.homepage && (

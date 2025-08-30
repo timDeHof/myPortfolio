@@ -1,4 +1,5 @@
-import { queryClient } from '../../lib/queryClient';
+import { queryClient } from '../../lib/query-client';
+import { env } from '../../lib/env';
 
 export interface GitHubRepository {
   id: number;
@@ -25,6 +26,12 @@ export interface GitHubLanguages {
 }
 
 export interface GitHubUser {
+  createdAt: string;
+  updated_at: string;
+  location: string | undefined;
+  blog: string | undefined;
+  twitter_username: string | undefined;
+  company: string | undefined;
   login: string;
   id: number;
   name: string;
@@ -58,8 +65,8 @@ export class GitHubAPIError extends Error {
 
 // Helper function to get authentication headers
 const getAuthHeaders = (): HeadersInit => {
-  const token = import.meta.env.VITE_GITHUB_PAT;
-  
+  const token = env.VITE_GITHUB_PAT;
+
   const baseHeaders = {
     'Accept': 'application/vnd.github.v3+json',
     'X-GitHub-Api-Version': '2022-11-28',
@@ -72,14 +79,14 @@ const getAuthHeaders = (): HeadersInit => {
       'Authorization': `Bearer ${token}`,
     };
   }
-  
+
   return baseHeaders;
 };
 
 // Enhanced fetch wrapper with better error handling
 const githubFetch = async <T>(url: string): Promise<T> => {
   console.log(`🚀 GitHub API Request: ${url}`);
-  
+
   try {
     const response = await fetch(url, {
       headers: getAuthHeaders()
@@ -93,9 +100,9 @@ const githubFetch = async <T>(url: string): Promise<T> => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error(`❌ GitHub API Error Response:`, errorText);
-      
+
       let errorMessage = `GitHub API error: ${response.status} ${response.statusText}`;
-      
+
       try {
         const errorData = JSON.parse(errorText);
         errorMessage = errorData.message || errorMessage;
@@ -114,9 +121,9 @@ const githubFetch = async <T>(url: string): Promise<T> => {
     if (error instanceof GitHubAPIError) {
       throw error;
     }
-    
+
     console.error(`💥 GitHub API Network Error:`, error);
-    throw new GitHubAPIError(0, 'Network Error', url, 
+    throw new GitHubAPIError(0, 'Network Error', url,
       error instanceof Error ? error.message : 'Unknown network error'
     );
   }
@@ -133,22 +140,22 @@ export const githubAPI = {
   fetchRepositories: async (): Promise<GitHubRepository[]> => {
     const url = `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100&type=all`;
     const repositories = await githubFetch<GitHubRepository[]>(url);
-    
+
     console.log('📊 Total repositories fetched:', repositories.length);
-    
+
     // Apply filtering for public, non-archived repositories
     const filteredRepos = repositories
       .filter(repo => {
         const isPublic = !repo.private;
         const isNotArchived = !repo.archived;
-        
+
         if (!isPublic) {
           console.log(`🔒 Filtering out private repo: ${repo.name}`);
         }
         if (!isNotArchived) {
           console.log(`📦 Filtering out archived repo: ${repo.name}`);
         }
-        
+
         return isPublic && isNotArchived;
       })
       .sort((a, b) => {
@@ -194,12 +201,12 @@ export const githubCache = {
   invalidateAll: () => {
     return queryClient.invalidateQueries({ queryKey: githubKeys.all });
   },
-  
+
   // Invalidate repositories
   invalidateRepositories: () => {
     return queryClient.invalidateQueries({ queryKey: githubKeys.repositories() });
   },
-  
+
   // Prefetch repositories
   prefetchRepositories: () => {
     return queryClient.prefetchQuery({
@@ -207,7 +214,7 @@ export const githubCache = {
       queryFn: githubAPI.fetchRepositories,
     });
   },
-  
+
   // Get cached repositories
   getCachedRepositories: (): GitHubRepository[] | undefined => {
     return queryClient.getQueryData(githubKeys.repositories());
@@ -219,7 +226,7 @@ export const getTopLanguages = (languages: GitHubLanguages): string[] => {
   const sortedLanguages = Object.entries(languages)
     .sort(([, a], [, b]) => b - a)
     .map(([language]) => language);
-  
+
   return sortedLanguages.slice(0, 3);
 };
 

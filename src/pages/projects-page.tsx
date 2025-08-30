@@ -1,17 +1,18 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { RefreshCw, AlertCircle, Github, Loader } from 'lucide-react';
-import { SEOHead } from '../components/common/SEOHead';
-import { AnimatedSection } from '../components/common/AnimatedSection';
-import { RepositorySkeletonGrid } from '../components/common/RepositoryCardSkeleton';
-import { Button } from '../components/ui/button';
-import { Card, CardContent } from '../components/ui/card';
-import { GitHubRepositoryCard } from '../components/projects/GitHubRepositoryCard';
-import { RepositoryFilter } from '../components/projects/RepositoryFilter';
-import { ProjectTypeFilter } from '../components/projects/ProjectTypeFilter';
-import { useGitHubRepositories } from '../hooks/queries/useGitHubRepositories';
-import { useRepositoryFiltering } from '../hooks/queries/useRepositoryFiltering';
-import { pageSEO } from '../utils/seo';
+import { motion } from "framer-motion";
+import { AlertCircle, Github, Loader, RefreshCw } from "lucide-react";
+import React from "react";
+
+import { AnimatedSection } from "../components/common/animated-section";
+import { RepositorySkeletonGrid } from "../components/common/repository-card-skeleton";
+import { SEOHead } from "../components/common/seo-head";
+import { GitHubRepositoryCard } from "../components/projects/github-repository-card";
+import { ProjectTypeFilter } from "../components/projects/project-type-filter";
+import { RepositoryFilter } from "../components/projects/repository-filter";
+import { Button } from "../components/ui/button";
+import { Card, CardContent } from "../components/ui/card";
+import { useGitHubRepositories } from "../hooks/queries/use-github-repositories";
+import { useRepositoryFiltering } from "../hooks/queries/use-repository-filtering";
+import { pageSEO } from "../utils/seo";
 
 export const ProjectsPage: React.FC = () => {
   // TanStack Query for repositories
@@ -21,7 +22,7 @@ export const ProjectsPage: React.FC = () => {
     error,
     isError,
     isFetching,
-    refetch
+    refetch,
   } = useGitHubRepositories();
 
   // Repository filtering with project type support
@@ -32,27 +33,17 @@ export const ProjectsPage: React.FC = () => {
     filteredRepositories,
     handleLanguageChange,
     handleProjectTypeChange,
-    stats
+    stats,
   } = useRepositoryFiltering({ repositories });
 
-  console.log('🎯 ProjectsPage State:', {
-    repositoriesLoaded: repositories.length,
-    filteredCount: filteredRepositories.length,
-    selectedLanguage,
-    selectedProjectType,
-    isLoading,
-    isError
-  });
-
   const handleRefresh = async () => {
-    console.log('🔄 Manual refresh triggered');
     await refetch();
   };
 
   // Error state
   if (isError && !repositories.length) {
-    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch repositories';
-    
+    const errorMessage = error instanceof Error ? error.message : "Failed to fetch repositories";
+
     return (
       <>
         <SEOHead seo={pageSEO.projects} />
@@ -89,30 +80,30 @@ export const ProjectsPage: React.FC = () => {
 
   const getProjectTypeTitle = () => {
     switch (selectedProjectType) {
-      case 'personal':
-        return 'Personal Projects';
-      case 'contributions':
-        return 'Contributions';
+      case "personal":
+        return "Personal Projects";
+      case "contributions":
+        return "Contributions";
       default:
-        return 'All Projects';
+        return "All Projects";
     }
   };
 
   const getProjectTypeDescription = () => {
     switch (selectedProjectType) {
-      case 'personal':
-        return 'Original projects I created from scratch';
-      case 'contributions':
-        return 'Projects I forked and contributed to';
+      case "personal":
+        return "Original projects I created from scratch";
+      case "contributions":
+        return "Projects I forked and contributed to";
       default:
-        return 'A mix of personal projects and contributions';
+        return "A mix of personal projects and contributions";
     }
   };
 
   return (
     <>
       <SEOHead seo={pageSEO.projects} />
-      
+
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-teal-900 dark:to-blue-900">
         <div className="container mx-auto px-4">
@@ -136,17 +127,31 @@ export const ProjectsPage: React.FC = () => {
               Each project represents a step in my continuous learning and growth as a developer.
             </p>
             <div className="flex items-center justify-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-              {isLoading ? (
-                <span>Loading repositories...</span>
-              ) : (
-                <>
-                  <span>{stats.total} total repositories</span>
-                  <span>•</span>
-                  <span className="text-teal-700 dark:text-teal-400 font-medium">{stats.personal} personal projects</span>
-                  <span>•</span>
-                  <span>{stats.contributions} contributions</span>
-                </>
-              )}
+              {isLoading
+                ? (
+                    <span>Loading repositories...</span>
+                  )
+                : (
+                    <>
+                      <span>
+                        {stats.total}
+                        {" "}
+                        total repositories
+                      </span>
+                      <span>•</span>
+                      <span className="text-teal-700 dark:text-teal-400 font-medium">
+                        {stats.personal}
+                        {" "}
+                        personal projects
+                      </span>
+                      <span>•</span>
+                      <span>
+                        {stats.contributions}
+                        {" "}
+                        contributions
+                      </span>
+                    </>
+                  )}
               <Button
                 variant="outline"
                 size="sm"
@@ -154,7 +159,7 @@ export const ProjectsPage: React.FC = () => {
                 disabled={isFetching}
                 className="ml-4 border-teal-700 dark:border-teal-400 text-teal-700 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
               >
-                <RefreshCw className={`h-4 w-4 mr-2 ${isFetching ? 'animate-spin' : ''}`} />
+                <RefreshCw className={`h-4 w-4 mr-2 ${isFetching ? "animate-spin" : ""}`} />
                 Refresh
               </Button>
             </div>
@@ -170,7 +175,7 @@ export const ProjectsPage: React.FC = () => {
           stats={{
             total: stats.total,
             personal: stats.personal,
-            contributions: stats.contributions
+            contributions: stats.contributions,
           }}
         />
       )}
@@ -178,7 +183,7 @@ export const ProjectsPage: React.FC = () => {
       {/* Language Filter - Only show when data is loaded and languages are available */}
       {!isLoading && availableLanguages.length > 0 && (
         <RepositoryFilter
-          languages={availableLanguages}
+          languages={availableLanguages.filter((lang): lang is string => lang !== null)}
           selectedLanguage={selectedLanguage}
           onLanguageChange={handleLanguageChange}
         />
@@ -208,8 +213,18 @@ export const ProjectsPage: React.FC = () => {
                   {getProjectTypeDescription()}
                 </p>
                 <p className="text-lg text-gray-700 dark:text-gray-300">
-                  Showing <strong className="text-teal-700 dark:text-teal-400">{stats.filtered}</strong> repositories
-                  {selectedLanguage !== 'All' && <span> for <strong className="text-teal-700 dark:text-teal-400">{selectedLanguage}</strong></span>}
+                  Showing
+                  {" "}
+                  <strong className="text-teal-700 dark:text-teal-400">{stats.filtered}</strong>
+                  {" "}
+                  repositories
+                  {selectedLanguage !== "All" && (
+                    <span>
+                      {" "}
+                      for
+                      <strong className="text-teal-700 dark:text-teal-400">{selectedLanguage}</strong>
+                    </span>
+                  )}
                 </p>
               </div>
 
@@ -229,26 +244,29 @@ export const ProjectsPage: React.FC = () => {
                 <div className="text-center py-12">
                   <Github className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                    No {selectedLanguage !== 'All' ? selectedLanguage : ''} repositories found
+                    No
+                    {" "}
+                    {selectedLanguage !== "All" ? selectedLanguage : ""}
+                    {" "}
+                    repositories found
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400 mb-6">
-                    {selectedProjectType === 'personal' 
+                    {selectedProjectType === "personal"
                       ? "No personal projects found for the selected criteria."
-                      : selectedProjectType === 'contributions'
-                      ? "No contributions found for the selected criteria."
-                      : "No repositories found for the selected filters."
-                    }
+                      : selectedProjectType === "contributions"
+                        ? "No contributions found for the selected criteria."
+                        : "No repositories found for the selected filters."}
                   </p>
                   <div className="space-y-3">
-                    <Button 
-                      onClick={() => handleLanguageChange('All')}
+                    <Button
+                      onClick={() => handleLanguageChange("All")}
                       className="bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white"
                     >
                       Show All Languages
                     </Button>
-                    <Button 
-                      variant="outline" 
-                      onClick={() => handleProjectTypeChange('all')}
+                    <Button
+                      variant="outline"
+                      onClick={() => handleProjectTypeChange("all")}
                       className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                     >
                       Show All Project Types
@@ -266,7 +284,7 @@ export const ProjectsPage: React.FC = () => {
                     We couldn't find any public repositories. This might be due to API issues or configuration problems.
                   </p>
                   <div className="space-x-4">
-                    <Button 
+                    <Button
                       onClick={handleRefresh}
                       className="bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white"
                     >

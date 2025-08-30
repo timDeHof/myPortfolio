@@ -1,39 +1,29 @@
-import { useMemo, useState, useCallback } from 'react';
-import { GitHubRepository } from '../../services/api/github';
+import { useCallback, useMemo, useState } from "react";
 
-export type ProjectType = 'all' | 'personal' | 'contributions';
+import type { GitHubRepository } from "../../services/api/github";
 
-interface UseRepositoryFilteringOptions {
+export type ProjectType = "all" | "personal" | "contributions";
+
+type UseRepositoryFilteringOptions = {
   repositories: GitHubRepository[];
-}
+};
 
-export const useRepositoryFiltering = ({ repositories }: UseRepositoryFilteringOptions) => {
-  const [selectedLanguage, setSelectedLanguage] = useState<string>('All');
-  const [selectedProjectType, setSelectedProjectType] = useState<ProjectType>('all');
-
-  console.log('🎯 useRepositoryFiltering:', {
-    repositoriesCount: repositories.length,
-    selectedLanguage,
-    selectedProjectType
-  });
+export function useRepositoryFiltering({ repositories }: UseRepositoryFilteringOptions) {
+  const [selectedLanguage, setSelectedLanguage] = useState<string>("All");
+  const [selectedProjectType, setSelectedProjectType] = useState<ProjectType>("all");
 
   // Categorize repositories by type
   const categorizedRepositories = useMemo(() => {
     const personal: GitHubRepository[] = [];
     const contributions: GitHubRepository[] = [];
 
-    repositories.forEach(repo => {
+    repositories.forEach((repo) => {
       if (repo.fork) {
         contributions.push(repo);
-      } else {
+      }
+      else {
         personal.push(repo);
       }
-    });
-
-    console.log('📊 Repository categories:', {
-      total: repositories.length,
-      personal: personal.length,
-      contributions: contributions.length
     });
 
     return { personal, contributions };
@@ -42,9 +32,9 @@ export const useRepositoryFiltering = ({ repositories }: UseRepositoryFilteringO
   // Get repositories based on selected project type
   const repositoriesByType = useMemo(() => {
     switch (selectedProjectType) {
-      case 'personal':
+      case "personal":
         return categorizedRepositories.personal;
-      case 'contributions':
+      case "contributions":
         return categorizedRepositories.contributions;
       default:
         return repositories;
@@ -53,54 +43,47 @@ export const useRepositoryFiltering = ({ repositories }: UseRepositoryFilteringO
 
   // Extract unique languages from filtered repositories
   const availableLanguages = useMemo(() => {
-    if (repositoriesByType.length === 0) return [];
-    
+    if (repositoriesByType.length === 0)
+      return [];
+
     const languages = [...new Set(
       repositoriesByType
         .map(repo => repo.language)
-        .filter(Boolean)
+        .filter(Boolean),
     )].sort();
-    
-    console.log('🔤 Available languages for', selectedProjectType, ':', languages);
+
     return languages;
-  }, [repositoriesByType, selectedProjectType]);
+  }, [repositoriesByType]);
 
   // Filter repositories by language
   const filteredRepositories = useMemo(() => {
-    console.log('🔍 Filtering repositories:', {
-      type: selectedProjectType,
-      total: repositoriesByType.length,
-      selectedLanguage
-    });
 
     if (repositoriesByType.length === 0) {
       return [];
     }
 
-    if (selectedLanguage === 'All') {
+    if (selectedLanguage === "All") {
       return repositoriesByType;
     }
 
     const filtered = repositoriesByType.filter(repo => repo.language === selectedLanguage);
-    console.log(`🎯 Filtered for "${selectedLanguage}" in ${selectedProjectType}:`, filtered.length);
     return filtered;
-  }, [repositoriesByType, selectedLanguage, selectedProjectType]);
+  }, [repositoriesByType, selectedLanguage]);
 
   const handleLanguageChange = useCallback((language: string) => {
-    console.log(`🔄 Changing language filter: "${selectedLanguage}" → "${language}"`);
+
     setSelectedLanguage(language);
-  }, [selectedLanguage]);
+  }, []);
 
   const handleProjectTypeChange = useCallback((type: ProjectType) => {
-    console.log(`🔄 Changing project type: "${selectedProjectType}" → "${type}"`);
     setSelectedProjectType(type);
     // Reset language filter when changing project type
-    setSelectedLanguage('All');
-  }, [selectedProjectType]);
+    setSelectedLanguage("All");
+  }, []);
 
   const resetFilters = useCallback(() => {
-    setSelectedLanguage('All');
-    setSelectedProjectType('all');
+    setSelectedLanguage("All");
+    setSelectedProjectType("all");
   }, []);
 
   return {
@@ -117,7 +100,7 @@ export const useRepositoryFiltering = ({ repositories }: UseRepositoryFilteringO
       personal: categorizedRepositories.personal.length,
       contributions: categorizedRepositories.contributions.length,
       filtered: filteredRepositories.length,
-      languages: availableLanguages.length
-    }
+      languages: availableLanguages.length,
+    },
   };
-};
+}

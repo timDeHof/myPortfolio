@@ -1,12 +1,13 @@
-import { useState, useCallback } from 'react';
-import { useAppStore } from '../store/useAppStore';
+import { useCallback, useState } from "react";
 
-interface UseApiOptions {
+import { useAppStore } from "../store/useAppStore";
+
+type UseApiOptions = {
   onSuccess?: (data: any) => void;
   onError?: (error: string) => void;
-}
+};
 
-export const useApi = <T = any>(options: UseApiOptions = {}) => {
+export function useApi<T = any>(options: UseApiOptions = {}) {
   const [data, setData] = useState<T | null>(null);
   const { setLoading, setError } = useAppStore();
 
@@ -18,15 +19,17 @@ export const useApi = <T = any>(options: UseApiOptions = {}) => {
       setData(result);
       options.onSuccess?.(result);
       return result;
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+    }
+    catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "An error occurred";
       setError(errorMessage);
       options.onError?.(errorMessage);
       throw error;
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   }, [setLoading, setError, options]);
 
   return { data, execute };
-};
+}

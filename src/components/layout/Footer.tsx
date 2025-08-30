@@ -1,41 +1,42 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowUpIcon, GithubIcon, LinkedinIcon, TwitterIcon, ExternalLink } from 'lucide-react';
-import { Separator } from '../ui/separator';
-import { Button } from '../ui/button';
+import { ArrowUpIcon, ExternalLink, GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
+import React from "react";
+import { Link } from "react-router-dom";
+
+import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
 
 const socialLinks = [
   {
     icon: <TwitterIcon className="h-6 w-6" />,
     href: "https://twitter.com/timdehof",
     label: "Twitter",
-    color: "hover:text-blue-400"
+    color: "hover:text-blue-400",
   },
   {
     icon: <LinkedinIcon className="h-6 w-6" />,
     href: "https://www.linkedin.com/in/timothy-dehof/",
     label: "LinkedIn",
-    color: "hover:text-blue-500"
+    color: "hover:text-blue-500",
   },
   {
     icon: <GithubIcon className="h-6 w-6" />,
     href: "https://github.com/timDeHof",
     label: "GitHub",
-    color: "hover:text-teal-400"
+    color: "hover:text-teal-400",
   },
 ];
 
 const footerLinks = [
-  { path: '/', label: 'Home', color: 'hover:text-blue-400' },
-  { path: '/about', label: 'About', color: 'hover:text-teal-400' },
-  { path: '/projects', label: 'Projects', color: 'hover:text-teal-400' },
-  { path: '/services', label: 'Services', color: 'hover:text-purple-400' },
-  { path: '/contact', label: 'Contact', color: 'hover:text-blue-400' },
+  { path: "/", label: "Home", color: "hover:text-blue-400" },
+  { path: "/about", label: "About", color: "hover:text-teal-400" },
+  { path: "/projects", label: "Projects", color: "hover:text-teal-400" },
+  { path: "/services", label: "Services", color: "hover:text-purple-400" },
+  { path: "/contact", label: "Contact", color: "hover:text-blue-400" },
 ];
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -52,9 +53,9 @@ export const Footer: React.FC = () => {
               with modern technologies and best practices.
             </p>
             <div className="mb-6">
-              <a 
-                href="https://blog.timdehof.dev/" 
-                target="_blank" 
+              <a
+                href="https://blog.timdehof.dev/"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-teal-400 hover:text-teal-300 transition-colors inline-flex items-center text-sm"
               >
@@ -63,9 +64,9 @@ export const Footer: React.FC = () => {
               </a>
             </div>
             <div className="flex justify-center md:justify-start space-x-4">
-              {socialLinks.map((link, index) => (
+              {socialLinks.map(link => (
                 <a
-                  key={index}
+                  key={link.label}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -81,10 +82,10 @@ export const Footer: React.FC = () => {
           {/* Quick Links - Enhanced Mobile Design */}
           <div className="text-center md:text-left">
             <h4 className="text-lg font-semibold mb-6 text-white">Quick Links</h4>
-            
+
             {/* Mobile: Enhanced grid layout */}
             <div className="grid grid-cols-2 gap-3 md:block md:space-y-3">
-              {footerLinks.map((link) => (
+              {footerLinks.map(link => (
                 <Link
                   key={link.path}
                   to={link.path}
@@ -112,10 +113,15 @@ export const Footer: React.FC = () => {
 
         <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
           <p className="text-gray-300 text-sm text-center md:text-left">
-            © {new Date().getFullYear()} Tim DeHof. All rights reserved.
+            ©
+            {" "}
+            {new Date().getFullYear()}
+            {" "}
+            Tim DeHof. All rights reserved.
           </p>
-          
+
           <button
+            type="button"
             onClick={scrollToTop}
             className="flex items-center space-x-2 text-gray-300 hover:text-teal-400 transition-all duration-300 py-2 px-4 rounded-lg hover:bg-gray-800 group"
             aria-label="Back to top"

@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Home, User, Briefcase, Settings, Mail } from 'lucide-react';
-import { ThemeToggle } from '../common/ThemeToggle';
+import { AnimatePresence, motion } from "framer-motion";
+import { Briefcase, Home, Mail, Menu, Settings, User, X } from "lucide-react";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+
+import { ThemeToggle } from "../common/theme-toggle";
 
 const navItems = [
-  { path: '/', label: 'Home', icon: <Home className="h-4 w-4" /> },
-  { path: '/about', label: 'About', icon: <User className="h-4 w-4" /> },
-  { path: '/projects', label: 'Projects', icon: <Briefcase className="h-4 w-4" /> },
-  { path: '/services', label: 'Services', icon: <Settings className="h-4 w-4" /> },
-  { path: '/contact', label: 'Contact', icon: <Mail className="h-4 w-4" /> },
+  { path: "/", label: "Home", icon: <Home className="h-4 w-4" /> },
+  { path: "/about", label: "About", icon: <User className="h-4 w-4" /> },
+  { path: "/projects", label: "Projects", icon: <Briefcase className="h-4 w-4" /> },
+  { path: "/services", label: "Services", icon: <Settings className="h-4 w-4" /> },
+  { path: "/contact", label: "Contact", icon: <Mail className="h-4 w-4" /> },
 ];
 
 export const Navigation: React.FC = () => {
@@ -32,14 +33,14 @@ export const Navigation: React.FC = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
+            {navItems.map(item => (
               <Link
                 key={item.path}
                 to={item.path}
                 className={`relative px-3 py-2 text-sm font-medium transition-colors ${
                   location.pathname === item.path
-                    ? 'text-teal-700 dark:text-teal-400'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-400'
+                    ? "text-teal-700 dark:text-teal-400"
+                    : "text-gray-700 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-400"
                 }`}
               >
                 {item.label}
@@ -48,12 +49,12 @@ export const Navigation: React.FC = () => {
                     layoutId="activeTab"
                     className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-700 dark:bg-teal-400"
                     initial={false}
-                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
                   />
                 )}
               </Link>
             ))}
-            
+
             {/* Theme Toggle */}
             <ThemeToggle />
           </div>
@@ -62,6 +63,7 @@ export const Navigation: React.FC = () => {
           <div className="md:hidden flex items-center space-x-2">
             <ThemeToggle />
             <button
+              type="button"
               onClick={toggleMenu}
               className="p-2 text-gray-700 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-400 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
               aria-label="Toggle menu"
@@ -76,21 +78,21 @@ export const Navigation: React.FC = () => {
           {isOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
               className="md:hidden border-t border-gray-200 dark:border-gray-700"
             >
               <div className="py-4 space-y-2">
-                {navItems.map((item) => (
+                {navItems.map(item => (
                   <Link
                     key={item.path}
                     to={item.path}
                     onClick={() => setIsOpen(false)}
                     className={`flex items-center space-x-3 px-4 py-3 text-sm font-medium transition-colors rounded-lg ${
                       location.pathname === item.path
-                        ? 'text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/20'
-                        : 'text-gray-700 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+                        ? "text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/20"
+                        : "text-gray-700 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-400 hover:bg-gray-50 dark:hover:bg-gray-800"
                     }`}
                   >
                     {item.icon}

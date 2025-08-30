@@ -1,21 +1,22 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import { 
-  Code, 
-  Palette, 
-  Zap, 
-  CheckCircle, 
-  ArrowRight, 
-  Target,
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  CheckCircle,
+  Code,
+  Coffee,
   Lightbulb,
+  Palette,
   Rocket,
+  Target,
   Users,
-  Coffee
-} from 'lucide-react';
-import { AnimatedSection } from '../common/AnimatedSection';
-import { Card, CardContent } from '../ui/card';
-import { Button } from '../ui/button';
+  Zap,
+} from "lucide-react";
+import React from "react";
+import { Link } from "react-router-dom";
+
+import { AnimatedSection } from "../common/animated-section";
+import { Button } from "../ui/button";
+import { Card, CardContent } from "../ui/card";
 
 const services = [
   {
@@ -26,17 +27,17 @@ const services = [
     color: "from-blue-700 to-cyan-700 dark:from-blue-400 dark:to-cyan-400",
     benefits: [
       "Custom React/TypeScript applications",
-      "Scalable Node.js backend architecture", 
+      "Scalable Node.js backend architecture",
       "Database design & optimization",
       "RESTful API development",
-      "Third-party integrations"
+      "Third-party integrations",
     ],
     process: [
       "Requirements analysis",
       "Technical architecture",
       "Development & testing",
-      "Deployment & monitoring"
-    ]
+      "Deployment & monitoring",
+    ],
   },
   {
     id: 2,
@@ -49,14 +50,14 @@ const services = [
       "WCAG AA accessibility compliance",
       "Modern design systems",
       "User experience optimization",
-      "Performance-focused implementation"
+      "Performance-focused implementation",
     ],
     process: [
       "User research & wireframes",
       "Design system creation",
       "Interactive prototyping",
-      "Development & testing"
-    ]
+      "Development & testing",
+    ],
   },
   {
     id: 3,
@@ -69,15 +70,15 @@ const services = [
       "SEO-friendly architecture",
       "Efficient caching strategies",
       "Bundle size optimization",
-      "Continuous performance monitoring"
+      "Continuous performance monitoring",
     ],
     process: [
       "Performance audit",
       "Optimization strategy",
       "Implementation & testing",
-      "Monitoring & maintenance"
-    ]
-  }
+      "Monitoring & maintenance",
+    ],
+  },
 ];
 
 const philosophy = [
@@ -86,35 +87,35 @@ const philosophy = [
     title: "Discovery",
     description: "Understanding your business goals, target audience, and technical requirements",
     icon: <Target className="h-6 w-6" />,
-    color: "bg-blue-700 dark:bg-blue-600"
+    color: "bg-blue-700 dark:bg-blue-600",
   },
   {
-    phase: "02", 
+    phase: "02",
     title: "Design",
     description: "Creating user-centered designs and technical architecture for optimal results",
     icon: <Lightbulb className="h-6 w-6" />,
-    color: "bg-purple-700 dark:bg-purple-600"
+    color: "bg-purple-700 dark:bg-purple-600",
   },
   {
     phase: "03",
     title: "Development",
     description: "Building your solution with clean, maintainable code and modern best practices",
     icon: <Code className="h-6 w-6" />,
-    color: "bg-teal-700 dark:bg-teal-600"
+    color: "bg-teal-700 dark:bg-teal-600",
   },
   {
     phase: "04",
     title: "Deployment",
     description: "Launching your application with proper testing, monitoring, and ongoing support",
     icon: <Rocket className="h-6 w-6" />,
-    color: "bg-orange-700 dark:bg-orange-600"
-  }
+    color: "bg-orange-700 dark:bg-orange-600",
+  },
 ];
 
 export const ServicesSection: React.FC = () => {
   return (
-    <AnimatedSection 
-      id="services-section" 
+    <AnimatedSection
+      id="services-section"
       className="py-20 bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/30 dark:from-slate-800 dark:via-blue-900/30 dark:to-teal-900/30"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -130,7 +131,7 @@ export const ServicesSection: React.FC = () => {
             What I Do Best
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Combining engineering precision with creative problem-solving to deliver 
+            Combining engineering precision with creative problem-solving to deliver
             exceptional web solutions that drive business growth.
           </p>
         </motion.div>
@@ -144,11 +145,11 @@ export const ServicesSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
               viewport={{ once: true }}
-              whileHover={{ 
-                scale: 1.02, 
+              whileHover={{
+                scale: 1.02,
                 y: -10,
                 rotateY: 5,
-                transition: { duration: 0.3 }
+                transition: { duration: 0.3 },
               }}
               className="group h-full"
             >
@@ -161,21 +162,21 @@ export const ServicesSection: React.FC = () => {
                   >
                     {service.icon}
                   </motion.div>
-                  
+
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                     {service.title}
                   </h3>
                   <p className="text-gray-700 dark:text-gray-300 mb-6">
                     {service.description}
                   </p>
-                  
+
                   {/* Benefits list */}
                   <div className="mb-6">
                     <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">What You Get:</h4>
                     <ul className="space-y-2">
                       {service.benefits.map((benefit, i) => (
-                        <motion.li 
-                          key={i}
+                        <motion.li
+                          key={benefit}
                           initial={{ opacity: 0, x: -20 }}
                           whileInView={{ opacity: 1, x: 0 }}
                           transition={{ duration: 0.5, delay: (index * 0.2) + (i * 0.1) }}
@@ -188,14 +189,14 @@ export const ServicesSection: React.FC = () => {
                       ))}
                     </ul>
                   </div>
-                  
+
                   {/* Process steps */}
                   <div className="mb-6">
                     <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Process:</h4>
                     <div className="space-y-2">
                       {service.process.map((step, i) => (
-                        <motion.div 
-                          key={i}
+                        <motion.div
+                          key={step}
                           initial={{ opacity: 0, scale: 0.8 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           transition={{ duration: 0.4, delay: (index * 0.2) + (i * 0.1) }}
@@ -219,9 +220,9 @@ export const ServicesSection: React.FC = () => {
                     transition={{ duration: 0.3 }}
                     className="absolute bottom-6 left-6 right-6 opacity-0 group-hover:opacity-100"
                   >
-                    <Button 
-                      asChild 
-                      size="sm" 
+                    <Button
+                      asChild
+                      size="sm"
                       className={`w-full bg-gradient-to-r ${service.color} text-white hover:shadow-lg transition-all duration-300`}
                     >
                       <Link to="/contact">
@@ -256,15 +257,15 @@ export const ServicesSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {philosophy.map((phase, index) => (
               <motion.div
-                key={index}
+                key={phase.title}
                 initial={{ opacity: 0, y: 30, scale: 0.9 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ 
-                  scale: 1.05, 
+                whileHover={{
+                  scale: 1.05,
                   y: -5,
-                  transition: { duration: 0.3 }
+                  transition: { duration: 0.3 },
                 }}
                 className="relative group"
               >
@@ -274,7 +275,7 @@ export const ServicesSection: React.FC = () => {
                     {index < philosophy.length - 1 && (
                       <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-0.5 bg-gradient-to-r from-gray-300 to-transparent dark:from-gray-600 dark:to-transparent transform -translate-y-1/2 z-10" />
                     )}
-                    
+
                     {/* Phase number */}
                     <motion.div
                       className={`w-12 h-12 ${phase.color} text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}
@@ -282,12 +283,12 @@ export const ServicesSection: React.FC = () => {
                     >
                       {phase.phase}
                     </motion.div>
-                    
+
                     {/* Phase icon overlay */}
                     <div className="absolute top-4 right-4 w-8 h-8 bg-gradient-to-br from-blue-600 to-teal-600 dark:from-blue-400 dark:to-teal-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       {phase.icon}
                     </div>
-                    
+
                     <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-colors">
                       {phase.title}
                     </h4>
@@ -312,10 +313,10 @@ export const ServicesSection: React.FC = () => {
               <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">
                 Ready to Build Something Amazing?
               </h3>
-              
+
               {/* Value metrics */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <motion.div 
+                <motion.div
                   className="text-center"
                   whileHover={{ scale: 1.05 }}
                 >
@@ -324,7 +325,7 @@ export const ServicesSection: React.FC = () => {
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">Custom Solutions</div>
                 </motion.div>
-                <motion.div 
+                <motion.div
                   className="text-center"
                   whileHover={{ scale: 1.05 }}
                 >
@@ -333,7 +334,7 @@ export const ServicesSection: React.FC = () => {
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">Response Time</div>
                 </motion.div>
-                <motion.div 
+                <motion.div
                   className="text-center"
                   whileHover={{ scale: 1.05 }}
                 >

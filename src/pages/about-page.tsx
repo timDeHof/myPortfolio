@@ -1,137 +1,138 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
-import { SEOHead } from '../components/common/SEOHead';
-import { AnimatedSection } from '../components/common/AnimatedSection';
-import { Card, CardContent } from '../components/ui/card';
-import { 
-  ReactIcon, 
-  TypeScriptIcon, 
-  NextJSIcon, 
-  TailwindIcon, 
-  FramerIcon,
-  NodeJSIcon,
-  ExpressIcon,
-  PostgreSQLIcon,
-  MongoDBIcon,
+import { motion } from "framer-motion";
+import { ExternalLink } from "lucide-react";
+import React from "react";
+
+import { AnimatedSection } from "../components/common/animated-section";
+import { SEOHead } from "../components/common/seo-head";
+import {
   APIIcon,
-  GitIcon,
-  DockerIcon,
   AWSIcon,
-  VercelIcon,
+  DockerIcon,
+  ExpressIcon,
   FigmaIcon,
-  PrintingIcon,
+  FramerIcon,
+  GitIcon,
   MechanicalIcon,
+  MongoDBIcon,
+  NextJSIcon,
+  NodeJSIcon,
+  PostgreSQLIcon,
+  PrintingIcon,
   PuzzleIcon,
+  ReactIcon,
+  SystemIcon,
+  TailwindIcon,
   TeamIcon,
-  SystemIcon
-} from '../components/common/TechnologyIcons';
-import { pageSEO } from '../utils/seo';
+  TypeScriptIcon,
+  VercelIcon,
+} from "../components/common/technology-icons";
+import { Card, CardContent } from "../components/ui/card";
+import { pageSEO } from "../utils/seo";
 
 // Enhanced skills with actual technology icons (removed proficiency)
 const skillCategories = [
   {
-    category: 'Frontend Development',
-    icon: '🎨',
-    color: 'from-blue-700 to-cyan-700 dark:from-blue-400 dark:to-cyan-400',
+    category: "Frontend Development",
+    icon: "🎨",
+    color: "from-blue-700 to-cyan-700 dark:from-blue-400 dark:to-cyan-400",
     skills: [
-      { name: 'React', icon: ReactIcon, color: '#61DAFB' },
-      { name: 'TypeScript', icon: TypeScriptIcon, color: '#3178C6' },
-      { name: 'Next.js', icon: NextJSIcon, color: '#000000' },
-      { name: 'Tailwind CSS', icon: TailwindIcon, color: '#06B6D4' },
-      { name: 'Framer Motion', icon: FramerIcon, color: '#FF3366' },
+      { name: "React", icon: ReactIcon, color: "#61DAFB" },
+      { name: "TypeScript", icon: TypeScriptIcon, color: "#3178C6" },
+      { name: "Next.js", icon: NextJSIcon, color: "#000000" },
+      { name: "Tailwind CSS", icon: TailwindIcon, color: "#06B6D4" },
+      { name: "Framer Motion", icon: FramerIcon, color: "#FF3366" },
     ],
   },
   {
-    category: 'Backend Development',
-    icon: '⚙️',
-    color: 'from-teal-700 to-emerald-700 dark:from-teal-400 dark:to-emerald-400',
+    category: "Backend Development",
+    icon: "⚙️",
+    color: "from-teal-700 to-emerald-700 dark:from-teal-400 dark:to-emerald-400",
     skills: [
-      { name: 'Node.js', icon: NodeJSIcon, color: '#339933' },
-      { name: 'Express', icon: ExpressIcon, color: '#000000' },
-      { name: 'PostgreSQL', icon: PostgreSQLIcon, color: '#336791' },
-      { name: 'MongoDB', icon: MongoDBIcon, color: '#47A248' },
-      { name: 'REST APIs', icon: APIIcon, color: '#FF6B35' },
+      { name: "Node.js", icon: NodeJSIcon, color: "#339933" },
+      { name: "Express", icon: ExpressIcon, color: "#000000" },
+      { name: "PostgreSQL", icon: PostgreSQLIcon, color: "#336791" },
+      { name: "MongoDB", icon: MongoDBIcon, color: "#47A248" },
+      { name: "REST APIs", icon: APIIcon, color: "#FF6B35" },
     ],
   },
   {
-    category: 'Development Tools',
-    icon: '🛠️',
-    color: 'from-purple-700 to-pink-700 dark:from-purple-400 dark:to-pink-400',
+    category: "Development Tools",
+    icon: "🛠️",
+    color: "from-purple-700 to-pink-700 dark:from-purple-400 dark:to-pink-400",
     skills: [
-      { name: 'Git', icon: GitIcon, color: '#F05032' },
-      { name: 'Docker', icon: DockerIcon, color: '#2496ED' },
-      { name: 'AWS', icon: AWSIcon, color: '#FF9900' },
-      { name: 'Vercel', icon: VercelIcon, color: '#000000' },
-      { name: 'Figma', icon: FigmaIcon, color: '#F24E1E' },
+      { name: "Git", icon: GitIcon, color: "#F05032" },
+      { name: "Docker", icon: DockerIcon, color: "#2496ED" },
+      { name: "AWS", icon: AWSIcon, color: "#FF9900" },
+      { name: "Vercel", icon: VercelIcon, color: "#000000" },
+      { name: "Figma", icon: FigmaIcon, color: "#F24E1E" },
     ],
   },
   {
-    category: 'Engineering & Innovation',
-    icon: '🔧',
-    color: 'from-orange-700 to-red-700 dark:from-orange-400 dark:to-red-400',
+    category: "Engineering & Innovation",
+    icon: "🔧",
+    color: "from-orange-700 to-red-700 dark:from-orange-400 dark:to-red-400",
     skills: [
-      { name: '3D Printing', icon: PrintingIcon, color: '#FF6B35' },
-      { name: 'Mechanical Engineering', icon: MechanicalIcon, color: '#4A90E2' },
-      { name: 'Problem Solving', icon: PuzzleIcon, color: '#8E44AD' },
-      { name: 'Team Leadership', icon: TeamIcon, color: '#E74C3C' },
-      { name: 'System Design', icon: SystemIcon, color: '#2ECC71' },
+      { name: "3D Printing", icon: PrintingIcon, color: "#FF6B35" },
+      { name: "Mechanical Engineering", icon: MechanicalIcon, color: "#4A90E2" },
+      { name: "Problem Solving", icon: PuzzleIcon, color: "#8E44AD" },
+      { name: "Team Leadership", icon: TeamIcon, color: "#E74C3C" },
+      { name: "System Design", icon: SystemIcon, color: "#2ECC71" },
     ],
   },
 ];
 
 const timeline = [
   {
-    year: '2023',
-    title: 'Full-Stack Developer',
-    description: 'Focusing on modern web technologies and building scalable applications.',
-    icon: '💻',
-    color: 'bg-blue-700 dark:bg-blue-600',
+    year: "2023",
+    title: "Full-Stack Developer",
+    description: "Focusing on modern web technologies and building scalable applications.",
+    icon: "💻",
+    color: "bg-blue-700 dark:bg-blue-600",
   },
   {
-    year: '2022',
-    title: 'Career Transition',
-    description: 'Completed intensive web development bootcamp and started building projects.',
-    icon: '🎓',
-    color: 'bg-teal-700 dark:bg-teal-600',
+    year: "2022",
+    title: "Career Transition",
+    description: "Completed intensive web development bootcamp and started building projects.",
+    icon: "🎓",
+    color: "bg-teal-700 dark:bg-teal-600",
   },
   {
-    year: '2015-2022',
-    title: 'Mechanical Engineer',
-    description: 'Worked in manufacturing and 3D printing, developing problem-solving skills.',
-    icon: '🔧',
-    color: 'bg-orange-700 dark:bg-orange-600',
+    year: "2015-2022",
+    title: "Mechanical Engineer",
+    description: "Worked in manufacturing and 3D printing, developing problem-solving skills.",
+    icon: "🔧",
+    color: "bg-orange-700 dark:bg-orange-600",
   },
 ];
 
 // Skill card component with actual technology icons
-const SkillCard: React.FC<{ 
-  skill: { name: string; icon: React.ComponentType<any>; color: string }; 
-  index: number 
+const SkillCard: React.FC<{
+  skill: { name: string; icon: React.ComponentType<any>; color: string };
+  index: number;
 }> = ({ skill, index }) => {
   const IconComponent = skill.icon;
-  
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.9 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true }}
-      whileHover={{ 
-        scale: 1.05, 
+      whileHover={{
+        scale: 1.05,
         rotateY: 5,
-        transition: { duration: 0.3 }
+        transition: { duration: 0.3 },
       }}
       className="group"
     >
       <Card className="h-full bg-white dark:bg-slate-800 hover:shadow-2xl dark:hover:shadow-2xl transition-all duration-500 border-gray-200 dark:border-slate-600 rounded-2xl overflow-hidden">
         <CardContent className="p-6 relative">
           {/* Background gradient overlay */}
-          <div 
+          <div
             className="absolute inset-0 opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-500"
             style={{ backgroundColor: skill.color }}
           />
-          
+
           {/* Icon and title */}
           <div className="flex flex-col items-center text-center space-y-4">
             <motion.div
@@ -140,11 +141,11 @@ const SkillCard: React.FC<{
             >
               <IconComponent size={48} className="drop-shadow-lg" />
             </motion.div>
-            
+
             <h4 className="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors">
               {skill.name}
             </h4>
-            
+
             {/* Technology color indicator */}
             <motion.div
               className="w-full h-1 rounded-full"
@@ -155,12 +156,16 @@ const SkillCard: React.FC<{
               viewport={{ once: true }}
             />
           </div>
-          
+
           {/* Decorative elements */}
-          <div className="absolute top-4 right-4 w-2 h-2 rounded-full opacity-20 group-hover:opacity-40 transition-opacity" 
-               style={{ backgroundColor: skill.color }} />
-          <div className="absolute bottom-4 left-4 w-1 h-1 rounded-full opacity-30 group-hover:opacity-60 transition-opacity" 
-               style={{ backgroundColor: skill.color }} />
+          <div
+            className="absolute top-4 right-4 w-2 h-2 rounded-full opacity-20 group-hover:opacity-40 transition-opacity"
+            style={{ backgroundColor: skill.color }}
+          />
+          <div
+            className="absolute bottom-4 left-4 w-1 h-1 rounded-full opacity-30 group-hover:opacity-60 transition-opacity"
+            style={{ backgroundColor: skill.color }}
+          />
         </CardContent>
       </Card>
     </motion.div>
@@ -171,7 +176,7 @@ export const AboutPage: React.FC = () => {
   return (
     <>
       <SEOHead seo={pageSEO.about} />
-      
+
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-teal-900 dark:to-blue-900">
         <div className="container mx-auto px-4">
@@ -217,11 +222,12 @@ export const AboutPage: React.FC = () => {
                   solutions that meet modern web standards.
                 </p>
                 <p>
-                  I regularly share my thoughts on development, engineering insights, and lessons learned 
-                  on my{' '}
-                  <a 
-                    href="https://blog.timdehof.dev/" 
-                    target="_blank" 
+                  I regularly share my thoughts on development, engineering insights, and lessons learned
+                  on my
+                  {" "}
+                  <a
+                    href="https://blog.timdehof.dev/"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="text-teal-700 hover:text-teal-800 dark:text-teal-400 dark:hover:text-teal-300 underline inline-flex items-center"
                   >
@@ -275,12 +281,12 @@ export const AboutPage: React.FC = () => {
                 Skills & Technologies
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                A comprehensive toolkit combining engineering precision with modern web development 
+                A comprehensive toolkit combining engineering precision with modern web development
                 expertise to build exceptional digital experiences.
               </p>
             </motion.div>
           </div>
-          
+
           <div className="space-y-16">
             {skillCategories.map((category, categoryIndex) => (
               <motion.div
@@ -381,7 +387,7 @@ export const AboutPage: React.FC = () => {
               Key milestones in my journey from engineering to web development.
             </p>
           </div>
-          
+
           <div className="max-w-4xl mx-auto">
             {timeline.map((item, index) => (
               <motion.div
@@ -396,7 +402,7 @@ export const AboutPage: React.FC = () => {
                 <div className="flex-shrink-0 w-24 text-right mr-8">
                   <span className="text-lg font-bold text-teal-700 dark:text-teal-400">{item.year}</span>
                 </div>
-                
+
                 {/* Timeline Icon */}
                 <div className="flex-shrink-0 relative">
                   <motion.div
@@ -409,7 +415,7 @@ export const AboutPage: React.FC = () => {
                     <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-0.5 h-20 bg-gradient-to-b from-teal-300 to-transparent dark:from-teal-600"></div>
                   )}
                 </div>
-                
+
                 {/* Content */}
                 <div className="flex-1 ml-8">
                   <Card className="p-6 hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-600">

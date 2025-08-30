@@ -1,68 +1,69 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Code, Palette, Zap, Users, Globe, Shield, Wrench, Target, CheckCircle, ArrowRight } from 'lucide-react';
-import { SEOHead } from '../components/common/SEOHead';
-import { AnimatedSection } from '../components/common/AnimatedSection';
-import { Card, CardContent } from '../components/ui/card';
-import { Button } from '../components/ui/button';
-import { pageSEO } from '../utils/seo';
-import { services } from '../data/services';
+import { motion } from "framer-motion";
+import { ArrowRight, CheckCircle, Code, Globe, Palette, Shield, Target, Users, Wrench, Zap } from "lucide-react";
+import React from "react";
+
+import { AnimatedSection } from "../components/common/animated-section";
+import { SEOHead } from "../components/common/seo-head";
+import { Button } from "../components/ui/button";
+import { Card, CardContent } from "../components/ui/card";
+import { services } from "../data/services";
+import { pageSEO } from "../utils/seo";
 
 const serviceIcons = {
-  'Experience': <Users className="h-8 w-8" />,
-  'Cutting-edge Technologies': <Zap className="h-8 w-8" />,
-  'Web Development': <Code className="h-8 w-8" />,
+  "Experience": <Users className="h-8 w-8" />,
+  "Cutting-edge Technologies": <Zap className="h-8 w-8" />,
+  "Web Development": <Code className="h-8 w-8" />,
 };
 
 const additionalServices = [
   {
     icon: <Globe className="h-8 w-8" />,
-    title: 'Responsive Design',
-    description: 'Creating websites that work perfectly on all devices and screen sizes.',
-    color: 'from-blue-700 to-cyan-700 dark:from-blue-400 dark:to-cyan-400',
+    title: "Responsive Design",
+    description: "Creating websites that work perfectly on all devices and screen sizes.",
+    color: "from-blue-700 to-cyan-700 dark:from-blue-400 dark:to-cyan-400",
   },
   {
     icon: <Shield className="h-8 w-8" />,
-    title: 'Security & Performance',
-    description: 'Implementing best practices for security, performance, and SEO optimization.',
-    color: 'from-teal-700 to-emerald-700 dark:from-teal-400 dark:to-emerald-400',
+    title: "Security & Performance",
+    description: "Implementing best practices for security, performance, and SEO optimization.",
+    color: "from-teal-700 to-emerald-700 dark:from-teal-400 dark:to-emerald-400",
   },
   {
     icon: <Palette className="h-8 w-8" />,
-    title: 'UI/UX Consulting',
-    description: 'Providing guidance on user experience and interface design decisions.',
-    color: 'from-purple-700 to-pink-700 dark:from-purple-400 dark:to-pink-400',
+    title: "UI/UX Consulting",
+    description: "Providing guidance on user experience and interface design decisions.",
+    color: "from-purple-700 to-pink-700 dark:from-purple-400 dark:to-pink-400",
   },
 ];
 
 const processSteps = [
-  { 
-    step: '01', 
-    title: 'Discovery', 
-    description: 'Understanding your needs and project requirements',
+  {
+    step: "01",
+    title: "Discovery",
+    description: "Understanding your needs and project requirements",
     icon: <Target className="h-6 w-6" />,
-    color: 'bg-blue-700 dark:bg-blue-600'
+    color: "bg-blue-700 dark:bg-blue-600",
   },
-  { 
-    step: '02', 
-    title: 'Planning', 
-    description: 'Creating detailed project roadmap and timeline',
+  {
+    step: "02",
+    title: "Planning",
+    description: "Creating detailed project roadmap and timeline",
     icon: <Code className="h-6 w-6" />,
-    color: 'bg-teal-700 dark:bg-teal-600'
+    color: "bg-teal-700 dark:bg-teal-600",
   },
-  { 
-    step: '03', 
-    title: 'Development', 
-    description: 'Building your solution with modern best practices',
+  {
+    step: "03",
+    title: "Development",
+    description: "Building your solution with modern best practices",
     icon: <Wrench className="h-6 w-6" />,
-    color: 'bg-purple-700 dark:bg-purple-600'
+    color: "bg-purple-700 dark:bg-purple-600",
   },
-  { 
-    step: '04', 
-    title: 'Delivery', 
-    description: 'Testing, deployment, and ongoing support',
+  {
+    step: "04",
+    title: "Delivery",
+    description: "Testing, deployment, and ongoing support",
     icon: <CheckCircle className="h-6 w-6" />,
-    color: 'bg-orange-700 dark:bg-orange-600'
+    color: "bg-orange-700 dark:bg-orange-600",
   },
 ];
 
@@ -70,7 +71,7 @@ export const ServicesPage: React.FC = () => {
   return (
     <>
       <SEOHead seo={pageSEO.services} />
-      
+
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-teal-900 dark:to-blue-900">
         <div className="container mx-auto px-4">
@@ -103,7 +104,7 @@ export const ServicesPage: React.FC = () => {
               to provide comprehensive solutions.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <motion.div
@@ -117,24 +118,26 @@ export const ServicesPage: React.FC = () => {
               >
                 <Card className="h-full bg-gradient-to-br from-blue-50 via-teal-50 to-purple-50 dark:from-blue-900/20 dark:via-teal-900/20 dark:to-purple-900/20 border-gray-200 dark:border-slate-600 shadow-lg hover:shadow-xl transition-all duration-300">
                   <CardContent className="p-8 text-center">
-                    <motion.div 
+                    <motion.div
                       className={`inline-flex items-center justify-center w-16 h-16 ${
-                        index === 0 ? 'bg-gradient-to-br from-blue-700 to-cyan-700 dark:from-blue-500 dark:to-cyan-500' :
-                        index === 1 ? 'bg-gradient-to-br from-teal-700 to-emerald-700 dark:from-teal-500 dark:to-emerald-500' :
-                        'bg-gradient-to-br from-purple-700 to-pink-700 dark:from-purple-500 dark:to-pink-500'
+                        index === 0
+                          ? "bg-gradient-to-br from-blue-700 to-cyan-700 dark:from-blue-500 dark:to-cyan-500"
+                          : index === 1
+                            ? "bg-gradient-to-br from-teal-700 to-emerald-700 dark:from-teal-500 dark:to-emerald-500"
+                            : "bg-gradient-to-br from-purple-700 to-pink-700 dark:from-purple-500 dark:to-pink-500"
                       } text-white rounded-full mb-6 group-hover:scale-110 transition-transform duration-300`}
                       whileHover={{ rotate: 12 }}
                     >
                       {serviceIcons[service.title as keyof typeof serviceIcons]}
                     </motion.div>
-                    
+
                     <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                       {service.title}
                     </h3>
-                    
+
                     <div className="space-y-4 text-gray-600 dark:text-gray-300">
-                      {service.paragraphs.map((paragraph, i) => (
-                        <p key={i} className="text-sm leading-relaxed">
+                      {service.paragraphs.map(paragraph => (
+                        <p key={paragraph} className="text-sm leading-relaxed">
                           {paragraph}
                         </p>
                       ))}
@@ -159,11 +162,11 @@ export const ServicesPage: React.FC = () => {
               of quality and performance.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {additionalServices.map((service, index) => (
               <motion.div
-                key={index}
+                key={service.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -173,7 +176,7 @@ export const ServicesPage: React.FC = () => {
               >
                 <Card className="h-full hover:shadow-lg transition-all duration-300 bg-white dark:bg-slate-700 border-gray-200 dark:border-slate-600">
                   <CardContent className="p-6 text-center">
-                    <motion.div 
+                    <motion.div
                       className={`inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br ${service.color} text-white rounded-full mb-4 group-hover:scale-110 transition-transform duration-300`}
                       whileHover={{ rotate: 8 }}
                     >
@@ -202,12 +205,12 @@ export const ServicesPage: React.FC = () => {
               A systematic approach to delivering high-quality results on time and within budget.
             </p>
           </div>
-          
+
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {processSteps.map((phase, index) => (
                 <motion.div
-                  key={index}
+                  key={phase.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -332,7 +335,7 @@ export const ServicesPage: React.FC = () => {
               Ready to Start Your Project?
             </h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-              Let's discuss your vision and create something amazing together. 
+              Let's discuss your vision and create something amazing together.
               I'm here to help bring your ideas to life with modern web technologies.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

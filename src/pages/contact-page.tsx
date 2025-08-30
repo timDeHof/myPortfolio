@@ -1,68 +1,71 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle, ExternalLink } from 'lucide-react';
-import { SEOHead } from '../components/common/SEOHead';
-import { AnimatedSection } from '../components/common/AnimatedSection';
-import { Button } from '../components/ui/button';
-import { Card, CardContent } from '../components/ui/card';
-import { pageSEO } from '../utils/seo';
-import { validateContactForm, ValidationErrors } from '../utils/validation';
-import { sendEmail } from '../services/emailService';
-import { ContactForm } from '../types';
+import { motion } from "framer-motion";
+import { AlertCircle, CheckCircle, ExternalLink, Mail, MapPin, Phone, Send } from "lucide-react";
+import React, { useState } from "react";
+
+import type { ContactForm } from "../types";
+import type { ValidationErrors } from "../utils/validation";
+
+import { AnimatedSection } from "../components/common/animated-section";
+import { SEOHead } from "../components/common/seo-head";
+import { Button } from "../components/ui/button";
+import { Card, CardContent } from "../components/ui/card";
+import { sendEmail } from "../services/email-service";
+import { pageSEO } from "../utils/seo";
+import { validateContactForm } from "../utils/validation";
 
 const contactInfo = [
   {
     icon: <Mail className="h-6 w-6" />,
-    title: 'Email',
-    value: 'tim@timdehof.dev',
-    href: 'mailto:tim@timdehof.dev',
+    title: "Email",
+    value: "tim@timdehof.dev",
+    href: "mailto:tim@timdehof.dev",
   },
   {
     icon: <Phone className="h-6 w-6" />,
-    title: 'Phone',
-    value: '+1 (555) 123-4567',
-    href: 'tel:+15551234567',
+    title: "Phone",
+    value: "+1 (555) 123-4567",
+    href: "tel:+15551234567",
   },
   {
     icon: <MapPin className="h-6 w-6" />,
-    title: 'Location',
-    value: 'Available for remote work',
+    title: "Location",
+    value: "Available for remote work",
     href: null,
   },
 ];
 
 export const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState<ContactForm>({
-    name: '',
-    email: '',
-    message: '',
+    name: "",
+    email: "",
+    message: "",
   });
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [submitMessage, setSubmitMessage] = useState<string>('');
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitMessage, setSubmitMessage] = useState<string>("");
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
+      setErrors(prev => ({ ...prev, [name]: "" }));
     }
 
     // Clear submit status when user modifies form
-    if (submitStatus !== 'idle') {
-      setSubmitStatus('idle');
-      setSubmitMessage('');
+    if (submitStatus !== "idle") {
+      setSubmitStatus("idle");
+      setSubmitMessage("");
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const validationErrors = validateContactForm(formData);
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -70,23 +73,25 @@ export const ContactPage: React.FC = () => {
     }
 
     setIsSubmitting(true);
-    setSubmitStatus('idle');
-    
+    setSubmitStatus("idle");
+
     try {
       await sendEmail({
         from_name: formData.name,
         from_email: formData.email,
         message: formData.message,
       });
-      
-      setSubmitStatus('success');
+
+      setSubmitStatus("success");
       setSubmitMessage("Thank you for your message! I'll get back to you within 24 hours.");
-      setFormData({ name: '', email: '', message: '' });
+      setFormData({ name: "", email: "", message: "" });
       setErrors({});
-    } catch (error) {
-      setSubmitStatus('error');
+    }
+    catch {
+      setSubmitStatus("error");
       setSubmitMessage("Sorry, there was an error sending your message. Please try again or contact me directly at tim@timdehof.dev");
-    } finally {
+    }
+    finally {
       setIsSubmitting(false);
     }
   };
@@ -94,7 +99,7 @@ export const ContactPage: React.FC = () => {
   return (
     <>
       <SEOHead seo={pageSEO.contact} />
-      
+
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-blue-900">
         <div className="container mx-auto px-4">
@@ -131,27 +136,29 @@ export const ContactPage: React.FC = () => {
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
                     Send me a message
                   </h2>
-                  
+
                   {/* Status Message */}
-                  {submitStatus !== 'idle' && (
+                  {submitStatus !== "idle" && (
                     <motion.div
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       className={`mb-6 p-4 rounded-lg flex items-start space-x-3 ${
-                        submitStatus === 'success' 
-                          ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-700' 
-                          : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-700'
+                        submitStatus === "success"
+                          ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-700"
+                          : "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-700"
                       }`}
                     >
-                      {submitStatus === 'success' ? (
-                        <CheckCircle className="h-5 w-5 mt-0.5 flex-shrink-0" />
-                      ) : (
-                        <AlertCircle className="h-5 w-5 mt-0.5 flex-shrink-0" />
-                      )}
+                      {submitStatus === "success"
+                        ? (
+                            <CheckCircle className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                          )
+                        : (
+                            <AlertCircle className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                          )}
                       <p className="text-sm leading-relaxed">{submitMessage}</p>
                     </motion.div>
                   )}
-                  
+
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                       <label
@@ -168,7 +175,7 @@ export const ContactPage: React.FC = () => {
                         onChange={handleInputChange}
                         disabled={isSubmitting}
                         className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-400 focus:border-transparent transition-colors disabled:bg-gray-50 dark:disabled:bg-slate-700 disabled:cursor-not-allowed bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 ${
-                          errors.name ? 'border-red-500 dark:border-red-400' : 'border-gray-300 dark:border-slate-600'
+                          errors.name ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-slate-600"
                         }`}
                         placeholder="Your full name"
                       />
@@ -192,7 +199,7 @@ export const ContactPage: React.FC = () => {
                         onChange={handleInputChange}
                         disabled={isSubmitting}
                         className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-400 focus:border-transparent transition-colors disabled:bg-gray-50 dark:disabled:bg-slate-700 disabled:cursor-not-allowed bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 ${
-                          errors.email ? 'border-red-500 dark:border-red-400' : 'border-gray-300 dark:border-slate-600'
+                          errors.email ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-slate-600"
                         }`}
                         placeholder="your.email@example.com"
                       />
@@ -216,7 +223,7 @@ export const ContactPage: React.FC = () => {
                         onChange={handleInputChange}
                         disabled={isSubmitting}
                         className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-400 focus:border-transparent transition-colors resize-none disabled:bg-gray-50 dark:disabled:bg-slate-700 disabled:cursor-not-allowed bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 ${
-                          errors.message ? 'border-red-500 dark:border-red-400' : 'border-gray-300 dark:border-slate-600'
+                          errors.message ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-slate-600"
                         }`}
                         placeholder="Tell me about your project..."
                       />
@@ -231,17 +238,19 @@ export const ContactPage: React.FC = () => {
                       className="w-full bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white"
                       size="lg"
                     >
-                      {isSubmitting ? (
-                        <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="h-4 w-4 mr-2" />
-                          Send Message
-                        </>
-                      )}
+                      {isSubmitting
+                        ? (
+                            <>
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                              Sending...
+                            </>
+                          )
+                        : (
+                            <>
+                              <Send className="h-4 w-4 mr-2" />
+                              Send Message
+                            </>
+                          )}
                     </Button>
                   </form>
                 </CardContent>
@@ -266,24 +275,26 @@ export const ContactPage: React.FC = () => {
                   or just want to explore possibilities, I'd love to hear from you.
                 </p>
                 <p className="text-gray-600 dark:text-gray-300 mb-8">
-                  You can also check out my{' '}
-                  <a 
-                    href="https://blog.timdehof.dev/" 
-                    target="_blank" 
+                  You can also check out my
+                  {" "}
+                  <a
+                    href="https://blog.timdehof.dev/"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-700 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline inline-flex items-center"
                   >
                     blog
                     <ExternalLink className="h-4 w-4 ml-1" />
                   </a>
-                  {' '}for insights into my development process and latest projects.
+                  {" "}
+                  for insights into my development process and latest projects.
                 </p>
               </div>
 
               <div className="space-y-6">
                 {contactInfo.map((info, index) => (
                   <motion.div
-                    key={index}
+                    key={info.title}
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
@@ -297,16 +308,18 @@ export const ContactPage: React.FC = () => {
                       <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">
                         {info.title}
                       </h3>
-                      {info.href ? (
-                        <a
-                          href={info.href}
-                          className="text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 transition-colors"
-                        >
-                          {info.value}
-                        </a>
-                      ) : (
-                        <p className="text-gray-600 dark:text-gray-300">{info.value}</p>
-                      )}
+                      {info.href
+                        ? (
+                            <a
+                              href={info.href}
+                              className="text-gray-600 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 transition-colors"
+                            >
+                              {info.value}
+                            </a>
+                          )
+                        : (
+                            <p className="text-gray-600 dark:text-gray-300">{info.value}</p>
+                          )}
                     </div>
                   </motion.div>
                 ))}
