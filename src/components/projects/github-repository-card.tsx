@@ -136,10 +136,7 @@ export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = ({ repo
           {/* Last updated */}
           <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
             <Calendar className="h-4 w-4 mr-1" />
-            <span>
-              Updated
-              {formatDate(repository.updated_at)}
-            </span>
+            <span>Updated {formatDate(repository.updated_at)}</span>
           </div>
 
           {/* Action buttons */}

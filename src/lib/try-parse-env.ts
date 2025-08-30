@@ -13,14 +13,14 @@ export default function tryParseEnv<T extends ZodRawShape, S extends ZodObject<T
   catch (error) {
     if (error instanceof ZodError) {
       const missingVars = error.issues
-        .map(issue => `• ${issue.path.join('.')} (${issue.message})`);
+        .map(issue => `• ${issue.path.join(".")} (${issue.message})`);
 
       throw new Error(
-        `Environment validation failed:\n${missingVars.join('\n')}\n\n` +
-        `Required variables:\n${Object.keys(EnvSchema.shape).join('\n')}`
+        `Environment validation failed:\n${missingVars.join("\n")}\n\n`
+        + `Required variables:\n${Object.keys(EnvSchema.shape).join("\n")}`,
       );
     }
 
-    throw new Error(`Environment configuration error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new Error(`Environment configuration error: ${error instanceof Error ? error.message : "Unknown error"}`);
   }
 }
