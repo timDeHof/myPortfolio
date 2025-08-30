@@ -7,7 +7,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import { ErrorBoundary } from "./components/common/error-boundary";
 import { LoadingSpinner } from "./components/common/loading-spinner";
-import { Layout } from "./components/layout/layout.tsx";
+import { Layout } from "./components/layout";
 import { useTheme } from "./hooks/use-theme";
 import { env } from "./lib/env";
 import { queryClient } from "./lib/query-client";
