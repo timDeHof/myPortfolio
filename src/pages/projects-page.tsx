@@ -4,8 +4,8 @@ import React from "react";
 
 import { AnimatedSection } from "../components/common/animated-section";
 import { RepositorySkeletonGrid } from "../components/common/repository-card-skeleton";
-import { SEOHead } from "../components/common/seo-head";
 import { SectionSEO } from "../components/common/section-seo";
+import { SEOHead } from "../components/common/seo-head";
 import { GitHubRepositoryCard } from "../components/projects/github-repository-card";
 import { ProjectTypeFilter } from "../components/projects/project-type-filter";
 import { RepositoryFilter } from "../components/projects/repository-filter";
@@ -13,7 +13,7 @@ import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { useGitHubRepositories } from "../hooks/queries/use-github-repositories";
 import { useRepositoryFiltering } from "../hooks/queries/use-repository-filtering";
-import { pageSEO, generateProjectSEO } from "../utils/seo";
+import { pageSEO } from "../utils/seo";
 import { generateBreadcrumbSchema } from "../utils/structured-data";
 
 export const ProjectsPage: React.FC = () => {
@@ -106,8 +106,8 @@ export const ProjectsPage: React.FC = () => {
   const structuredData = {
     "@graph": [
       generateBreadcrumbSchema([
-        { name: 'Home', url: '/' },
-        { name: 'Projects', url: '/projects' }
+        { name: "Home", url: "/" },
+        { name: "Projects", url: "/projects" },
       ]),
       {
         "@context": "https://schema.org",
@@ -127,18 +127,18 @@ export const ProjectsPage: React.FC = () => {
             "programmingLanguage": repo.language,
             "author": {
               "@type": "Person",
-              "name": "Tim DeHof"
-            }
-          }))
-        }
-      }
-    ]
+              "name": "Tim DeHof",
+            },
+          })),
+        },
+      },
+    ],
   };
 
   return (
     <>
-      <SEOHead 
-        seo={pageSEO.projects} 
+      <SEOHead
+        seo={pageSEO.projects}
         structuredData={structuredData}
       />
 
@@ -232,119 +232,122 @@ export const ProjectsPage: React.FC = () => {
       <AnimatedSection className="py-20 bg-white dark:bg-slate-900">
         <div className="container mx-auto px-4">
           {/* Loading State - Show Skeletons */}
-          {isLoading ? (
-            <>
-              <div className="text-center mb-8">
-                <p className="text-lg text-gray-700 dark:text-gray-300">
-                  Loading repositories from GitHub...
-                </p>
-              </div>
-              <RepositorySkeletonGrid count={6} />
-            </>
-          ) : (
-            <>
-              {/* Current View Info */}
-              <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                  {getProjectTypeTitle()}
-                </h2>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  {getProjectTypeDescription()}
-                </p>
-                <p className="text-lg text-gray-700 dark:text-gray-300">
-                  Showing
-                  {" "}
-                  <strong className="text-teal-700 dark:text-teal-400">{stats.filtered}</strong>
-                  {" "}
-                  repositories
-                  {selectedLanguage !== "All" && (
-                    <span>
-                      {" "}
-                      for
-                      <strong className="text-teal-700 dark:text-teal-400">{selectedLanguage}</strong>
-                    </span>
-                  )}
-                </p>
-              </div>
-
-              {/* Repository Grid or Messages */}
-              {filteredRepositories.length > 0 ? (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {filteredRepositories.map((repository, index) => (
-                    <GitHubRepositoryCard
-                      key={repository.id}
-                      repository={repository}
-                      index={index}
-                    />
-                  ))}
-                </div>
-              ) : repositories.length > 0 ? (
-                // No filtered repositories but we have total repositories
-                <div className="text-center py-12">
-                  <Github className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                    No
-                    {" "}
-                    {selectedLanguage !== "All" ? selectedLanguage : ""}
-                    {" "}
-                    repositories found
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6">
-                    {selectedProjectType === "personal"
-                      ? "No personal projects found for the selected criteria."
-                      : selectedProjectType === "contributions"
-                        ? "No contributions found for the selected criteria."
-                        : "No repositories found for the selected filters."}
-                  </p>
-                  <div className="space-y-3">
-                    <Button
-                      onClick={() => handleLanguageChange("All")}
-                      className="bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white"
-                    >
-                      Show All Languages
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() => handleProjectTypeChange("all")}
-                      className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                    >
-                      Show All Project Types
-                    </Button>
+          {isLoading
+            ? (
+                <>
+                  <div className="text-center mb-8">
+                    <p className="text-lg text-gray-700 dark:text-gray-300">
+                      Loading repositories from GitHub...
+                    </p>
                   </div>
-                </div>
+                  <RepositorySkeletonGrid count={6} />
+                </>
               ) : (
-                // No repositories at all
-                <div className="text-center py-12">
-                  <Github className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                    No Repositories Found
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
-                    We couldn't find any public repositories. This might be due to API issues or configuration problems.
-                  </p>
-                  <div className="space-x-4">
-                    <Button
-                      onClick={handleRefresh}
-                      className="bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white"
-                    >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Try Again
-                    </Button>
-                    <Button variant="outline" asChild className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                      <a
-                        href="https://github.com/timDeHof"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Github className="h-4 w-4 mr-2" />
-                        View GitHub Profile
-                      </a>
-                    </Button>
+                <>
+                  {/* Current View Info */}
+                  <div className="text-center mb-8">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+                      {getProjectTypeTitle()}
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-400 mb-4">
+                      {getProjectTypeDescription()}
+                    </p>
+                    <p className="text-lg text-gray-700 dark:text-gray-300">
+                      Showing
+                      {" "}
+                      <strong className="text-teal-700 dark:text-teal-400">{stats.filtered}</strong>
+                      {" "}
+                      repositories
+                      {selectedLanguage !== "All" && (
+                        <span>
+                          {" "}
+                          for
+                          <strong className="text-teal-700 dark:text-teal-400">{selectedLanguage}</strong>
+                        </span>
+                      )}
+                    </p>
                   </div>
-                </div>
+
+                  {/* Repository Grid or Messages */}
+                  {filteredRepositories.length > 0 ? (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                      {filteredRepositories.map((repository, index) => (
+                        <GitHubRepositoryCard
+                          key={repository.id}
+                          repository={repository}
+                          index={index}
+                        />
+                      ))}
+                    </div>
+                  )
+                    : repositories.length > 0
+                      ? (
+                    // No filtered repositories but we have total repositories
+                          <div className="text-center py-12">
+                            <Github className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+                            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                              No
+                              {" "}
+                              {selectedLanguage !== "All" ? selectedLanguage : ""}
+                              {" "}
+                              repositories found
+                            </h3>
+                            <p className="text-gray-600 dark:text-gray-400 mb-6">
+                              {selectedProjectType === "personal"
+                                ? "No personal projects found for the selected criteria."
+                                : selectedProjectType === "contributions"
+                                  ? "No contributions found for the selected criteria."
+                                  : "No repositories found for the selected filters."}
+                            </p>
+                            <div className="space-y-3">
+                              <Button
+                                onClick={() => handleLanguageChange("All")}
+                                className="bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white"
+                              >
+                                Show All Languages
+                              </Button>
+                              <Button
+                                variant="outline"
+                                onClick={() => handleProjectTypeChange("all")}
+                                className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                              >
+                                Show All Project Types
+                              </Button>
+                            </div>
+                          </div>
+                        ) : (
+                    // No repositories at all
+                          <div className="text-center py-12">
+                            <Github className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
+                            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                              No Repositories Found
+                            </h3>
+                            <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+                              We couldn't find any public repositories. This might be due to API issues or configuration problems.
+                            </p>
+                            <div className="space-x-4">
+                              <Button
+                                onClick={handleRefresh}
+                                className="bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white"
+                              >
+                                <RefreshCw className="h-4 w-4 mr-2" />
+                                Try Again
+                              </Button>
+                              <Button variant="outline" asChild className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+                                <a
+                                  href="https://github.com/timDeHof"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <Github className="h-4 w-4 mr-2" />
+                                  View GitHub Profile
+                                </a>
+                              </Button>
+                            </div>
+                          </div>
+                        )}
+                </>
               )}
-            </>
-          )}
         </div>
       </AnimatedSection>
 
