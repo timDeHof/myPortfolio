@@ -11,7 +11,7 @@ export default antfu(
 			semi: true,
 			quotes: "double",
 		},
-		ignores: ["**/migrations/*","*.config.***"],
+		ignores: ["**/migrations/*","*.config.***", "**/dist/**", "**/node_modules/**", "**/.nuxt/**", "**/.output/**", "**/coverage/**", "**/public/**"],
 	},
 	{
 		rules: {
@@ -28,7 +28,7 @@ export default antfu(
 				"error",
 				{
 					case: "kebabCase",
-					ignore: ["README.md"],
+					ignore: ["README.md", "App.tsx"],
 				},
 			],
 		},

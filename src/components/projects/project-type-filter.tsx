@@ -1,8 +1,8 @@
+import type { ProjectType } from "@hooks/queries/use-repository-filtering";
+
 import { motion } from "framer-motion";
 import { GitFork, Globe, User } from "lucide-react";
 import React from "react";
-
-import type { ProjectType } from "../../hooks/queries/use-repository-filtering";
 
 import { Button } from "../ui/button";
 

@@ -10,8 +10,20 @@
     ],
     "moduleDetection": "force",
     "useDefineForClassFields": true,
+    "baseUrl": "./",
+
     "module": "ESNext",
+    /* Bundler mode */
     "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@services/*": ["./src/services/*"]
+    },
+    "allowImportingTsExtensions": true,
+    /* Linting */
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,

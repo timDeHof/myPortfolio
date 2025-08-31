@@ -1,11 +1,11 @@
+import type { GitHubRepository } from "@services/api/github";
+
+import { useGitHubRepositoryLanguages } from "@hooks/queries/use-github-repositories";
+import { formatDate, getRepositoryImage, getTopLanguages } from "@services/api/github";
 import { motion } from "framer-motion";
 import { Calendar, Code, ExternalLink, GitFork, Github, Star, Users } from "lucide-react";
 import React from "react";
 
-import type { GitHubRepository } from "../../services/api/github";
-
-import { useGitHubRepositoryLanguages } from "../../hooks/queries/use-github-repositories";
-import { formatDate, getRepositoryImage, getTopLanguages } from "../../services/api/github";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 
@@ -136,7 +136,10 @@ export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = ({ repo
           {/* Last updated */}
           <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
             <Calendar className="h-4 w-4 mr-1" />
-            <span>Updated {formatDate(repository.updated_at)}</span>
+            <span>
+              Updated
+              {formatDate(repository.updated_at)}
+            </span>
           </div>
 
           {/* Action buttons */}
