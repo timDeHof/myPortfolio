@@ -2,8 +2,8 @@ import { ErrorBoundary } from "@components/common/error-boundary";
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-import { Footer } from "./footer";
-import { Navigation } from "./navigation";
+import Footer from "./Footer";
+import Navigation from "./Navigation";
 
 export const Layout: React.FC = () => {
   return (

@@ -1,5 +1,4 @@
 import { ArrowUpIcon, ExternalLink, GithubIcon, LinkedinIcon, TwitterIcon } from "lucide-react";
-import React from "react";
 import { Link } from "react-router-dom";
 
 import { Button } from "../ui/button";
@@ -34,7 +33,7 @@ const footerLinks = [
   { path: "/contact", label: "Contact", color: "hover:text-blue-400" },
 ];
 
-export const Footer: React.FC = () => {
+export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -133,4 +132,4 @@ export const Footer: React.FC = () => {
       </div>
     </footer>
   );
-};
+}
