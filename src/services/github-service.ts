@@ -70,11 +70,23 @@ export async function fetchGitHubRepositories(): Promise<GitHubRepository[]> {
 
     const repositories: GitHubRepository[] = await response.json();
 
-    // Apply minimal filtering - only exclude private repos
+    console.log("📊 Total repositories fetched:", repositories.length);
+
+    // Apply filtering - exclude private repos and forked repositories
     const filteredRepos = repositories
       .filter((repo) => {
         const isPublic = !repo.private;
-        return isPublic;
+        const isOwned = !repo.fork; // Exclude forked repositories to show only original work
+
+        // Log filtering decisions for debugging
+        if (!isPublic) {
+          console.log(`🔒 Filtering out private repo: ${repo.name}`);
+        }
+        if (!isOwned) {
+          console.log(`🍴 Filtering out forked repo: ${repo.name}`);
+        }
+
+        return isPublic && isOwned;
       })
       .sort((a, b) => {
         // Sort by stars first, then by last updated
@@ -92,6 +104,7 @@ export async function fetchGitHubRepositories(): Promise<GitHubRepository[]> {
     if (filteredRepos.length === 0) {
       console.warn("⚠️ No repositories after filtering! This might indicate:");
       console.warn("  - All repositories are private");
+      console.warn("  - All repositories are forks (not original work)");
       console.warn("  - GitHub API returned empty results");
       console.warn("  - Filtering logic is too restrictive");
     }
