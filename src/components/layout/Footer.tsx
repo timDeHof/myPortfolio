@@ -70,7 +70,7 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4 text-white">Quick Links</h4>
 
             {/* Mobile: Enhanced grid layout */}
-            <div className="grid grid-cols-2 gap-3 md:gap-y-3">
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-2 md:gap-y-3">
               {footerLinks.map(link => (
                 <Link
                   key={link.path}
