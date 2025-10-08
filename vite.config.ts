@@ -9,11 +9,11 @@ export default defineConfig({
   base: "./",
   resolve: {
     alias: {
-      "@/*": resolve(__dirname, "./src"),
-      "@components/*": resolve(__dirname, "./src/components/*"),
-      "@hooks/*": resolve(__dirname, "./src/hooks/*"),
-      "@pages/*": resolve(__dirname, "./src/pages/*"),
-      "@services/*": resolve(__dirname, "./src/services/*"),
+      "@": resolve(__dirname, "./src"),
+      "@components": resolve(__dirname, "./src/components"),
+      "@hooks": resolve(__dirname, "./src/hooks"),
+      "@pages": resolve(__dirname, "./src/pages"),
+      "@services": resolve(__dirname, "./src/services"),
     },
     extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
   },
