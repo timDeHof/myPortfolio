@@ -62,28 +62,15 @@ export default function Footer() {
                 <ExternalLink className="h-4 w-4 ml-1" />
               </a>
             </div>
-            <div className="flex justify-center md:justify-start space-x-4">
-              {socialLinks.map(link => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={link.label}
-                  className={`text-gray-300 ${link.color} transition-all duration-300 p-3 hover:bg-gray-800 rounded-xl hover:scale-110`}
-                >
-                  {link.icon}
-                </a>
-              ))}
-            </div>
+
           </div>
 
           {/* Quick Links - Enhanced Mobile Design */}
           <div className="text-center md:text-left">
-            <h4 className="text-lg font-semibold mb-6 text-white">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-4 text-white">Quick Links</h4>
 
             {/* Mobile: Enhanced grid layout */}
-            <div className="grid grid-cols-2 gap-3 md:block md:space-y-3">
+            <div className="grid grid-cols-2 gap-3 md:gap-y-3">
               {footerLinks.map(link => (
                 <Link
                   key={link.path}
@@ -102,9 +89,26 @@ export default function Footer() {
             <p className="text-gray-300 mb-6 leading-relaxed">
               Ready to work together? Let's discuss your next project.
             </p>
-            <Button asChild className="bg-gradient-to-r from-blue-700 via-teal-700 to-purple-700 hover:from-blue-800 hover:via-teal-800 hover:to-purple-800 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <Link to="/contact">Contact Me</Link>
-            </Button>
+
+            <div className="flex flex-col gap-y-3 md:flex-row md:gap-x-3 items-center">
+              <Button asChild className="bg-gradient-to-r from-blue-700 via-teal-700 to-purple-700 hover:from-blue-800 hover:via-teal-800 hover:to-purple-800 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+                <Link to="/contact">Contact Me</Link>
+              </Button>
+              <div className="flex justify-center md:justify-end w-full space-x-4">
+                {socialLinks.map(link => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={link.label}
+                    className={`text-gray-300 ${link.color} transition-all duration-300 p-3 hover:bg-gray-800 rounded-xl hover:scale-110`}
+                  >
+                    {link.icon}
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
