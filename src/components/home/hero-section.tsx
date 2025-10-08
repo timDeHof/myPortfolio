@@ -162,7 +162,7 @@ export const HeroSection: React.FC = () => {
                 <div className="backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/30 dark:border-white/20">
                   <TextGenerateEffect
                     words="Transforming Your Business Challenges into Powerful Web Applications"
-                    className="text-lg sm:text-xl md:text-2xl text-gray-800 dark:text-gray-200 font-medium text-center flex items-center justify-center leading-relaxed"
+                    className="text-lg sm:text-xl md:text-2xl text-gray-800 dark:text-gray-200 font-medium text-center flex items-center justify-center leading-relaxed text-pretty"
                   />
                 </div>
               </motion.div>
