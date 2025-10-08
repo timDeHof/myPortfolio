@@ -13,7 +13,7 @@ const navItems = [
   { path: "/contact", label: "Contact", icon: <Mail className="h-4 w-4" /> },
 ];
 
-export default function Navigation() {
+export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 

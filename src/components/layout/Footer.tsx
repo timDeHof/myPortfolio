@@ -33,7 +33,7 @@ const footerLinks = [
   { path: "/contact", label: "Contact", color: "hover:text-blue-400" },
 ];
 
-export default function Footer() {
+export function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };

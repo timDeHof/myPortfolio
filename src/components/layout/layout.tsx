@@ -1,6 +1,6 @@
 import { ErrorBoundary } from "@components/common/error-boundary";
-import Footer from "@components/layout/footer";
-import Navigation from "@components/layout/navigation";
+import { Footer } from "@components/layout/footer";
+import { Navigation } from "@components/layout/navigation";
 import React from "react";
 import { Outlet } from "react-router-dom";
 
