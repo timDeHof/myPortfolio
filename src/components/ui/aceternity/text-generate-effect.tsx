@@ -6,7 +6,7 @@ import { cn } from "../../../lib/utils";
 export const TextGenerateEffect = ({
   words,
   className,
-  filter = true,
+  filter = false,
   duration = 0.5,
 }: {
   words: string;
@@ -16,30 +16,32 @@ export const TextGenerateEffect = ({
 }) => {
   const [scope, animate] = useAnimate();
   let wordsArray = words.split(" ");
+  
   useEffect(() => {
     animate(
       "span",
       {
         opacity: 1,
-        filter: filter ? "blur(0px)" : "none",
+        transform: "translateY(0px)",
       },
       {
         duration: duration ? duration : 1,
-        delay: stagger(0.2),
+        delay: stagger(0.1),
       }
     );
   }, [scope.current]);
 
   const renderWords = () => {
     return (
-      <motion.div ref={scope}>
+      <motion.div ref={scope} className="min-h-[1.5em]">
         {wordsArray.map((word, idx) => {
           return (
             <motion.span
               key={word + idx}
-              className="dark:text-white text-black opacity-0"
+              className="dark:text-white text-black inline-block"
               style={{
-                filter: filter ? "blur(10px)" : "none",
+                opacity: 0,
+                transform: "translateY(10px)",
               }}
             >
               {word}{" "}
@@ -53,7 +55,7 @@ export const TextGenerateEffect = ({
   return (
     <div className={cn("font-bold", className)}>
       <div className="mt-4">
-        <div className="dark:text-white text-black text-2xl leading-snug tracking-wide">
+        <div className="dark:text-white text-black text-2xl leading-snug tracking-wide min-h-[3em]">
           {renderWords()}
         </div>
       </div>

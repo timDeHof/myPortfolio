@@ -57,14 +57,14 @@ export const HeroSection: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-blue-900 dark:to-purple-900 overflow-hidden">
+    <section className="hero-section relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-blue-900 dark:to-purple-900 overflow-hidden">
       {/* Floating tech icons */}
       {floatingIcons.map((item, index) => {
         const IconComponent = item.Icon;
         return (
           <motion.div
             key={index}
-            className="absolute z-10 opacity-20 dark:opacity-30 hidden lg:block"
+            className="motion-element absolute z-10 opacity-20 dark:opacity-30 hidden lg:block"
             style={{ left: item.x, top: item.y }}
             initial={{ opacity: 0, scale: 0, rotate: -180 }}
             animate={{
@@ -91,7 +91,7 @@ export const HeroSection: React.FC = () => {
         return (
           <motion.div
             key={`bg-${index}`}
-            className="absolute z-5 opacity-10 dark:opacity-20 text-blue-600 dark:text-blue-400 hidden md:block"
+            className="motion-element absolute z-5 opacity-10 dark:opacity-20 text-blue-600 dark:text-blue-400 hidden md:block"
             style={{ left: item.x, top: item.y }}
             initial={{ opacity: 0, scale: 0 }}
             animate={{

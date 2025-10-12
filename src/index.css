@@ -383,6 +383,40 @@ textarea:focus-visible {
   }
 }
 
+/* Prevent layout shifts by reserving space */
+.text-generate-container {
+  min-height: 3em;
+  contain: layout;
+}
+
+.animated-section {
+  contain: layout;
+  will-change: transform, opacity;
+}
+
+/* Force composited layers for animations */
+.motion-element {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Prevent layout shifts from hover effects */
+.hover-transform {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Reserve space for dynamic content */
+.hero-section {
+  min-height: 100vh;
+  contain: layout;
+}
+
+.services-section {
+  min-height: 50vh;
+  contain: layout;
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -392,5 +426,10 @@ textarea:focus-visible {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  
+  .motion-element {
+    will-change: auto;
+    transform: none;
   }
 }
