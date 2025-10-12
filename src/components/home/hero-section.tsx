@@ -23,12 +23,20 @@ export const HeroSection: React.FC = () => {
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      const scrolled = window.scrollY;
-      const threshold = window.innerHeight * 0.8;
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrolled = window.scrollY;
+          const threshold = window.innerHeight * 0.8;
 
-      setShowScrollIndicator(scrolled < 100);
-      setShowBackToTop(scrolled > threshold);
+          setShowScrollIndicator(scrolled < 100);
+          setShowBackToTop(scrolled > threshold);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -36,12 +44,16 @@ export const HeroSection: React.FC = () => {
   }, []);
 
   const scrollToContent = () => {
-    const nextSection = document.querySelector("#services-section");
-    nextSection?.scrollIntoView({ behavior: "smooth" });
+    requestAnimationFrame(() => {
+      const nextSection = document.querySelector("#services-section");
+      nextSection?.scrollIntoView({ behavior: "smooth" });
+    });
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
   };
 
   return (
