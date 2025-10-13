@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import React from "react";
 
 import { useIntersectionObserver } from "../../hooks/use-intersectio-observer";
+import { useOptimizedAnimations } from "../../hooks/use-optimized-animations";
 
 type AnimatedSectionProps = {
   id?: string;
@@ -22,6 +23,7 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
     threshold: 0.1,
     triggerOnce: true,
   });
+  const { scheduleAnimation } = useOptimizedAnimations();
 
   const directionVariants = {
     up: { y: 50, opacity: 0 },

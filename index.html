@@ -57,6 +57,30 @@
     <!-- Theme color -->
     <meta name="theme-color" content="#2563eb" />
 
+    <!-- Critical CSS for LCP optimization -->
+    <style>
+      .hero-section { 
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #e0e7ff 100%);
+      }
+      .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1.1;
+        color: #111827;
+      }
+      @media (prefers-color-scheme: dark) {
+        .hero-section {
+          background: linear-gradient(135deg, #0f172a 0%, #0f766e 50%, #1e1b4b 100%);
+        }
+        .hero-title {
+          color: #f9fafb;
+        }
+      }
+    </style>
+
     <!-- Manifest for PWA -->
     <link rel="manifest" href="/manifest.json" />
   </head>

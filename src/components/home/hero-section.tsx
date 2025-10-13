@@ -23,24 +23,25 @@ export const HeroSection: React.FC = () => {
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
-    let ticking = false;
+    let rafId: number;
     
     const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          const scrolled = window.scrollY;
-          const threshold = window.innerHeight * 0.8;
+      if (rafId) cancelAnimationFrame(rafId);
+      
+      rafId = requestAnimationFrame(() => {
+        const scrolled = window.scrollY;
+        const threshold = window.innerHeight * 0.8;
 
-          setShowScrollIndicator(scrolled < 100);
-          setShowBackToTop(scrolled > threshold);
-          ticking = false;
-        });
-        ticking = true;
-      }
+        setShowScrollIndicator(scrolled < 100);
+        setShowBackToTop(scrolled > threshold);
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   const scrollToContent = () => {

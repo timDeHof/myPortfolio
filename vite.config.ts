@@ -48,6 +48,9 @@ export default defineConfig({
   build: {
     outDir: "build",
     rollupOptions: {
+      treeshake: {
+        moduleSideEffects: false
+      },
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
