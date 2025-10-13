@@ -2,10 +2,35 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { resolve } from "path";
 import viteTsconfigPaths from "vite-tsconfig-paths";
+import { VitePWA } from 'vite-plugin-pwa';
+import viteImagemin from 'vite-plugin-imagemin';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), viteTsconfigPaths()],
+  plugins: [
+    react(),
+    viteTsconfigPaths(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        runtimeCaching: [{
+          urlPattern: /^https:\/\/api\.github\.com\/.*/i,
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'github-api-cache',
+            expiration: { maxEntries: 10, maxAgeSeconds: 300 }
+          }
+      }]
+    }
+    }),
+    viteImagemin({
+    gifsicle: { optimizationLevel: 7 },
+    mozjpeg: { quality: 80 },
+    pngquant: { quality: [0.65, 0.8] },
+    webp: { quality: 75 }
+  })
+  ],
   base: "./",
   resolve: {
     alias: {
@@ -28,6 +53,8 @@ export default defineConfig({
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
           ui: ['framer-motion', 'lucide-react'],
+          query: ['@tanstack/react-query', '@tanstack/react-query-devtools'],
+          email: ['@emailjs/browser']
         },
       },
     },
