@@ -38,13 +38,15 @@ export const TextGenerateEffect = ({
           return (
             <motion.span
               key={word + idx}
-              className="dark:text-white text-black inline-block"
+              className="dark:text-white text-black"
               style={{
                 opacity: 0,
                 transform: "translateY(10px)",
+                display: "inline-block",
+                marginRight: "0.25em"
               }}
             >
-              {word}{" "}
+              {word}
             </motion.span>
           );
         })}
