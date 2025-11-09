@@ -47,20 +47,6 @@ export default defineConfig({
   },
   build: {
     outDir: "build",
-    rollupOptions: {
-      treeshake: {
-        moduleSideEffects: false
-      },
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          router: ['react-router-dom'],
-          ui: ['framer-motion', 'lucide-react'],
-          query: ['@tanstack/react-query', '@tanstack/react-query-devtools'],
-          email: ['@emailjs/browser']
-        },
-      },
-    },
   },
   server: {
     port: 5173,
