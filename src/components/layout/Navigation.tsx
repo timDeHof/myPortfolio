@@ -1,9 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Briefcase, Home, Mail, Menu, Settings, User, X } from "lucide-react";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { ThemeToggle } from "../common/theme-toggle";
+import { ViewTransitionLink } from "../common/view-transition-link";
 
 const navItems = [
   { path: "/", label: "Home", icon: <Home className="h-4 w-4" /> },
@@ -24,17 +25,17 @@ export function Navigation() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link
+          <ViewTransitionLink
             to="/"
             className="text-xl font-bold bg-gradient-to-r from-blue-700 via-teal-700 to-purple-700 dark:from-blue-400 dark:via-teal-400 dark:to-purple-400 bg-clip-text text-transparent hover:from-blue-800 hover:via-teal-800 hover:to-purple-800 dark:hover:from-blue-300 dark:hover:via-teal-300 dark:hover:to-purple-300 transition-all"
           >
             Tim DeHof
-          </Link>
+          </ViewTransitionLink>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map(item => (
-              <Link
+              <ViewTransitionLink
                 key={item.path}
                 to={item.path}
                 className={`relative px-3 py-2 text-sm font-medium transition-colors ${
@@ -52,7 +53,7 @@ export function Navigation() {
                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
                   />
                 )}
-              </Link>
+              </ViewTransitionLink>
             ))}
 
             {/* Theme Toggle */}
@@ -85,7 +86,7 @@ export function Navigation() {
             >
               <div className="py-4 space-y-2">
                 {navItems.map(item => (
-                  <Link
+                  <ViewTransitionLink
                     key={item.path}
                     to={item.path}
                     onClick={() => setIsOpen(false)}
@@ -97,7 +98,7 @@ export function Navigation() {
                   >
                     {item.icon}
                     <span>{item.label}</span>
-                  </Link>
+                  </ViewTransitionLink>
                 ))}
               </div>
             </motion.div>
