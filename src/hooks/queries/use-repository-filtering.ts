@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 
 import type { GitHubRepository } from "../../services/api/github";
 
-export type ProjectType = "all" | "personal" | "contributions";
+export type ProjectType = "all" | "showcase" | "personal" | "contributions";
 
 type UseRepositoryFilteringOptions = {
   repositories: GitHubRepository[];
@@ -14,24 +14,40 @@ export function useRepositoryFiltering({ repositories }: UseRepositoryFilteringO
 
   // Categorize repositories by type
   const categorizedRepositories = useMemo(() => {
+    const showcase: GitHubRepository[] = [];
     const personal: GitHubRepository[] = [];
     const contributions: GitHubRepository[] = [];
 
     repositories.forEach((repo) => {
-      if (repo.fork) {
-        contributions.push(repo);
-      }
-      else {
-        personal.push(repo);
+      switch (repo.category) {
+        case 'showcase':
+          showcase.push(repo);
+          break;
+        case 'personal':
+          personal.push(repo);
+          break;
+        case 'contribution':
+        case 'fork':
+          contributions.push(repo);
+          break;
+        default:
+          // Fallback for repos without category
+          if (repo.fork) {
+            contributions.push(repo);
+          } else {
+            personal.push(repo);
+          }
       }
     });
 
-    return { personal, contributions };
+    return { showcase, personal, contributions };
   }, [repositories]);
 
   // Get repositories based on selected project type
   const repositoriesByType = useMemo(() => {
     switch (selectedProjectType) {
+      case "showcase":
+        return categorizedRepositories.showcase;
       case "personal":
         return categorizedRepositories.personal;
       case "contributions":
@@ -97,6 +113,7 @@ export function useRepositoryFiltering({ repositories }: UseRepositoryFilteringO
     resetFilters,
     stats: {
       total: repositories.length,
+      showcase: categorizedRepositories.showcase.length,
       personal: categorizedRepositories.personal.length,
       contributions: categorizedRepositories.contributions.length,
       filtered: filteredRepositories.length,

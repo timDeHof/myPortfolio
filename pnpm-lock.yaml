@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@emailjs/browser':
-        specifier: ^4.3.3
-        version: 4.4.1
       '@radix-ui/react-separator':
         specifier: ^1.1.0
         version: 1.1.7(@types/react-dom@18.2.0)(@types/react@18.2.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -813,10 +810,6 @@ packages:
 
   '@dprint/toml@0.6.4':
     resolution: {integrity: sha512-bZXIUjxr0LIuHWshZr/5mtUkOrnh0NKVZEF6ACojW5z7zkJu7s9sV2mMXm8XQDqN4cJzdHYUYzUyEGdfciaLJA==}
-
-  '@emailjs/browser@4.4.1':
-    resolution: {integrity: sha512-DGSlP9sPvyFba3to2A50kDtZ+pXVp/0rhmqs2LmbMS3I5J8FSOgLwzY2Xb4qfKlOVHh29EAutLYwe5yuEZmEFg==}
-    engines: {node: '>=14.0.0'}
 
   '@emnapi/runtime@1.5.0':
     resolution: {integrity: sha512-97/BJ3iXHww3djw6hYIfErCZFee7qCtrneuLa20UXFCOTCfBM2cvQHjWJ2EG0s0MtdNwInarqCTz35i4wWXHsQ==}
@@ -6725,8 +6718,6 @@ snapshots:
   '@dprint/markdown@0.17.8': {}
 
   '@dprint/toml@0.6.4': {}
-
-  '@emailjs/browser@4.4.1': {}
 
   '@emnapi/runtime@1.5.0':
     dependencies:

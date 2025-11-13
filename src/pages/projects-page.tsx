@@ -6,11 +6,13 @@ import { AnimatedSection } from "../components/common/animated-section";
 import { RepositorySkeletonGrid } from "../components/common/repository-card-skeleton";
 import { SectionSEO } from "../components/common/section-seo";
 import { SEOHead } from "../components/common/seo-head";
+import { GitHubStatsSection } from "../components/github/github-stats-section";
 import { GitHubRepositoryCard } from "../components/projects/github-repository-card";
 import { ProjectTypeFilter } from "../components/projects/project-type-filter";
 import { RepositoryFilter } from "../components/projects/repository-filter";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
+import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
 import { useGitHubRepositories } from "../hooks/queries/use-github-repositories";
 import { useRepositoryFiltering } from "../hooks/queries/use-repository-filtering";
 import { pageSEO } from "../utils/seo";
@@ -50,31 +52,33 @@ export const ProjectsPage: React.FC = () => {
       <>
         <SEOHead seo={pageSEO.projects} />
         <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-slate-900">
-          <Card className="max-w-lg w-full mx-4 bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700">
-            <CardContent className="p-8 text-center">
-              <AlertCircle className="h-12 w-12 text-red-600 dark:text-red-400 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                Failed to Load Repositories
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">{errorMessage}</p>
-              <div className="space-y-3">
-                <Button onClick={handleRefresh} className="w-full bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white">
-                  <RefreshCw className="h-4 w-4 mr-2" />
-                  Try Again
-                </Button>
-                <Button variant="outline" asChild className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                  <a
-                    href="https://github.com/timDeHof"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Github className="h-4 w-4 mr-2" />
-                    View GitHub Profile
-                  </a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          <MaxWidthWrapper>
+            <Card className="max-w-lg w-full mx-auto bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700">
+              <CardContent className="p-8 text-center">
+                <AlertCircle className="h-12 w-12 text-red-600 dark:text-red-400 mx-auto mb-4" />
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                  Failed to Load Repositories
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400 mb-6">{errorMessage}</p>
+                <div className="space-y-3">
+                  <Button onClick={handleRefresh} className="w-full bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white">
+                    <RefreshCw className="h-4 w-4 mr-2" />
+                    Try Again
+                  </Button>
+                  <Button variant="outline" asChild className="w-full border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <a
+                      href="https://github.com/timDeHof"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Github className="h-4 w-4 mr-2" />
+                      View GitHub Profile
+                    </a>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </MaxWidthWrapper>
         </div>
       </>
     );
@@ -82,6 +86,8 @@ export const ProjectsPage: React.FC = () => {
 
   const getProjectTypeTitle = () => {
     switch (selectedProjectType) {
+      case "showcase":
+        return "Showcase Projects";
       case "personal":
         return "Personal Projects";
       case "contributions":
@@ -93,12 +99,14 @@ export const ProjectsPage: React.FC = () => {
 
   const getProjectTypeDescription = () => {
     switch (selectedProjectType) {
+      case "showcase":
+        return "Featured high-quality projects worth highlighting";
       case "personal":
         return "Original projects I created from scratch";
       case "contributions":
         return "Projects I forked and contributed to";
       default:
-        return "A mix of personal projects and contributions";
+        return "A mix of showcase, personal projects and contributions";
     }
   };
 
@@ -145,7 +153,7 @@ export const ProjectsPage: React.FC = () => {
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-teal-900 dark:to-blue-900">
         <SectionSEO section="portfolio" />
-        <div className="container mx-auto px-4">
+        <MaxWidthWrapper>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -168,42 +176,48 @@ export const ProjectsPage: React.FC = () => {
             <div className="flex items-center justify-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
               {isLoading
                 ? (
-                    <span>Loading repositories...</span>
-                  )
+                  <span>Loading repositories...</span>
+                )
                 : (
-                    <>
-                      <span>
-                        {stats.total}
-                        {" "}
-                        total repositories
-                      </span>
-                      <span>•</span>
-                      <span className="text-teal-700 dark:text-teal-400 font-medium">
-                        {stats.personal}
-                        {" "}
-                        personal projects
-                      </span>
-                      <span>•</span>
-                      <span>
-                        {stats.contributions}
-                        {" "}
-                        contributions
-                      </span>
-                    </>
-                  )}
+                  <>
+                    <span>
+                      {stats.total}
+                      {" "}
+                      total repositories
+                    </span>
+                    <span>•</span>
+                    <span className="text-yellow-600 dark:text-yellow-400 font-medium">
+                      {stats.showcase}
+                      {" "}
+                      showcase
+                    </span>
+                    <span>•</span>
+                    <span className="text-teal-700 dark:text-teal-400 font-medium">
+                      {stats.personal}
+                      {" "}
+                      personal
+                    </span>
+                    <span>•</span>
+                    <span>
+                      {stats.contributions}
+                      {" "}
+                      contributions
+                    </span>
+                  </>
+                )}
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleRefresh}
                 disabled={isFetching}
-                className="ml-4 border-teal-700 dark:border-teal-400 text-teal-700 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
+                className="ml-4 border-teal-700 dark:border-teal-400 bg-teal-700 text-teal-50 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-900/20"
               >
                 <RefreshCw className={`h-4 w-4 mr-2 ${isFetching ? "animate-spin" : ""}`} />
                 Refresh
               </Button>
             </div>
           </motion.div>
-        </div>
+        </MaxWidthWrapper>
       </section>
 
       {/* Project Type Filter - Show when data is loaded */}
@@ -213,6 +227,7 @@ export const ProjectsPage: React.FC = () => {
           onTypeChange={handleProjectTypeChange}
           stats={{
             total: stats.total,
+            showcase: stats.showcase,
             personal: stats.personal,
             contributions: stats.contributions,
           }}
@@ -230,7 +245,7 @@ export const ProjectsPage: React.FC = () => {
 
       {/* Repositories Grid */}
       <AnimatedSection className="py-20 bg-white dark:bg-slate-900">
-        <div className="container mx-auto px-4">
+        <MaxWidthWrapper>
           {/* Loading State - Show Skeletons */}
           {isLoading && (
             <>
@@ -270,7 +285,7 @@ export const ProjectsPage: React.FC = () => {
 
               {/* Repository Grid or Messages */}
               {filteredRepositories.length > 0 && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {filteredRepositories.map((repository, index) => (
                     <GitHubRepositoryCard
                       key={repository.id}
@@ -292,6 +307,7 @@ export const ProjectsPage: React.FC = () => {
                     repositories found
                   </h3>
                   <p className="text-gray-600 dark:text-gray-400 mb-6">
+                    {selectedProjectType === "showcase" && "No showcase projects found for the selected criteria."}
                     {selectedProjectType === "personal" && "No personal projects found for the selected criteria."}
                     {selectedProjectType === "contributions" && "No contributions found for the selected criteria."}
                     {selectedProjectType === "all" && "No repositories found for the selected filters."}
@@ -346,12 +362,17 @@ export const ProjectsPage: React.FC = () => {
               )}
             </>
           )}
-        </div>
+        </MaxWidthWrapper>
       </AnimatedSection>
+
+      {/* GitHub Stats Section */}
+      {!isLoading && repositories.length > 0 && (
+        <GitHubStatsSection />
+      )}
 
       {/* GitHub Profile Link */}
       <AnimatedSection className="py-16 bg-gradient-to-br from-gray-50 via-teal-50/30 to-blue-50 dark:from-slate-800 dark:via-teal-900/30 dark:to-blue-900">
-        <div className="container mx-auto px-4 text-center">
+        <MaxWidthWrapper className="text-center">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
             Want to see more?
           </h2>
@@ -368,7 +389,7 @@ export const ProjectsPage: React.FC = () => {
               View GitHub Profile
             </a>
           </Button>
-        </div>
+        </MaxWidthWrapper>
       </AnimatedSection>
     </>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { ErrorBoundary } from "../common/error-boundary";
 
+import { ErrorBoundary } from "../common/error-boundary";
 // Import the components directly to avoid module resolution issues
 import { Footer } from "./footer";
 import { Navigation } from "./navigation";

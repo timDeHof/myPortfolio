@@ -3,7 +3,7 @@ import React from "react";
 
 import { Button } from "../ui/button";
 
-type RepositoryFilterProps = {
+interface RepositoryFilterProps {
   languages: string[];
   selectedLanguage: string;
   onLanguageChange: (language: string) => void;
@@ -41,7 +41,7 @@ export const RepositoryFilter: React.FC<RepositoryFilterProps> = ({
               onClick={() => onLanguageChange(language)}
               className={selectedLanguage === language
                 ? "bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white"
-                : "border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:border-teal-300 dark:hover:border-teal-600"}
+                : "border-gray-300 dark:border-gray-600 text-white dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:border-teal-300 dark:hover:border-teal-600"}
             >
               {language}
             </Button>

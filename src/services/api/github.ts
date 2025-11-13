@@ -19,6 +19,7 @@ export type GitHubRepository = {
   archived: boolean;
   fork: boolean;
   private: boolean;
+  category?: 'showcase' | 'personal' | 'contribution' | 'fork';
 };
 
 export type GitHubLanguages = {
@@ -49,6 +50,15 @@ export type GitHubError = {
 
 const GITHUB_USERNAME = "timDeHof";
 const GITHUB_API_BASE = "https://api.github.com";
+
+// Repositories to exclude from portfolio (add repo names here)
+const EXCLUDED_REPOS = [
+  'timDeHof', // Profile README repo
+  'test-repo',
+  'playground',
+  'scratch',
+  // Add any repo names you want to hide
+];
 
 // Enhanced error class for better error handling
 export class GitHubAPIError extends Error {
@@ -137,41 +147,96 @@ export const githubAPI = {
     return githubFetch<GitHubUser>(`${GITHUB_API_BASE}/users/${GITHUB_USERNAME}`);
   },
 
-  // Fetch repositories with enhanced filtering
+  // Fetch repositories with enhanced categorization
   fetchRepositories: async (): Promise<GitHubRepository[]> => {
     const url = `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100&type=all`;
     const repositories = await githubFetch<GitHubRepository[]>(url);
 
     console.log("📊 Total repositories fetched:", repositories.length);
 
-    // Apply filtering for public, non-archived, owned repositories
-    const filteredRepos = repositories
-      .filter((repo) => {
-        const isPublic = !repo.private;
-        const isNotArchived = !repo.archived;
-        const isOwned = !repo.fork; // Exclude forked repositories to show only original work
+    // Filter for public, non-archived, non-excluded repositories with demo links
+    const publicRepos = repositories.filter((repo) => {
+      const isPublic = !repo.private;
+      const isNotArchived = !repo.archived;
+      const isNotExcluded = !EXCLUDED_REPOS.includes(repo.name);
+      const hasDemo = repo.homepage && repo.homepage.trim() !== "";
 
-        if (!isPublic) {
-          console.log(`🔒 Filtering out private repo: ${repo.name}`);
-        }
-        if (!isNotArchived) {
-          console.log(`📦 Filtering out archived repo: ${repo.name}`);
-        }
-        if (!isOwned) {
-          console.log(`🍴 Filtering out forked repo: ${repo.name}`);
-        }
+      if (!isPublic) console.log(`🔒 Filtering out private repo: ${repo.name}`);
+      if (!isNotArchived) console.log(`📦 Filtering out archived repo: ${repo.name}`);
+      if (!isNotExcluded) console.log(`🚫 Filtering out excluded repo: ${repo.name}`);
+      if (!hasDemo) console.log(`🔗 Filtering out repo without demo: ${repo.name}`);
 
-        return isPublic && isNotArchived && isOwned;
-      })
-      .sort((a, b) => {
-        // Sort by stars first, then by last updated
-        if (b.stargazers_count !== a.stargazers_count) {
-          return b.stargazers_count - a.stargazers_count;
-        }
-        return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
-      });
+      return isPublic && isNotArchived && isNotExcluded && hasDemo;
+    });
 
-    return filteredRepos;
+    // Categorize repositories
+    const categorized = publicRepos.map(repo => ({
+      ...repo,
+      category: githubAPI.categorizeRepository(repo)
+    }));
+
+    // Sort by category priority, then by engagement
+    return categorized.sort((a, b) => {
+      const categoryPriority = { showcase: 0, personal: 1, contribution: 2, fork: 3 };
+      const aPriority = categoryPriority[a.category];
+      const bPriority = categoryPriority[b.category];
+      
+      if (aPriority !== bPriority) return aPriority - bPriority;
+      
+      // Within same category, sort by engagement (stars + forks)
+      const aEngagement = a.stargazers_count + a.forks_count;
+      const bEngagement = b.stargazers_count + b.forks_count;
+      
+      if (bEngagement !== aEngagement) return bEngagement - aEngagement;
+      
+      return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+    });
+  },
+
+  // Categorize repository based on various criteria
+  categorizeRepository: (repo: GitHubRepository): 'showcase' | 'personal' | 'contribution' | 'fork' => {
+    // Check for portfolio-ready topics
+    const portfolioTopics = ['portfolio', 'showcase', 'featured', 'production', 'demo'];
+    const hasPortfolioTopic = repo.topics?.some(topic => portfolioTopics.includes(topic.toLowerCase()));
+    
+    // Showcase projects: High-quality original projects worth highlighting
+    const showcaseIndicators = [
+      repo.stargazers_count > 0,
+      repo.forks_count > 0,
+      repo.description && repo.description.length > 20,
+      repo.homepage,
+      repo.topics && repo.topics.length > 2,
+      hasPortfolioTopic // Bonus for portfolio topics
+    ];
+    
+    const showcaseScore = showcaseIndicators.filter(Boolean).length;
+    
+    if (!repo.fork && (hasPortfolioTopic || showcaseScore >= 3)) {
+      console.log(`⭐ Showcase project: ${repo.name} (score: ${showcaseScore}, portfolio topic: ${hasPortfolioTopic})`);
+      return 'showcase';
+    }
+    
+    // Personal projects: Original work but maybe not showcase-ready
+    if (!repo.fork) {
+      console.log(`👤 Personal project: ${repo.name}`);
+      return 'personal';
+    }
+    
+    // Contributions: Forks with meaningful changes
+    const contributionIndicators = [
+      repo.stargazers_count > 0,
+      new Date(repo.pushed_at) > new Date(repo.created_at),
+      repo.description && !repo.description.includes('fork')
+    ];
+    
+    if (contributionIndicators.filter(Boolean).length >= 2) {
+      console.log(`🤝 Contribution: ${repo.name}`);
+      return 'contribution';
+    }
+    
+    // Regular forks
+    console.log(`🍴 Fork: ${repo.name}`);
+    return 'fork';
   },
 
   // Fetch repository languages

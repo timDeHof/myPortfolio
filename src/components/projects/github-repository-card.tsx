@@ -9,7 +9,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 
-type GitHubRepositoryCardProps = {
+interface GitHubRepositoryCardProps {
   repository: GitHubRepository;
   index: number;
 };
@@ -97,30 +97,30 @@ export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = ({ repo
           <div className="mb-4">
             {loadingLanguages
               ? (
-                  <div className="flex space-x-2">
-                    <div className="h-6 w-16 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
-                    <div className="h-6 w-12 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
-                  </div>
-                )
+                <div className="flex space-x-2">
+                  <div className="h-6 w-16 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
+                  <div className="h-6 w-12 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
+                </div>
+              )
               : displayLanguages.length > 0
                 ? (
-                    <div className="flex flex-wrap gap-2">
-                      {displayLanguages.map(language => (
-                        <span
-                          key={language}
-                          className="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 text-xs rounded-full font-medium flex items-center border border-blue-200 dark:border-blue-700"
-                        >
-                          <Code className="h-3 w-3 mr-1" />
-                          {language}
-                        </span>
-                      ))}
-                    </div>
-                  )
+                  <div className="flex flex-wrap gap-2">
+                    {displayLanguages.map(language => (
+                      <span
+                        key={language}
+                        className="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 text-xs rounded-full font-medium flex items-center border border-blue-200 dark:border-blue-700"
+                      >
+                        <Code className="h-3 w-3 mr-1" />
+                        {language}
+                      </span>
+                    ))}
+                  </div>
+                )
                 : (
-                    <div className="text-xs text-gray-500 dark:text-gray-400">
-                      No language information available
-                    </div>
-                  )}
+                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                    No language information available
+                  </div>
+                )}
           </div>
 
           {/* Project Type Info */}
@@ -156,7 +156,7 @@ export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = ({ repo
               </a>
             </Button>
             {repository.homepage && (
-              <Button variant="outline" size="sm" asChild className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+              <Button variant="outline" size="sm" asChild className="border-gray-300 dark:border-gray-600 text-white dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                 <a
                   href={repository.homepage}
                   target="_blank"

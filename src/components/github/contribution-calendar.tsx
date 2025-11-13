@@ -198,7 +198,7 @@ export const ContributionCalendar: React.FC = () => {
 
           {/* Calendar Container */}
           <div className="overflow-x-auto">
-            <div className="inline-block min-w-full">
+            <div className="inline-block" style={{ minWidth: "800px" }}>
               {/* Month labels with improved accessibility */}
               <div className="hidden md:block mb-8 relative" style={{ minHeight: "40px" }}>
                 <div className="flex">
@@ -243,7 +243,7 @@ export const ContributionCalendar: React.FC = () => {
               {/* Main calendar grid */}
               <div className="flex items-start bg-gradient-to-br from-slate-50/50 to-white dark:from-slate-800/50 dark:to-slate-900 p-6 rounded-2xl border border-slate-200/50 dark:border-slate-700/50">
                 {/* Enhanced day labels */}
-                <div className="flex flex-col gap-1 mr-6" style={{ width: "72px" }}>
+                <div className="flex flex-col gap-1 mr-4 flex-shrink-0" style={{ width: "60px" }}>
                   <div className="h-8 mb-2"></div>
                   {dayLabels.map((day, index) => (
                     <div
@@ -260,7 +260,7 @@ export const ContributionCalendar: React.FC = () => {
                 </div>
 
                 {/* Enhanced contribution squares with accessible colors */}
-                <div className="flex gap-1">
+                <div className="flex gap-1 flex-1 min-w-0">
                   {contributionWeeks.map((week, weekIndex) => (
                     <div key={weekIndex} className="flex flex-col gap-1">
                       {week.days.map((day, dayIndex) => {

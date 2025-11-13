@@ -17,21 +17,30 @@ export function useTheme() {
   useEffect(() => {
     const savedTheme = localStorage.getItem("portfolio-theme") as "light" | "dark" | "system" | null;
 
-    if (savedTheme) {
+    if (savedTheme && (savedTheme === "light" || savedTheme === "dark")) {
       setTheme(savedTheme);
     }
     else {
-      // Set system as default if no preference is saved
-      setTheme("system");
+      // Default to system preference
+      setTheme(getSystemPreference());
     }
   }, [setTheme]);
 
   // Apply theme to document
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const applyTheme = (themeToApply: "light" | "dark") => {
       const root = document.documentElement;
+      
+      // Remove existing theme classes
       root.classList.remove("light", "dark");
+      
+      // Add new theme class
       root.classList.add(themeToApply);
+      
+      // Force a repaint to ensure styles are applied
+      root.style.colorScheme = themeToApply;
 
       // Update meta theme color
       const metaThemeColor = document.querySelector("meta[name=\"theme-color\"]");
@@ -55,14 +64,24 @@ export function useTheme() {
       effectiveTheme = theme;
     }
 
+    // Apply theme immediately
     applyTheme(effectiveTheme);
 
     // Listen for system theme changes
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    mediaQuery.addEventListener("change", handleSystemThemeChange);
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", handleSystemThemeChange);
+    } else {
+      // Fallback for older browsers
+      mediaQuery.addListener(handleSystemThemeChange);
+    }
 
     return () => {
-      mediaQuery.removeEventListener("change", handleSystemThemeChange);
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener("change", handleSystemThemeChange);
+      } else {
+        mediaQuery.removeListener(handleSystemThemeChange);
+      }
     };
   }, [theme]);
 
@@ -72,15 +91,7 @@ export function useTheme() {
   }, [theme]);
 
   const toggleTheme = () => {
-    if (theme === "light") {
-      setTheme("dark");
-    }
-    else if (theme === "dark") {
-      setTheme("system");
-    }
-    else {
-      setTheme("light");
-    }
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   const getEffectiveTheme = (): "light" | "dark" => {

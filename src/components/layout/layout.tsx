@@ -6,6 +6,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "../common/error-boundary";
 import { ThemeToggle } from "../common/theme-toggle";
 import { Button } from "../ui/button";
+import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { Separator } from "../ui/separator";
 
 // Navigation Component
@@ -25,7 +26,7 @@ function Navigation() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 shadow-sm">
-      <div className="container mx-auto px-4">
+      <MaxWidthWrapper>
         <div className="flex items-center justify-between h-16">
           <Link
             to="/"
@@ -39,10 +40,9 @@ function Navigation() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`relative px-3 py-2 text-sm font-medium transition-colors ${
-                  location.pathname === item.path
-                    ? "text-teal-700 dark:text-teal-400"
-                    : "text-gray-700 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-400"
+                className={`relative px-3 py-2 text-sm font-medium transition-colors ${location.pathname === item.path
+                ? "text-teal-700 dark:text-teal-400"
+                : "text-gray-700 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-400"
                 }`}
               >
                 {item.label}
@@ -87,11 +87,10 @@ function Navigation() {
                     key={item.path}
                     to={item.path}
                     onClick={() => setIsOpen(false)}
-                    className={`flex items-center space-x-3 px-4 py-3 text-sm font-medium transition-colors rounded-lg ${
-                      location.pathname === item.path
-                        ? "text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/20"
-                        : "text-gray-700 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-400 hover:bg-gray-50 dark:hover:bg-gray-800"
-                    }`}
+                    className={`flex items-center space-x-3 px-4 py-3 text-sm font-medium transition-colors rounded-lg ${location.pathname === item.path
+                      ? "text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/20"
+                      : "text-gray-700 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-400 hover:bg-gray-50 dark:hover:bg-gray-800"
+                      }`}
                   >
                     {item.icon}
                     <span>{item.label}</span>
@@ -101,7 +100,7 @@ function Navigation() {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </MaxWidthWrapper>
     </nav>
   );
 }

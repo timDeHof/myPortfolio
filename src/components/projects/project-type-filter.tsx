@@ -1,16 +1,17 @@
 import type { ProjectType } from "@hooks/queries/use-repository-filtering";
 
 import { motion } from "framer-motion";
-import { GitFork, Globe, User } from "lucide-react";
+import { GitFork, Globe, Star, User } from "lucide-react";
 import React from "react";
 
 import { Button } from "../ui/button";
 
-type ProjectTypeFilterProps = {
+interface ProjectTypeFilterProps {
   selectedType: ProjectType;
   onTypeChange: (type: ProjectType) => void;
   stats: {
     total: number;
+    showcase: number;
     personal: number;
     contributions: number;
   };
@@ -23,6 +24,13 @@ const projectTypes = [
     icon: Globe,
     description: "All repositories",
     color: "blue",
+  },
+  {
+    type: "showcase" as ProjectType,
+    label: "Showcase",
+    icon: Star,
+    description: "Featured high-quality projects",
+    color: "yellow",
   },
   {
     type: "personal" as ProjectType,
@@ -47,6 +55,8 @@ export const ProjectTypeFilter: React.FC<ProjectTypeFilterProps> = ({
 }) => {
   const getCount = (type: ProjectType) => {
     switch (type) {
+      case "showcase":
+        return stats.showcase;
       case "personal":
         return stats.personal;
       case "contributions":
@@ -62,15 +72,19 @@ export const ProjectTypeFilter: React.FC<ProjectTypeFilterProps> = ({
     const colorClasses = {
       blue: {
         selected: "bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white",
-        unselected: "hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-600 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300",
+        unselected: "hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-600 border-gray-300 dark:border-gray-600 text-gray-100 dark:text-gray-300",
+      },
+      yellow: {
+        selected: "bg-yellow-600 hover:bg-yellow-700 dark:bg-yellow-500 dark:hover:bg-yellow-600 text-white",
+        unselected: "hover:bg-yellow-50 dark:hover:bg-yellow-900/20 hover:border-yellow-300 dark:hover:border-yellow-600 border-gray-300 dark:border-gray-600 text-gray-100 dark:text-gray-300",
       },
       teal: {
         selected: "bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white",
-        unselected: "hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:border-teal-300 dark:hover:border-teal-600 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300",
+        unselected: "hover:bg-teal-50 dark:hover:bg-teal-900/20 hover:border-teal-300 dark:hover:border-teal-600 border-gray-300 dark:border-gray-600 text-gray-100 dark:text-gray-300",
       },
       purple: {
         selected: "bg-purple-700 hover:bg-purple-800 dark:bg-purple-600 dark:hover:bg-purple-700 text-white",
-        unselected: "hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:border-purple-300 dark:hover:border-purple-600 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300",
+        unselected: "hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:border-purple-300 dark:hover:border-purple-600 border-gray-300 dark:border-gray-600 text-gray-100 dark:text-gray-300",
       },
     };
 
@@ -84,6 +98,10 @@ export const ProjectTypeFilter: React.FC<ProjectTypeFilterProps> = ({
       blue: {
         selected: "bg-blue-600 dark:bg-blue-500 text-white",
         unselected: "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 group-hover:bg-blue-100 dark:group-hover:bg-blue-800",
+      },
+      yellow: {
+        selected: "bg-yellow-500 dark:bg-yellow-400 text-white",
+        unselected: "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 group-hover:bg-yellow-100 dark:group-hover:bg-yellow-800",
       },
       teal: {
         selected: "bg-teal-600 dark:bg-teal-500 text-white",

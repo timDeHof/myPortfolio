@@ -27,6 +27,7 @@ import {
   VercelIcon,
 } from "../components/common/technology-icons";
 import { Card, CardContent } from "../components/ui/card";
+import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
 import { pageSEO } from "../utils/seo";
 
 // Enhanced skills with actual technology icons (removed proficiency)
@@ -179,7 +180,7 @@ export const AboutPage: React.FC = () => {
 
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-teal-900 dark:to-blue-900">
-        <div className="container mx-auto px-4">
+        <MaxWidthWrapper>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -194,12 +195,12 @@ export const AboutPage: React.FC = () => {
               to creating efficient and innovative digital solutions.
             </p>
           </motion.div>
-        </div>
+        </MaxWidthWrapper>
       </section>
 
       {/* Story Section */}
       <AnimatedSection className="py-20 bg-white dark:bg-slate-900">
-        <div className="container mx-auto px-4">
+        <MaxWidthWrapper>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">My Journey</h2>
@@ -264,12 +265,12 @@ export const AboutPage: React.FC = () => {
               </Card>
             </div>
           </div>
-        </div>
+        </MaxWidthWrapper>
       </AnimatedSection>
 
       {/* Enhanced Skills Section - With Actual Technology Icons */}
       <AnimatedSection className="py-20 bg-gradient-to-br from-gray-50 to-blue-50/30 dark:from-slate-800 dark:to-blue-900/30">
-        <div className="container mx-auto px-4">
+        <MaxWidthWrapper>
           <div className="text-center mb-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -373,12 +374,12 @@ export const AboutPage: React.FC = () => {
               </CardContent>
             </Card>
           </motion.div>
-        </div>
+        </MaxWidthWrapper>
       </AnimatedSection>
 
       {/* Timeline Section */}
       <AnimatedSection className="py-20 bg-white dark:bg-slate-900">
-        <div className="container mx-auto px-4">
+        <MaxWidthWrapper>
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
               Professional Timeline
@@ -428,7 +429,7 @@ export const AboutPage: React.FC = () => {
               </motion.div>
             ))}
           </div>
-        </div>
+        </MaxWidthWrapper>
       </AnimatedSection>
     </>
   );

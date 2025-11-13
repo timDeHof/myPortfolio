@@ -4,9 +4,7 @@ import tryParseEnv from "./try-parse-env";
 
 const EnvSchema = z.object({
   VITE_NODE_ENV: z.string().default("development"),
-  VITE_EMAILJS_SERVICE_ID: z.string().optional(),
-  VITE_EMAILJS_TEMPLATE_ID: z.string().optional(),
-  VITE_EMAILJS_PUBLIC_KEY: z.string().optional(),
+  VITE_WEB3FORMS_ACCESS_KEY: z.string().optional(),
   VITE_GITHUB_PAT: z.string().optional(),
 });
 

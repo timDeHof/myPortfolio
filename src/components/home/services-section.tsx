@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import { AnimatedSection } from "../common/animated-section";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
+import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 
 const services = [
   {
@@ -118,8 +119,8 @@ export const ServicesSection: React.FC = () => {
       id="services-section"
       className="py-20 bg-gradient-to-br from-gray-50 via-blue-50/30 to-teal-50/30 dark:from-slate-800 dark:via-blue-900/30 dark:to-teal-900/30"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+      {/* Section Header */}
+      <MaxWidthWrapper>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -135,109 +136,113 @@ export const ServicesSection: React.FC = () => {
             exceptional web solutions that drive business growth.
           </p>
         </motion.div>
+      </MaxWidthWrapper>
 
-        {/* Services Grid */}
+      {/* Services Grid */}
+      <MaxWidthWrapper>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.id}
-              initial={{ opacity: 0, y: 30, rotateY: -15 }}
-              whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              whileHover={{
-                scale: 1.02,
-                y: -10,
-                rotateY: 5,
-                transition: { duration: 0.3 },
-              }}
-              className="group h-full"
-            >
-              <Card className="h-full bg-white dark:bg-slate-800 hover:shadow-2xl dark:hover:shadow-2xl transition-all duration-500 border-gray-200 dark:border-slate-600 rounded-2xl overflow-hidden">
-                <CardContent className="p-8 h-full relative">
-                  {/* Service Icon & Header */}
-                  <motion.div
-                    className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${service.color} text-white rounded-2xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}
-                    whileHover={{ scale: 1.2, rotate: 12 }}
-                  >
-                    {service.icon}
-                  </motion.div>
-
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-700 dark:text-gray-300 mb-6">
-                    {service.description}
-                  </p>
-
-                  {/* Benefits list */}
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">What You Get:</h4>
-                    <ul className="space-y-2">
-                      {service.benefits.map((benefit, i) => (
-                        <motion.li
-                          key={benefit}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.5, delay: (index * 0.2) + (i * 0.1) }}
-                          viewport={{ once: true }}
-                          className="flex items-center text-gray-700 dark:text-gray-300"
-                        >
-                          <CheckCircle className="h-4 w-4 mr-2 text-green-600 dark:text-green-400 flex-shrink-0" />
-                          <span className="text-sm">{benefit}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Process steps */}
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Process:</h4>
-                    <div className="space-y-2">
-                      {service.process.map((step, i) => (
-                        <motion.div
-                          key={step}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.4, delay: (index * 0.2) + (i * 0.1) }}
-                          viewport={{ once: true }}
-                          className="flex items-center"
-                        >
-                          <div className={`w-6 h-6 rounded-full bg-gradient-to-br ${service.color} text-white flex items-center justify-center text-sm mr-3 font-bold`}>
-                            {i + 1}
-                          </div>
-                          <span className="text-sm text-gray-700 dark:text-gray-300">{step}</span>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Hidden CTA that reveals on hover */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 0, y: 20 }}
-                    whileHover={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute bottom-6 left-6 right-6 opacity-0 group-hover:opacity-100"
-                  >
-                    <Button
-                      asChild
-                      size="sm"
-                      className={`w-full bg-gradient-to-r ${service.color} text-white hover:shadow-lg transition-all duration-300`}
+            {services.map((service, index) => (
+              <motion.div
+                key={service.id}
+                initial={{ opacity: 0, y: 30, rotateY: -15 }}
+                whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.2 }}
+                viewport={{ once: true }}
+                whileHover={{
+                  scale: 1.02,
+                  y: -10,
+                  rotateY: 5,
+                  transition: { duration: 0.3 },
+                }}
+                className="group h-full"
+              >
+                <Card className="h-full bg-white dark:bg-slate-800 hover:shadow-2xl dark:hover:shadow-2xl transition-all duration-500 border-gray-200 dark:border-slate-600 rounded-2xl overflow-hidden">
+                  <CardContent className="p-8 h-full relative">
+                    {/* Service Icon & Header */}
+                    <motion.div
+                      className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${service.color} text-white rounded-2xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}
+                      whileHover={{ scale: 1.2, rotate: 12 }}
                     >
-                      <Link to="/contact">
-                        Get Started
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </motion.div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+                      {service.icon}
+                    </motion.div>
 
-        {/* Development Philosophy Section */}
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-700 dark:text-gray-300 mb-6">
+                      {service.description}
+                    </p>
+
+                    {/* Benefits list */}
+                    <div className="mb-6">
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">What You Get:</h4>
+                      <ul className="space-y-2">
+                        {service.benefits.map((benefit, i) => (
+                          <motion.li
+                            key={benefit}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: (index * 0.2) + (i * 0.1) }}
+                            viewport={{ once: true }}
+                            className="flex items-center text-gray-700 dark:text-gray-300"
+                          >
+                            <CheckCircle className="h-4 w-4 mr-2 text-green-600 dark:text-green-400 flex-shrink-0" />
+                            <span className="text-sm">{benefit}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Process steps */}
+                    <div className="mb-6">
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Process:</h4>
+                      <div className="space-y-2">
+                        {service.process.map((step, i) => (
+                          <motion.div
+                            key={step}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.4, delay: (index * 0.2) + (i * 0.1) }}
+                            viewport={{ once: true }}
+                            className="flex items-center"
+                          >
+                            <div className={`w-6 h-6 rounded-full bg-gradient-to-br ${service.color} text-white flex items-center justify-center text-sm mr-3 font-bold`}>
+                              {i + 1}
+                            </div>
+                            <span className="text-sm text-gray-700 dark:text-gray-300">{step}</span>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Hidden CTA that reveals on hover */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 0, y: 20 }}
+                      whileHover={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute bottom-6 left-6 right-6 opacity-0 group-hover:opacity-100"
+                    >
+                      <Button
+                        asChild
+                        size="sm"
+                        className={`w-full bg-gradient-to-r ${service.color} text-white hover:shadow-lg transition-all duration-300`}
+                      >
+                        <Link to="/contact">
+                          Get Started
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </motion.div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+        </div>
+      </MaxWidthWrapper>
+
+      {/* Development Philosophy Section */}
+      <MaxWidthWrapper>
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -299,8 +304,10 @@ export const ServicesSection: React.FC = () => {
             ))}
           </div>
         </motion.div>
+      </MaxWidthWrapper>
 
-        {/* Value Proposition & CTA */}
+      {/* Value Proposition & CTA */}
+      <MaxWidthWrapper>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -374,7 +381,7 @@ export const ServicesSection: React.FC = () => {
             </CardContent>
           </Card>
         </motion.div>
-      </div>
+      </MaxWidthWrapper>
     </AnimatedSection>
   );
 };

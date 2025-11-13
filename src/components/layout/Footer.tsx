@@ -2,6 +2,7 @@ import { ArrowUpIcon, ExternalLink, GithubIcon, LinkedinIcon, TwitterIcon } from
 import { Link } from "react-router-dom";
 
 import { Button } from "../ui/button";
+import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { Separator } from "../ui/separator";
 
 const socialLinks = [
@@ -40,7 +41,7 @@ export function Footer() {
 
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 text-white pt-16 pb-8">
-      <div className="container mx-auto px-4 py-12">
+      <MaxWidthWrapper>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-8">
           {/* Brand Section */}
           <div className="text-center md:text-left">
@@ -133,7 +134,7 @@ export function Footer() {
             <span className="text-sm">Back to top</span>
           </button>
         </div>
-      </div>
+      </MaxWidthWrapper>
     </footer>
   );
 }

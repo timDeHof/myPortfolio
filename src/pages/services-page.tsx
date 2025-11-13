@@ -6,6 +6,7 @@ import { AnimatedSection } from "../components/common/animated-section";
 import { SEOHead } from "../components/common/seo-head";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
+import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
 import { services } from "../data/services";
 import { pageSEO } from "../utils/seo";
 
@@ -74,7 +75,7 @@ export const ServicesPage: React.FC = () => {
 
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-teal-900 dark:to-blue-900">
-        <div className="container mx-auto px-4">
+        <MaxWidthWrapper>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -89,12 +90,12 @@ export const ServicesPage: React.FC = () => {
               with creative problem-solving to deliver exceptional results.
             </p>
           </motion.div>
-        </div>
+        </MaxWidthWrapper>
       </section>
 
       {/* Main Services Section */}
       <AnimatedSection className="py-20 bg-white dark:bg-slate-900">
-        <div className="container mx-auto px-4">
+        <MaxWidthWrapper>
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
               What I Offer
@@ -147,12 +148,12 @@ export const ServicesPage: React.FC = () => {
               </motion.div>
             ))}
           </div>
-        </div>
+        </MaxWidthWrapper>
       </AnimatedSection>
 
       {/* Additional Services Section */}
       <AnimatedSection className="py-20 bg-gray-50 dark:bg-slate-800">
-        <div className="container mx-auto px-4">
+        <MaxWidthWrapper>
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
               Additional Services
@@ -191,12 +192,12 @@ export const ServicesPage: React.FC = () => {
               </motion.div>
             ))}
           </div>
-        </div>
+        </MaxWidthWrapper>
       </AnimatedSection>
 
       {/* Process Section */}
       <AnimatedSection className="py-20 bg-white dark:bg-slate-900">
-        <div className="container mx-auto px-4">
+        <MaxWidthWrapper>
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
               My Process
@@ -237,12 +238,12 @@ export const ServicesPage: React.FC = () => {
               ))}
             </div>
           </div>
-        </div>
+        </MaxWidthWrapper>
       </AnimatedSection>
 
       {/* Technologies Showcase */}
       <AnimatedSection className="py-20 bg-gradient-to-br from-gray-50 via-teal-50/30 to-blue-50 dark:from-slate-800 dark:via-teal-900/30 dark:to-blue-900">
-        <div className="container mx-auto px-4">
+        <MaxWidthWrapper>
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
               Technologies I Work With
@@ -319,12 +320,12 @@ export const ServicesPage: React.FC = () => {
               </Card>
             </motion.div>
           </div>
-        </div>
+        </MaxWidthWrapper>
       </AnimatedSection>
 
       {/* Call to Action */}
       <AnimatedSection className="py-20 bg-gradient-to-r from-blue-700 via-teal-700 to-purple-700 dark:from-blue-600 dark:via-teal-600 dark:to-purple-600 text-white">
-        <div className="container mx-auto px-4 text-center">
+        <MaxWidthWrapper className="text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -352,7 +353,7 @@ export const ServicesPage: React.FC = () => {
               </Button>
             </div>
           </motion.div>
-        </div>
+        </MaxWidthWrapper>
       </AnimatedSection>
     </>
   );

@@ -87,9 +87,15 @@ export const ContactPage: React.FC = () => {
       setFormData({ name: "", email: "", message: "" });
       setErrors({});
     }
-    catch {
+    catch (error) {
       setSubmitStatus("error");
-      setSubmitMessage("Sorry, there was an error sending your message. Please try again or contact me directly at tim@timdehof.dev");
+      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+      
+      if (errorMessage.includes("access key not configured")) {
+        setSubmitMessage("Contact form is not configured yet. Please reach out directly at tim@timdehof.dev");
+      } else {
+        setSubmitMessage("Sorry, there was an error sending your message. Please try again or contact me directly at tim@timdehof.dev");
+      }
     }
     finally {
       setIsSubmitting(false);
