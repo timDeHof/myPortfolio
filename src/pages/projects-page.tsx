@@ -295,7 +295,6 @@ export const ProjectsPage: React.FC = () => {
                   ))}
                 </div>
               )}
-              283
               {filteredRepositories.length === 0 && repositories.length > 0 && (
                 <div className="text-center py-12">
                   <Github className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
@@ -329,7 +328,6 @@ export const ProjectsPage: React.FC = () => {
                   </div>
                 </div>
               )}
-              317
               {filteredRepositories.length === 0 && repositories.length === 0 && (
                 <div className="text-center py-12">
                   <Github className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
