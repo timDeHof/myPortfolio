@@ -26,6 +26,7 @@ import {
   TypeScriptIcon,
   VercelIcon,
 } from "../components/common/technology-icons";
+import { CertificationsSection } from "@/components/about/certifications-section";
 import { Card, CardContent } from "../components/ui/card";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
 import { pageSEO } from "../utils/seo";
@@ -431,6 +432,11 @@ export const AboutPage: React.FC = () => {
           </div>
         </MaxWidthWrapper>
       </AnimatedSection>
+      {/* Certifications Section */}
+      <AnimatedSection>
+        <CertificationsSection />
+      </AnimatedSection>
+
     </>
   );
 };
