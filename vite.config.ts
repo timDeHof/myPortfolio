@@ -4,11 +4,13 @@ import { resolve } from "path";
 import viteTsconfigPaths from "vite-tsconfig-paths";
 import { VitePWA } from 'vite-plugin-pwa';
 import viteImagemin from 'vite-plugin-imagemin';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    tailwindcss(),
     viteTsconfigPaths(),
     VitePWA({
       registerType: 'autoUpdate',
