@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 
 // Force TypeScript refresh
 import App from "./App";
-import "./index.css";
+import "./styles/index.css";
 
 createRoot(document.getElementById("app") as HTMLElement).render(
   <StrictMode>

@@ -1,6 +1,4 @@
-const {
-  default: flattenColorPalette,
-} = require("tailwindcss/lib/util/flattenColorPalette");
+const flattenColorPalette = require("tailwindcss/dist/flatten-color-palette.js");
 
 module.exports = {
   content: [
