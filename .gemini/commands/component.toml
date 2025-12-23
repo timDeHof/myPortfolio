@@ -1,0 +1,16 @@
+description = 'Creates a new UI component and test file'
+prompt = """
+Before doing anything, run a shell command to see if there's any uncommitted, unstaged or untracked changes on the current branch. If there are uncommitted, unstaged or untracked changes, abort this process and tell the user. DO NOT GO ANY FURTHER.
+
+You will be making a new react component for the fullstack app as described here = {{args}}.
+
+Your job is to:
+1.  Derive a safe branch name based on that component description. The format of the branch should be `component/<slug>`, where the <slug/> should be lowercase letters, kebab-case, and relatively short but descriptive..
+2. show the user the branch name you have chosen, and the git command you intend to run (e.g., `git switch -c component/avatar`).
+3. Run a shell command to switch to the new branch. If there's uncommitted changes: tell the user, abort the process and do NOT continue.
+4. create a new test file for the component in the `./tests/components` directory and write a small suite of meaningful tests based on the expected behavior of the new component. Do NOT RUN THE TESTS YET.
+5. Make the new component in the `./src/components` directory. The name of the component can be derived from the component description and should be CamelCase. Keep file names consistent with existing conventions.
+6. When the component is created, run the tests for the component to make sure they all pass. If some tests fail, fix the component and re-run the tests until they all pass.
+7. Once everything passes, render example of the new component in the /preview page. This will involve editing the `./src/pages/preview-page.tsx` file.
+8. Briefly summarize what you have done to the user.
+"""
