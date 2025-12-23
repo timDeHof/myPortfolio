@@ -80,3 +80,5 @@ pnpm run test
 - **Linting:** ESLint is used to enforce a consistent coding style and catch potential errors.
 - **Testing:** Vitest is used for unit testing, with tests located in `__tests__` directories alongside the files they test.
 - **Conventional Commits:** The project follows the Conventional Commits specification for commit messages.
+
+

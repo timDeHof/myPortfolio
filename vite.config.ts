@@ -27,11 +27,13 @@ export default defineConfig({
     }
     }),
     viteImagemin({
-    gifsicle: { optimizationLevel: 7 },
-    mozjpeg: { quality: 80 },
-    pngquant: { quality: [0.65, 0.8] },
-    webp: { quality: 75 }
-  })
+      gifsicle: { optimizationLevel: 7 },
+      mozjpeg: { quality: 80 },
+      pngquant: { quality: [0.65, 0.8] },
+      webp: { quality: 75 },
+      // Filter to include assets from the public directory and other image files
+      filter: /\.(jpg|jpeg|png|gif|svg)$/i,
+    })
   ],
   base: "./",
   resolve: {
