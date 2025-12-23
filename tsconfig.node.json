@@ -9,6 +9,11 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
+
+    /* Node.js types */
+    "types": ["node"],
+
+    /* Bundler mode continued */
     "allowImportingTsExtensions": true,
 
     /* Linting */
