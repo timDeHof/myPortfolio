@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueries } from "@tanstack/react-query";
 
 import type { GitHubRepository } from "../../services/api/github";
 
@@ -49,6 +49,19 @@ export function useGitHubRepositoryLanguages(languagesUrl: string, enabled = tru
     meta: {
       errorMessage: "Failed to fetch repository languages",
     },
+  });
+}
+
+export function useGitHubRepositoriesLanguages(repositories: GitHubRepository[] | undefined) {
+  const languageUrls = repositories?.map(repo => repo.languages_url) ?? [];
+
+  return useQueries({
+    queries: languageUrls.map(url => ({
+      queryKey: ['languages', url],
+      queryFn: () => githubAPI.fetchRepositoryLanguages(url),
+      staleTime: 15 * 60 * 1000, // 15 minutes
+      enabled: !!repositories,
+    })),
   });
 }
 
