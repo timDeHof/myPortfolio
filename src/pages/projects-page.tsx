@@ -31,13 +31,19 @@ export const ProjectsPage: React.FC = () => {
 
   // Fetch languages for all repositories concurrently
   const languagesQueries = useGitHubRepositoriesLanguages(repositories);
+
+  const queryStates = languagesQueries.map(q => `${q.isLoading}-${q.isSuccess}`).join(',');
+
   const languagesByRepo = React.useMemo(() => {
-    if (!repositories || languagesQueries.some(query => query.isLoading)) return {};
+    if (!repositories || languagesQueries.length === 0) return {};
     return repositories.reduce((acc, repo, index) => {
-      acc[repo.id] = languagesQueries[index]?.data ?? {};
+      const query = languagesQueries[index];
+      if (query?.isSuccess && query.data) {
+        acc[repo.id] = query.data;
+      }
       return acc;
     }, {} as Record<string, Record<string, number>>);
-  }, [repositories, languagesQueries]);
+  }, [repositories, queryStates]);
 
 
   // Repository filtering with project type support
