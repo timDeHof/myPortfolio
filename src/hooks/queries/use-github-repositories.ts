@@ -40,6 +40,13 @@ export function useGitHubUser() {
   });
 }
 
+/**
+ * Fetches the programming languages used in a repository identified by a languages URL.
+ *
+ * @param languagesUrl - The repository's languages API URL; when falsy the query is disabled.
+ * @param enabled - Whether the query should be allowed to run (defaults to `true`).
+ * @returns An object representing the query result; `data` is a record mapping language names to byte counts, with standard status and error fields from React Query.
+ */
 export function useGitHubRepositoryLanguages(languagesUrl: string, enabled = true) {
   return useQuery({
     queryKey: [...githubKeys.all, "languages", languagesUrl],
@@ -52,6 +59,12 @@ export function useGitHubRepositoryLanguages(languagesUrl: string, enabled = tru
   });
 }
 
+/**
+ * Creates parallel queries to fetch languages for each repository in the provided list.
+ *
+ * @param repositories - Array of GitHub repositories; if `undefined`, queries are disabled.
+ * @returns An array of React Query result objects, one per repository language URL. Each query fetches that repository's languages, is disabled when `repositories` is `undefined`, and uses a 15-minute stale time.
+ */
 export function useGitHubRepositoriesLanguages(repositories: GitHubRepository[] | undefined) {
   const languageUrls = repositories?.map(repo => repo.languages_url) ?? [];
 
@@ -65,6 +78,11 @@ export function useGitHubRepositoriesLanguages(repositories: GitHubRepository[] 
   });
 }
 
+/**
+ * Fetches GitHub API rate limit information and refreshes it every minute.
+ *
+ * @returns A React Query result containing the GitHub rate limit data, status flags, and query controls.
+ */
 export function useGitHubRateLimit() {
   return useQuery({
     queryKey: githubKeys.rateLimit(),
