@@ -1,9 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpIcon, Briefcase, ExternalLink, GithubIcon, Home, LinkedinIcon, Mail, Menu, Settings, TwitterIcon, User, X } from "lucide-react";
-import React, { useState } from "react";
+import { ArrowUpIcon, ExternalLink, GithubIcon, LinkedinIcon, Menu, TwitterIcon, X } from "lucide-react";
+import React, { Suspense, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 
-import { ErrorBoundary } from "../common/error-boundary";
+import { navItems, footerLinks } from "@/config/navigation";
+import { LoadingSpinner } from "../common/loading-spinner";
 import { Button } from "../ui/button";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { Separator } from "../ui/separator";
@@ -12,14 +13,6 @@ import { Separator } from "../ui/separator";
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-
-  const navItems = [
-    { path: "/", label: "Home", icon: <Home className="h-4 w-4" /> },
-    { path: "/about", label: "About", icon: <User className="h-4 w-4" /> },
-    { path: "/projects", label: "Projects", icon: <Briefcase className="h-4 w-4" /> },
-    { path: "/services", label: "Services", icon: <Settings className="h-4 w-4" /> },
-    { path: "/contact", label: "Contact", icon: <Mail className="h-4 w-4" /> },
-  ];
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -37,15 +30,15 @@ function Navigation() {
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map(item => (
               <Link
-                key={item.path}
-                to={item.path}
-                className={`relative px-3 py-2 text-sm font-medium transition-colors ${location.pathname === item.path
+                key={item.href}
+                to={item.href}
+                className={`relative px-3 py-2 text-sm font-medium transition-colors ${location.pathname === item.href
                   ? "text-teal-700 dark:text-teal-400"
                   : "text-gray-700 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-400"
                 }`}
               >
-                {item.label}
-                {location.pathname === item.path && (
+                {item.name}
+                {location.pathname === item.href && (
                   <motion.div
                     layoutId="activeTab"
                     className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-700 dark:bg-teal-400"
@@ -81,16 +74,15 @@ function Navigation() {
               <div className="py-4 space-y-2">
                 {navItems.map(item => (
                   <Link
-                    key={item.path}
-                    to={item.path}
+                    key={item.href}
+                    to={item.href}
                     onClick={() => setIsOpen(false)}
-                    className={`flex items-center space-x-3 px-4 py-3 text-sm font-medium transition-colors rounded-lg ${location.pathname === item.path
+                    className={`flex items-center space-x-3 px-4 py-3 text-sm font-medium transition-colors rounded-lg ${location.pathname === item.href
                       ? "text-teal-700 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/20"
                       : "text-gray-700 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-400 hover:bg-gray-50 dark:hover:bg-gray-800"
                     }`}
                   >
-                    {item.icon}
-                    <span>{item.label}</span>
+                    <span>{item.name}</span>
                   </Link>
                 ))}
               </div>
@@ -102,37 +94,14 @@ function Navigation() {
   );
 }
 
+const socialIconMap = {
+  GitHub: <GithubIcon className="h-6 w-6" />,
+  LinkedIn: <LinkedinIcon className="h-6 w-6" />,
+  Twitter: <TwitterIcon className="h-6 w-6" />,
+};
+
 // Footer Component
 function Footer() {
-  const socialLinks = [
-    {
-      icon: <TwitterIcon className="h-6 w-6" />,
-      href: "https://twitter.com/timdehof",
-      label: "Twitter",
-      color: "hover:text-blue-400",
-    },
-    {
-      icon: <LinkedinIcon className="h-6 w-6" />,
-      href: "https://www.linkedin.com/in/timothy-dehof/",
-      label: "LinkedIn",
-      color: "hover:text-blue-500",
-    },
-    {
-      icon: <GithubIcon className="h-6 w-6" />,
-      href: "https://github.com/timDeHof",
-      label: "GitHub",
-      color: "hover:text-teal-400",
-    },
-  ];
-
-  const footerLinks = [
-    { path: "/", label: "Home", color: "hover:text-blue-400" },
-    { path: "/about", label: "About", color: "hover:text-teal-400" },
-    { path: "/projects", label: "Projects", color: "hover:text-teal-400" },
-    { path: "/services", label: "Services", color: "hover:text-purple-400" },
-    { path: "/contact", label: "Contact", color: "hover:text-blue-400" },
-  ];
-
   const scrollToTop = () => {
     requestAnimationFrame(() => {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -168,13 +137,13 @@ function Footer() {
             <div className="text-center md:text-left">
               <h4 className="text-lg font-semibold mb-4 text-white">Quick Links</h4>
               <div className="grid grid-cols-2 gap-3 md:grid-cols-2 md:gap-y-3">
-                {footerLinks.map(link => (
+                {navItems.map(link => (
                   <Link
-                    key={link.path}
-                    to={link.path}
-                    className={`block text-gray-300 ${link.color} transition-all duration-300 py-3 px-4 md:py-2 md:px-0 rounded-xl md:rounded-none hover:bg-gray-800 md:hover:bg-transparent text-center md:text-left font-medium hover:translate-x-1 md:hover:translate-x-2`}
+                    key={link.href}
+                    to={link.href}
+                    className="block text-gray-300 hover:text-teal-400 transition-all duration-300 py-3 px-4 md:py-2 md:px-0 rounded-xl md:rounded-none hover:bg-gray-800 md:hover:bg-transparent text-center md:text-left font-medium hover:translate-x-1 md:hover:translate-x-2"
                   >
-                    {link.label}
+                    {link.name}
                   </Link>
                 ))}
               </div>
@@ -190,16 +159,16 @@ function Footer() {
                   <Link to="/contact">Contact Me</Link>
                 </Button>
                 <div className="flex justify-center md:justify-end w-full space-x-4">
-                  {socialLinks.map(link => (
+                  {footerLinks.social.map(link => (
                     <a
-                      key={link.label}
+                      key={link.name}
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={link.label}
-                      className={`text-gray-300 ${link.color} transition-all duration-300 p-3 hover:bg-gray-800 rounded-xl hover:scale-110`}
+                      aria-label={link.name}
+                      className="text-gray-300 hover:text-teal-400 transition-all duration-300 p-3 hover:bg-gray-800 rounded-xl hover:scale-110"
                     >
-                      {link.icon}
+                      {socialIconMap[link.name as keyof typeof socialIconMap]}
                     </a>
                   ))}
                 </div>
@@ -238,9 +207,9 @@ export const Layout: React.FC = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       <main className="flex-1 pt-16">
-        <ErrorBoundary>
+        <Suspense fallback={<div className="h-full flex items-center justify-center"><LoadingSpinner size="lg" /></div>}>
           <Outlet />
-        </ErrorBoundary>
+        </Suspense>
       </main>
       <Footer />
     </div>

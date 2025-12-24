@@ -5,7 +5,6 @@ import { HelmetProvider } from "react-helmet-async";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import { ErrorBoundary } from "./components/common/error-boundary";
-import { LoadingSpinner } from "./components/common/loading-spinner";
 import { Layout } from "./components/layout/layout";
 import { useTheme } from "./hooks/use-theme";
 import { env } from "./lib/env";
@@ -18,14 +17,8 @@ const ProjectsPage = lazy(() => import("./pages/projects-page").then(module => (
 const ServicesPage = lazy(() => import("./pages/services-page").then(module => ({ default: module.ServicesPage })));
 const ContactPage = lazy(() => import("./pages/contact-page").then(module => ({ default: module.ContactPage })));
 
-// Loading fallback component
-function PageLoader() {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <LoadingSpinner size="lg" />
-    </div>
-  );
-}
+// Move lazy() call outside the component
+const ReactQueryDevtoolsProduction = env.VITE_NODE_ENV === "development" ? lazy(() => import("@tanstack/react-query-devtools").then(module => ({ default: module.ReactQueryDevtools }))) : null;
 
 function AppContent() {
   // Initialize theme
@@ -35,46 +28,11 @@ function AppContent() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route
-            index
-            element={(
-              <Suspense fallback={<PageLoader />}>
-                <HomePage />
-              </Suspense>
-            )}
-          />
-          <Route
-            path="about"
-            element={(
-              <Suspense fallback={<PageLoader />}>
-                <AboutPage />
-              </Suspense>
-            )}
-          />
-          <Route
-            path="projects"
-            element={(
-              <Suspense fallback={<PageLoader />}>
-                <ProjectsPage />
-              </Suspense>
-            )}
-          />
-          <Route
-            path="services"
-            element={(
-              <Suspense fallback={<PageLoader />}>
-                <ServicesPage />
-              </Suspense>
-            )}
-          />
-          <Route
-            path="contact"
-            element={(
-              <Suspense fallback={<PageLoader />}>
-                <ContactPage />
-              </Suspense>
-            )}
-          />
+          <Route index element={<HomePage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="projects" element={<ProjectsPage />} />
+          <Route path="services" element={<ServicesPage />} />
+          <Route path="contact" element={<ContactPage />} />
         </Route>
       </Routes>
     </div>
@@ -82,7 +40,6 @@ function AppContent() {
 }
 
 function App() {
-  const ReactQueryDevtoolsProduction = env.VITE_NODE_ENV === "development" ? lazy(() => import("@tanstack/react-query-devtools").then(module => ({ default: module.ReactQueryDevtools }))) : null;
   return (
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
