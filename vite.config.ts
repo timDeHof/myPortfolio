@@ -5,10 +5,16 @@ import viteTsconfigPaths from "vite-tsconfig-paths";
 import { VitePWA } from 'vite-plugin-pwa';
 import viteImagemin from 'vite-plugin-imagemin';
 import tailwindcss from '@tailwindcss/vite';
+import {visualizer} from "rollup-plugin-visualizer";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    visualizer({
+      emitFile: true,
+      filename: 'stats.html',
+      open: true
+    }),
     react(),
     tailwindcss(),
     viteTsconfigPaths(),
