@@ -32,7 +32,7 @@ export const ProjectsPage: React.FC = () => {
   // Fetch languages for all repositories concurrently
   const languagesQueries = useGitHubRepositoriesLanguages(repositories);
 
-  const queryStates = languagesQueries.map(q => `${q.isLoading}-${q.isSuccess}`).join(',');
+  const queryStates = languagesQueries.map(q => q.dataUpdatedAt ?? 0).join(',');
 
   const languagesByRepo = React.useMemo(() => {
     if (!repositories || languagesQueries.length === 0) return {};
