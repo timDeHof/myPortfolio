@@ -22,6 +22,9 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // In a production environment, you would report the error to a third-party service
+    // Example: Sentry.captureException(error, { extra: errorInfo });
+    // Example: LogRocket.captureException(error, { extra: errorInfo });
     console.error("Uncaught error:", error, errorInfo);
   }
 

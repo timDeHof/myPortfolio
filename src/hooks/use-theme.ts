@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../store/use-app-store";
 
 export function useTheme() {
   const { theme, setTheme } = useAppStore();
@@ -28,17 +28,18 @@ export function useTheme() {
 
   // Apply theme to document
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined")
+      return;
 
     const applyTheme = (themeToApply: "light" | "dark") => {
       const root = document.documentElement;
-      
+
       // Remove existing theme classes
       root.classList.remove("light", "dark");
-      
+
       // Add new theme class
       root.classList.add(themeToApply);
-      
+
       // Force a repaint to ensure styles are applied
       root.style.colorScheme = themeToApply;
 
@@ -71,7 +72,8 @@ export function useTheme() {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     if (mediaQuery.addEventListener) {
       mediaQuery.addEventListener("change", handleSystemThemeChange);
-    } else {
+    }
+    else {
       // Fallback for older browsers
       mediaQuery.addListener(handleSystemThemeChange);
     }
@@ -79,7 +81,8 @@ export function useTheme() {
     return () => {
       if (mediaQuery.removeEventListener) {
         mediaQuery.removeEventListener("change", handleSystemThemeChange);
-      } else {
+      }
+      else {
         mediaQuery.removeListener(handleSystemThemeChange);
       }
     };
