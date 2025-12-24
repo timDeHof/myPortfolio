@@ -207,7 +207,7 @@ export const Layout: React.FC = () => {
     <div className="min-h-screen flex flex-col">
       <Navigation />
       <main className="flex-1 pt-16">
-        <Suspense fallback={<div className="flex-grow flex items-center justify-center"><LoadingSpinner size="lg" /></div>}>
+        <Suspense fallback={<div className="h-full flex items-center justify-center"><LoadingSpinner size="lg" /></div>}>
           <Outlet />
         </Suspense>
       </main>

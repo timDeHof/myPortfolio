@@ -17,6 +17,9 @@ const ProjectsPage = lazy(() => import("./pages/projects-page").then(module => (
 const ServicesPage = lazy(() => import("./pages/services-page").then(module => ({ default: module.ServicesPage })));
 const ContactPage = lazy(() => import("./pages/contact-page").then(module => ({ default: module.ContactPage })));
 
+// Move lazy() call outside the component
+const ReactQueryDevtoolsProduction = env.VITE_NODE_ENV === "development" ? lazy(() => import("@tanstack/react-query-devtools").then(module => ({ default: module.ReactQueryDevtools }))) : null;
+
 function AppContent() {
   // Initialize theme
   useTheme();
@@ -37,7 +40,6 @@ function AppContent() {
 }
 
 function App() {
-  const ReactQueryDevtoolsProduction = env.VITE_NODE_ENV === "development" ? lazy(() => import("@tanstack/react-query-devtools").then(module => ({ default: module.ReactQueryDevtools }))) : null;
   return (
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
