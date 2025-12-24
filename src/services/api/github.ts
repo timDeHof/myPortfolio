@@ -1,4 +1,3 @@
-import { env } from "../../lib/env";
 import { queryClient } from "../../lib/query-client";
 
 export type GitHubRepository = {
@@ -9,7 +8,7 @@ export type GitHubRepository = {
   html_url: string;
   homepage: string | null;
   language: string | null;
-  languages_url: string;
+  languages_url:string;
   stargazers_count: number;
   forks_count: number;
   created_at: string;
@@ -49,7 +48,8 @@ export type GitHubError = {
 };
 
 const GITHUB_USERNAME = "timDeHof";
-const GITHUB_API_BASE = "https://api.github.com";
+// Update the API base to point to the serverless proxy
+const GITHUB_API_BASE = "/api/github";
 
 // Repositories to exclude from portfolio (add repo names here)
 const EXCLUDED_REPOS = [
@@ -73,39 +73,20 @@ export class GitHubAPIError extends Error {
   }
 }
 
-// Helper function to get authentication headers
-function getAuthHeaders(): HeadersInit {
-  const token = env.VITE_GITHUB_PAT;
-
-  const baseHeaders = {
-    "Accept": "application/vnd.github.v3+json",
-    "X-GitHub-Api-Version": "2022-11-28",
-    "User-Agent": "Portfolio-App/1.0.0",
-  };
-
-  if (token && token !== "your_github_personal_access_token_here") {
-    return {
-      ...baseHeaders,
-      Authorization: `Bearer ${token}`,
-    };
-  }
-
-  return baseHeaders;
-}
-
-// Enhanced fetch wrapper with better error handling
+// Simplified fetch wrapper for the proxy
 async function githubFetch<T>(url: string): Promise<T> {
-  console.log(`🚀 GitHub API Request: ${url}`);
+  console.log(`🚀 Proxied GitHub API Request: ${url}`);
 
   try {
+    // The proxy will handle authentication and headers
     const response = await fetch(url, {
-      headers: getAuthHeaders(),
+      headers: {
+        "Accept": "application/vnd.github.v3+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+      }
     });
 
-    // Log response details
     console.log(`📡 Response Status: ${response.status} ${response.statusText}`);
-    console.log("📋 Rate Limit Remaining:", response.headers.get("x-ratelimit-remaining"));
-    console.log("📋 Rate Limit Reset:", response.headers.get("x-ratelimit-reset"));
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -242,7 +223,9 @@ export const githubAPI = {
   // Fetch repository languages
   fetchRepositoryLanguages: async (languagesUrl: string): Promise<GitHubLanguages> => {
     try {
-      return await githubFetch<GitHubLanguages>(languagesUrl);
+      // The languagesUrl is a full URL, so we need to proxy it correctly.
+      const proxiedUrl = languagesUrl.replace('https://api.github.com', GITHUB_API_BASE);
+      return await githubFetch<GitHubLanguages>(proxiedUrl);
     }
     catch (error) {
       console.warn(`⚠️ Failed to fetch languages for ${languagesUrl}:`, error);
