@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUp, ChevronDown, Code, Coffee, Rocket, Star } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { ArrowRight, Code, Coffee, Network, Rocket, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { TextGenerateEffect } from "../ui/aceternity/text-generate-effect";
 import { Button } from "../ui/button";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
-// Floating icons configuration
+import { BackToTopButton } from "./back-to-top-button";
 import { floatingIcons } from "./floating-icons";
+import { ScrollIndicator } from "./scroll-indicator";
 
 // Background elements
 const backgroundElements = [
@@ -16,50 +16,10 @@ const backgroundElements = [
   { icon: Coffee, x: "8%", y: "60%" },
   { icon: Rocket, x: "92%", y: "70%" },
   { icon: ArrowRight, x: "12%", y: "30%" },
-  { icon: Code, x: "88%", y: "85%" },
+  { icon: Network, x: "88%", y: "85%" },
 ];
 
 export const HeroSection: React.FC = () => {
-  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
-  const [showBackToTop, setShowBackToTop] = useState(false);
-
-  useEffect(() => {
-    let rafId: number;
-
-    const handleScroll = () => {
-      if (rafId)
-        cancelAnimationFrame(rafId);
-
-      rafId = requestAnimationFrame(() => {
-        const scrolled = window.scrollY;
-        const threshold = window.innerHeight * 0.8;
-
-        setShowScrollIndicator(scrolled < 100);
-        setShowBackToTop(scrolled > threshold);
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (rafId)
-        cancelAnimationFrame(rafId);
-    };
-  }, []);
-
-  const scrollToContent = () => {
-    requestAnimationFrame(() => {
-      const nextSection = document.querySelector("#services-section");
-      nextSection?.scrollIntoView({ behavior: "smooth" });
-    });
-  };
-
-  const scrollToTop = () => {
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  };
-
   return (
     <section className="hero-section relative min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-blue-900 dark:to-purple-900 overflow-hidden">
       {/* Floating tech icons */}
@@ -95,7 +55,7 @@ export const HeroSection: React.FC = () => {
         return (
           <motion.div
             key={`bg-${item.icon.displayName || index}`}
-            className="motion-element absolute z-5 opacity-10 dark:opacity-20 text-blue-600 dark:text-blue-400 hidden md:block"
+            className="motion-element absolute z-0 opacity-10 dark:opacity-20 text-blue-600 dark:text-blue-400 hidden md:block"
             style={{ left: item.x, top: item.y }}
             initial={{ opacity: 0, scale: 0 }}
             animate={{
@@ -264,57 +224,10 @@ export const HeroSection: React.FC = () => {
       </MaxWidthWrapper>
 
       {/* Smart Scroll Indicator */}
-      {
-        showScrollIndicator && (
-          <motion.button
-            onClick={scrollToContent}
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-2 text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 transition-colors duration-300 z-30 touch-manipulation group"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            whileHover={{ scale: 1.1, y: -4 }}
-            whileTap={{ scale: 0.95 }}
-            aria-label="Scroll to explore"
-          >
-            <div className="backdrop-blur-sm bg-white/20 dark:bg-white/10 border border-white/30 dark:border-white/20 rounded-full p-3 group-hover:bg-white/30 dark:group-hover:bg-white/20 transition-all duration-300">
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <ChevronDown className="h-6 w-6" />
-              </motion.div>
-            </div>
-            <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              Scroll to explore
-            </span>
-          </motion.button>
-        )
-      }
+      <ScrollIndicator />
 
       {/* Fixed Back to Top Button */}
-      {
-        showBackToTop && (
-          <motion.button
-            onClick={scrollToTop}
-            className="fixed bottom-8 right-8 z-50 bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 touch-manipulation group min-w-[48px] min-h-[48px] flex items-center justify-center"
-            initial={{ opacity: 0, scale: 0, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0, y: 20 }}
-            whileHover={{ scale: 1.1, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            aria-label="Back to top"
-          >
-            <ArrowUp className="h-5 w-5" />
-
-            {/* Tooltip */}
-            <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-              Back to top
-              <div className="absolute top-full right-4 border-4 border-transparent border-t-gray-900 dark:border-t-gray-100"></div>
-            </div>
-          </motion.button>
-        )
-      }
+      <BackToTopButton />
     </section>
   );
 };

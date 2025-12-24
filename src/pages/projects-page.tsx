@@ -13,7 +13,7 @@ import { RepositoryFilter } from "../components/projects/repository-filter";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
-import { useGitHubRepositories } from "../hooks/queries/use-github-repositories";
+import { useGitHubRepositories, useGitHubRepositoriesLanguages } from "../hooks/queries/use-github-repositories";
 import { useRepositoryFiltering } from "../hooks/queries/use-repository-filtering";
 import { pageSEO } from "../utils/seo";
 import { generateBreadcrumbSchema } from "../utils/structured-data";
@@ -28,6 +28,23 @@ export const ProjectsPage: React.FC = () => {
     isFetching,
     refetch,
   } = useGitHubRepositories();
+
+  // Fetch languages for all repositories concurrently
+  const languagesQueries = useGitHubRepositoriesLanguages(repositories);
+
+  const queryStates = languagesQueries.map(q => q.dataUpdatedAt ?? 0).join(',');
+
+  const languagesByRepo = React.useMemo(() => {
+    if (!repositories || languagesQueries.length === 0) return {};
+    return repositories.reduce((acc, repo, index) => {
+      const query = languagesQueries[index];
+      if (query?.isSuccess && query.data) {
+        acc[repo.id] = query.data;
+      }
+      return acc;
+    }, {} as Record<string, Record<string, number>>);
+  }, [repositories, queryStates]);
+
 
   // Repository filtering with project type support
   const {
@@ -290,6 +307,7 @@ export const ProjectsPage: React.FC = () => {
                     <GitHubRepositoryCard
                       key={repository.id}
                       repository={repository}
+                      languages={languagesByRepo[repository.id]}
                       index={index}
                     />
                   ))}
