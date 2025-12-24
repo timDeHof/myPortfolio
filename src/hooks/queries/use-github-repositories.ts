@@ -57,7 +57,7 @@ export function useGitHubRepositoriesLanguages(repositories: GitHubRepository[] 
 
   return useQueries({
     queries: languageUrls.map(url => ({
-      queryKey: ['languages', url],
+      queryKey: [...githubKeys.all, 'languages', url],
       queryFn: () => githubAPI.fetchRepositoryLanguages(url),
       staleTime: 15 * 60 * 1000, // 15 minutes
       enabled: !!repositories,
