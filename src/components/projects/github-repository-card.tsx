@@ -1,6 +1,5 @@
 import type { GitHubRepository } from "@services/api/github";
 
-import { useGitHubRepositoryLanguages } from "@hooks/queries/use-github-repositories";
 import { formatDate, getRepositoryImage, getTopLanguages } from "@services/api/github";
 import { motion } from "framer-motion";
 import { Calendar, Code, ExternalLink, GitFork, Github, Star, Users } from "lucide-react";
@@ -11,23 +10,22 @@ import { Card, CardContent } from "../ui/card";
 
 interface GitHubRepositoryCardProps {
   repository: GitHubRepository;
+  languages: Record<string, number> | undefined;
   index: number;
 };
 
-export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = ({ repository, index }) => {
-  // Use TanStack Query for languages
-  const {
-    data: repoLanguages = {},
-    isLoading: loadingLanguages,
-  } = useGitHubRepositoryLanguages(repository.languages_url);
-
-  const languages = getTopLanguages(repoLanguages);
+export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = React.memo(({ repository, languages: repoLanguages, index }) => {
+  const languages = getTopLanguages(repoLanguages ?? {});
   const imageUrl = getRepositoryImage(repository.name);
 
   // Fallback to repository.language if languages API fails
   const displayLanguages = languages.length > 0
     ? languages
     : (repository.language ? [repository.language] : []);
+
+  // Determine if languages are still loading (e.g., if repoLanguages is undefined from parent)
+  const loadingLanguages = !repoLanguages && repository.languages_url;
+
 
   return (
     <motion.div
@@ -172,4 +170,4 @@ export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = ({ repo
       </Card>
     </motion.div>
   );
-};
+});
