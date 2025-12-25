@@ -61,5 +61,12 @@ export default defineConfig({
   server: {
     port: 5173,
     host: true,
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:8788',
+        changeOrigin: true,
+        // The rewrite function is not needed here as the worker expects the full path
+      },
+    }
   },
 });

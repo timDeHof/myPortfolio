@@ -1,3 +1,4 @@
+
 import { queryClient } from "../../lib/query-client";
 
 export type GitHubRepository = {
@@ -78,13 +79,8 @@ async function githubFetch<T>(url: string): Promise<T> {
   console.log(`🚀 Proxied GitHub API Request: ${url}`);
 
   try {
-    // The proxy will handle authentication and headers
-    const response = await fetch(url, {
-      headers: {
-        "Accept": "application/vnd.github.v3+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-      }
-    });
+    // Fetch directly from GitHub API (proxy handles the routing)
+    const response = await fetch(url);
 
     console.log(`📡 Response Status: ${response.status} ${response.statusText}`);
 
@@ -94,16 +90,37 @@ async function githubFetch<T>(url: string): Promise<T> {
 
       let errorMessage = `GitHub API error: ${response.status} ${response.statusText}`;
 
-      try {
-        const errorData = JSON.parse(errorText);
-        errorMessage = errorData.message || errorMessage;
+      // Check if response is HTML (rate limit or auth issue)
+      if (errorText.trim().startsWith('<')) {
+        if (errorText.includes('API rate limit exceeded')) {
+          errorMessage = 'GitHub API rate limit exceeded. Please try again later.';
+        } else if (errorText.includes('authentication') || errorText.includes('login')) {
+          errorMessage = 'GitHub authentication required. Please check your credentials.';
+        } else {
+          errorMessage = 'GitHub API returned HTML response. This might be a rate limit or authentication issue.';
+        }
       }
-      catch {
-        // If we can't parse the error as JSON, use the raw text
-        errorMessage = errorText || errorMessage;
+      // Try to parse as JSON if not HTML
+      else {
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.message || errorMessage;
+        }
+        catch {
+          // If we can't parse the error as JSON, use the raw text
+          errorMessage = errorText || errorMessage;
+        }
       }
 
       throw new GitHubAPIError(response.status, response.statusText, url, errorMessage);
+    }
+
+    // Check if response is HTML (shouldn't happen for successful responses, but just in case)
+    const contentType = response.headers.get('Content-Type') || '';
+    if (contentType.includes('text/html')) {
+      const textData = await response.text();
+      console.error(`⚠️ GitHub API returned HTML instead of JSON:`, textData);
+      throw new GitHubAPIError(response.status, response.statusText, url, 'GitHub API returned HTML response instead of JSON');
     }
 
     const data = await response.json();
@@ -161,15 +178,15 @@ export const githubAPI = {
       const categoryPriority = { showcase: 0, personal: 1, contribution: 2, fork: 3 };
       const aPriority = categoryPriority[a.category];
       const bPriority = categoryPriority[b.category];
-      
+
       if (aPriority !== bPriority) return aPriority - bPriority;
-      
+
       // Within same category, sort by engagement (stars + forks)
       const aEngagement = a.stargazers_count + a.forks_count;
       const bEngagement = b.stargazers_count + b.forks_count;
-      
+
       if (bEngagement !== aEngagement) return bEngagement - aEngagement;
-      
+
       return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
     });
   },
@@ -179,7 +196,7 @@ export const githubAPI = {
     // Check for portfolio-ready topics
     const portfolioTopics = ['portfolio', 'showcase', 'featured', 'production', 'demo'];
     const hasPortfolioTopic = repo.topics?.some(topic => portfolioTopics.includes(topic.toLowerCase()));
-    
+
     // Showcase projects: High-quality original projects worth highlighting
     const showcaseIndicators = [
       repo.stargazers_count > 0,
@@ -189,32 +206,32 @@ export const githubAPI = {
       repo.topics && repo.topics.length > 2,
       hasPortfolioTopic // Bonus for portfolio topics
     ];
-    
+
     const showcaseScore = showcaseIndicators.filter(Boolean).length;
-    
+
     if (!repo.fork && (hasPortfolioTopic || showcaseScore >= 3)) {
       console.log(`⭐ Showcase project: ${repo.name} (score: ${showcaseScore}, portfolio topic: ${hasPortfolioTopic})`);
       return 'showcase';
     }
-    
+
     // Personal projects: Original work but maybe not showcase-ready
     if (!repo.fork) {
       console.log(`👤 Personal project: ${repo.name}`);
       return 'personal';
     }
-    
+
     // Contributions: Forks with meaningful changes
     const contributionIndicators = [
       repo.stargazers_count > 0,
       new Date(repo.pushed_at) > new Date(repo.created_at),
       repo.description && !repo.description.includes('fork')
     ];
-    
+
     if (contributionIndicators.filter(Boolean).length >= 2) {
       console.log(`🤝 Contribution: ${repo.name}`);
       return 'contribution';
     }
-    
+
     // Regular forks
     console.log(`🍴 Fork: ${repo.name}`);
     return 'fork';
