@@ -16,7 +16,9 @@ vi.mock("../../../src/hooks/use-theme", () => ({
 // Mock framer-motion to avoid animation issues in tests
 vi.mock("framer-motion", () => ({
   motion: {
-    div: ({ children, ...props }: { children: React.ReactNode; [key: string]: any }) => <div {...props}>{children}</div>,
+    div: ({ children, initial, animate, exit, transition, ...props }: { children: React.ReactNode;[key: string]: any }) => (
+      <div {...props}>{children}</div>
+    ),
   },
 }));
 

@@ -21,7 +21,7 @@
       "@pages/*": ["./src/pages/*"],
       "@services/*": ["./src/services/*"]
     },
-    "types": [],
+    "types": ["vitest/globals"],
     "allowImportingTsExtensions": true,
     /* Linting */
     "strict": true,
@@ -33,6 +33,9 @@
     "skipLibCheck": true
   },
   "include": [
-    "src"
+    "src",
+    "src/**/__tests__/*",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx"
   ]
 }
