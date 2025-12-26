@@ -3,7 +3,7 @@ import type { GitHubRepository } from "./github";
 
 import { githubAPI } from "./github";
 
-export type GitHubStats = {
+export interface GitHubStats {
   profile: {
     login: string;
     name: string;
@@ -33,29 +33,29 @@ export type GitHubStats = {
     longestStreak: number;
     contributionYears: string[];
   };
-};
+}
 
-export type LanguageStats = {
+export interface LanguageStats {
   name: string;
   percentage: number;
   bytes: number;
   color: string;
-};
+}
 
-export type TopicStats = {
+export interface TopicStats {
   name: string;
   count: number;
-};
+}
 
-export type ContributionDay = {
+export interface ContributionDay {
   date: string;
   count: number;
   level: 0 | 1 | 2 | 3 | 4;
-};
+}
 
-export type ContributionWeek = {
+export interface ContributionWeek {
   days: ContributionDay[];
-};
+}
 
 // Language colors mapping (GitHub's color scheme)
 const LANGUAGE_COLORS: { [key: string]: string } = {
@@ -93,7 +93,6 @@ function getLanguageColor(language: string): string {
 export const githubStatsAPI = {
   // Fetch comprehensive GitHub stats
   fetchGitHubStats: async (): Promise<GitHubStats> => {
-
     // Fetch user profile and repositories in parallel
     const [profile, repositories] = await Promise.all([
       githubAPI.fetchUser(),
@@ -125,13 +124,11 @@ export const githubStatsAPI = {
       activity: activityStats,
     };
 
-
     return stats;
   },
 
   // Calculate detailed repository statistics
   calculateRepositoryStats: async (repositories: GitHubRepository[]) => {
-
     // Categorize repositories
     const personal = repositories.filter(repo => !repo.fork);
     const contributions = repositories.filter(repo => repo.fork);
@@ -145,7 +142,10 @@ export const githubStatsAPI = {
       .filter(repo => repo.languages_url)
       .map(repo =>
         githubAPI.fetchRepositoryLanguages(repo.languages_url)
-          .catch(() => ({})), // Return empty object on error
+          .catch((error) => {
+            console.warn(`⚠️ Failed to fetch languages for ${repo.languages_url}:`, error);
+            return {};
+          }),
       );
 
     const languageResults = await Promise.all(languagePromises);
@@ -196,7 +196,6 @@ export const githubStatsAPI = {
 
   // Calculate activity statistics (simplified version)
   calculateActivityStats: (repositories: GitHubRepository[]) => {
-
     // Get unique years from repository creation/update dates
     const years = new Set<string>();
     repositories.forEach((repo) => {

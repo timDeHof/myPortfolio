@@ -3,16 +3,16 @@ import { env } from "../lib/env";
 // Web3Forms configuration
 const WEB3FORMS_ACCESS_KEY = env.VITE_WEB3FORMS_ACCESS_KEY || "YOUR_WEB3FORMS_ACCESS_KEY";
 
-export type EmailData = {
+export interface EmailData {
   from_name: string;
   from_email: string;
   message: string;
   to_name?: string;
-};
+}
 
 export async function sendEmail(data: EmailData): Promise<void> {
   if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === "YOUR_WEB3FORMS_ACCESS_KEY") {
-    throw new Error("Web3Forms access key not configured. Please set VITE_WEB3FORMS_ACCESS_KEY in your environment.");
+    throw new Error("Web3Forms access key not configured");
   }
 
   try {
@@ -24,25 +24,30 @@ export async function sendEmail(data: EmailData): Promise<void> {
     formData.append("subject", `New Contact Form Message from ${data.from_name}`);
     formData.append("from_name", "Portfolio Contact Form");
     formData.append("redirect", "false");
-    
+
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      body: formData
+      body: formData,
     });
 
     const result = await response.json();
-    
-    if (!response.ok || !result.success) {
+
+    if (!response.ok) {
+      throw new Error(result.message || "Failed to send email");
+    }
+
+    if (!result.success) {
       throw new Error(result.message || "Failed to send email");
     }
   }
   catch (error) {
     console.error("Email Error:", error);
+    if (error instanceof Error) {
+      throw error;
+    }
     throw new Error("Failed to send email. Please try again later.");
   }
 };
-
-
 
 // Test function to verify email configuration
 export async function testEmailConfiguration(): Promise<boolean> {
