@@ -4,6 +4,3 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 ---
-
-- [x] **Track: Fix GitHub API with Standalone Worker**
-*Link: [./tracks/fix_github_api_20260207/](./tracks/fix_github_api_20260207/)*
