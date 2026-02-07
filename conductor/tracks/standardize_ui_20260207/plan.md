@@ -3,7 +3,7 @@
 This plan outlines the steps to audit, standardize, and verify the core UI components and hooks of the portfolio.
 
 ## Phase 1: Audit and Test Infrastructure
-Goal: Identify gaps in coverage and ensure the testing environment is fully ready.
+Goal: Identify gaps in coverage and ensure the testing environment is fully ready. [checkpoint: 27f0c81]
 
 - [x] Task: Audit UI components and hooks for test coverage.
     - [x] Run coverage report to identify files with <80% coverage.
