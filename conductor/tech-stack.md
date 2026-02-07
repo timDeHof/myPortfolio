@@ -19,6 +19,7 @@
 ## Backend & Deployment
 - **Platform:** Cloudflare Pages
 - **Serverless Functions:** Cloudflare Workers (via functions/ directory)
+- **API Proxy:** Standalone Cloudflare Worker
 - **CLI/Deployment Tool:** Wrangler
 
 ## Testing & Quality
