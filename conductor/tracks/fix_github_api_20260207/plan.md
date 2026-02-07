@@ -31,9 +31,9 @@ Goal: Update the portfolio to use the new proxy URL.
 ## Phase 3: Validation and Cleanup
 Goal: Ensure everything is working correctly in production and remove dead code.
 
-- [ ] Task: End-to-end verification.
-    - [ ] Verify that repository data and stats are loading correctly in development and production.
-    - [ ] Confirm that no sensitive tokens are visible in network requests.
-- [ ] Task: Legacy code removal.
-    - [ ] Remove the unused `functions/api/github/` directory if any remnants exist.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Validation and Cleanup' (Protocol in workflow.md)
+- [x] Task: End-to-end verification. [24e5b1c]
+    - [x] Verify that repository data and stats are loading correctly in development and production.
+    - [x] Confirm that no sensitive tokens are visible in network requests.
+- [x] Task: Legacy code removal. [24e5b1c]
+    - [x] Remove the unused `functions/api/github/` directory if any remnants exist.
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Validation and Cleanup' (Protocol in workflow.md) [24e5b1c]
