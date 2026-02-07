@@ -1,2 +1,5 @@
-# [x] Track: Standardize and Verify Core Components
-Link: [./conductor/tracks/standardize_ui_20260207/](./conductor/tracks/standardize_ui_20260207/)
+# Project Tracks
+
+This file tracks all major tracks for the project. Each track has its own detailed plan in its respective folder.
+
+---
