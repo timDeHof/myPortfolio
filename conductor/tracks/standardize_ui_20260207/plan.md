@@ -30,14 +30,14 @@ Goal: Ensure common utility components meet the high-impact guidelines and are f
 ## Phase 3: Standardize UI Primitives
 Goal: Ensure low-level UI components are robust and consistent.
 
-- [ ] Task: Standardize and test `src/components/ui/button.tsx`.
-    - [ ] Write/Update tests to achieve >80% coverage.
-    - [ ] Ensure accessibility and responsive states.
-- [ ] Task: Standardize and test `src/components/ui/card.tsx`.
-    - [ ] Write/Update tests to achieve >80% coverage.
-    - [ ] Ensure consistency with Aceternity UI components.
-- [ ] Task: Standardize and test `src/components/ui/max-width-wrapper.tsx`.
-    - [ ] Write/Update tests to achieve >80% coverage.
+- [x] Task: Standardize and test `src/components/ui/button.tsx`.
+    - [x] Write/Update tests to achieve >80% coverage.
+    - [x] Ensure accessibility and responsive states.
+- [x] Task: Standardize and test `src/components/ui/card.tsx`.
+    - [x] Write/Update tests to achieve >80% coverage.
+    - [x] Ensure consistency with Aceternity UI components.
+- [x] Task: Standardize and test `src/components/ui/max-width-wrapper.tsx`.
+    - [x] Write/Update tests to achieve >80% coverage.
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Standardize UI Primitives' (Protocol in workflow.md)
 
 ## Phase 4: Standardize Custom Hooks
