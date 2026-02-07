@@ -20,12 +20,12 @@ Goal: Create and deploy a secure proxy worker.
 ## Phase 2: Frontend Service Integration
 Goal: Update the portfolio to use the new proxy URL.
 
-- [ ] Task: Update frontend API services.
-    - [ ] Write tests for the updated fetch logic in `src/services/api/__tests__/github.test.ts`.
-    - [ ] Modify `src/services/api/github.ts` to point to the new standalone Worker URL.
-- [ ] Task: Update environment configuration.
-    - [ ] Add the new Worker URL to `.env` and `src/lib/env.ts`.
-    - [ ] Remove any legacy proxy configurations from `vite.config.ts` if no longer needed.
+- [x] Task: Update frontend API services. [291c354]
+    - [x] Write tests for the updated fetch logic in `src/services/api/__tests__/github.test.ts`.
+    - [x] Modify `src/services/api/github.ts` to point to the new standalone Worker URL.
+- [x] Task: Update environment configuration. [291c354]
+    - [x] Add the new Worker URL to `.env` and `src/lib/env.ts`.
+    - [x] Remove any legacy proxy configurations from `vite.config.ts` if no longer needed.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Frontend Service Integration' (Protocol in workflow.md)
 
 ## Phase 3: Validation and Cleanup
