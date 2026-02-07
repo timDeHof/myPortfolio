@@ -28,7 +28,7 @@ Goal: Ensure common utility components meet the high-impact guidelines and are f
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Standardize Common Components' (Protocol in workflow.md)
 
 ## Phase 3: Standardize UI Primitives
-Goal: Ensure low-level UI components are robust and consistent.
+Goal: Ensure low-level UI components are robust and consistent. [checkpoint: 44818f8]
 
 - [x] Task: Standardize and test `src/components/ui/button.tsx`.
     - [x] Write/Update tests to achieve >80% coverage.
