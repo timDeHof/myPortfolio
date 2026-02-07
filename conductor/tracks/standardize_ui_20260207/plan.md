@@ -41,7 +41,7 @@ Goal: Ensure low-level UI components are robust and consistent. [checkpoint: 448
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Standardize UI Primitives' (Protocol in workflow.md)
 
 ## Phase 4: Standardize Custom Hooks
-Goal: Ensure all business logic and state management hooks are reliable.
+Goal: Ensure all business logic and state management hooks are reliable. [checkpoint: 8de5c3f]
 
 - [x] Task: Standardize and test `src/hooks/use-theme.ts`.
     - [x] Write/Update tests for dark/light mode logic.
