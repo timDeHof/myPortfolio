@@ -14,7 +14,7 @@ Goal: Identify gaps in coverage and ensure the testing environment is fully read
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Audit and Test Infrastructure' (Protocol in workflow.md)
 
 ## Phase 2: Standardize Common Components
-Goal: Ensure common utility components meet the high-impact guidelines and are fully tested.
+Goal: Ensure common utility components meet the high-impact guidelines and are fully tested. [checkpoint: 3b7a955]
 
 - [x] Task: Standardize `src/components/common/animated-icon.tsx`.
     - [x] Write/Update tests to achieve >80% coverage.
