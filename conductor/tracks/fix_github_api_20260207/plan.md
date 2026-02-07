@@ -2,7 +2,7 @@
 
 This plan details the steps to implement a standalone Cloudflare Worker for proxying GitHub API requests and updating the portfolio frontend to consume it.
 
-## Phase 1: Standalone Worker Development
+## Phase 1: Standalone Worker Development [checkpoint: faddad2]
 Goal: Create and deploy a secure proxy worker.
 
 - [x] Task: Initialize the worker project structure. [966fb67]
