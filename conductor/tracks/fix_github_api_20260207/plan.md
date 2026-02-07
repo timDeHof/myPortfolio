@@ -12,7 +12,7 @@ Goal: Create and deploy a secure proxy worker.
     - [x] Write logic to handle incoming requests and map them to GitHub API paths.
     - [x] Implement secure injection of the `Authorization` header using environment secrets.
     - [x] Add basic error handling and CORS support.
-- [x] Task: Deploy and configure the worker. [e9b2c3a]
+- [x] Task: Deploy and configure the worker. [b17b472]
     - [x] Deploy the worker to Cloudflare.
     - [x] Configure the `GITHUB_PAT` secret using `wrangler secret put`.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Standalone Worker Development' (Protocol in workflow.md)
