@@ -1,0 +1,9 @@
+name = "github-api-proxy"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+[vars]
+GITHUB_API_URL = "https://api.github.com"
+
+[observability]
+enabled = true
