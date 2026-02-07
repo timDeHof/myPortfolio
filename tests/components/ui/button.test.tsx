@@ -52,4 +52,16 @@ describe("button Component", () => {
     // The opacity-50 class is conditionally applied via disabled:opacity-50
     expect(button.className).toContain("disabled:opacity-50");
   });
+
+  it("renders as a different element when asChild is true", () => {
+    render(
+      <Button asChild>
+        <a href="/test">Link Button</a>
+      </Button>
+    );
+    const link = screen.getByRole("link", { name: /link button/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveClass("bg-primary");
+    expect(link).not.toBeInstanceOf(HTMLButtonElement);
+  });
 });
