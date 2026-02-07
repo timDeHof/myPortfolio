@@ -2,16 +2,34 @@ import { motion } from "framer-motion";
 import React from "react";
 
 import { useIntersectionObserver } from "../../hooks/use-intersection-observer";
-import { useOptimizedAnimations } from "../../hooks/use-optimized-animations";
 
 type AnimatedSectionProps = {
+  /**
+   * Optional ID for the section element.
+   */
   id?: string;
+  /**
+   * Content to be rendered inside the section.
+   */
   children: React.ReactNode;
+  /**
+   * Optional CSS class name for the section element.
+   */
   className?: string;
+  /**
+   * Animation delay in seconds.
+   */
   delay?: number;
+  /**
+   * Direction from which the section animates in.
+   */
   direction?: "up" | "down" | "left" | "right";
 };
 
+/**
+ * A wrapper component that provides scroll-triggered animations for its children.
+ * Uses Framer Motion for smooth, high-impact transitions.
+ */
 export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   children,
   className = "",
@@ -23,7 +41,6 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
     threshold: 0.1,
     triggerOnce: true,
   });
-  const { scheduleAnimation } = useOptimizedAnimations();
 
   const directionVariants = {
     up: { y: 50, opacity: 0 },
@@ -34,7 +51,7 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
 
   return (
     <motion.section
-      ref={ref}
+      ref={ref as React.RefObject<HTMLElement>}
       initial={directionVariants[direction]}
       animate={isIntersecting ? { x: 0, y: 0, opacity: 1 } : directionVariants[direction]}
       transition={{
@@ -43,7 +60,7 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
         ease: "easeOut",
       }}
       className={className}
-      id={id} // Added id prop to motion.section
+      id={id}
     >
       {children}
     </motion.section>
