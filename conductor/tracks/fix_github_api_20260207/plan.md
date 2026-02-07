@@ -8,10 +8,10 @@ Goal: Create and deploy a secure proxy worker.
 - [x] Task: Initialize the worker project structure. [966fb67]
     - [x] Create a dedicated directory or repository for the worker.
     - [x] Set up `wrangler.toml` for the standalone worker.
-- [ ] Task: Implement the proxy logic.
-    - [ ] Write logic to handle incoming requests and map them to GitHub API paths.
-    - [ ] Implement secure injection of the `Authorization` header using environment secrets.
-    - [ ] Add basic error handling and CORS support.
+- [x] Task: Implement the proxy logic. [0d119c5]
+    - [x] Write logic to handle incoming requests and map them to GitHub API paths.
+    - [x] Implement secure injection of the `Authorization` header using environment secrets.
+    - [x] Add basic error handling and CORS support.
 - [ ] Task: Deploy and configure the worker.
     - [ ] Deploy the worker to Cloudflare.
     - [ ] Configure the `GITHUB_PAT` secret using `wrangler secret put`.
