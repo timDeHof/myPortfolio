@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1770480603868" clover="3.2.0">
-  <project timestamp="1770480603869" name="All files">
-    <metrics statements="233" coveredstatements="211" conditionals="123" coveredconditionals="86" methods="60" coveredmethods="57" elements="416" coveredelements="354" complexity="0" loc="233" ncloc="233" packages="5" files="10" classes="10"/>
+<coverage generated="1770481458364" clover="3.2.0">
+  <project timestamp="1770481458364" name="All files">
+    <metrics statements="248" coveredstatements="225" conditionals="139" coveredconditionals="99" methods="63" coveredmethods="60" elements="450" coveredelements="384" complexity="0" loc="248" ncloc="248" packages="5" files="12" classes="12"/>
     <package name="components.common">
-      <metrics statements="7" coveredstatements="7" conditionals="9" coveredconditionals="6" methods="2" coveredmethods="2"/>
+      <metrics statements="22" coveredstatements="21" conditionals="25" coveredconditionals="19" methods="5" coveredmethods="5"/>
+      <file name="animated-icon.tsx" path="/Users/timothydehof/Dev/Personal/portfolios/myPortfolio/src/components/common/animated-icon.tsx">
+        <metrics statements="10" coveredstatements="9" conditionals="11" coveredconditionals="9" methods="2" coveredmethods="2"/>
+        <line num="43" count="3" type="stmt"/>
+        <line num="48" count="3" type="stmt"/>
+        <line num="50" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="52" count="3" type="stmt"/>
+        <line num="53" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="57" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="60" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="64" count="2" type="stmt"/>
+      </file>
+      <file name="animated-section.tsx" path="/Users/timothydehof/Dev/Personal/portfolios/myPortfolio/src/components/common/animated-section.tsx">
+        <metrics statements="5" coveredstatements="5" conditionals="5" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+      </file>
       <file name="loading-spinner.tsx" path="/Users/timothydehof/Dev/Personal/portfolios/myPortfolio/src/components/common/loading-spinner.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
         <line num="10" count="1" type="stmt"/>
@@ -161,9 +182,9 @@
         <line num="243" count="1092" type="stmt"/>
         <line num="244" count="1092" type="cond" truecount="1" falsecount="1"/>
         <line num="245" count="1092" type="cond" truecount="2" falsecount="0"/>
-        <line num="247" count="923" type="cond" truecount="2" falsecount="0"/>
-        <line num="249" count="696" type="cond" truecount="2" falsecount="0"/>
-        <line num="251" count="388" type="stmt"/>
+        <line num="247" count="919" type="cond" truecount="2" falsecount="0"/>
+        <line num="249" count="680" type="cond" truecount="2" falsecount="0"/>
+        <line num="251" count="390" type="stmt"/>
         <line num="253" count="1092" type="stmt"/>
         <line num="261" count="156" type="cond" truecount="1" falsecount="1"/>
         <line num="262" count="156" type="stmt"/>
