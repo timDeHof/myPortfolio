@@ -43,10 +43,10 @@ Goal: Ensure low-level UI components are robust and consistent. [checkpoint: 448
 ## Phase 4: Standardize Custom Hooks
 Goal: Ensure all business logic and state management hooks are reliable.
 
-- [ ] Task: Standardize and test `src/hooks/use-theme.ts`.
-    - [ ] Write/Update tests for dark/light mode logic.
-- [ ] Task: Standardize and test `src/hooks/use-seo.ts`.
-    - [ ] Write/Update tests for meta tag generation.
-- [ ] Task: Standardize and test `src/hooks/use-optimized-animations.ts`.
-    - [ ] Write/Update tests for performance optimization logic.
+- [x] Task: Standardize and test `src/hooks/use-theme.ts`.
+    - [x] Write/Update tests for dark/light mode logic.
+- [x] Task: Standardize and test `src/hooks/use-seo.ts`.
+    - [x] Write/Update tests for meta tag generation.
+- [x] Task: Standardize and test `src/hooks/use-optimized-animations.ts`.
+    - [x] Write/Update tests for performance optimization logic.
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Standardize Custom Hooks' (Protocol in workflow.md)
