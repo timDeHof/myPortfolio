@@ -1,5 +1,6 @@
 
 import { queryClient } from "../../lib/query-client";
+import { env } from "../../lib/env";
 
 export type GitHubRepository = {
   id: number;
@@ -49,8 +50,8 @@ export type GitHubError = {
 };
 
 const GITHUB_USERNAME = "timDeHof";
-// Update the API base to point to the serverless proxy
-const GITHUB_API_BASE = "/api/github";
+// Update the API base to point to the standalone worker proxy
+const GITHUB_API_BASE = env.VITE_GITHUB_PROXY_URL;
 
 // Repositories to exclude from portfolio (add repo names here)
 const EXCLUDED_REPOS = [
