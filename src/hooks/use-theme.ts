@@ -2,10 +2,18 @@ import { useEffect } from "react";
 
 import { useAppStore } from "../store/use-app-store";
 
+/**
+ * Custom hook for managing the application theme (light/dark/system).
+ * Handles system preference detection, persistence in localStorage, and applying styles to the document.
+ * 
+ * @returns An object containing theme state and control functions.
+ */
 export function useTheme() {
   const { theme, setTheme } = useAppStore();
 
-  // Detect system preference
+  /**
+   * Detects the user's system color scheme preference.
+   */
   const getSystemPreference = (): "light" | "dark" => {
     if (typeof window !== "undefined") {
       return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
@@ -31,6 +39,9 @@ export function useTheme() {
     if (typeof window === "undefined")
       return;
 
+    /**
+     * Applies the specified theme to the document root and meta tags.
+     */
     const applyTheme = (themeToApply: "light" | "dark") => {
       const root = document.documentElement;
 
@@ -50,6 +61,9 @@ export function useTheme() {
       }
     };
 
+    /**
+     * Handles changes to the system theme preference.
+     */
     const handleSystemThemeChange = (e: MediaQueryListEvent) => {
       if (theme === "system") {
         applyTheme(e.matches ? "dark" : "light");
@@ -93,10 +107,16 @@ export function useTheme() {
     localStorage.setItem("portfolio-theme", theme);
   }, [theme]);
 
+  /**
+   * Toggles the theme between light and dark.
+   */
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
+  /**
+   * Gets the currently active theme (resolving 'system' to its actual value).
+   */
   const getEffectiveTheme = (): "light" | "dark" => {
     if (theme === "system") {
       return getSystemPreference();
