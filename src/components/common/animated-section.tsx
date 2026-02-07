@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import React from "react";
 
-import { useIntersectionObserver } from "../../hooks/use-intersectio-observer";
+import { useIntersectionObserver } from "../../hooks/use-intersection-observer";
 import { useOptimizedAnimations } from "../../hooks/use-optimized-animations";
 
 type AnimatedSectionProps = {

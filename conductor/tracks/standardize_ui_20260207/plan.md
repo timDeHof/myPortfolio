@@ -5,12 +5,12 @@ This plan outlines the steps to audit, standardize, and verify the core UI compo
 ## Phase 1: Audit and Test Infrastructure
 Goal: Identify gaps in coverage and ensure the testing environment is fully ready.
 
-- [ ] Task: Audit UI components and hooks for test coverage.
-    - [ ] Run coverage report to identify files with <80% coverage.
-    - [ ] List all files in `src/components/ui/`, `src/components/common/`, and `src/hooks/` that need attention.
-- [ ] Task: Verify and update testing configuration.
-    - [ ] Ensure Vitest and React Testing Library are correctly configured for all component types.
-    - [ ] Add necessary testing utilities or mocks for Framer Motion and Radix UI if missing.
+- [x] Task: Audit UI components and hooks for test coverage.
+    - [x] Run coverage report to identify files with <80% coverage.
+    - [x] List all files in `src/components/ui/`, `src/components/common/`, and `src/hooks/` that need attention.
+- [x] Task: Verify and update testing configuration.
+    - [x] Ensure Vitest and React Testing Library are correctly configured for all component types.
+    - [x] Add necessary testing utilities or mocks for Framer Motion and Radix UI if missing.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Audit and Test Infrastructure' (Protocol in workflow.md)
 
 ## Phase 2: Standardize Common Components
