@@ -6,6 +6,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 import viteImagemin from 'vite-plugin-imagemin';
 import tailwindcss from '@tailwindcss/vite';
 import {visualizer} from "rollup-plugin-visualizer";
+import { cloudflare } from "@cloudflare/vite-plugin";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -18,6 +19,12 @@ export default defineConfig({
     react(),
     tailwindcss(),
     viteTsconfigPaths(),
+    cloudflare({
+      // Cloudflare Pages/Workers configuration
+      // The functions directory is used for Cloudflare Pages Functions
+      // The wrangler.toml is used for Cloudflare Workers
+      // For Pages Functions, we need to configure it to use the functions directory
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {

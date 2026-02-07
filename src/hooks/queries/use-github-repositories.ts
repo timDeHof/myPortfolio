@@ -1,13 +1,13 @@
-import { useQuery, useQueries } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 
 import type { GitHubRepository } from "../../services/api/github";
 
 import { githubAPI, githubKeys } from "../../services/api/github";
 
-type UseGitHubRepositoriesOptions = {
+interface UseGitHubRepositoriesOptions {
   enabled?: boolean;
   refetchOnWindowFocus?: boolean;
-};
+}
 
 export function useGitHubRepositories(options: UseGitHubRepositoriesOptions = {}) {
   const {
@@ -70,7 +70,7 @@ export function useGitHubRepositoriesLanguages(repositories: GitHubRepository[] 
 
   return useQueries({
     queries: languageUrls.map(url => ({
-      queryKey: [...githubKeys.all, 'languages', url],
+      queryKey: [...githubKeys.all, "languages", url],
       queryFn: () => githubAPI.fetchRepositoryLanguages(url),
       staleTime: 15 * 60 * 1000, // 15 minutes
       enabled: !!repositories,
