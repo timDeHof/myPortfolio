@@ -28,7 +28,7 @@ Goal: Update the portfolio to use the new proxy URL.
     - [x] Remove any legacy proxy configurations from `vite.config.ts` if no longer needed.
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Frontend Service Integration' (Protocol in workflow.md) [7e24ae1]
 
-## Phase 3: Validation and Cleanup
+## Phase 3: Validation and Cleanup [checkpoint: f436f6a]
 Goal: Ensure everything is working correctly in production and remove dead code.
 
 - [x] Task: End-to-end verification. [24e5b1c]
