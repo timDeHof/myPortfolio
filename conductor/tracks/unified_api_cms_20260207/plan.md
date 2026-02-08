@@ -2,7 +2,7 @@
 
 This plan details the steps to build a unified serverless API for the portfolio, incorporating a blog backend, a custom contact form handler, dynamic portfolio data, and interactive documentation.
 
-## Phase 1: Project Setup & Modular Router [checkpoint: none]
+## Phase 1: Project Setup & Modular Router [checkpoint: 14e0525]
 Goal: Initialize the new worker project and implement the core routing structure.
 
 - [x] Task: Initialize the API worker project. [b964c29]
@@ -13,7 +13,7 @@ Goal: Initialize the new worker project and implement the core routing structure
     - [x] Create the main entry point with a base Hono router.
     - [x] Set up a modular structure for namespaces (e.g., `src/routes/`).
     - [x] Implement a basic health check endpoint at `/api/health`.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Project Setup & Modular Router' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Project Setup & Modular Router' (Protocol in workflow.md) [14e0525]
 
 ## Phase 2: Database & Storage Infrastructure [checkpoint: none]
 Goal: Set up Cloudflare D1 and R2 and implement the data access layer.
