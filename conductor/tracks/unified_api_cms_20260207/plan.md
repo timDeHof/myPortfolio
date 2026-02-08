@@ -9,10 +9,10 @@ Goal: Initialize the new worker project and implement the core routing structure
     - [x] Create `portfolio-api` directory.
     - [x] Initialize `package.json`, `wrangler.toml`, and `tsconfig.json`.
     - [x] Install dependencies: `hono`, `@hono/zod-openapi`, `zod`.
-- [ ] Task: Implement the core modular router.
-    - [ ] Create the main entry point with a base Hono router.
-    - [ ] Set up a modular structure for namespaces (e.g., `src/routes/`).
-    - [ ] Implement a basic health check endpoint at `/api/health`.
+- [x] Task: Implement the core modular router. [38eae46]
+    - [x] Create the main entry point with a base Hono router.
+    - [x] Set up a modular structure for namespaces (e.g., `src/routes/`).
+    - [x] Implement a basic health check endpoint at `/api/health`.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Project Setup & Modular Router' (Protocol in workflow.md)
 
 ## Phase 2: Database & Storage Infrastructure [checkpoint: none]
