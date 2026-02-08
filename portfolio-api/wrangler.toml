@@ -4,3 +4,12 @@ main = "src/index.ts"
 
 [observability]
 enabled = true
+
+[[d1_databases]]
+binding = "portfolio_db"
+database_name = "portfolio-db"
+database_id = "223fa851-ea8e-4e53-b17d-521db010a695"
+
+[[r2_buckets]]
+binding = "portfolio_assets"
+bucket_name = "portfolio-assets"
