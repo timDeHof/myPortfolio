@@ -44,12 +44,12 @@ Goal: Implement CRUD/GET endpoints for portfolio data.
 ## Phase 4: Contact Form & Integration [checkpoint: none]
 Goal: Implement the Resend-powered contact handler and migrate GitHub proxy.
 
-- [ ] Task: Implement the Contact Form handler.
-    - [ ] Write tests for the `/api/contact` POST endpoint.
-    - [ ] Implement the route with Zod validation and Resend API integration.
-- [ ] Task: Migrate/Integrate the GitHub Proxy.
-    - [ ] Write tests for the `/api/github/*` namespace.
-    - [ ] Implement the proxy logic within the new modular router.
+- [x] Task: Implement the Contact Form handler. [d6f464f]
+    - [x] Write tests for the `/api/contact` POST endpoint.
+    - [x] Implement the route with Zod validation and Resend API integration.
+- [x] Task: Migrate/Integrate the GitHub Proxy. [b5a990b]
+    - [x] Write tests for the `/api/github/*` namespace.
+    - [x] Implement the proxy logic within the new modular router.
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Contact Form & Integration' (Protocol in workflow.md)
 
 ## Phase 5: Documentation & Frontend Integration [checkpoint: none]
