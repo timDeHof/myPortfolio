@@ -1,43 +1,33 @@
 import { env } from "../lib/env";
 
-// Web3Forms configuration
-const WEB3FORMS_ACCESS_KEY = env.VITE_WEB3FORMS_ACCESS_KEY || "YOUR_WEB3FORMS_ACCESS_KEY";
-
 export interface EmailData {
   from_name: string;
   from_email: string;
   message: string;
-  to_name?: string;
+  subject?: string;
 }
 
 export async function sendEmail(data: EmailData): Promise<void> {
-  if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY === "YOUR_WEB3FORMS_ACCESS_KEY") {
-    throw new Error("Web3Forms access key not configured");
-  }
+  const payload = {
+    name: data.from_name,
+    email: data.from_email,
+    subject: data.subject || `New Contact Form Message from ${data.from_name}`,
+    message: data.message,
+  };
 
   try {
-    const formData = new FormData();
-    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
-    formData.append("name", data.from_name);
-    formData.append("email", data.from_email);
-    formData.append("message", data.message);
-    formData.append("subject", `New Contact Form Message from ${data.from_name}`);
-    formData.append("from_name", "Portfolio Contact Form");
-    formData.append("redirect", "false");
-
-    const response = await fetch("https://api.web3forms.com/submit", {
+    const response = await fetch(`${env.VITE_API_BASE_URL}/contact`, {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
     });
 
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error(result.message || "Failed to send email");
-    }
-
-    if (!result.success) {
-      throw new Error(result.message || "Failed to send email");
+      throw new Error(result.error || "Failed to send email");
     }
   }
   catch (error) {

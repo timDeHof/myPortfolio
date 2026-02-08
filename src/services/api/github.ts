@@ -51,7 +51,7 @@ export type GitHubError = {
 
 const GITHUB_USERNAME = "timDeHof";
 // Update the API base to point to the standalone worker proxy
-const GITHUB_API_BASE = env.VITE_GITHUB_PROXY_URL;
+const GITHUB_API_BASE = `${env.VITE_API_BASE_URL}/github`;
 
 // Repositories to exclude from portfolio (add repo names here)
 const EXCLUDED_REPOS = [

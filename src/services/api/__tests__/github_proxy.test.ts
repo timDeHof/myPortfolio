@@ -29,7 +29,6 @@ describe('githubAPI Proxy Integration', () => {
     await githubAPI.fetchUser();
     
     // We expect the URL to be the new worker URL
-    // This will fail initially because GITHUB_API_BASE is still /api/github
-    expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('https://github-api-proxy.ttdehof.workers.dev'));
+    expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining('https://portfolio-api.ttdehof.workers.dev/github'));
   });
 });

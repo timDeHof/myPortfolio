@@ -70,7 +70,7 @@ describe('githubAPI.fetchUser', () => {
     global.fetch = mockFetch(200, mockUser);
 
     const user = await githubAPI.fetchUser();
-    expect(global.fetch).toHaveBeenCalledWith(`${env.VITE_GITHUB_PROXY_URL}/users/timDeHof`);
+    expect(global.fetch).toHaveBeenCalledWith(`${env.VITE_API_BASE_URL}/github/users/timDeHof`);
     expect(user).toEqual(mockUser);
   });
 
@@ -109,7 +109,7 @@ describe('githubAPI.fetchRepositories', () => {
 
     const repositories = await githubAPI.fetchRepositories();
 
-    expect(global.fetch).toHaveBeenCalledWith(`${env.VITE_GITHUB_PROXY_URL}/users/timDeHof/repos?sort=updated&per_page=100&type=all`);
+    expect(global.fetch).toHaveBeenCalledWith(`${env.VITE_API_BASE_URL}/github/users/timDeHof/repos?sort=updated&per_page=100&type=all`);
     expect(repositories.length).toBe(5); // 1 (showcase) + 1 (personal) + 1 (contribution) + 1 (fork) + 1 (another-showcase)
     expect(repositories.some(repo => repo.name === 'private-repo')).toBeFalsy();
     expect(repositories.some(repo => repo.name === 'archived-repo')).toBeFalsy();
@@ -240,7 +240,7 @@ describe('githubAPI.fetchRepositoryLanguages', () => {
 
     const languages = await githubAPI.fetchRepositoryLanguages(languagesUrl);
 
-    expect(global.fetch).toHaveBeenCalledWith(`${env.VITE_GITHUB_PROXY_URL}/repos/timDeHof/my-showcase/languages`);
+    expect(global.fetch).toHaveBeenCalledWith(`${env.VITE_API_BASE_URL}/github/repos/timDeHof/my-showcase/languages`);
     expect(languages).toEqual(mockLanguages);
   });
 
@@ -267,7 +267,7 @@ describe('githubAPI.fetchRateLimit', () => {
 
     const rateLimit = await githubAPI.fetchRateLimit();
 
-    expect(global.fetch).toHaveBeenCalledWith(`${env.VITE_GITHUB_PROXY_URL}/rate_limit`);
+    expect(global.fetch).toHaveBeenCalledWith(`${env.VITE_API_BASE_URL}/github/rate_limit`);
     expect(rateLimit).toEqual(mockRateLimit);
   });
 
