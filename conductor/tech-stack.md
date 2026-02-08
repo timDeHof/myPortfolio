@@ -18,8 +18,10 @@
 
 ## Backend & Deployment
 - **Platform:** Cloudflare Pages
-- **Serverless Functions:** Cloudflare Workers (via functions/ directory)
-- **API Proxy:** Standalone Cloudflare Worker
+- **API Runtime:** Cloudflare Workers (Standalone)
+- **API Framework:** Hono with @hono/zod-openapi
+- **Database:** Cloudflare D1 (SQL)
+- **Object Storage:** Cloudflare R2
 - **CLI/Deployment Tool:** Wrangler
 
 ## Testing & Quality
@@ -29,5 +31,6 @@
 - **Type Checking:** TypeScript (tsc)
 
 ## Services
-- **Communication:** EmailJS (Contact form integration)
+- **Communication:** Resend API (Custom contact handler)
 - **Data Source:** GitHub API (Real-time project and stat data)
+- **API Documentation:** Scalar (Interactive OpenAPI)

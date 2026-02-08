@@ -16,9 +16,11 @@ A modern single-page portfolio application built with React, TypeScript, and bes
 
 ## Key Features
 - **Project Showcase:** Interactive grid of projects with filtering by type and details fetched from GitHub API.
-- **GitHub Integration:** Display real-time stats, language distribution, and contribution activity.
+- **GitHub Integration:** Display real-time stats, language distribution, and contribution activity via a secure proxy.
+- **Portfolio CMS:** Dynamic management of tech stack, services, and certifications via a unified serverless API and Cloudflare D1/R2.
+- **Blog Backend:** Fully functional blog API with D1 storage for dynamic content.
 - **Services Section:** Detailed overview of development services offered.
 - **About Me:** Professional background, certifications, and technical skill set.
-- **Contact Form:** Functional form with EmailJS integration and automated confirmation replies.
+- **Contact Form:** Functional form with custom Resend API integration and serverless validation.
 - **Modern UI/UX:** Dark mode support, smooth animations with Framer Motion, and responsive design for all devices.
 - **SEO & Performance:** Optimized for search engines and fast loading times using Vite and modern web standards.
