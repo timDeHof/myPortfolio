@@ -2,6 +2,7 @@ import { OpenAPIHono } from '@hono/zod-openapi';
 import { assets } from './assets';
 import { portfolio } from './portfolio';
 import { blog } from './blog';
+import { contact } from './contact';
 
 export const routes = new OpenAPIHono();
 
@@ -9,6 +10,7 @@ export const routes = new OpenAPIHono();
 routes.route('/assets', assets);
 routes.route('/portfolio', portfolio);
 routes.route('/blog', blog);
+routes.route('/contact', contact);
 
 // Health check
 routes.get('/health', (c) => {
