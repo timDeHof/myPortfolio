@@ -33,12 +33,12 @@ Goal: Set up Cloudflare D1 and R2 and implement the data access layer.
 ## Phase 3: Portfolio CMS Endpoints [checkpoint: none]
 Goal: Implement CRUD/GET endpoints for portfolio data.
 
-- [ ] Task: Implement Portfolio Data endpoints.
-    - [ ] Write tests for `/api/portfolio/techstack`, `services`, and `certifications`.
-    - [ ] Implement the routes to retrieve data from D1.
-- [ ] Task: Implement Blog endpoints.
-    - [ ] Write tests for `/api/blog` (list) and `/api/blog/:slug` (fetch).
-    - [ ] Implement the blog routes using D1.
+- [x] Task: Implement Portfolio Data endpoints. [37374d7]
+    - [x] Write tests for `/api/portfolio/techstack`, `services`, and `certifications`.
+    - [x] Implement the routes to retrieve data from D1.
+- [x] Task: Implement Blog endpoints. [cad59a8]
+    - [x] Write tests for `/api/blog` (list) and `/api/blog/:slug` (fetch).
+    - [x] Implement the blog routes using D1.
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Portfolio CMS Endpoints' (Protocol in workflow.md)
 
 ## Phase 4: Contact Form & Integration [checkpoint: none]
