@@ -18,16 +18,16 @@ Goal: Initialize the new worker project and implement the core routing structure
 ## Phase 2: Database & Storage Infrastructure [checkpoint: none]
 Goal: Set up Cloudflare D1 and R2 and implement the data access layer.
 
-- [ ] Task: Provision Cloudflare D1 and R2 resources.
-    - [ ] Create a new D1 database (`portfolio-db`).
-    - [ ] Create a new R2 bucket (`portfolio-assets`).
-    - [ ] Update `wrangler.toml` with D1 and R2 bindings.
-- [ ] Task: Define and initialize database schemas.
-    - [ ] Create SQL migration files for `posts`, `skills`, `services`, and `certifications`.
-    - [ ] Execute migrations against the D1 database (local and remote).
-- [ ] Task: Implement the Asset Proxy endpoint.
-    - [ ] Write tests for `/api/assets/*` retrieval.
-    - [ ] Implement the `assets` route to fetch and serve objects from R2.
+- [x] Task: Provision Cloudflare D1 and R2 resources. [245c088]
+    - [x] Create a new D1 database (`portfolio-db`).
+    - [x] Create a new R2 bucket (`portfolio-assets`).
+    - [x] Update `wrangler.toml` with D1 and R2 bindings.
+- [x] Task: Define and initialize database schemas. [85d335f]
+    - [x] Create SQL migration files for `posts`, `skills`, `services`, and `certifications`.
+    - [x] Execute migrations against the D1 database (local and remote).
+- [x] Task: Implement the Asset Proxy endpoint. [3cb3db4]
+    - [x] Write tests for `/api/assets/*` retrieval.
+    - [x] Implement the `assets` route to fetch and serve objects from R2.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Database & Storage Infrastructure' (Protocol in workflow.md)
 
 ## Phase 3: Portfolio CMS Endpoints [checkpoint: none]
