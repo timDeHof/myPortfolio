@@ -5,7 +5,7 @@ import tryParseEnv from "./try-parse-env";
 const EnvSchema = z.object({
   VITE_NODE_ENV: z.string().default("development"),
   VITE_WEB3FORMS_ACCESS_KEY: z.string().optional(),
-  VITE_API_BASE_URL: z.string().url().default("https://portfolio-api.ttdehof.workers.dev"),
+  VITE_API_BASE_URL: z.string().url().default("https://portfolio-api.ttdehof.workers.dev/api"),
 });
 
 export type EnvSchema = z.infer<typeof EnvSchema>;

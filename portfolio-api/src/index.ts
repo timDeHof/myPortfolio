@@ -1,4 +1,5 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
+import { cors } from 'hono/cors';
 import { apiReference } from '@scalar/hono-api-reference';
 import { routes } from './routes';
 
@@ -11,6 +12,9 @@ export interface Env {
 }
 
 const app = new OpenAPIHono<{ Bindings: Env }>();
+
+// Enable CORS for all origins (or specific ones if preferred)
+app.use('*', cors());
 
 // Mount the routes at /api
 app.route('/api', routes);

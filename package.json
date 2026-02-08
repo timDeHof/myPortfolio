@@ -12,8 +12,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "dev:pages": "pnpm run build && pnpm run copy:functions && pnpm exec wrangler pages dev build --port 4173",
-    "copy:functions": "cp -r functions build/",
+    "dev:pages": "pnpm run build && pnpm exec wrangler pages dev build --port 4173",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint",
@@ -24,7 +23,7 @@
     "coverage": "vitest run --coverage",
     "preview:worker": "pnpm run build && wrangler dev",
     "deploy:worker": "pnpm run build && wrangler deploy",
-    "deploy:pages": "pnpm run copy:functions && pnpm run build && wrangler pages deploy build"
+    "deploy:pages": "pnpm run build && wrangler pages deploy build"
   },
   "dependencies": {
     "@radix-ui/react-separator": "^1.1.8",
