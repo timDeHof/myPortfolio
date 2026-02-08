@@ -15,7 +15,7 @@ Goal: Initialize the new worker project and implement the core routing structure
     - [x] Implement a basic health check endpoint at `/api/health`.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Project Setup & Modular Router' (Protocol in workflow.md) [14e0525]
 
-## Phase 2: Database & Storage Infrastructure [checkpoint: none]
+## Phase 2: Database & Storage Infrastructure [checkpoint: 843e6a3]
 Goal: Set up Cloudflare D1 and R2 and implement the data access layer.
 
 - [x] Task: Provision Cloudflare D1 and R2 resources. [245c088]
@@ -28,7 +28,7 @@ Goal: Set up Cloudflare D1 and R2 and implement the data access layer.
 - [x] Task: Implement the Asset Proxy endpoint. [3cb3db4]
     - [x] Write tests for `/api/assets/*` retrieval.
     - [x] Implement the `assets` route to fetch and serve objects from R2.
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Database & Storage Infrastructure' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Database & Storage Infrastructure' (Protocol in workflow.md) [843e6a3]
 
 ## Phase 3: Portfolio CMS Endpoints [checkpoint: none]
 Goal: Implement CRUD/GET endpoints for portfolio data.
