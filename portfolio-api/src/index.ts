@@ -1,7 +1,12 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { routes } from './routes';
 
-const app = new OpenAPIHono();
+export interface Env {
+  portfolio_db: D1Database;
+  portfolio_assets: R2Bucket;
+}
+
+const app = new OpenAPIHono<{ Bindings: Env }>();
 
 // Mount the routes at /api
 app.route('/api', routes);
