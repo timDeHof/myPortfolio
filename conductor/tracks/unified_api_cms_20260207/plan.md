@@ -55,11 +55,11 @@ Goal: Implement the Resend-powered contact handler and migrate GitHub proxy.
 ## Phase 5: Documentation & Frontend Integration [checkpoint: none]
 Goal: Add interactive docs and update the frontend to use the new API.
 
-- [ ] Task: Implement OpenAPI & Scalar Documentation.
-    - [ ] Define Zod schemas for all request/response objects.
-    - [ ] Implement the `/api/docs` endpoint using `@scalar/hono-api-reference`.
-- [ ] Task: Update Frontend Service Layer.
-    - [ ] Update `src/services/api/github.ts` and environment variables.
-    - [ ] Create new services (e.g., `src/services/api/portfolio.ts`) to fetch data from the new CMS endpoints.
-    - [ ] Replace EmailJS usage with the new `/api/contact` endpoint.
+- [x] Task: Implement OpenAPI & Scalar Documentation. [5075c90]
+    - [x] Define Zod schemas for all request/response objects.
+    - [x] Implement the `/api/docs` endpoint using `@scalar/hono-api-reference`.
+- [x] Task: Update Frontend Service Layer. [7841f84]
+    - [x] Update `src/services/api/github.ts` and environment variables.
+    - [x] Create new services (e.g., `src/services/api/portfolio.ts`) to fetch data from the new CMS endpoints.
+    - [x] Replace EmailJS usage with the new `/api/contact` endpoint.
 - [ ] Task: Conductor - User Manual Verification 'Phase 5: Documentation & Frontend Integration' (Protocol in workflow.md)
