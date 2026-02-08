@@ -41,7 +41,7 @@ Goal: Implement CRUD/GET endpoints for portfolio data.
     - [x] Implement the blog routes using D1.
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Portfolio CMS Endpoints' (Protocol in workflow.md) [a7a7723]
 
-## Phase 4: Contact Form & Integration [checkpoint: none]
+## Phase 4: Contact Form & Integration [checkpoint: b734ecf]
 Goal: Implement the Resend-powered contact handler and migrate GitHub proxy.
 
 - [x] Task: Implement the Contact Form handler. [d6f464f]
@@ -50,7 +50,7 @@ Goal: Implement the Resend-powered contact handler and migrate GitHub proxy.
 - [x] Task: Migrate/Integrate the GitHub Proxy. [b5a990b]
     - [x] Write tests for the `/api/github/*` namespace.
     - [x] Implement the proxy logic within the new modular router.
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Contact Form & Integration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Contact Form & Integration' (Protocol in workflow.md) [b734ecf]
 
 ## Phase 5: Documentation & Frontend Integration [checkpoint: none]
 Goal: Add interactive docs and update the frontend to use the new API.
