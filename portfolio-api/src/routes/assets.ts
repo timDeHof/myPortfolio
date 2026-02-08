@@ -1,10 +1,33 @@
-import { Hono } from 'hono';
+import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 import { Env } from '../index';
 
-export const assets = new Hono<{ Bindings: Env }>();
+export const assets = new OpenAPIHono<{ Bindings: Env }>();
 
-assets.get('/:key', async (c) => {
-  const key = c.req.param('key');
+const getAssetRoute = createRoute({
+  method: 'get',
+  path: '/{key}',
+  request: {
+    params: z.object({
+      key: z.string().openapi({ example: 'icons/react.svg' }),
+    }),
+  },
+  responses: {
+    200: {
+      description: 'The asset file',
+    },
+    404: {
+      content: {
+        'application/json': {
+          schema: z.object({ error: z.string() }),
+        },
+      },
+      description: 'Asset not found',
+    },
+  },
+});
+
+assets.openapi(getAssetRoute, async (c) => {
+  const { key } = c.req.valid('param');
   const object = await c.env.portfolio_assets.get(key);
 
   if (!object) {

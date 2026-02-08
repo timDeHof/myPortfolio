@@ -1,4 +1,5 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
+import { apiReference } from '@scalar/hono-api-reference';
 import { routes } from './routes';
 
 export interface Env {
@@ -13,6 +14,38 @@ const app = new OpenAPIHono<{ Bindings: Env }>();
 
 // Mount the routes at /api
 app.route('/api', routes);
+
+// OpenAPI Specification
+app.doc('/api/openapi.json', {
+  openapi: '3.1.0',
+  info: {
+    title: 'Unified Portfolio API',
+    version: '1.0.0',
+    description: 'A unified serverless API for Tim DeHof\'s portfolio, managing blog posts, tech stack, services, and contact forms.',
+  },
+  servers: [
+    {
+      url: 'https://portfolio-api.ttdehof.workers.dev',
+      description: 'Production server',
+    },
+    {
+      url: 'http://localhost:8787',
+      description: 'Local development',
+    },
+  ],
+});
+
+// Scalar API Reference
+app.get(
+  '/api/docs',
+  apiReference({
+    spec: {
+      url: '/api/openapi.json',
+    },
+    theme: 'purple',
+    layout: 'modern',
+  })
+);
 
 export default app;
 export { app };

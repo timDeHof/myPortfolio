@@ -1,25 +1,62 @@
-import { Hono } from 'hono';
-import { z } from 'zod';
+import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 import { Env } from '../index';
 
-export const contact = new Hono<{ Bindings: Env }>();
+export const contact = new OpenAPIHono<{ Bindings: Env }>();
 
-const contactSchema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  subject: z.string().min(2),
-  message: z.string().min(10),
+const contactRequestSchema = z.object({
+  name: z.string().min(2).openapi({ example: 'John Doe' }),
+  email: z.string().email().openapi({ example: 'john@example.com' }),
+  subject: z.string().min(2).openapi({ example: 'Inquiry' }),
+  message: z.string().min(10).openapi({ example: 'Hello, I would like to discuss a project.' }),
+}).openapi('ContactRequest');
+
+const contactResponseSchema = z.object({
+  success: z.boolean().openapi({ example: true }),
+  message: z.string().openapi({ example: 'Message sent successfully' }),
+}).openapi('ContactResponse');
+
+const sendContactRoute = createRoute({
+  method: 'post',
+  path: '/',
+  request: {
+    body: {
+      content: {
+        'application/json': {
+          schema: contactRequestSchema,
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      content: {
+        'application/json': {
+          schema: contactResponseSchema,
+        },
+      },
+      description: 'Contact message sent',
+    },
+    400: {
+      content: {
+        'application/json': {
+          schema: z.object({ error: z.string(), details: z.any() }),
+        },
+      },
+      description: 'Invalid input',
+    },
+    500: {
+      content: {
+        'application/json': {
+          schema: z.object({ error: z.string(), details: z.string() }),
+        },
+      },
+      description: 'Server error',
+    },
+  },
 });
 
-contact.post('/', async (c) => {
-  const body = await c.req.json();
-  const result = contactSchema.safeParse(body);
-
-  if (!result.success) {
-    return c.json({ error: 'Invalid input', details: result.error.format() }, 400);
-  }
-
-  const { name, email, subject, message } = result.data;
+contact.openapi(sendContactRoute, async (c) => {
+  const { name, email, subject, message } = c.req.valid('json');
 
   try {
     const response = await fetch('https://api.resend.com/emails', {
@@ -29,15 +66,10 @@ contact.post('/', async (c) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Portfolio Contact <onboarding@resend.dev>', // Change to your verified domain later
+        from: 'Portfolio Contact <onboarding@resend.dev>',
         to: 'ttdehof@gmail.com',
         subject: `New Contact: ${subject}`,
-        html: `
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Message:</strong></p>
-          <p>${message}</p>
-        `,
+        html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong></p><p>${message}</p>`,
       }),
     });
 

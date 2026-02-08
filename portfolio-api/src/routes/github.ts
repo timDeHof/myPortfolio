@@ -1,8 +1,10 @@
-import { Hono } from 'hono';
+import { OpenAPIHono } from '@hono/zod-openapi';
 import { Env } from '../index';
 
-export const github = new Hono<{ Bindings: Env }>();
+export const github = new OpenAPIHono<{ Bindings: Env }>();
 
+// Generic catch-all for GitHub proxy
+// Note: Catch-all routes are tricky with OpenAPI, so we'll just handle the logic here.
 github.all('/*', async (c) => {
   const path = c.req.path.replace('/api/github', '');
   const url = new URL(c.req.url);
@@ -23,7 +25,6 @@ github.all('/*', async (c) => {
     });
 
     const newResponse = new Response(response.body, response);
-    // Add CORS if not already present (Hono might handle this if configured globally, but keeping it explicit for proxy)
     newResponse.headers.set('Access-Control-Allow-Origin', '*');
     
     return newResponse;
