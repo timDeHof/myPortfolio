@@ -30,7 +30,7 @@ Goal: Set up Cloudflare D1 and R2 and implement the data access layer.
     - [x] Implement the `assets` route to fetch and serve objects from R2.
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Database & Storage Infrastructure' (Protocol in workflow.md) [843e6a3]
 
-## Phase 3: Portfolio CMS Endpoints [checkpoint: none]
+## Phase 3: Portfolio CMS Endpoints [checkpoint: a7a7723]
 Goal: Implement CRUD/GET endpoints for portfolio data.
 
 - [x] Task: Implement Portfolio Data endpoints. [37374d7]
@@ -39,7 +39,7 @@ Goal: Implement CRUD/GET endpoints for portfolio data.
 - [x] Task: Implement Blog endpoints. [cad59a8]
     - [x] Write tests for `/api/blog` (list) and `/api/blog/:slug` (fetch).
     - [x] Implement the blog routes using D1.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Portfolio CMS Endpoints' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Portfolio CMS Endpoints' (Protocol in workflow.md) [a7a7723]
 
 ## Phase 4: Contact Form & Integration [checkpoint: none]
 Goal: Implement the Resend-powered contact handler and migrate GitHub proxy.
