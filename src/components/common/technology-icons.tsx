@@ -1,4 +1,5 @@
 import React from "react";
+import { Printer, Settings, Puzzle, Layout, Users } from "lucide-react";
 
 /**
  * Common properties for technology icon components.
@@ -182,6 +183,41 @@ export const ExpressIcon: React.FC<IconProps> = ({ className = "", size = 24, ..
     <path d="M12 4.885c-3.924 0-7.115 3.192-7.115 7.115S8.076 19.115 12 19.115s7.115-3.192 7.115-7.115S15.924 4.885 12 4.885m0 13.526c-3.535 0-6.411-2.876-6.411-6.411S8.465 5.589 12 5.589 18.411 8.465 18.411 12 15.535 18.411 12 18.411" />
     <path d="M13.315 10.145H12a.35.35 0 0 0-.352.352v3.006a.352.352 0 0 0 .705 0v-.775h.963c.712 0 1.292-.579 1.292-1.292s-.581-1.291-1.293-1.291m0 1.879h-.963V10.85h.963a.587.587 0 0 1 0 1.174m-3.24-1.651a.35.35 0 0 0-.329-.228H9.37a.35.35 0 0 0-.33.229L7.913 13.38a.352.352 0 0 0 .66.247l.196-.523h1.578l.196.523a.35.35 0 0 0 .33.229.352.352 0 0 0 .33-.476zm-1.042 2.026.525-1.4.525 1.4zm6.349-2.254a.35.35 0 0 0-.352.352v3.006a.352.352 0 0 0 .705 0v-3.006a.35.35 0 0 0-.352-.352M14.52 4.1a8 8 0 0 1 .724.269.4.4 0 0 0 .138.028.352.352 0 0 0 .138-.676 9 9 0 0 0-.786-.292.352.352 0 0 0-.214.671M4.718 15.964a.352.352 0 0 0-.618.337 9 9 0 0 0 .481.783.35.35 0 0 0 .291.153.352.352 0 0 0 .29-.552 8 8 0 0 1-.443-.722m6.56 4.296a8.3 8.3 0 0 1-5.045-2.303.352.352 0 1 0-.49.506 9 9 0 0 0 5.475 2.499l.031.001a.35.35 0 0 0 .351-.322.35.35 0 0 0-.321-.381m5.789-15.69a.352.352 0 0 0-.398.582 8.3 8.3 0 0 1 3.333 4.686.35.35 0 0 0 .34.261.352.352 0 0 0 .34-.444 9 9 0 0 0-3.616-5.084" />
   </svg>
+);
+
+/**
+ * 3D Printing technology icon.
+ */
+export const PrintingIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
+  <Printer size={size} className={className} {...props} />
+);
+
+/**
+ * Mechanical Engineering technology icon.
+ */
+export const MechanicalIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
+  <Settings size={size} className={className} {...props} />
+);
+
+/**
+ * Problem Solving technology icon.
+ */
+export const PuzzleIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
+  <Puzzle size={size} className={className} {...props} />
+);
+
+/**
+ * Team Leadership technology icon.
+ */
+export const TeamIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
+  <Users size={size} className={className} {...props} />
+);
+
+/**
+ * System Design technology icon.
+ */
+export const SystemIcon: React.FC<IconProps> = ({ className = "", size = 24, ...props }) => (
+  <Layout size={size} className={className} {...props} />
 );
 
 /**

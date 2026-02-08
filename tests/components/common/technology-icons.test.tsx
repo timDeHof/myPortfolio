@@ -25,4 +25,19 @@ describe("TechnologyIcons", () => {
     expect(svg).toBeInTheDocument();
     expect(svg).toHaveAttribute("width", "20");
   });
+
+  it("renders PrintingIcon correctly", () => {
+    const { container } = render(<Icons.PrintingIcon size={40} className="test-printing" />);
+    const svg = container.querySelector("svg");
+    expect(svg).toBeInTheDocument();
+    expect(svg).toHaveAttribute("width", "40");
+    expect(svg).toHaveClass("test-printing");
+  });
+
+  it("renders MechanicalIcon correctly", () => {
+    const { container } = render(<Icons.MechanicalIcon size={30} />);
+    const svg = container.querySelector("svg");
+    expect(svg).toBeInTheDocument();
+    expect(svg).toHaveAttribute("width", "30");
+  });
 });
