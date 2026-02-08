@@ -52,7 +52,7 @@ Goal: Implement the Resend-powered contact handler and migrate GitHub proxy.
     - [x] Implement the proxy logic within the new modular router.
 - [x] Task: Conductor - User Manual Verification 'Phase 4: Contact Form & Integration' (Protocol in workflow.md) [b734ecf]
 
-## Phase 5: Documentation & Frontend Integration [checkpoint: none]
+## Phase 5: Documentation & Frontend Integration [checkpoint: 07c5fe1]
 Goal: Add interactive docs and update the frontend to use the new API.
 
 - [x] Task: Implement OpenAPI & Scalar Documentation. [5075c90]
@@ -62,4 +62,4 @@ Goal: Add interactive docs and update the frontend to use the new API.
     - [x] Update `src/services/api/github.ts` and environment variables.
     - [x] Create new services (e.g., `src/services/api/portfolio.ts`) to fetch data from the new CMS endpoints.
     - [x] Replace EmailJS usage with the new `/api/contact` endpoint.
-- [ ] Task: Conductor - User Manual Verification 'Phase 5: Documentation & Frontend Integration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 5: Documentation & Frontend Integration' (Protocol in workflow.md) [07c5fe1]
