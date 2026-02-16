@@ -1,6 +1,6 @@
 // Structured Data (JSON-LD) utilities for rich snippets
 
-export type PersonSchema = {
+export interface PersonSchema {
   "@context": "https://schema.org";
   "@type": "Person";
   "name": string;
@@ -10,15 +10,18 @@ export type PersonSchema = {
   "image": string;
   "email": string;
   "sameAs": string[];
+  "skills": string[];
   "knowsAbout": string[];
   "alumniOf"?: string;
-  "workLocation"?: {
-    "@type": "Place";
-    "name": string;
+  "address"?: {
+    "@type": "PostalAddress";
+    "addressLocality": string;
+    "addressCountry": string;
+    "addressRegion": string;
   };
-};
+}
 
-export type WebsiteSchema = {
+export interface WebsiteSchema {
   "@context": "https://schema.org";
   "@type": "WebSite";
   "name": string;
@@ -33,9 +36,9 @@ export type WebsiteSchema = {
     "target": string;
     "query-input": string;
   };
-};
+}
 
-export type ProjectSchema = {
+export interface ProjectSchema {
   "@context": "https://schema.org";
   "@type": "CreativeWork";
   "name": string;
@@ -49,7 +52,7 @@ export type ProjectSchema = {
   "dateCreated": string;
   "programmingLanguage": string[];
   "keywords": string[];
-};
+}
 
 // Generate Person structured data
 export function generatePersonSchema(): PersonSchema {
@@ -67,6 +70,7 @@ export function generatePersonSchema(): PersonSchema {
       "https://linkedin.com/in/timdehof",
       "https://twitter.com/timDeHof",
     ],
+    "skills": ["React", "Node.js", "TypeScript", "Python", "JavaScript", "Cloudflare Workers", "AWS Lambda", "Vitest", "test-driven development"],
     "knowsAbout": [
       "JavaScript",
       "TypeScript",
@@ -77,9 +81,11 @@ export function generatePersonSchema(): PersonSchema {
       "Full Stack Development",
       "Mechanical Engineering",
     ],
-    "workLocation": {
-      "@type": "Place",
-      "name": "Remote",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Jacksonville",
+      "addressRegion": "FL",
+      "addressCountry": "USA",
     },
   };
 }
