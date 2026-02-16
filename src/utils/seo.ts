@@ -1,4 +1,4 @@
-export type SEOData = {
+export interface SEOData {
   title: string;
   description: string;
   keywords?: string;
@@ -16,7 +16,7 @@ export type SEOData = {
   canonicalUrl?: string;
   noIndex?: boolean;
   noFollow?: boolean;
-};
+}
 
 export const defaultSEO: SEOData = {
   title: "Tim DeHof - Full Stack Developer",
