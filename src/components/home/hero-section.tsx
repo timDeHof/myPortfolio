@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowRight, Code, Coffee, Network, Rocket, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -26,11 +26,11 @@ export const HeroSection: React.FC = () => {
       {floatingIcons.map((item, index) => {
         const IconComponent = item.Icon;
         return (
-          <motion.div
+          <m.div
             key={`floating-${item.Icon.displayName || index}`}
             className="motion-element absolute z-10 opacity-20 dark:opacity-30 hidden lg:block"
             style={{ left: item.x, top: item.y }}
-            initial={{ opacity: 0, scale: 0, rotate: -180 }}
+            initial={{ opacity: 0, scale: 0.95, rotate: -180 }}
             animate={{
               opacity: [0.2, 0.4, 0.2],
               scale: [0.8, 1.2, 0.8],
@@ -45,7 +45,7 @@ export const HeroSection: React.FC = () => {
             }}
           >
             <IconComponent size={48} />
-          </motion.div>
+          </m.div>
         );
       })}
 
@@ -53,11 +53,11 @@ export const HeroSection: React.FC = () => {
       {backgroundElements.map((item, index) => {
         const IconComponent = item.icon;
         return (
-          <motion.div
+          <m.div
             key={`bg-${item.icon.displayName || index}`}
             className="motion-element absolute z-0 opacity-10 dark:opacity-20 text-blue-600 dark:text-blue-400 hidden md:block"
             style={{ left: item.x, top: item.y }}
-            initial={{ opacity: 0, scale: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{
               opacity: [0.1, 0.3, 0.1],
               scale: [1, 1.5, 1],
@@ -71,7 +71,7 @@ export const HeroSection: React.FC = () => {
             }}
           >
             <IconComponent size={32} />
-          </motion.div>
+          </m.div>
         );
       })}
 
@@ -79,13 +79,13 @@ export const HeroSection: React.FC = () => {
       <MaxWidthWrapper>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
             {/* Glassmorphism container */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.9, y: 50 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2 }}
@@ -97,7 +97,7 @@ export const HeroSection: React.FC = () => {
 
               <div className="relative z-10">
                 {/* Enhanced greeting with animation */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
@@ -106,9 +106,9 @@ export const HeroSection: React.FC = () => {
                   <span className="inline-block px-3 py-2 sm:px-4 bg-gradient-to-r from-blue-100 to-teal-100 dark:from-blue-900/50 dark:to-teal-900/50 text-blue-800 dark:text-blue-300 rounded-full text-xs sm:text-sm font-medium border border-blue-200 dark:border-blue-700 touch-manipulation">
                     👋 Welcome to my digital space
                   </span>
-                </motion.div>
+                </m.div>
 
-                <motion.h1
+                <m.h1
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 leading-tight"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -121,17 +121,17 @@ export const HeroSection: React.FC = () => {
                   <span className="relative">
                     Full-Stack Developer
                     {/* Animated underline */}
-                    <motion.div
+                    <m.div
                       className="absolute -bottom-1 sm:-bottom-2 left-0 right-0 h-0.5 sm:h-1 bg-gradient-to-r from-blue-700 via-teal-700 to-purple-700 dark:from-blue-400 dark:via-teal-400 dark:to-purple-400 rounded-full"
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: 1 }}
                       transition={{ duration: 0.8, delay: 1.2 }}
                     />
                   </span>
-                </motion.h1>
+                </m.h1>
 
                 {/* Enhanced description with glassmorphism */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.8 }}
@@ -143,16 +143,16 @@ export const HeroSection: React.FC = () => {
                       className="text-lg sm:text-xl md:text-2xl text-gray-800 dark:text-gray-200 font-medium text-center flex items-center justify-center leading-relaxed text-pretty"
                     />
                   </div>
-                </motion.div>
+                </m.div>
 
                 {/* Enhanced CTA buttons */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 1 }}
                   className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center"
                 >
-                  <motion.div
+                  <m.div
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     className="w-full sm:w-auto"
@@ -168,8 +168,8 @@ export const HeroSection: React.FC = () => {
                         <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                       </Link>
                     </Button>
-                  </motion.div>
-                  <motion.div
+                  </m.div>
+                  <m.div
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     className="w-full sm:w-auto"
@@ -182,44 +182,44 @@ export const HeroSection: React.FC = () => {
                     >
                       <Link to="/contact">Get In Touch</Link>
                     </Button>
-                  </motion.div>
-                </motion.div>
+                  </m.div>
+                </m.div>
 
                 {/* Enhanced social proof with glassmorphism */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 1.2 }}
                   className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-600 dark:text-gray-400"
                 >
-                  <motion.div
+                  <m.div
                     className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-3 sm:px-4 py-2 border border-white/30 dark:border-white/20 touch-manipulation"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <Star className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-yellow-500" />
                     <span>GitHub Active</span>
-                  </motion.div>
-                  <motion.div
+                  </m.div>
+                  <m.div
                     className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-3 sm:px-4 py-2 border border-white/30 dark:border-white/20 touch-manipulation"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <Coffee className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-teal-600 dark:text-teal-400" />
                     <span>3+ Years Experience</span>
-                  </motion.div>
-                  <motion.div
+                  </m.div>
+                  <m.div
                     className="flex items-center backdrop-blur-sm bg-white/20 dark:bg-white/10 rounded-full px-3 sm:px-4 py-2 border border-white/30 dark:border-white/20 touch-manipulation"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <Rocket className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-purple-600 dark:text-purple-400" />
                     <span>Always Learning</span>
-                  </motion.div>
-                </motion.div>
+                  </m.div>
+                </m.div>
               </div>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         </div>
       </MaxWidthWrapper>
 

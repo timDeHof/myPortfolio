@@ -24,9 +24,9 @@ export function BackToTopButton(): JSX.Element | null {
     <motion.button
       onClick={scrollToTop}
       className="fixed bottom-8 right-8 z-50 bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 touch-manipulation group min-w-[48px] min-h-[48px] flex items-center justify-center"
-      initial={{ opacity: 0, scale: 0, y: 20 }}
+      initial={{ opacity: 0, scale: 0.95, y: 20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0, y: 20 }}
+      exit={{ opacity: 0, scale: 0.95, y: 20 }}
       whileHover={{ scale: 1.1, y: -2 }}
       whileTap={{ scale: 0.95 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}

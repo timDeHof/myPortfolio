@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { ArrowUpIcon, ExternalLink, GithubIcon, LinkedinIcon, Menu, TwitterIcon, X } from "lucide-react";
 import React, { Suspense, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
@@ -39,7 +39,7 @@ function Navigation() {
               >
                 {item.name}
                 {location.pathname === item.href && (
-                  <motion.div
+                  <m.div
                     layoutId="activeTab"
                     className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-700 dark:bg-teal-400"
                     initial={false}
@@ -64,7 +64,7 @@ function Navigation() {
 
         <AnimatePresence>
           {isOpen && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
@@ -86,7 +86,7 @@ function Navigation() {
                   </Link>
                 ))}
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </MaxWidthWrapper>

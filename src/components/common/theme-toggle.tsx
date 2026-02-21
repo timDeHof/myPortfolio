@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
 import React from "react";
 
@@ -17,7 +17,7 @@ export const ThemeToggle: React.FC = () => {
         className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
         aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
       >
-        <motion.div
+        <m.div
           key={theme}
           initial={{ scale: 0.5, opacity: 0, rotate: -90 }}
           animate={{ scale: 1, opacity: 1, rotate: 0 }}
@@ -26,7 +26,7 @@ export const ThemeToggle: React.FC = () => {
           className="flex items-center justify-center"
         >
           {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-        </motion.div>
+        </m.div>
       </Button>
 
       {/* Tooltip */}

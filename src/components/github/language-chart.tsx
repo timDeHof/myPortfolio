@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import React from "react";
 
 import { useGitHubStats } from "../../hooks/queries/use-github-stats";
@@ -32,7 +32,7 @@ export const LanguageChart: React.FC = () => {
   const topLanguages = languages.slice(0, 8); // Show top 8 languages
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
@@ -46,7 +46,7 @@ export const LanguageChart: React.FC = () => {
           {/* Language List */}
           <div className="space-y-4">
             {topLanguages.map((language, index) => (
-              <motion.div
+              <m.div
                 key={language.name}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -70,7 +70,7 @@ export const LanguageChart: React.FC = () => {
                 </div>
 
                 <div className="relative h-2 bg-gray-200 rounded-full overflow-hidden">
-                  <motion.div
+                  <m.div
                     className="absolute top-0 left-0 h-full rounded-full"
                     style={{ backgroundColor: language.color }}
                     initial={{ width: 0 }}
@@ -78,7 +78,7 @@ export const LanguageChart: React.FC = () => {
                     transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
                   />
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
 
@@ -91,9 +91,9 @@ export const LanguageChart: React.FC = () => {
               {topLanguages.map((language, index) => {
                 const size = Math.max(language.percentage * 2, 20); // Minimum size of 20px
                 return (
-                  <motion.div
+                  <m.div
                     key={`circle-${language.name}`}
-                    initial={{ scale: 0 }}
+                    initial={{ scale: 0.95 }}
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     className="relative group"
@@ -120,7 +120,7 @@ export const LanguageChart: React.FC = () => {
                       %
                       <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
                     </div>
-                  </motion.div>
+                  </m.div>
                 );
               })}
             </div>
@@ -143,6 +143,6 @@ export const LanguageChart: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-    </motion.div>
+    </m.div>
   );
 };

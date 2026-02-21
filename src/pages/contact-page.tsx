@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { AlertCircle, CheckCircle, ExternalLink, Mail, MapPin, Phone, Send } from "lucide-react";
 import React, { useState } from "react";
 
@@ -109,7 +109,7 @@ export const ContactPage: React.FC = () => {
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-blue-900">
         <div className="container mx-auto px-4">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -122,7 +122,7 @@ export const ContactPage: React.FC = () => {
               Ready to bring your ideas to life? I'd love to hear about your project
               and discuss how we can create something amazing together.
             </p>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
@@ -131,7 +131,7 @@ export const ContactPage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
@@ -145,7 +145,7 @@ export const ContactPage: React.FC = () => {
 
                   {/* Status Message */}
                   {submitStatus !== "idle" && (
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       className={`mb-6 p-4 rounded-lg flex items-start space-x-3 ${
@@ -162,7 +162,7 @@ export const ContactPage: React.FC = () => {
                             <AlertCircle className="h-5 w-5 mt-0.5 flex-shrink-0" />
                           )}
                       <p className="text-sm leading-relaxed">{submitMessage}</p>
-                    </motion.div>
+                    </m.div>
                   )}
 
                   <form onSubmit={handleSubmit} className="space-y-6">
@@ -261,10 +261,10 @@ export const ContactPage: React.FC = () => {
                   </form>
                 </CardContent>
               </Card>
-            </motion.div>
+            </m.div>
 
             {/* Contact Information */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
@@ -299,7 +299,7 @@ export const ContactPage: React.FC = () => {
 
               <div className="space-y-6">
                 {contactInfo.map((info, index) => (
-                  <motion.div
+                  <m.div
                     key={info.title}
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -327,7 +327,7 @@ export const ContactPage: React.FC = () => {
                             <p className="text-gray-600 dark:text-gray-300">{info.value}</p>
                           )}
                     </div>
-                  </motion.div>
+                  </m.div>
                 ))}
               </div>
 
@@ -343,7 +343,7 @@ export const ContactPage: React.FC = () => {
                   </p>
                 </CardContent>
               </Card>
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </AnimatedSection>

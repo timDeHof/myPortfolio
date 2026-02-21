@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import React from "react";
 
 import { useIntersectionObserver } from "../../hooks/use-intersection-observer";
@@ -50,7 +50,7 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   };
 
   return (
-    <motion.section
+    <m.section
       ref={ref as React.RefObject<HTMLElement>}
       initial={directionVariants[direction]}
       animate={isIntersecting ? { x: 0, y: 0, opacity: 1 } : directionVariants[direction]}
@@ -63,6 +63,6 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
       id={id}
     >
       {children}
-    </motion.section>
+    </m.section>
   );
 };

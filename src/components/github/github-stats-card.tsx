@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Calendar, GitBranch, GitFork, Link as LinkIcon, MapPin, Star, Users } from "lucide-react";
 import React from "react";
 
@@ -63,7 +63,7 @@ export const GitHubStatsCard: React.FC = () => {
   ];
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -140,7 +140,7 @@ export const GitHubStatsCard: React.FC = () => {
           {/* Statistics Grid */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {statItems.map((item, index) => (
-              <motion.div
+              <m.div
                 key={item.label}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -152,7 +152,7 @@ export const GitHubStatsCard: React.FC = () => {
                 </div>
                 <div className="text-xl font-bold">{item.value}</div>
                 <div className="text-xs text-gray-300">{item.label}</div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
 
@@ -181,6 +181,6 @@ export const GitHubStatsCard: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-    </motion.div>
+    </m.div>
   );
 };

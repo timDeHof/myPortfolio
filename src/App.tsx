@@ -1,5 +1,6 @@
 /* eslint-disable unicorn/filename-case */
 import { QueryClientProvider } from "@tanstack/react-query";
+import { domAnimation, LazyMotion } from "framer-motion";
 import { lazy, Suspense } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
@@ -44,9 +45,11 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
         <ErrorBoundary>
-          <Router>
-            <AppContent />
-          </Router>
+          <LazyMotion features={domAnimation} strict>
+            <Router>
+              <AppContent />
+            </Router>
+          </LazyMotion>
         </ErrorBoundary>
       </HelmetProvider>
 

@@ -1,7 +1,7 @@
 import type { GitHubRepository } from "@services/api/github";
 
 import { formatDate, getRepositoryImage, getTopLanguages } from "@services/api/github";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Calendar, Code, ExternalLink, GitFork, Github, Star, Users } from "lucide-react";
 import React from "react";
 
@@ -28,7 +28,7 @@ export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = React.m
 
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -168,6 +168,6 @@ export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = React.m
           </div>
         </CardContent>
       </Card>
-    </motion.div>
+    </m.div>
   );
 });

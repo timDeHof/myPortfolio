@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import React, { useMemo } from "react";
 
 import type { ContributionDay } from "../../services/api/github-stats";
@@ -163,7 +163,7 @@ export const ContributionCalendar: React.FC = () => {
   }
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
@@ -205,7 +205,7 @@ export const ContributionCalendar: React.FC = () => {
                   <div className="w-20 flex-shrink-0"></div>
                   <div className="flex-1 relative">
                     {monthPositions.map((monthData, index) => (
-                      <motion.div
+                      <m.div
                         key={`${monthData.month}-${monthData.weekIndex}`}
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -219,7 +219,7 @@ export const ContributionCalendar: React.FC = () => {
                         }}
                       >
                         {monthData.month}
-                      </motion.div>
+                      </m.div>
                     ))}
                   </div>
                 </div>
@@ -228,7 +228,7 @@ export const ContributionCalendar: React.FC = () => {
               {/* Mobile month display */}
               <div className="md:hidden flex justify-center gap-3 mb-8 flex-wrap">
                 {monthPositions.slice(0, 4).map((monthData, index) => (
-                  <motion.span
+                  <m.span
                     key={`mobile-${monthData.month}`}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -236,7 +236,7 @@ export const ContributionCalendar: React.FC = () => {
                     className="bg-gradient-to-r from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 px-4 py-2 rounded-full border border-slate-400 dark:border-slate-500 text-sm font-semibold text-slate-800 dark:text-slate-200 shadow-sm"
                   >
                     {monthData.month}
-                  </motion.span>
+                  </m.span>
                 ))}
               </div>
 
@@ -270,9 +270,9 @@ export const ContributionCalendar: React.FC = () => {
                         const squareColor = isDarkMode ? levelConfig?.darkColor : levelConfig?.color;
 
                         return (
-                          <motion.div
+                          <m.div
                             key={`${weekIndex}-${dayIndex}`}
-                            initial={{ scale: 0, opacity: 0 }}
+                            initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{
                               duration: 0.3,
@@ -311,7 +311,7 @@ export const ContributionCalendar: React.FC = () => {
                               )}
                               <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-8 border-transparent border-t-slate-900/95 dark:border-t-slate-100/95"></div>
                             </div>
-                          </motion.div>
+                          </m.div>
                         );
                       })}
                     </div>
@@ -321,7 +321,7 @@ export const ContributionCalendar: React.FC = () => {
 
               {/* Enhanced Legend with accessible colors */}
               <div className="flex items-center justify-between mt-10 pt-8 border-t border-slate-200 dark:border-slate-700">
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 }}
@@ -329,8 +329,8 @@ export const ContributionCalendar: React.FC = () => {
                 >
                   <div className="w-5 h-5 bg-gradient-to-br from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 rounded-full mr-3 group-hover:scale-110 transition-transform"></div>
                   Learn how we count contributions
-                </motion.div>
-                <motion.div
+                </m.div>
+                <m.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.6 }}
@@ -343,9 +343,9 @@ export const ContributionCalendar: React.FC = () => {
                       const squareColor = isDarkMode ? level.darkColor : level.color;
 
                       return (
-                        <motion.div
+                        <m.div
                           key={level.level}
-                          initial={{ scale: 0 }}
+                          initial={{ scale: 0.95 }}
                           animate={{ scale: 1 }}
                           transition={{ delay: 0.7 + index * 0.1 }}
                           className="w-5 h-5 rounded-md cursor-pointer hover:ring-2 hover:ring-slate-500 dark:hover:ring-slate-400 hover:ring-offset-2 hover:scale-125 transition-all duration-200 shadow-sm"
@@ -356,13 +356,13 @@ export const ContributionCalendar: React.FC = () => {
                     })}
                   </div>
                   <span className="text-sm text-slate-600 dark:text-slate-400 font-semibold">More</span>
-                </motion.div>
+                </m.div>
               </div>
 
               {/* Enhanced Summary Stats with accessible colors */}
               <div className="mt-10 pt-8 border-t border-slate-100 dark:border-slate-800">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8 }}
@@ -374,9 +374,9 @@ export const ContributionCalendar: React.FC = () => {
                     <div className="text-sm text-slate-700 dark:text-slate-300 font-medium group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors">
                       Total Contributions
                     </div>
-                  </motion.div>
+                  </m.div>
 
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.9 }}
@@ -388,9 +388,9 @@ export const ContributionCalendar: React.FC = () => {
                     <div className="text-sm text-slate-700 dark:text-slate-300 font-medium group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors">
                       Current Streak
                     </div>
-                  </motion.div>
+                  </m.div>
 
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.0 }}
@@ -402,9 +402,9 @@ export const ContributionCalendar: React.FC = () => {
                     <div className="text-sm text-slate-700 dark:text-slate-300 font-medium group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors">
                       Weekly Average
                     </div>
-                  </motion.div>
+                  </m.div>
 
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.1 }}
@@ -417,13 +417,13 @@ export const ContributionCalendar: React.FC = () => {
                     <div className="text-sm text-slate-700 dark:text-slate-300 font-medium group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors">
                       Best Week
                     </div>
-                  </motion.div>
+                  </m.div>
                 </div>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
-    </motion.div>
+    </m.div>
   );
 };

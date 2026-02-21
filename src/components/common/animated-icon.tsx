@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import React from "react";
 import { useIntersectionObserver } from "../../hooks/use-intersection-observer";
 
@@ -62,7 +62,7 @@ function AnimatedIcon({ item, animationProps, className, size, index }: Animated
   }
 
   return (
-    <motion.div
+    <m.div
       ref={ref as React.RefObject<HTMLDivElement>}
       key={`animated-${item.Icon?.displayName || item.icon?.displayName || index}-${item.x}-${item.y}`}
       className={className}
@@ -72,7 +72,7 @@ function AnimatedIcon({ item, animationProps, className, size, index }: Animated
       transition={animationProps.transition}
     >
       <IconComponent size={size} />
-    </motion.div>
+    </m.div>
   );
 }
 

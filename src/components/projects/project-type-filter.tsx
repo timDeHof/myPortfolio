@@ -1,6 +1,6 @@
 import type { ProjectType } from "@hooks/queries/use-repository-filtering";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { GitFork, Globe, Star, User } from "lucide-react";
 import React from "react";
 
@@ -134,7 +134,7 @@ export const ProjectTypeFilter: React.FC<ProjectTypeFilterProps> = ({
             const count = getCount(projectType.type);
 
             return (
-              <motion.div
+              <m.div
                 key={projectType.type}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -157,7 +157,7 @@ export const ProjectTypeFilter: React.FC<ProjectTypeFilterProps> = ({
                     <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-100"></div>
                   </div>
                 </Button>
-              </motion.div>
+              </m.div>
             );
           })}
         </div>

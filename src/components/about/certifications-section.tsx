@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Award, ExternalLink } from "lucide-react";
 import React from "react";
 
@@ -23,7 +23,7 @@ type CertificationCardProps = {
 
 const CertificationCard: React.FC<CertificationCardProps> = ({ certification, index }) => {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -39,7 +39,7 @@ const CertificationCard: React.FC<CertificationCardProps> = ({ certification, in
           {/* Badge Image */}
           {certification.badgeUrl && (
             <div className="flex justify-center mb-6">
-              <motion.div
+              <m.div
                 className="w-32 h-32 rounded-full overflow-hidden shadow-lg bg-white dark:bg-slate-700 p-2"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ duration: 0.3 }}
@@ -49,20 +49,20 @@ const CertificationCard: React.FC<CertificationCardProps> = ({ certification, in
                   alt={`${certification.name} badge`}
                   className="w-full h-full object-contain"
                 />
-              </motion.div>
+              </m.div>
             </div>
           )}
 
           {/* Certification Icon (if no badge) */}
           {!certification.badgeUrl && (
             <div className="flex justify-center mb-6">
-              <motion.div
+              <m.div
                 className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-700 to-teal-700 dark:from-blue-400 dark:to-teal-400 flex items-center justify-center shadow-lg"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ duration: 0.3 }}
               >
                 <Award className="w-10 h-10 text-white" />
-              </motion.div>
+              </m.div>
             </div>
           )}
 
@@ -106,7 +106,7 @@ const CertificationCard: React.FC<CertificationCardProps> = ({ certification, in
 
           {/* Verification Link */}
           {certification.verificationUrl && (
-            <motion.a
+            <m.a
               href={certification.verificationUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -116,14 +116,14 @@ const CertificationCard: React.FC<CertificationCardProps> = ({ certification, in
             >
               Verify Credential
               <ExternalLink className="ml-2 h-4 w-4 group-hover/link:translate-x-1 transition-transform" />
-            </motion.a>
+            </m.a>
           )}
 
           {/* Decorative corner accent */}
           <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-teal-700 dark:bg-teal-400 opacity-20 group-hover:opacity-60 transition-opacity" />
         </CardContent>
       </Card>
-    </motion.div>
+    </m.div>
   );
 };
 
@@ -133,7 +133,7 @@ export const CertificationsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -149,7 +149,7 @@ export const CertificationsSection: React.FC = () => {
               Professional certifications that validate my expertise and commitment to continuous learning
               in modern web development and technology.
             </p>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* Certifications Grid */}
@@ -158,7 +158,7 @@ export const CertificationsSection: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {certifications.map((cert, index) => (
                   <CertificationCard
-                    key={`${cert.name}-${index}`}
+                    key={cert.name}
                     certification={cert}
                     index={index}
                   />
@@ -167,7 +167,7 @@ export const CertificationsSection: React.FC = () => {
             )
           : (
             // Empty state
-              <motion.div
+              <m.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.6 }}
@@ -186,12 +186,12 @@ export const CertificationsSection: React.FC = () => {
                     </p>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </m.div>
             )}
 
         {/* Stats Summary */}
         {certifications.length > 0 && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -201,34 +201,34 @@ export const CertificationsSection: React.FC = () => {
             <Card className="bg-gradient-to-br from-white to-gray-50 dark:from-slate-800 dark:to-slate-700 border-gray-200 dark:border-slate-600 shadow-2xl rounded-3xl overflow-hidden">
               <CardContent className="p-10">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                  <motion.div whileHover={{ scale: 1.05 }}>
+                  <m.div whileHover={{ scale: 1.05 }}>
                     <div className="text-4xl font-bold bg-gradient-to-r from-blue-700 to-teal-700 dark:from-blue-400 dark:to-teal-400 bg-clip-text text-transparent mb-2">
                       {certifications.length}
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">
                       Active Certifications
                     </div>
-                  </motion.div>
-                  <motion.div whileHover={{ scale: 1.05 }}>
+                  </m.div>
+                  <m.div whileHover={{ scale: 1.05 }}>
                     <div className="text-4xl font-bold bg-gradient-to-r from-teal-700 to-emerald-700 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent mb-2">
                       {new Set(certifications.map(c => c.issuer)).size}
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">
                       Issuing Organizations
                     </div>
-                  </motion.div>
-                  <motion.div whileHover={{ scale: 1.05 }}>
+                  </m.div>
+                  <m.div whileHover={{ scale: 1.05 }}>
                     <div className="text-4xl font-bold bg-gradient-to-r from-purple-700 to-pink-700 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-2">
                       {certifications.filter(c => c.verificationUrl).length}
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">
                       Verified Credentials
                     </div>
-                  </motion.div>
+                  </m.div>
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </m.div>
         )}
       </div>
     </section>

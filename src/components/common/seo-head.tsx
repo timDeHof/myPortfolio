@@ -61,8 +61,8 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ seo = defaultSEOProp, structur
       {publishedTime && <meta property="article:published_time" content={publishedTime} />}
       {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
       {author && <meta property="article:author" content={author} />}
-      {tags?.map((tag, index) => (
-        <meta key={index} property="article:tag" content={tag} />
+      {tags?.map((tag) => (
+        <meta key={tag} property="article:tag" content={tag} />
       ))}
 
       {/* Twitter Card */}

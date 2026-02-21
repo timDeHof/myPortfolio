@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import React from "react";
 
@@ -115,7 +115,7 @@ const SkillCard: React.FC<{
   const IconComponent = skill.icon;
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20, scale: 0.9 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -137,19 +137,19 @@ const SkillCard: React.FC<{
 
           {/* Icon and title */}
           <div className="flex flex-col items-center text-center space-y-4">
-            <motion.div
+            <m.div
               className="transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
               whileHover={{ scale: 1.2, rotate: 12 }}
             >
               <IconComponent size={48} className="drop-shadow-lg" />
-            </motion.div>
+            </m.div>
 
             <h4 className="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-colors">
               {skill.name}
             </h4>
 
             {/* Technology color indicator */}
-            <motion.div
+            <m.div
               className="w-full h-1 rounded-full"
               style={{ backgroundColor: skill.color }}
               initial={{ scaleX: 0 }}
@@ -170,7 +170,7 @@ const SkillCard: React.FC<{
           />
         </CardContent>
       </Card>
-    </motion.div>
+    </m.div>
   );
 };
 
@@ -182,7 +182,7 @@ export const AboutPage: React.FC = () => {
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-teal-900 dark:to-blue-900">
         <MaxWidthWrapper>
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -195,7 +195,7 @@ export const AboutPage: React.FC = () => {
               From mechanical engineering to web development, I bring a unique perspective
               to creating efficient and innovative digital solutions.
             </p>
-          </motion.div>
+          </m.div>
         </MaxWidthWrapper>
       </section>
 
@@ -273,7 +273,7 @@ export const AboutPage: React.FC = () => {
       <AnimatedSection className="py-20 bg-gradient-to-br from-gray-50 to-blue-50/30 dark:from-slate-800 dark:to-blue-900/30">
         <MaxWidthWrapper>
           <div className="text-center mb-16">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -286,12 +286,12 @@ export const AboutPage: React.FC = () => {
                 A comprehensive toolkit combining engineering precision with modern web development
                 expertise to build exceptional digital experiences.
               </p>
-            </motion.div>
+            </m.div>
           </div>
 
           <div className="space-y-16">
             {skillCategories.map((category, categoryIndex) => (
-              <motion.div
+              <m.div
                 key={category.category}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -301,13 +301,13 @@ export const AboutPage: React.FC = () => {
               >
                 {/* Category Header */}
                 <div className="text-center mb-12">
-                  <motion.div
+                  <m.div
                     className={`inline-flex items-center justify-center w-20 h-20 rounded-3xl mb-6 shadow-2xl text-white text-4xl bg-gradient-to-br ${category.color}`}
                     whileHover={{ scale: 1.1, rotateY: 15 }}
                     transition={{ duration: 0.3 }}
                   >
                     {category.icon}
-                  </motion.div>
+                  </m.div>
                   <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                     {category.category}
                   </h3>
@@ -328,12 +328,12 @@ export const AboutPage: React.FC = () => {
                 {/* Decorative Background Elements */}
                 <div className="absolute -top-4 -left-4 w-32 h-32 rounded-full opacity-5 bg-gradient-to-br from-blue-600 to-teal-600 dark:from-blue-400 dark:to-teal-400 -z-10" />
                 <div className="absolute -bottom-8 -right-8 w-24 h-24 rounded-full opacity-5 bg-gradient-to-br from-teal-600 to-purple-600 dark:from-teal-400 dark:to-purple-400 -z-10" />
-              </motion.div>
+              </m.div>
             ))}
           </div>
 
           {/* Skills Summary Stats */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -344,7 +344,7 @@ export const AboutPage: React.FC = () => {
               <CardContent className="p-10">
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8">Technical Expertise Overview</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <motion.div
+                  <m.div
                     whileHover={{ scale: 1.05 }}
                     className="text-center"
                   >
@@ -352,8 +352,8 @@ export const AboutPage: React.FC = () => {
                       {skillCategories.reduce((total, cat) => total + cat.skills.length, 0)}
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">Technologies</div>
-                  </motion.div>
-                  <motion.div
+                  </m.div>
+                  <m.div
                     whileHover={{ scale: 1.05 }}
                     className="text-center"
                   >
@@ -361,8 +361,8 @@ export const AboutPage: React.FC = () => {
                       {skillCategories.length}
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">Specializations</div>
-                  </motion.div>
-                  <motion.div
+                  </m.div>
+                  <m.div
                     whileHover={{ scale: 1.05 }}
                     className="text-center"
                   >
@@ -370,11 +370,11 @@ export const AboutPage: React.FC = () => {
                       3+
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">Years Experience</div>
-                  </motion.div>
+                  </m.div>
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </m.div>
         </MaxWidthWrapper>
       </AnimatedSection>
 
@@ -392,8 +392,8 @@ export const AboutPage: React.FC = () => {
 
           <div className="max-w-4xl mx-auto">
             {timeline.map((item, index) => (
-              <motion.div
-                key={index}
+              <m.div
+                key={item.title}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -407,12 +407,12 @@ export const AboutPage: React.FC = () => {
 
                 {/* Timeline Icon */}
                 <div className="flex-shrink-0 relative">
-                  <motion.div
+                  <m.div
                     whileHover={{ scale: 1.2, rotate: 15 }}
                     className={`w-16 h-16 ${item.color} rounded-2xl flex items-center justify-center text-white text-2xl shadow-xl z-10 relative`}
                   >
                     {item.icon}
-                  </motion.div>
+                  </m.div>
                   {index < timeline.length - 1 && (
                     <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-0.5 h-20 bg-gradient-to-b from-teal-300 to-transparent dark:from-teal-600"></div>
                   )}
@@ -427,7 +427,7 @@ export const AboutPage: React.FC = () => {
                     </CardContent>
                   </Card>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </MaxWidthWrapper>

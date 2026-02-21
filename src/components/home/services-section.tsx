@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import {
   ArrowRight,
   CheckCircle,
@@ -121,7 +121,7 @@ export const ServicesSection: React.FC = () => {
     >
       {/* Section Header */}
       <MaxWidthWrapper>
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -135,14 +135,14 @@ export const ServicesSection: React.FC = () => {
             Combining engineering precision with creative problem-solving to deliver
             exceptional web solutions that drive business growth.
           </p>
-        </motion.div>
+        </m.div>
       </MaxWidthWrapper>
 
       {/* Services Grid */}
       <MaxWidthWrapper>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
             {services.map((service, index) => (
-              <motion.div
+              <m.div
                 key={service.id}
                 initial={{ opacity: 0, y: 30, rotateY: -15 }}
                 whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
@@ -159,12 +159,12 @@ export const ServicesSection: React.FC = () => {
                 <Card className="h-full bg-white dark:bg-slate-800 hover:shadow-2xl dark:hover:shadow-2xl transition-all duration-500 border-gray-200 dark:border-slate-600 rounded-2xl overflow-hidden">
                   <CardContent className="p-8 h-full relative">
                     {/* Service Icon & Header */}
-                    <motion.div
+                    <m.div
                       className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br ${service.color} text-white rounded-2xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}
                       whileHover={{ scale: 1.2, rotate: 12 }}
                     >
                       {service.icon}
-                    </motion.div>
+                    </m.div>
 
                     <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                       {service.title}
@@ -178,7 +178,7 @@ export const ServicesSection: React.FC = () => {
                       <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">What You Get:</h4>
                       <ul className="space-y-2">
                         {service.benefits.map((benefit, i) => (
-                          <motion.li
+                          <m.li
                             key={benefit}
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -188,7 +188,7 @@ export const ServicesSection: React.FC = () => {
                           >
                             <CheckCircle className="h-4 w-4 mr-2 text-green-600 dark:text-green-400 flex-shrink-0" />
                             <span className="text-sm">{benefit}</span>
-                          </motion.li>
+                          </m.li>
                         ))}
                       </ul>
                     </div>
@@ -198,7 +198,7 @@ export const ServicesSection: React.FC = () => {
                       <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Process:</h4>
                       <div className="space-y-2">
                         {service.process.map((step, i) => (
-                          <motion.div
+                          <m.div
                             key={step}
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
@@ -210,13 +210,13 @@ export const ServicesSection: React.FC = () => {
                               {i + 1}
                             </div>
                             <span className="text-sm text-gray-700 dark:text-gray-300">{step}</span>
-                          </motion.div>
+                          </m.div>
                         ))}
                       </div>
                     </div>
 
                     {/* Hidden CTA that reveals on hover */}
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 0, y: 20 }}
                       whileHover={{ opacity: 1, y: 0 }}
@@ -233,17 +233,17 @@ export const ServicesSection: React.FC = () => {
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
                       </Button>
-                    </motion.div>
+                    </m.div>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </m.div>
             ))}
         </div>
       </MaxWidthWrapper>
 
       {/* Development Philosophy Section */}
       <MaxWidthWrapper>
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -261,7 +261,7 @@ export const ServicesSection: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {philosophy.map((phase, index) => (
-              <motion.div
+              <m.div
                 key={phase.title}
                 initial={{ opacity: 0, y: 30, scale: 0.9 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -282,12 +282,12 @@ export const ServicesSection: React.FC = () => {
                     )}
 
                     {/* Phase number */}
-                    <motion.div
+                    <m.div
                       className={`w-12 h-12 ${phase.color} text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}
                       whileHover={{ rotate: 8 }}
                     >
                       {phase.phase}
-                    </motion.div>
+                    </m.div>
 
                     {/* Phase icon overlay */}
                     <div className="absolute top-4 right-4 w-8 h-8 bg-gradient-to-br from-blue-600 to-teal-600 dark:from-blue-400 dark:to-teal-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -300,15 +300,15 @@ export const ServicesSection: React.FC = () => {
                     <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{phase.description}</p>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </m.div>
             ))}
           </div>
-        </motion.div>
+        </m.div>
       </MaxWidthWrapper>
 
       {/* Value Proposition & CTA */}
       <MaxWidthWrapper>
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -323,7 +323,7 @@ export const ServicesSection: React.FC = () => {
 
               {/* Value metrics */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <motion.div
+                <m.div
                   className="text-center"
                   whileHover={{ scale: 1.05 }}
                 >
@@ -331,8 +331,8 @@ export const ServicesSection: React.FC = () => {
                     100%
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">Custom Solutions</div>
-                </motion.div>
-                <motion.div
+                </m.div>
+                <m.div
                   className="text-center"
                   whileHover={{ scale: 1.05 }}
                 >
@@ -340,8 +340,8 @@ export const ServicesSection: React.FC = () => {
                     &lt;24h
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">Response Time</div>
-                </motion.div>
-                <motion.div
+                </m.div>
+                <m.div
                   className="text-center"
                   whileHover={{ scale: 1.05 }}
                 >
@@ -349,12 +349,12 @@ export const ServicesSection: React.FC = () => {
                     3+
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">Years Engineering + Development</div>
-                </motion.div>
+                </m.div>
               </div>
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <motion.div
+                <m.div
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -365,8 +365,8 @@ export const ServicesSection: React.FC = () => {
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
-                </motion.div>
-                <motion.div
+                </m.div>
+                <m.div
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -376,11 +376,11 @@ export const ServicesSection: React.FC = () => {
                       View All Services
                     </Link>
                   </Button>
-                </motion.div>
+                </m.div>
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </m.div>
       </MaxWidthWrapper>
     </AnimatedSection>
   );

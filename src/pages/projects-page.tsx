@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { AlertCircle, Github, Loader, RefreshCw } from "lucide-react";
 import React from "react";
 
@@ -171,7 +171,7 @@ export const ProjectsPage: React.FC = () => {
       <section className="py-20 bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-teal-900 dark:to-blue-900">
         <SectionSEO section="portfolio" />
         <MaxWidthWrapper>
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -233,7 +233,7 @@ export const ProjectsPage: React.FC = () => {
                 Refresh
               </Button>
             </div>
-          </motion.div>
+          </m.div>
         </MaxWidthWrapper>
       </section>
 

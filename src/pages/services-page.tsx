@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowRight, CheckCircle, Code, Globe, Palette, Shield, Target, Users, Wrench, Zap } from "lucide-react";
 import React from "react";
 
@@ -76,7 +76,7 @@ export const ServicesPage: React.FC = () => {
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-teal-900 dark:to-blue-900">
         <MaxWidthWrapper>
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -89,7 +89,7 @@ export const ServicesPage: React.FC = () => {
               Comprehensive web development services combining technical expertise
               with creative problem-solving to deliver exceptional results.
             </p>
-          </motion.div>
+          </m.div>
         </MaxWidthWrapper>
       </section>
 
@@ -108,7 +108,7 @@ export const ServicesPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <motion.div
+              <m.div
                 key={service.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -119,7 +119,7 @@ export const ServicesPage: React.FC = () => {
               >
                 <Card className="h-full bg-gradient-to-br from-blue-50 via-teal-50 to-purple-50 dark:from-blue-900/20 dark:via-teal-900/20 dark:to-purple-900/20 border-gray-200 dark:border-slate-600 shadow-lg hover:shadow-xl transition-all duration-300">
                   <CardContent className="p-8 text-center">
-                    <motion.div
+                    <m.div
                       className={`inline-flex items-center justify-center w-16 h-16 ${
                         index === 0
                           ? "bg-gradient-to-br from-blue-700 to-cyan-700 dark:from-blue-500 dark:to-cyan-500"
@@ -130,7 +130,7 @@ export const ServicesPage: React.FC = () => {
                       whileHover={{ rotate: 12 }}
                     >
                       {serviceIcons[service.title as keyof typeof serviceIcons]}
-                    </motion.div>
+                    </m.div>
 
                     <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">
                       {service.title}
@@ -145,7 +145,7 @@ export const ServicesPage: React.FC = () => {
                     </div>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </MaxWidthWrapper>
@@ -166,7 +166,7 @@ export const ServicesPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {additionalServices.map((service, index) => (
-              <motion.div
+              <m.div
                 key={service.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -177,19 +177,19 @@ export const ServicesPage: React.FC = () => {
               >
                 <Card className="h-full hover:shadow-lg transition-all duration-300 bg-white dark:bg-slate-700 border-gray-200 dark:border-slate-600">
                   <CardContent className="p-6 text-center">
-                    <motion.div
+                    <m.div
                       className={`inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br ${service.color} text-white rounded-full mb-4 group-hover:scale-110 transition-transform duration-300`}
                       whileHover={{ rotate: 8 }}
                     >
                       {service.icon}
-                    </motion.div>
+                    </m.div>
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                       {service.title}
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 text-sm">{service.description}</p>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </MaxWidthWrapper>
@@ -210,7 +210,7 @@ export const ServicesPage: React.FC = () => {
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {processSteps.map((phase, index) => (
-                <motion.div
+                <m.div
                   key={phase.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -220,12 +220,12 @@ export const ServicesPage: React.FC = () => {
                   className="text-center group"
                 >
                   <div className="relative mb-6">
-                    <motion.div
+                    <m.div
                       className={`w-16 h-16 ${phase.color} text-white rounded-2xl flex items-center justify-center text-xl font-bold mx-auto shadow-lg group-hover:shadow-xl transition-shadow duration-300`}
                       whileHover={{ rotate: 8 }}
                     >
                       {phase.step}
-                    </motion.div>
+                    </m.div>
                     <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-blue-600 to-teal-600 dark:from-blue-400 dark:to-teal-400 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       {phase.icon}
                     </div>
@@ -234,7 +234,7 @@ export const ServicesPage: React.FC = () => {
                     {phase.title}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{phase.description}</p>
-                </motion.div>
+                </m.div>
               ))}
             </div>
           </div>
@@ -254,7 +254,7 @@ export const ServicesPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
@@ -274,9 +274,9 @@ export const ServicesPage: React.FC = () => {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </m.div>
 
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -296,9 +296,9 @@ export const ServicesPage: React.FC = () => {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </m.div>
 
-            <motion.div
+            <m.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -318,7 +318,7 @@ export const ServicesPage: React.FC = () => {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </m.div>
           </div>
         </MaxWidthWrapper>
       </AnimatedSection>
@@ -326,7 +326,7 @@ export const ServicesPage: React.FC = () => {
       {/* Call to Action */}
       <AnimatedSection className="py-20 bg-gradient-to-r from-blue-700 via-teal-700 to-purple-700 dark:from-blue-600 dark:via-teal-600 dark:to-purple-600 text-white">
         <MaxWidthWrapper className="text-center">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -352,7 +352,7 @@ export const ServicesPage: React.FC = () => {
                 </a>
               </Button>
             </div>
-          </motion.div>
+          </m.div>
         </MaxWidthWrapper>
       </AnimatedSection>
     </>
