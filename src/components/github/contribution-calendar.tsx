@@ -180,7 +180,7 @@ export const ContributionCalendar: React.FC = () => {
             </div>
             <div className="text-right bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 px-6 py-4 rounded-2xl border border-green-200 dark:border-green-700">
               <div className="text-sm text-slate-700 dark:text-slate-300 font-medium">
-                <span className="text-2xl font-bold bg-gradient-to-r from-green-700 to-emerald-700 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent">
+                <span className="text-2xl font-bold bg-gradient-to-r from-green-900 to-emerald-700 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent">
                   {stats.total}
                 </span>
                 <span className="ml-1">contributions this year</span>
@@ -368,7 +368,7 @@ export const ContributionCalendar: React.FC = () => {
                     transition={{ delay: 0.8 }}
                     className="text-center group hover:scale-105 transition-all duration-300 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-2xl border border-green-200 dark:border-green-800"
                   >
-                    <div className="text-4xl font-bold bg-gradient-to-r from-green-700 to-emerald-700 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent mb-2">
+                    <div className="text-4xl font-bold bg-gradient-to-r from-green-900 to-emerald-700 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent mb-2">
                       {stats.total}
                     </div>
                     <div className="text-sm text-slate-700 dark:text-slate-300 font-medium group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors">
@@ -382,7 +382,7 @@ export const ContributionCalendar: React.FC = () => {
                     transition={{ delay: 0.9 }}
                     className="text-center group hover:scale-105 transition-all duration-300 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 p-6 rounded-2xl border border-blue-200 dark:border-blue-800"
                   >
-                    <div className="text-4xl font-bold bg-gradient-to-r from-blue-700 to-cyan-700 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent mb-2">
+                    <div className="text-4xl font-bold bg-gradient-to-r from-indigo-800 to-cyan-700 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent mb-2">
                       {stats.streak}
                     </div>
                     <div className="text-sm text-slate-700 dark:text-slate-300 font-medium group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors">
@@ -396,7 +396,7 @@ export const ContributionCalendar: React.FC = () => {
                     transition={{ delay: 1.0 }}
                     className="text-center group hover:scale-105 transition-all duration-300 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-2xl border border-purple-200 dark:border-purple-800"
                   >
-                    <div className="text-4xl font-bold bg-gradient-to-r from-purple-700 to-pink-700 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-2">
+                    <div className="text-4xl font-bold bg-gradient-to-r from-violet-900 to-pink-700 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-2">
                       {Math.round(stats.total / 52)}
                     </div>
                     <div className="text-sm text-slate-700 dark:text-slate-300 font-medium group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors">
@@ -410,7 +410,7 @@ export const ContributionCalendar: React.FC = () => {
                     transition={{ delay: 1.1 }}
                     className="text-center group hover:scale-105 transition-all duration-300 bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 p-6 rounded-2xl border border-orange-200 dark:border-orange-800"
                   >
-                    <div className="text-4xl font-bold bg-gradient-to-r from-orange-700 to-red-700 dark:from-orange-400 dark:to-red-400 bg-clip-text text-transparent mb-2">
+                    <div className="text-4xl font-bold bg-gradient-to-r from-orange-900 to-red-700 dark:from-orange-400 dark:to-red-400 bg-clip-text text-transparent mb-2">
                       {contributionWeeks.reduce((max, week) =>
                         Math.max(max, week.days.reduce((sum, day) => sum + day.count, 0)), 0)}
                     </div>

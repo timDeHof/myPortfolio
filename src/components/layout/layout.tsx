@@ -22,7 +22,7 @@ function Navigation() {
         <div className="flex items-center justify-between h-16">
           <Link
             to="/"
-            className="text-xl font-bold bg-gradient-to-r from-blue-700 via-teal-700 to-purple-700 dark:from-blue-400 dark:via-teal-400 dark:to-purple-400 bg-clip-text text-transparent hover:from-blue-800 hover:via-teal-800 hover:to-purple-800 dark:hover:from-blue-300 dark:hover:via-teal-300 dark:hover:to-purple-300 transition-all"
+            className="text-xl font-bold bg-gradient-to-r from-indigo-800 via-blue-600 to-purple-600 dark:from-blue-300 dark:via-teal-300 dark:to-purple-400 bg-clip-text text-transparent hover:from-indigo-900 hover:via-blue-700 hover:to-purple-700 dark:hover:from-blue-200 dark:hover:via-teal-200 dark:hover:to-purple-300 transition-all"
           >
             Tim DeHof
           </Link>
@@ -114,7 +114,7 @@ function Footer() {
         <div className="mx-auto px-4 py-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-8">
             <div className="text-center md:text-left">
-              <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-teal-400 to-purple-400 bg-clip-text text-transparent">
+              <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-300 via-teal-300 to-purple-400 bg-clip-text text-transparent">
                 Tim DeHof
               </h3>
               <p className="text-gray-300 mb-6 leading-relaxed">

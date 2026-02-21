@@ -128,7 +128,7 @@ export const ServicesSection: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-teal-800 dark:from-gray-100 dark:via-blue-400 dark:to-teal-400 bg-clip-text text-transparent mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-800 via-blue-600 to-teal-500 dark:from-white dark:via-blue-300 dark:to-teal-400 bg-clip-text text-transparent mb-6">
             What I Do Best
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
@@ -327,7 +327,7 @@ export const ServicesSection: React.FC = () => {
                   className="text-center"
                   whileHover={{ scale: 1.05 }}
                 >
-                  <div className="text-3xl font-bold bg-gradient-to-r from-blue-700 to-cyan-700 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent mb-2">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-indigo-800 to-cyan-700 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent mb-2">
                     100%
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">Custom Solutions</div>
@@ -336,7 +336,7 @@ export const ServicesSection: React.FC = () => {
                   className="text-center"
                   whileHover={{ scale: 1.05 }}
                 >
-                  <div className="text-3xl font-bold bg-gradient-to-r from-teal-700 to-emerald-700 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent mb-2">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-teal-900 to-emerald-700 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent mb-2">
                     &lt;24h
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">Response Time</div>
@@ -345,7 +345,7 @@ export const ServicesSection: React.FC = () => {
                   className="text-center"
                   whileHover={{ scale: 1.05 }}
                 >
-                  <div className="text-3xl font-bold bg-gradient-to-r from-purple-700 to-pink-700 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-2">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-violet-900 to-pink-700 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-2">
                     3+
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-300">Years Engineering + Development</div>
