@@ -27,7 +27,7 @@ export default antfu(
 				"error",
 				{
 					case: "kebabCase",
-					ignore: ["README.md", "App.tsx"],
+					ignore: ["README.md", "App.tsx", "*.test.tsx"],
 				},
 			],
 		},
