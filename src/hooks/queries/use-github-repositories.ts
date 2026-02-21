@@ -29,7 +29,7 @@ export function useGitHubRepositories(options: UseGitHubRepositoriesOptions = {}
   });
 }
 
-export function useGitHubUser() {
+function useGitHubUser() {
   return useQuery({
     queryKey: githubKeys.user(),
     queryFn: githubAPI.fetchUser,
@@ -47,7 +47,7 @@ export function useGitHubUser() {
  * @param enabled - Whether the query should be allowed to run (defaults to `true`).
  * @returns An object representing the query result; `data` is a record mapping language names to byte counts, with standard status and error fields from React Query.
  */
-export function useGitHubRepositoryLanguages(languagesUrl: string, enabled = true) {
+function useGitHubRepositoryLanguages(languagesUrl: string, enabled = true) {
   return useQuery({
     queryKey: [...githubKeys.all, "languages", languagesUrl],
     queryFn: () => githubAPI.fetchRepositoryLanguages(languagesUrl),
@@ -83,7 +83,7 @@ export function useGitHubRepositoriesLanguages(repositories: GitHubRepository[] 
  *
  * @returns A React Query result containing the GitHub rate limit data, status flags, and query controls.
  */
-export function useGitHubRateLimit() {
+function useGitHubRateLimit() {
   return useQuery({
     queryKey: githubKeys.rateLimit(),
     queryFn: githubAPI.fetchRateLimit,

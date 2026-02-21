@@ -23,11 +23,11 @@ export type GitHubRepository = {
   category?: 'showcase' | 'personal' | 'contribution' | 'fork';
 };
 
-export type GitHubLanguages = {
+type GitHubLanguages = {
   [language: string]: number;
 };
 
-export type GitHubUser = {
+type GitHubUser = {
   createdAt: string;
   updated_at: string;
   location: string | undefined;
@@ -43,7 +43,7 @@ export type GitHubUser = {
   following: number;
 };
 
-export type GitHubError = {
+type GitHubError = {
   message: string;
   status: number;
   url: string;

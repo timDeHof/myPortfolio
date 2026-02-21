@@ -1,6 +1,6 @@
 // Structured Data (JSON-LD) utilities for rich snippets
 
-export interface PersonSchema {
+interface PersonSchema {
   "@context": "https://schema.org";
   "@type": "Person";
   "name": string;
@@ -21,7 +21,7 @@ export interface PersonSchema {
   };
 }
 
-export interface WebsiteSchema {
+interface WebsiteSchema {
   "@context": "https://schema.org";
   "@type": "WebSite";
   "name": string;
@@ -38,7 +38,7 @@ export interface WebsiteSchema {
   };
 }
 
-export interface ProjectSchema {
+interface ProjectSchema {
   "@context": "https://schema.org";
   "@type": "CreativeWork";
   "name": string;
@@ -111,7 +111,7 @@ export function generateWebsiteSchema(): WebsiteSchema {
 }
 
 // Generate Project structured data
-export function generateProjectSchema(project: {
+function generateProjectSchema(project: {
   name: string;
   description: string;
   url: string;
@@ -152,7 +152,7 @@ export function generateBreadcrumbSchema(breadcrumbs: Array<{ name: string; url:
 }
 
 // Generate FAQ structured data
-export function generateFAQSchema(faqs: Array<{ question: string; answer: string }>) {
+function generateFAQSchema(faqs: Array<{ question: string; answer: string }>) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",

@@ -6,7 +6,7 @@ type RepositoryCardSkeletonProps = {
   index?: number;
 };
 
-export const RepositoryCardSkeleton: React.FC<RepositoryCardSkeletonProps> = ({ index = 0 }) => {
+const RepositoryCardSkeleton: React.FC<RepositoryCardSkeletonProps> = ({ index = 0 }) => {
   return (
     <div
       className="animate-pulse"

@@ -8,7 +8,7 @@ const EnvSchema = z.object({
   VITE_API_BASE_URL: z.string().url().default("https://portfolio-api.ttdehof.workers.dev/api"),
 });
 
-export type EnvSchema = z.infer<typeof EnvSchema>;
+type EnvSchema = z.infer<typeof EnvSchema>;
 
 // Create environment object with only string values
 const envWithNodeEnv = {

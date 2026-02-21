@@ -3,7 +3,7 @@ import type { GitHubRepository } from "./github";
 
 import { githubAPI } from "./github";
 
-export interface GitHubStats {
+interface GitHubStats {
   profile: {
     login: string;
     name: string;
@@ -35,14 +35,14 @@ export interface GitHubStats {
   };
 }
 
-export interface LanguageStats {
+interface LanguageStats {
   name: string;
   percentage: number;
   bytes: number;
   color: string;
 }
 
-export interface TopicStats {
+interface TopicStats {
   name: string;
   count: number;
 }
@@ -53,7 +53,7 @@ export interface ContributionDay {
   level: 0 | 1 | 2 | 3 | 4;
 }
 
-export interface ContributionWeek {
+interface ContributionWeek {
   days: ContributionDay[];
 }
 

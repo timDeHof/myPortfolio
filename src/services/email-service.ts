@@ -1,6 +1,6 @@
 import { env } from "../lib/env";
 
-export interface EmailData {
+interface EmailData {
   from_name: string;
   from_email: string;
   message: string;

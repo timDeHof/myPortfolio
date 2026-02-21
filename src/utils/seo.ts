@@ -69,7 +69,7 @@ export const pageSEO = {
 };
 
 // Section-specific SEO for different parts of pages
-export const sectionSEO = {
+const sectionSEO = {
   hero: {
     title: "Tim DeHof - Innovative Full Stack Developer",
     description: "Transforming ideas into powerful web applications with modern technologies and engineering precision.",
@@ -89,7 +89,7 @@ export const sectionSEO = {
 };
 
 // Project-specific SEO generator
-export function generateProjectSEO(project: {
+function generateProjectSEO(project: {
   title: string;
   description: string;
   technologies: string[];
@@ -105,7 +105,7 @@ export function generateProjectSEO(project: {
 }
 
 // Utility to merge SEO data
-export function mergeSEO(base: Partial<SEOData>, override: Partial<SEOData>): SEOData {
+function mergeSEO(base: Partial<SEOData>, override: Partial<SEOData>): SEOData {
   return {
     ...defaultSEO,
     ...base,

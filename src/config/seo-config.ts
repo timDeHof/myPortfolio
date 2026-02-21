@@ -1,6 +1,6 @@
 // SEO Configuration - Customize these values for your portfolio
 
-export const siteConfig = {
+const siteConfig = {
   // Basic site information
   siteName: 'Tim DeHof Portfolio',
   siteUrl: 'https://timdehof.dev', // Update with your actual domain
@@ -54,7 +54,7 @@ export const siteConfig = {
 };
 
 // Page-specific SEO templates - Customize these for each page
-export const pageTemplates = {
+const pageTemplates = {
   home: {
     titleTemplate: '%s - Full Stack Developer & Engineer',
     description: 'Welcome to my portfolio. I\'m a full-stack developer with a background in mechanical engineering, creating efficient and innovative web solutions.',
@@ -115,7 +115,7 @@ export const sectionTemplates = {
 };
 
 // Project categories for dynamic SEO
-export const projectCategories = {
+const projectCategories = {
   'web-app': {
     title: 'Web Application',
     description: 'Full-stack web application built with modern technologies',
