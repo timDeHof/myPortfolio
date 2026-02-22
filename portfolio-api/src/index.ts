@@ -53,3 +53,4 @@ app.get(
 );
 
 export default app;
+export { app };
