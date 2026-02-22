@@ -53,7 +53,7 @@ export interface ContributionDay {
   level: 0 | 1 | 2 | 3 | 4;
 }
 
-interface ContributionWeek {
+export interface ContributionWeek {
   days: ContributionDay[];
 }
 

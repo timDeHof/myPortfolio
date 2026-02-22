@@ -1,4 +1,4 @@
-export interface Env {
+interface Env {
   GITHUB_PAT: string;
   GITHUB_API_URL: string;
 }
