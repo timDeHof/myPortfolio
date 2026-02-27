@@ -7,7 +7,7 @@ import { SEOHead } from "../components/common/seo-head";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
-import { services } from "../data/services";
+import { usePortfolioData } from "../hooks/usePortfolioData";
 import { pageSEO } from "../utils/seo";
 
 const serviceIcons = {
@@ -69,6 +69,17 @@ const processSteps = [
 ];
 
 export const ServicesPage: React.FC = () => {
+  const { data: portfolioData, isLoading } = usePortfolioData();
+  const services = portfolioData?.services || [];
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
   return (
     <>
       <SEOHead seo={pageSEO.services} />
