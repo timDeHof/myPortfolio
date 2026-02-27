@@ -9,7 +9,7 @@ import {visualizer} from "rollup-plugin-visualizer";
 import { cloudflare } from "@cloudflare/vite-plugin";
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     visualizer({
       emitFile: true,
@@ -19,12 +19,12 @@ export default defineConfig({
     react(),
     tailwindcss(),
     viteTsconfigPaths(),
-    cloudflare({
+    ...(mode === 'production' ? [cloudflare({
       // Cloudflare Pages/Workers configuration
       // The functions directory is used for Cloudflare Pages Functions
       // The wrangler.toml is used for Cloudflare Workers
       // For Pages Functions, we need to configure it to use the functions directory
-    }),
+    })] : []),
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
@@ -36,8 +36,8 @@ export default defineConfig({
             cacheName: 'github-api-cache',
             expiration: { maxEntries: 10, maxAgeSeconds: 300 }
           }
-      }]
-    }
+        }]
+      }
     }),
     viteImagemin({
       gifsicle: { optimizationLevel: 7 },
@@ -48,7 +48,7 @@ export default defineConfig({
       filter: /\.(jpg|jpeg|png|gif|svg)$/i,
     })
   ],
-  base: "./",
+  base: "/",
   resolve: {
     alias: {
       "@": resolve(__dirname, "./src"),
@@ -68,12 +68,14 @@ export default defineConfig({
   server: {
     port: 5173,
     host: true,
+    fs: {
+      allow: [".."],
+    },
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:8788',
         changeOrigin: true,
-        // The rewrite function is not needed here as the worker expects the full path
       },
     }
   },
-});
+}))
