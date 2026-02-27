@@ -15,6 +15,7 @@ import { queryClient } from "./lib/query-client";
 const HomePage = lazy(() => import("./pages/home-page").then(module => ({ default: module.HomePage })));
 const AboutPage = lazy(() => import("./pages/about-page").then(module => ({ default: module.AboutPage })));
 const ProjectsPage = lazy(() => import("./pages/projects-page").then(module => ({ default: module.ProjectsPage })));
+const ProjectDetailPage = lazy(() => import("./pages/project-detail-page").then(module => ({ default: module.ProjectDetailPage })));
 const ServicesPage = lazy(() => import("./pages/services-page").then(module => ({ default: module.ServicesPage })));
 const ContactPage = lazy(() => import("./pages/contact-page").then(module => ({ default: module.ContactPage })));
 
@@ -28,10 +29,11 @@ function AppContent() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="projects" element={<ProjectsPage />} />
+          <Route path="projects/:slug" element={<ProjectDetailPage />} />
           <Route path="services" element={<ServicesPage />} />
           <Route path="contact" element={<ContactPage />} />
         </Route>
