@@ -32,6 +32,6 @@ GEMINI.md
 # coding agents
 .amazonq
 .gemini
-.agents
+.agents/*
 .kombai
 .vscode
