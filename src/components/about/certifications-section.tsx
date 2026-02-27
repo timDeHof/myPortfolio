@@ -2,8 +2,8 @@ import { m } from "framer-motion";
 import { Award, ExternalLink } from "lucide-react";
 import React from "react";
 
-import { certifications } from "../../data/certifications";
 import { Card, CardContent } from "../ui/card";
+import { usePortfolioData } from "@hooks/usePortfolioData";
 
 // Certification type definition
 export type Certification = {
@@ -100,6 +100,21 @@ const CertificationCard: React.FC<CertificationCardProps> = ({ certification, in
 };
 
 export const CertificationsSection: React.FC = () => {
+  const { data: portfolioData, isLoading } = usePortfolioData();
+  const certifications = portfolioData?.certifications || [];
+
+  if (isLoading) {
+    return (
+      <section className="bg-gradient-to-br from-blue-50 via-teal-50 to-purple-50 py-20 dark:from-slate-800 dark:via-blue-900/30 dark:to-purple-900/30">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="bg-gradient-to-br from-blue-50 via-teal-50 to-purple-50 py-20 dark:from-slate-800 dark:via-blue-900/30 dark:to-purple-900/30">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
