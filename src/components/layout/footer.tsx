@@ -2,7 +2,7 @@ import { ArrowUpIcon, ExternalLink, GithubIcon, LinkedinIcon, TwitterIcon, Mail 
 import { Button } from "../ui/button";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { Separator } from "../ui/separator";
-import { navItems, footerLinks } from "@/config/navigation";
+import { usePortfolioData } from "@hooks/usePortfolioData";
 import { Link } from "react-router-dom";
 
 const socialIconMap = {
@@ -13,6 +13,22 @@ const socialIconMap = {
 
 // Footer Component
 export function Footer() {
+  const { data: portfolioData } = usePortfolioData();
+  const footerLinks = portfolioData?.navigation?.footerLinks || {
+    social: [
+      { name: "GitHub", href: "https://github.com/tim-dehof" },
+      { name: "LinkedIn", href: "https://www.linkedin.com/in/tim-dehof/" },
+      { name: "Twitter", href: "https://twitter.com/timdehof" },
+    ]
+  };
+  const navItems = portfolioData?.navigation?.navItems || [
+    { name: "Home", href: "/" },
+    { name: "Services", href: "/services" },
+    { name: "Projects", href: "/projects" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
+  ];
+
   const scrollToTop = () => {
     requestAnimationFrame(() => {
       window.scrollTo({ top: 0, behavior: "smooth" });
