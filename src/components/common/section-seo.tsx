@@ -1,13 +1,35 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { sectionTemplates } from '../../config/seo-config';
 
 interface SectionSEOProps {
-  section: keyof typeof sectionTemplates;
+  section: string;
   customTitle?: string;
   customDescription?: string;
   noIndex?: boolean;
 }
+
+const defaultSectionTemplates: Record<string, { title: string; description: string }> = {
+  hero: {
+    title: 'Innovative Full Stack Developer',
+    description: 'Transforming ideas into powerful web applications with modern technologies and engineering precision.',
+  },
+  skills: {
+    title: 'Technical Skills & Expertise',
+    description: 'Expertise in React, TypeScript, Node.js, Python, and modern web development technologies.',
+  },
+  experience: {
+    title: 'Professional Experience',
+    description: 'Years of experience in full-stack development, from mechanical engineering to cutting-edge web solutions.',
+  },
+  testimonials: {
+    title: 'Client Testimonials',
+    description: 'What clients say about working with Tim DeHof on their web development projects.',
+  },
+  portfolio: {
+    title: 'Featured Projects',
+    description: 'A showcase of recent web development projects and technical achievements.',
+  },
+};
 
 export const SectionSEO: React.FC<SectionSEOProps> = ({
   section,
@@ -15,7 +37,7 @@ export const SectionSEO: React.FC<SectionSEOProps> = ({
   customDescription,
   noIndex = false,
 }) => {
-  const sectionData = sectionTemplates[section];
+  const sectionData = defaultSectionTemplates[section] || { title: section, description: '' };
   const title = customTitle || sectionData.title;
   const description = customDescription || sectionData.description;
 
