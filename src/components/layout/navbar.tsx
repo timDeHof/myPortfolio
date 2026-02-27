@@ -2,12 +2,20 @@ import { AnimatePresence, m } from "framer-motion";
 import { useState } from "react";
 import {Link, useLocation } from "react-router-dom";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
-import { navItems } from "@/config/navigation";
+import { usePortfolioData } from "@hooks/usePortfolioData";
 import {Menu, X, CodeXml } from "lucide-react";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { data: portfolioData } = usePortfolioData();
+  const navItems = portfolioData?.navigation?.navItems || [
+    { name: "Home", href: "/" },
+    { name: "Services", href: "/services" },
+    { name: "Projects", href: "/projects" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
+  ];
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
