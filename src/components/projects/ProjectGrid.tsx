@@ -9,9 +9,12 @@ import { ProjectCard } from "./ProjectCard";
 interface ProjectGridProps {
   projects: Project[];
   isLoading?: boolean;
+  onProjectClick?: (slug: string) => void;
 }
 
-export const ProjectGrid: React.FC<ProjectGridProps> = ({ projects, isLoading }) => {
+export const ProjectGrid: React.FC<ProjectGridProps> = ({ projects, isLoading, onProjectClick }) => {
+  const SKELETON_COUNT = 3;
+
   if (isLoading) {
     return (
       <AnimatedSection className="py-20 bg-white dark:bg-slate-900">
@@ -22,8 +25,8 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({ projects, isLoading })
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-96 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
+            {Array.from({ length: SKELETON_COUNT }).map((_, idx) => (
+              <div key={`skeleton-${idx}`} className="h-96 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
             ))}
           </div>
         </MaxWidthWrapper>
@@ -50,7 +53,12 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({ projects, isLoading })
       <MaxWidthWrapper>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <ProjectCard key={project.slug} project={project} index={index} />
+            <ProjectCard 
+              key={project.slug} 
+              project={project} 
+              index={index}
+              onClick={onProjectClick ? () => onProjectClick(project.slug) : undefined}
+            />
           ))}
         </div>
       </MaxWidthWrapper>
