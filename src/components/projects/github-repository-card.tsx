@@ -7,6 +7,7 @@ import React from "react";
 
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
+import { getLanguageBadgeClasses } from "../../lib/utils";
 
 interface GitHubRepositoryCardProps {
   repository: GitHubRepository;
@@ -103,15 +104,18 @@ export const GitHubRepositoryCard: React.FC<GitHubRepositoryCardProps> = React.m
               : displayLanguages.length > 0
                 ? (
                   <div className="flex flex-wrap gap-2">
-                    {displayLanguages.map(language => (
-                      <span
-                        key={language}
-                        className="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 text-xs rounded-full font-medium flex items-center border border-blue-200 dark:border-blue-700"
-                      >
-                        <Code className="h-3 w-3 mr-1" />
-                        {language}
-                      </span>
-                    ))}
+                    {displayLanguages.map(language => {
+                      const colors = getLanguageBadgeClasses(language);
+                      return (
+                        <span
+                          key={language}
+                          className={`px-2 py-1 text-xs rounded-full font-medium flex items-center border ${colors.bg} ${colors.text} ${colors.border}`}
+                        >
+                          <Code className="h-3 w-3 mr-1" />
+                          {language}
+                        </span>
+                      );
+                    })}
                   </div>
                 )
                 : (
