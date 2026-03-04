@@ -6,6 +6,7 @@ const EnvSchema = z.object({
   VITE_NODE_ENV: z.string().default("development"),
   VITE_WEB3FORMS_ACCESS_KEY: z.string().optional(),
   VITE_API_BASE_URL: z.string().url().default("https://portfolio-api.ttdehof.workers.dev/api"),
+  VITE_RESUME_URL: z.string().url().optional(),
 });
 
 type EnvSchema = z.infer<typeof EnvSchema>;
