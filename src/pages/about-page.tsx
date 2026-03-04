@@ -1,9 +1,10 @@
 import { m } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { Download, ExternalLink } from "lucide-react";
 import React from "react";
 
 import { AnimatedSection } from "../components/common/animated-section";
 import { SEOHead } from "../components/common/seo-head";
+import { Button } from "../components/ui/button";
 import {
   APIIcon,
   AWSIcon,
@@ -29,6 +30,7 @@ import {
 import { CertificationsSection } from "@/components/about/certifications-section";
 import { Card, CardContent } from "../components/ui/card";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
+import { env } from "../lib/env";
 import { pageSEO } from "../utils/seo";
 
 // Enhanced skills with actual technology icons (removed proficiency)
@@ -84,6 +86,13 @@ const skillCategories = [
 ];
 
 const timeline = [
+  {
+    year: "2024 - Present",
+    title: "Frontend Engineer (Volunteer)",
+    description: "Building the TeamForward networking platform using React, TypeScript, and Tailwind CSS. Developing accessible, user-friendly interfaces for an event planning application.",
+    icon: "🤝",
+    color: "bg-teal-700 dark:bg-teal-600",
+  },
   {
     year: "2023",
     title: "Full-Stack Developer",
@@ -191,10 +200,18 @@ export const AboutPage: React.FC = () => {
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6">
               About Me
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
               From mechanical engineering to web development, I bring a unique perspective
               to creating efficient and innovative digital solutions.
             </p>
+            {env.VITE_RESUME_URL && (
+              <Button asChild className="bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white">
+                <a href={env.VITE_RESUME_URL} target="_blank" rel="noopener noreferrer">
+                  <Download className="h-4 w-4 mr-2" />
+                  Download Resume
+                </a>
+              </Button>
+            )}
           </m.div>
         </MaxWidthWrapper>
       </section>
