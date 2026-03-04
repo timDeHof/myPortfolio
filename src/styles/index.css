@@ -204,7 +204,7 @@
     }
 
     &.btn--link {
-      @apply text-primary underline-offset-4 hover:underline;
+      @apply text-secondary underline-offset-4 hover:underline;
     }
 
     &.btn--default {
@@ -301,10 +301,10 @@
     @apply bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 text-white pt-16 pb-8;
 
     .inner {
-      @apply mx-auto px-4 py-6;
+      @apply mx-auto px-4;
 
       .footer-grid {
-        @apply grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-8;
+        @apply grid grid-cols-1 md:grid-cols-3 justify-center gap-12 md:gap-16 mb-8;
 
         .left, .center, .right {
           @apply text-center md:text-left;
@@ -325,24 +325,31 @@
           }
 
           .links {
-            @apply grid grid-cols-2 gap-3 md:grid-cols-2 md:gap-y-3;
+            @apply flex flex-col;
 
             a {
-              @apply block text-gray-300 hover:text-teal-400 transition-all duration-300 py-3 px-4 md:py-2 md:px-0 rounded-xl md:rounded-none hover:bg-gray-800 md:hover:bg-transparent text-center md:text-left font-medium hover:translate-x-1 md:hover:translate-x-2;
+              @apply flex items-center  text-gray-300 hover:text-teal-400 transition-all duration-300 py-3 px-4 md:py-2 md:px-0 rounded-xl md:rounded-none hover:bg-gray-800 md:hover:bg-transparent text-center md:text-left font-medium hover:translate-x-1 md:hover:translate-x-2;
             }
           }
           .contacts {
-            @apply flex flex-col gap-4 items-center;
+            @apply flex flex-col gap-4 items-center md:items-start;
             .cta {
-              @apply border-teal-600 text-teal-700 hover:bg-teal-50 hover:border-teal-700 dark:border-teal-400 dark:text-teal-400 dark:hover:bg-teal-900/20 w-full md:w-auto;
+              @apply border-teal-600 bg-teal-600 text-white hover:bg-teal-700 hover:border-teal-700 dark:border-teal-400 dark:text-white dark:hover:bg-teal-900/20 w-full md:w-auto;
+
+              a {
+                @apply text-gray-300 hover:text-gray-100 transition-colors;
+              }
             }
             .socials {
-              @apply flex justify-center w-full space-x-4 pt-2 border-t border-gray-700 md:border-t-0 md:pt-0 md:w-auto;
+              @apply flex justify-center w-full space-x-4 pt-2 border-t border-gray-700 md:border-t-0 md:pt-0 md:w-auto md:justify-start;
               a {
                 @apply text-gray-300 hover:text-teal-400 transition-all duration-300 p-3 hover:bg-gray-800 rounded-xl hover:scale-110;
               }
             }
           }
+        }
+        .center {
+          @apply order-last md:order-none;
         }
       }
       .separator {
@@ -357,10 +364,10 @@
 
         .back-to-top {
           @apply flex items-center space-x-2 text-gray-300 hover:text-teal-400 transition-all duration-300 py-2 px-4 rounded-lg hover:bg-gray-800;
-          &.back-to-top-icon {
+          & .back-to-top-icon {
             @apply h-4 w-4 hover:-translate-y-1 transition-transform;
           }
-          &.back-to-top-txt {
+          & .back-to-top-txt {
             @apply text-sm;
           }
         }

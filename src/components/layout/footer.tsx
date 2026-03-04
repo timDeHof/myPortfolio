@@ -1,4 +1,4 @@
-import { ArrowUpIcon, ExternalLink, GithubIcon, LinkedinIcon, TwitterIcon, Mail } from "lucide-react";
+import { ArrowUpIcon, ExternalLink, GithubIcon, LinkedinIcon, TwitterIcon, Mail, ArrowRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { Separator } from "../ui/separator";
@@ -60,7 +60,12 @@ export function Footer() {
               <h3>Quick Links</h3>
               <div className="links">
                 {navItems.map(link => (
-                  <Link key={link.href} to={link.href}>{link.name}</Link>
+                  <Link key={link.href} to={link.href}>
+                    <ArrowRight className="h-4 w-4 mr-1" />
+                    <span>
+                      {link.name}
+                      </span>
+                    </Link>
                 ))}
               </div>
             </div>
@@ -70,7 +75,7 @@ export function Footer() {
               <p>Ready to work together?<br />
               Let's discuss your next project.</p>
               <div className="contacts">
-              <Button variant="outline" size="lg" asChild className="cta">
+              <Button variant="default" size="lg" asChild className="cta">
                 <Link to="/contact">
                   <Mail className="h-5 w-5" />
                   Get In Touch
