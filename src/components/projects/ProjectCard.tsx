@@ -6,6 +6,7 @@ import { Button } from "@components/ui/button";
 import { Card, CardContent } from "@components/ui/card";
 
 import type { Project, ProjectTechStackItem } from "../../types/project";
+import { getTechBadgeClasses } from "../../lib/utils";
 
 interface ProjectCardProps {
   project: Project;
@@ -105,12 +106,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, on
 
           <div className="mb-4">
             <div className="flex flex-wrap gap-2">
-              {Array.isArray(project.techStack) && project.techStack.length > 0 && project.techStack.slice(0, 3).map((item) => {
+              {Array.isArray(project.techStack) && project.techStack.length > 0 && project.techStack.slice(0, 5).map((item) => {
                 const techKey = typeof item === "string" ? item : (item as ProjectTechStackItem).tech.split("·")[0].trim();
+                const colors = getTechBadgeClasses(techKey);
                 return (
                   <span
                     key={techKey}
-                    className="px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 text-xs rounded-full font-medium flex items-center border border-blue-200 dark:border-blue-700"
+                    className={`px-2 py-1 text-xs rounded-full font-medium flex items-center border ${colors.bg} ${colors.text} ${colors.border}`}
                   >
                     <Code className="h-3 w-3 mr-1" />
                     {techKey}
