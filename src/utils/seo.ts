@@ -66,6 +66,13 @@ export const pageSEO = {
     section: "Contact",
     tags: ["contact", "hire", "collaboration"],
   },
+  blog: {
+    title: "Blog - Tim DeHof",
+    description: "Thoughts on web development, React, TypeScript, and building modern applications.",
+    keywords: "Tim DeHof blog, web development articles, React tutorials, programming blog",
+    section: "Blog",
+    tags: ["blog", "articles", "tutorials", "web development"],
+  },
 };
 
 // Section-specific SEO for different parts of pages
