@@ -18,6 +18,7 @@ const ProjectsPage = lazy(() => import("./pages/projects-page").then(module => (
 const ProjectDetailPage = lazy(() => import("./pages/project-detail-page").then(module => ({ default: module.ProjectDetailPage })));
 const ServicesPage = lazy(() => import("./pages/services-page").then(module => ({ default: module.ServicesPage })));
 const ContactPage = lazy(() => import("./pages/contact-page").then(module => ({ default: module.ContactPage })));
+const BlogPage = lazy(() => import("./pages/blog-page").then(module => ({ default: module.BlogPage })));
 
 // Move lazy() call outside the component
 const ReactQueryDevtoolsProduction = env.VITE_NODE_ENV === "development" ? lazy(() => import("@tanstack/react-query-devtools").then(module => ({ default: module.ReactQueryDevtools }))) : null;
@@ -36,6 +37,7 @@ function AppContent() {
           <Route path="projects/:slug" element={<ProjectDetailPage />} />
           <Route path="services" element={<ServicesPage />} />
           <Route path="contact" element={<ContactPage />} />
+          <Route path="blog" element={<BlogPage />} />
         </Route>
       </Routes>
     </div>
