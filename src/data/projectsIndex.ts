@@ -33,6 +33,12 @@ export const projectsIndex: ProjectIndexEntry[] = [
     repo: "portfolio-metadata",
     path: "habitgate-mobile.json",
   },
+  {
+    slug: "3d-product-configurator",
+    owner: "timDeHof",
+    repo: "portfolio-metadata",
+    path: "3d-product-configurator.json",
+  }
 ];
 
 export function findProjectBySlug(slug: string): ProjectIndexEntry | undefined {
