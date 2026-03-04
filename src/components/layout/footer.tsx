@@ -4,6 +4,7 @@ import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { Separator } from "../ui/separator";
 import { usePortfolioData } from "@hooks/usePortfolioData";
 import { Link } from "react-router-dom";
+import { DEFAULT_NAV_ITEMS } from "../../lib/constants";
 
 const socialIconMap = {
   GitHub: <GithubIcon className="h-6 w-6" />,
@@ -21,13 +22,7 @@ export function Footer() {
       { name: "Twitter", href: "https://twitter.com/timdehof" },
     ]
   };
-  const navItems = portfolioData?.navigation?.navItems || [
-    { name: "Home", href: "/" },
-    { name: "Services", href: "/services" },
-    { name: "Projects", href: "/projects" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
-  ];
+  const navItems = portfolioData?.navigation?.navItems || DEFAULT_NAV_ITEMS;
 
   const scrollToTop = () => {
     requestAnimationFrame(() => {
