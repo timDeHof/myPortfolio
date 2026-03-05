@@ -1,3 +1,5 @@
+import { BookOpen, Code, Layout, List, Workflow } from "lucide-react";
+
 import { Card, CardContent } from "../ui/card";
 
 import type { ProjectTechStackItem, ProjectWorkflowStep, ProjectAdvancedFeature } from "../../types/project";
@@ -218,4 +220,21 @@ export function WorkflowTab({ project }: OverviewTabProps) {
       )}
     </div>
   );
+}
+
+export function getProjectTabs(
+  hasCaseStudy: boolean = false
+): { id: string; label: string; icon: React.ReactNode }[] {
+  const tabs = [
+    { id: "overview", label: "Overview", icon: <Layout className="h-4 w-4" /> },
+    { id: "features", label: "Features", icon: <List className="h-4 w-4" /> },
+    { id: "tech", label: "Tech Stack", icon: <Code className="h-4 w-4" /> },
+    { id: "workflow", label: "Workflow", icon: <Workflow className="h-4 w-4" /> },
+  ];
+
+  if (hasCaseStudy) {
+    tabs.unshift({ id: "case-study", label: "Case Study", icon: <BookOpen className="h-4 w-4" /> });
+  }
+
+  return tabs;
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, Clock, Code, ExternalLink, Github, Star, Layout, List, Workflow, X } from "lucide-react";
+import { ArrowLeft, Clock, Code, ExternalLink, Github, Star, X } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 
 import { Button } from "@components/ui/button";
@@ -7,8 +7,12 @@ import { Card, CardContent } from "@components/ui/card";
 import { MaxWidthWrapper } from "@components/ui/max-width-wrapper";
 
 import { useProject } from "@hooks/useProjects";
+import { useCaseStudy } from "@hooks/useCaseStudy";
 import type { ProjectGalleryItem, ProjectAdvancedFeature, ProjectWorkflowStep, ProjectTechStackItem } from "../types/project";
-import { OverviewTab, FeaturesTab, TechStackTab, WorkflowTab } from "@components/projects/ProjectDetailTabs";
+import { OverviewTab, FeaturesTab, TechStackTab, WorkflowTab, getProjectTabs } from "@components/projects/ProjectDetailTabs";
+import { CaseStudyTab } from "@components/projects/CaseStudyTab";
+
+import type { CaseStudyData } from "@hooks/useCaseStudy";
 
 interface Tab {
   id: string;
@@ -19,10 +23,15 @@ interface Tab {
 interface TabContentProps {
   activeTab: string;
   project: NonNullable<ReturnType<typeof useProject>["data"]>;
+  caseStudyData?: CaseStudyData | null;
 }
 
-const TabContent: React.FC<TabContentProps> = ({ activeTab, project }) => {
+const TabContent: React.FC<TabContentProps> = ({ activeTab, project, caseStudyData }) => {
   switch (activeTab) {
+    case "case-study":
+      return caseStudyData ? (
+        <CaseStudyTab data={caseStudyData} accentColor={project.accentColor} />
+      ) : null;
     case "overview":
       return <OverviewTab project={project} />;
     case "features":
@@ -45,6 +54,9 @@ interface ProjectDetailContentProps {
 const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, onClose, isModal }) => {
   const [activeTab, setActiveTab] = useState("overview");
 
+  const hasCaseStudy = project.slug === "shadcn-timeline";
+  const { data: caseStudyData } = useCaseStudy(project.slug);
+
   const galleryImages: ProjectGalleryItem[] = (() => {
     if (!project.gallery || (Array.isArray(project.gallery) && project.gallery.length === 0)) {
       return project.image ? [{ url: project.image, alt: project.name, type: "image" as const }] : [];
@@ -55,12 +67,7 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
     return project.gallery as ProjectGalleryItem[];
   })();
 
-  const tabs: Tab[] = [
-    { id: "overview", label: "Overview", icon: <Layout className="h-4 w-4" /> },
-    { id: "features", label: "Features", icon: <List className="h-4 w-4" /> },
-    { id: "tech", label: "Tech Stack", icon: <Code className="h-4 w-4" /> },
-    { id: "workflow", label: "Workflow", icon: <Workflow className="h-4 w-4" /> },
-  ];
+  const tabs: Tab[] = getProjectTabs(hasCaseStudy);
 
   return (
     <div className="bg-gray-50 dark:bg-slate-900">
@@ -137,7 +144,7 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
       <div className="p-4">
         {isModal ? (
           <div className="min-h-[300px]">
-            <TabContent activeTab={activeTab} project={project} />
+            <TabContent activeTab={activeTab} project={project} caseStudyData={caseStudyData ?? undefined} />
           </div>
         ) : (
           // Full page view (non-modal)
