@@ -131,7 +131,7 @@ export const GitHubStatsCard: React.FC = () => {
             <div className="flex items-center">
               <Calendar className="h-4 w-4 mr-1" />
               <span>
-                Joined
+                Joined{" "}
                 {new Date(profile.created_at).getFullYear()}
               </span>
             </div>
