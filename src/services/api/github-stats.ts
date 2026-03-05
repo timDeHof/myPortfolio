@@ -113,7 +113,7 @@ export const githubStatsAPI = {
         public_repos: profile.public_repos,
         followers: profile.followers,
         following: profile.following,
-        created_at: profile.createdAt,
+        created_at: profile.created_at,
         updated_at: profile.updated_at,
         location: profile.location,
         blog: profile.blog,
@@ -219,7 +219,69 @@ export const githubStatsAPI = {
     };
   },
 
-  // Generate mock contribution calendar data
+  // Fetch real contribution data from GitHub Contributions API with fallback to mock data
+  fetchContributions: async (username: string): Promise<{ contributions: ContributionWeek[]; total: number }> => {
+    try {
+      const url = new URL(`/v4/${username}`, "https://github-contributions-api.jogruber.de");
+      const response = await fetch(url.toString());
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch contributions: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      const currentYear = new Date().getFullYear();
+      const previousYear = currentYear - 1;
+      const total = data.total?.[currentYear] ?? 0;
+
+      // Filter to include current year plus 2 months from previous year
+      const contributionsArray = (data.contributions ?? []).filter((day: { date: string }) => {
+        const dateYear = parseInt(day.date.split("-")[0], 10);
+        const dateMonth = parseInt(day.date.split("-")[1], 10);
+
+        // Include current year or last 2 months of previous year
+        if (dateYear === currentYear) return true;
+        if (dateYear === previousYear && dateMonth >= 9) return true; // Sep & Oct &Nov & Dec
+
+        return false;
+      });
+
+      // Group days into weeks, starting from November of previous year
+      const weeks: ContributionWeek[] = [];
+      let currentWeek: ContributionDay[] = [];
+
+      contributionsArray.forEach((day: { date: string; count: number; level: number }) => {
+        const contributionDay: ContributionDay = {
+          date: day.date,
+          count: day.count,
+          level: day.level as 0 | 1 | 2 | 3 | 4,
+        };
+
+        currentWeek.push(contributionDay);
+
+        // Start a new week every 7 days
+        if (currentWeek.length === 7) {
+          weeks.push({ days: currentWeek });
+          currentWeek = [];
+        }
+      });
+
+      // Push remaining days as the last week
+      if (currentWeek.length > 0) {
+        weeks.push({ days: currentWeek });
+      }
+
+      return { contributions: weeks, total };
+    } catch (error) {
+      // Fallback to mock data if API fails
+      console.warn("Failed to fetch contributions from API, using mock data:", error);
+      const mockData = githubStatsAPI.generateContributionCalendar();
+      const total = mockData.reduce((sum, week) => sum + week.days.reduce((s, day) => s + day.count, 0), 0);
+      return { contributions: mockData, total };
+    }
+  },
+
+  // Generate mock contribution calendar data (fallback)
   generateContributionCalendar: (): ContributionWeek[] => {
     const weeks: ContributionWeek[] = [];
     const today = new Date();
@@ -271,5 +333,5 @@ export const githubStatsAPI = {
 export const githubStatsKeys = {
   all: ["githubStats"] as const,
   stats: () => [...githubStatsKeys.all, "stats"] as const,
-  contributions: () => [...githubStatsKeys.all, "contributions"] as const,
+  contributions: (username: string) => [...githubStatsKeys.all, "contributions", username] as const,
 };
