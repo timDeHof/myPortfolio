@@ -12,6 +12,7 @@ import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
 import { useProjects, useProject } from "../hooks/useProjects";
 import { ProjectDetailContent } from "./project-detail-page";
 import { pageSEO } from "../utils/seo";
+import { GitHubStatsSection } from "../components/github/github-stats-section";
 
 export const ProjectsPage: React.FC = () => {
   const { data: projects = [], isLoading, error, isError } = useProjects();
@@ -87,6 +88,8 @@ export const ProjectsPage: React.FC = () => {
       </AnimatedSection>
 
       <ProjectGrid projects={projects} isLoading={isLoading} onProjectClick={handleProjectClick} />
+
+      <GitHubStatsSection />
 
       <AnimatedSection className="py-16 bg-gradient-to-br from-gray-50 via-teal-50/30 to-blue-50 dark:from-slate-800 dark:via-teal-900/30 dark:to-blue-900">
         <MaxWidthWrapper className="text-center">
