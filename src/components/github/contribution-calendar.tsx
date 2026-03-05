@@ -5,103 +5,52 @@ import type { ContributionDay } from "../../services/api/github-stats";
 
 import { useGitHubContributions } from "../../hooks/queries/use-github-stats";
 import { Card, CardContent } from "../ui/card";
-import { CalendarGrid } from "./calendar-grid";
-import { CalendarHeader } from "./calendar-header";
-import { CalendarLegend } from "./calendar-legend";
-import { CalendarStats } from "./calendar-stats";
+import { Badge } from "../ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
+import {
+  ContributionGraph,
+  ContributionGraphBlock,
+  ContributionGraphCalendar,
+  ContributionGraphFooter,
+  ContributionGraphLegend,
+  ContributionGraphTotalCount,
+  type Activity,
+} from "../kibo-ui/contribution-graph";
 
-export const ContributionCalendar: React.FC = () => {
-  const { data: contributionWeeks, error } = useGitHubContributions();
+export const ContributionCalendar: React.FC<{ username?: string }> = ({ username = "timDeHof" }) => {
+  const { data, error } = useGitHubContributions(username);
+  const contributionData = data?.contributions;
 
-  const stats = useMemo(() => {
-    if (!contributionWeeks)
-      return { total: 0, streak: 0 };
+  const { activities, total } = useMemo(() => {
+    if (!contributionData) return { activities: [], total: 0 };
 
-    let total = 0;
-    let streak = 0;
+    let totalCount = 0;
     const allDays: ContributionDay[] = [];
 
-    contributionWeeks.forEach((week) => {
+    contributionData.forEach((week) => {
       week.days.forEach((day) => {
         allDays.push(day);
-        total += day.count;
+        totalCount += day.count;
       });
     });
 
-    const sortedDays = allDays.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    for (const day of sortedDays) {
-      if (day.count > 0) {
-        streak++;
-      }
-      else {
-        break;
-      }
-    }
+    const activitiesData: Activity[] = contributionData.flatMap((week) =>
+      week.days.map((day) => ({
+        date: day.date,
+        count: day.count,
+        level: day.level,
+      }))
+    );
 
-    return { total, streak };
-  }, [contributionWeeks]);
+    return { activities: activitiesData, total: totalCount };
+  }, [contributionData]);
 
-  const monthPositions = useMemo(() => {
-    const monthLabels = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-
-    if (!contributionWeeks || contributionWeeks.length === 0)
-      return [];
-
-    const totalWeeks = contributionWeeks.length;
-
-    const monthAppearances = new Map<number, { weekIndex: number; monthName: string; date: Date }>();
-
-    contributionWeeks.forEach((week, weekIndex) => {
-      if (week.days.length > 0) {
-        const firstDay = week.days[0];
-        const date = new Date(firstDay.date);
-        const month = date.getMonth();
-        const monthName = monthLabels[month];
-
-        if (!monthAppearances.has(month)) {
-          monthAppearances.set(month, { weekIndex, monthName, date });
-        }
-      }
-    });
-
-    const sortedMonths = Array.from(monthAppearances.values())
-      .sort((a, b) => a.weekIndex - b.weekIndex);
-
-    const filteredMonths = [];
-    let lastUsedPosition = -20;
-
-    for (const monthData of sortedMonths) {
-      const currentPosition = (monthData.weekIndex / totalWeeks) * 100;
-
-      if (currentPosition - lastUsedPosition >= 18) {
-        const finalPosition = Math.min(currentPosition, 88);
-        filteredMonths.push({
-          month: monthData.monthName,
-          weekIndex: monthData.weekIndex,
-          left: finalPosition,
-          date: monthData.date,
-        });
-        lastUsedPosition = finalPosition;
-      }
-    }
-
-    return filteredMonths;
-  }, [contributionWeeks]);
-
-  if (error || !contributionWeeks) {
+  if (error || !contributionData) {
     return (
       <Card className="overflow-hidden border-0 shadow-xl bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900 dark:to-orange-900">
         <CardContent className="p-10 flex items-center justify-center h-96">
@@ -126,14 +75,56 @@ export const ContributionCalendar: React.FC = () => {
       transition={{ duration: 0.5, delay: 0.4 }}
     >
       <Card className="overflow-hidden border-0 shadow-xl bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800">
-        <CardContent className="p-10">
-          <CalendarHeader total={stats.total} streak={stats.streak} />
-          <div className="overflow-x-auto">
-            <div className="inline-block" style={{ minWidth: "800px" }}>
-              <CalendarGrid contributionWeeks={contributionWeeks} monthPositions={monthPositions} />
-              <CalendarLegend />
-              <CalendarStats total={stats.total} streak={stats.streak} contributionWeeks={contributionWeeks} />
-            </div>
+        <CardContent className="p-10 w-full">
+          <div className="w-full">
+            <ContributionGraph
+              data={activities}
+              blockMargin={2}
+              blockSize={20}
+              fontSize={16}
+            >
+              <ContributionGraphCalendar>
+                {({ activity, dayIndex, weekIndex }) => (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <g>
+
+                  <ContributionGraphBlock
+                    className="cursor-pointer"
+                    activity={activity}
+                    dayIndex={dayIndex}
+                    weekIndex={weekIndex}
+                    />
+                    </g>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <div className="flex flex-col gap-0.5">
+                      <p className="font-semibold">{activity.date}</p>
+                      <p className="text-muted-foreground">{activity.count} contributions</p>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+                )}
+              </ContributionGraphCalendar>
+              <ContributionGraphFooter>
+                <ContributionGraphTotalCount>
+                  {({ totalCount, year }) => (
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground text-sm font-medium">
+                        Year{" "}{year}:
+                      </span>
+                      <Badge className="text-sm font-bold text-emerald-600
+                      bg-emerald-300 dark:bg-emerald-900
+                      border-emerald-400 dark:border-emerald-700
+                      dark:text-emerald-400">
+                        {totalCount.toLocaleString()}{" "}contributions
+                      </Badge>
+                    </div>
+                  )}
+                </ContributionGraphTotalCount>
+                <ContributionGraphLegend />
+              </ContributionGraphFooter>
+            </ContributionGraph>
           </div>
         </CardContent>
       </Card>
