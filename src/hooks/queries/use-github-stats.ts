@@ -14,13 +14,14 @@ export function useGitHubStats() {
   });
 }
 
-export function useGitHubContributions() {
+export function useGitHubContributions(username: string = "timDeHof") {
   return useQuery({
-    queryKey: githubStatsKeys.contributions(),
-    queryFn: githubStatsAPI.generateContributionCalendar,
-    staleTime: 60 * 60 * 1000, // 1 hour
+    queryKey: githubStatsKeys.contributions(username),
+    queryFn: () => githubStatsAPI.fetchContributions(username),
+    staleTime: 60 * 60 * 1000, // 1 hour - same as Next.js unstable_cache revalidate
+    gcTime: 24 * 60 * 60 * 1000, // 24 hours (cache garbage collection)
     meta: {
-      errorMessage: "Failed to generate contribution calendar",
+      errorMessage: "Failed to fetch contribution calendar",
     },
   });
 }
