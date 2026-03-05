@@ -28,7 +28,7 @@ type GitHubLanguages = {
 };
 
 type GitHubUser = {
-  createdAt: string;
+  created_at: string;
   updated_at: string;
   location: string | undefined;
   blog: string | undefined;
