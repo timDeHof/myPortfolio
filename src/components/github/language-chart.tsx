@@ -39,7 +39,7 @@ export const LanguageChart: React.FC = () => {
     >
       <Card>
         <CardContent className="p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-6">
+          <h3 className="text-lg font-semibold dark:text-white text-gray-900 mb-6">
             Most Used Languages
           </h3>
 
@@ -59,11 +59,11 @@ export const LanguageChart: React.FC = () => {
                       className="w-3 h-3 rounded-full"
                       style={{ backgroundColor: language.color }}
                     />
-                    <span className="text-sm font-medium text-gray-900">
+                    <span className="text-sm font-medium text-gray-900 dark:text-gray-200">
                       {language.name}
                     </span>
                   </div>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-gray-500 dark:text-gray-300">
                     {language.percentage.toFixed(1)}
                     %
                   </span>
@@ -84,7 +84,7 @@ export const LanguageChart: React.FC = () => {
 
           {/* Language Circles Visualization */}
           <div className="mt-8">
-            <h4 className="text-sm font-medium text-gray-700 mb-4">
+            <h4 className="text-sm font-medium text-gray-700 mb-4 dark:text-gray-200">
               Language Distribution
             </h4>
             <div className="flex flex-wrap gap-2">
@@ -129,14 +129,14 @@ export const LanguageChart: React.FC = () => {
           {/* Summary */}
           <div className="mt-6 pt-6 border-t border-gray-200">
             <div className="text-center">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
                 Analyzed across
                 {" "}
                 <strong>{stats.repositories.total}</strong>
                 {" "}
                 repositories
               </p>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-600 dark:text-gray-500 mt-1">
                 Based on lines of code and project composition
               </p>
             </div>
