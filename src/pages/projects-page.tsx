@@ -18,7 +18,7 @@ export const ProjectsPage: React.FC = () => {
   const { data: projects = [], isLoading, error, isError } = useProjects();
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedSlug = searchParams.get("project");
-  
+
   const { data: selectedProject, isLoading: isProjectLoading } = useProject(selectedSlug || "");
 
   useEffect(() => {
@@ -99,7 +99,7 @@ export const ProjectsPage: React.FC = () => {
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             Check out my complete GitHub profile for more projects and contributions.
           </p>
-          <Button asChild className="bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white">
+          <Button asChild className="bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white py-4 px-6">
             <a href="https://github.com/timDeHof" target="_blank" rel="noopener noreferrer">
               <Github className="h-4 w-4 mr-2" />
               View GitHub Profile
@@ -118,7 +118,7 @@ export const ProjectsPage: React.FC = () => {
             className="fixed inset-0 z-50 md:hidden"
           >
             {/* Mobile: Full screen bottom sheet style */}
-            <div 
+            <div
               className="absolute inset-0 bg-black/50 backdrop-blur-sm md:hidden"
               onClick={handleCloseModal}
               onKeyDown={(e) => e.key === 'Escape' && handleCloseModal()}
@@ -139,8 +139,8 @@ export const ProjectsPage: React.FC = () => {
                   <div className="h-48 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
                 </div>
               ) : selectedProject ? (
-                <ProjectDetailContent 
-                  project={selectedProject} 
+                <ProjectDetailContent
+                  project={selectedProject}
                   onClose={handleCloseModal}
                   isModal
                 />
@@ -175,15 +175,15 @@ export const ProjectsPage: React.FC = () => {
               aria-label="Close modal"
               className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             />
-            
+
             {/* Modal */}
             <m.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-                w-[95vw] max-w-5xl max-h-[90vh] rounded-xl bg-gray-50 dark:bg-slate-900 
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+                w-[95vw] max-w-5xl max-h-[90vh] rounded-xl bg-gray-50 dark:bg-slate-900
                 overflow-y-auto shadow-2xl"
             >
               {isProjectLoading ? (
@@ -192,8 +192,8 @@ export const ProjectsPage: React.FC = () => {
                   <div className="h-64 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
                 </div>
               ) : selectedProject ? (
-                <ProjectDetailContent 
-                  project={selectedProject} 
+                <ProjectDetailContent
+                  project={selectedProject}
                   onClose={handleCloseModal}
                   isModal
                 />
