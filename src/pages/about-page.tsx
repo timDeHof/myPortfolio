@@ -75,7 +75,7 @@ const skillCategories = [
   {
     category: "Engineering & Innovation",
     icon: "🔧",
-    color: "from-orange-700 to-red-700 dark:from-orange-400 dark:to-red-400",
+    color: "from-slate-600 to-slate-500 dark:from-slate-300 dark:to-slate-400",
     skills: [
       { name: "3D Printing", icon: PrintingIcon, color: "#FF6B35" },
       { name: "Mechanical Engineering", icon: MechanicalIcon, color: "#4A90E2" },
@@ -297,7 +297,7 @@ export const AboutPage: React.FC = () => {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 via-teal-800 to-purple-800 dark:from-gray-100 dark:via-blue-400 dark:via-purple-400 dark:to-purple-400 bg-clip-text text-transparent mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 dark:from-slate-200 dark:via-slate-300 dark:to-slate-200 bg-clip-text text-transparent mb-6">
                 Skills & Technologies
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
