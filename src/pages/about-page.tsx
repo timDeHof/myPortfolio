@@ -28,6 +28,7 @@ import {
   VercelIcon,
 } from "../components/common/technology-icons";
 import { CertificationsSection } from "@/components/about/certifications-section";
+import { TestimonialsSection } from "@/components/about/testimonials-section";
 import { Card, CardContent } from "../components/ui/card";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
 import { env } from "../lib/env";
@@ -452,6 +453,11 @@ export const AboutPage: React.FC = () => {
       {/* Certifications Section */}
       <AnimatedSection>
         <CertificationsSection />
+      </AnimatedSection>
+
+      {/* Testimonials Section */}
+      <AnimatedSection>
+        <TestimonialsSection />
       </AnimatedSection>
 
     </>
