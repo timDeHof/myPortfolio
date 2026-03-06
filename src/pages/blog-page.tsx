@@ -1,5 +1,5 @@
 import React from "react";
-import { PenLine } from "lucide-react";
+import { PenLine, Rss } from "lucide-react";
 
 import { AnimatedSection } from "../components/common/animated-section";
 import { SEOHead } from "../components/common/seo-head";
@@ -54,6 +54,20 @@ export const BlogPage: React.FC = () => {
             <p className="mt-4 text-gray-500 dark:text-gray-400">
               {posts.length} posts published
             </p>
+            <div className="mt-6 flex justify-center gap-4">
+              <Button asChild className="bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white py-4 px-6" >
+                <a href="/feed.xml" target="_blank" rel="noopener noreferrer">
+                  <Rss className="h-4 w-4 mr-2" />
+                  Subscribe RSS
+                </a>
+              </Button>
+              <Button asChild variant="outline" className="border-teal-400 border-2 dark:border-teal-600 text-teal-500 dark:bg-teal-300/10 hover:bg-teal-50 dark:hover:bg-teal-700/10 py-4 px-6">
+                <a href={BLOG_URL} target="_blank" rel="noopener noreferrer">
+                  <PenLine className="h-4 w-4 mr-2" />
+                  Visit Blog
+                </a>
+              </Button>
+            </div>
           </div>
         </MaxWidthWrapper>
       </AnimatedSection>
@@ -70,7 +84,7 @@ export const BlogPage: React.FC = () => {
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             Check out my full blog for more articles and tutorials.
           </p>
-          <Button asChild className="bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white">
+          <Button asChild className="bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white py-4 px-6">
             <a href={BLOG_URL} target="_blank" rel="noopener noreferrer">
               <PenLine className="h-4 w-4 mr-2" />
               Visit Full Blog

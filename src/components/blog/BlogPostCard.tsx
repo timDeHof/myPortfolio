@@ -1,5 +1,5 @@
 import { m } from "framer-motion";
-import { Calendar, ExternalLink, Tag } from "lucide-react";
+import { Calendar, Clock, ExternalLink, Tag } from "lucide-react";
 
 import { Button } from "@components/ui/button";
 import { Card, CardContent } from "@components/ui/card";
@@ -46,9 +46,17 @@ export const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, index = 0 }) =
             {post.title}
           </h3>
           
-          <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-3">
-            <Calendar className="h-4 w-4" />
-            <span>{formattedDate}</span>
+          <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-3">
+            <div className="flex items-center gap-1">
+              <Calendar className="h-4 w-4" />
+              <span>{formattedDate}</span>
+            </div>
+            {post.readingTime && (
+              <div className="flex items-center gap-1">
+                <Clock className="h-4 w-4" />
+                <span>{post.readingTime} min read</span>
+              </div>
+            )}
           </div>
 
           {post.description && (
