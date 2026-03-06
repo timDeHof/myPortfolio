@@ -65,7 +65,7 @@ const services = [
     icon: <Zap className="h-8 w-8" />,
     title: "Performance Optimization",
     description: "Enhancing application speed, efficiency, and user experience through optimization.",
-    color: "from-orange-700 to-amber-700 dark:from-orange-400 dark:to-amber-400",
+    color: "from-slate-600 to-slate-500 dark:from-slate-300 dark:to-slate-400",
     benefits: [
       "Core Web Vitals optimization",
       "SEO-friendly architecture",
@@ -128,7 +128,7 @@ export const ServicesSection: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-800 via-blue-600 to-teal-500 dark:from-white dark:via-blue-300 dark:to-teal-400 bg-clip-text text-transparent mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 dark:from-slate-200 dark:via-slate-300 dark:to-slate-200 bg-clip-text text-transparent mb-6">
             What I Do Best
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">

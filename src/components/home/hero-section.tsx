@@ -42,7 +42,7 @@ export const HeroSection: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              <span className="bg-gradient-to-r from-indigo-800 via-blue-600 to-purple-700 bg-clip-text text-transparent dark:from-indigo-300 dark:via-blue-300 dark:to-purple-400">
+              <span className="bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 bg-clip-text text-transparent dark:from-slate-200 dark:via-slate-300 dark:to-slate-200">
                 Tim DeHof
               </span>
               <br />

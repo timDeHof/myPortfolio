@@ -1,10 +1,11 @@
 import { AnimatePresence, m } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import {Link, useLocation } from "react-router-dom";
-import { CodeXml, Download, Menu, X } from "lucide-react";
+import { CodeXml, Download, Menu, Moon, Sun, X } from "lucide-react";
 
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { usePortfolioData } from "@hooks/usePortfolioData";
+import { useTheme } from "@hooks/use-theme";
 import { env } from "../../lib/env";
 import { DEFAULT_NAV_ITEMS } from "../../lib/constants";
 
@@ -13,6 +14,7 @@ export function Navbar() {
   const mobileNavRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const { data: portfolioData } = usePortfolioData();
+  const { effectiveTheme, toggleTheme } = useTheme();
   const navItems = portfolioData?.navigation?.navItems || DEFAULT_NAV_ITEMS;
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -75,6 +77,14 @@ export function Navbar() {
             ))}
               </div>
           <div className="right hidden md:flex">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="not-selected flex items-center gap-1 mr-4"
+              aria-label={`Switch to ${effectiveTheme === "dark" ? "light" : "dark"} mode`}
+            >
+              {effectiveTheme === "dark" ? <Moon size={18} /> : <Sun size={18} />}
+            </button>
             {env.VITE_RESUME_URL && (
               <a
                 href={env.VITE_RESUME_URL}
@@ -140,6 +150,24 @@ export function Navbar() {
                     </Link>
                   </m.div>
                 ))}
+                <m.div
+                  variants={{
+                    open: { opacity: 1, y: 0 },
+                    closed: { opacity: 0, y: -10 }
+                  }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => {
+                      toggleTheme();
+                      setIsOpen(false);
+                    }}
+                    className="not-selected flex items-center gap-1 w-full"
+                  >
+                    {effectiveTheme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+                    <span>{effectiveTheme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+                  </button>
+                </m.div>
                 {env.VITE_RESUME_URL && (
                   <m.div
                     variants={{
