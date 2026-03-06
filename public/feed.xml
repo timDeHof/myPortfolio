@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tim DeHof's Blog</title>
+    <description>Thoughts on web development, React, and building modern applications.</description>
+    <link>https://blog.timdehof.dev</link>
+    <atom:link href="https://timdehof.dev/feed.xml" rel="self" type="application/rss+xml"/>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 06 Mar 2026 14:12:58 GMT</lastBuildDate>
+    
+    <item>
+      <title><![CDATA[The Mysterious Case of the Disappearing Props]]></title>
+      <description><![CDATA[Join us on a humorous detective journey to solve the mystery of disappearing props in a React application. Learn troubleshooting tips and best practices to prevent your props from vanishing into thin air.]]></description>
+      <link>https://blog.timdehof.dev/blog/disappearing-props</link>
+      <guid isPermaLink="true">https://blog.timdehof.dev/blog/disappearing-props</guid>
+      <pubDate>Fri, 01 Mar 2024 00:00:00 GMT</pubDate>
+      <category>code</category>
+      <category>react</category>
+      <category>props</category>
+    </item>
+    <item>
+      <title><![CDATA[From Mechanical Design Engineer to Fullstack Developer - My Journey and Lessons Learned along the way]]></title>
+      <description><![CDATA[Learn about my journey from mechanical design engineer to fullstack developer]]></description>
+      <link>https://blog.timdehof.dev/blog/from-mechanical-design-engineer-to-fullstack-developer-my-journey-and-lessons-learned</link>
+      <guid isPermaLink="true">https://blog.timdehof.dev/blog/from-mechanical-design-engineer-to-fullstack-developer-my-journey-and-lessons-learned</guid>
+      <pubDate>Thu, 22 Dec 2022 19:43:40 GMT</pubDate>
+      <category>careerchange</category>
+      <category>fullstack</category>
+      <category>react</category>
+      <category>learning</category>
+    </item>
+    <item>
+      <title><![CDATA[Github Flavoured Markdown CheatSheet]]></title>
+      <description><![CDATA[A markdown cheat sheet for GFM]]></description>
+      <link>https://blog.timdehof.dev/blog/github-markdown</link>
+      <guid isPermaLink="true">https://blog.timdehof.dev/blog/github-markdown</guid>
+      <pubDate>Sun, 03 Mar 2024 00:00:00 GMT</pubDate>
+      
+    </item>
+    <item>
+      <title><![CDATA[Prop Drilling: The Horror Movie - A Tale of React Components]]></title>
+      <description><![CDATA[Step into a spine-chilling narrative where React components face the dread of prop drilling. Discover how using Context API or Redux can save your components from the depths of despair in this humorous take on a common React challenge.]]></description>
+      <link>https://blog.timdehof.dev/blog/prop-drilling</link>
+      <guid isPermaLink="true">https://blog.timdehof.dev/blog/prop-drilling</guid>
+      <pubDate>Wed, 28 Feb 2024 00:00:00 GMT</pubDate>
+      <category>code</category>
+      <category>react</category>
+      <category>props</category>
+    </item>
+    <item>
+      <title><![CDATA[How to Deploy the Face Recognition API for Free with Render Alternative to Heroku]]></title>
+      <description><![CDATA[Learn how to deploy the Face Recognition API for free with Render alternative to Heroku]]></description>
+      <link>https://blog.timdehof.dev/blog/how-to-deploy-the-face-recognition-api-for-free-with-render-alternative-to-heroku</link>
+      <guid isPermaLink="true">https://blog.timdehof.dev/blog/how-to-deploy-the-face-recognition-api-for-free-with-render-alternative-to-heroku</guid>
+      <pubDate>Tue, 20 Dec 2022 00:00:00 GMT</pubDate>
+      <category>web development</category>
+      <category>heroku</category>
+      <category>render</category>
+      <category>free</category>
+      <category>face recognition</category>
+    </item>
+    <item>
+      <title><![CDATA[Debugging React with Wizardry and Magic: A Developer's Spellbook]]></title>
+      <description><![CDATA[Enter the mystical world of debugging React applications with a touch of humor. Learn spells and incantations to banish bugs and optimize your code, all while navigating the enchanting forest of React development.]]></description>
+      <link>https://blog.timdehof.dev/blog/react-debug-magic</link>
+      <guid isPermaLink="true">https://blog.timdehof.dev/blog/react-debug-magic</guid>
+      <pubDate>Tue, 27 Feb 2024 00:00:00 GMT</pubDate>
+      <category>react</category>
+    </item>
+    <item>
+      <title><![CDATA[React State Management: An Epic Tale of Love, Loss, and Redux]]></title>
+      <description><![CDATA[Embark on a dramatic journey through the realm of React state management. Witness the love triangles, betrayals, and heartaches that components face as they navigate the complex world of state management, with a special appearance by Redux.]]></description>
+      <link>https://blog.timdehof.dev/blog/react-state-management</link>
+      <guid isPermaLink="true">https://blog.timdehof.dev/blog/react-state-management</guid>
+      <pubDate>Sat, 24 Feb 2024 00:00:00 GMT</pubDate>
+      
+    </item>
+    <item>
+      <title><![CDATA[React Hooks: Fishing for Components in the React Sea]]></title>
+      <description><![CDATA[Explore the amusing analogy of React Hooks as fishing tools designed to catch components in the vast sea of React development. Learn how to use useState, useEffect, and useContext to manage your catch effectively.]]></description>
+      <link>https://blog.timdehof.dev/blog/react-hooks</link>
+      <guid isPermaLink="true">https://blog.timdehof.dev/blog/react-hooks</guid>
+      <pubDate>Mon, 26 Feb 2024 00:00:00 GMT</pubDate>
+      
+    </item>
+    <item>
+      <title><![CDATA[The Lifecycle of a React Component, As Told by Cats]]></title>
+      <description><![CDATA[A whimsical exploration of the React component lifecycle, with each stage humorously explained through the behavior of cats. Perfect for developers looking to understand lifecycle methods in a more relatable and entertaining way.]]></description>
+      <link>https://blog.timdehof.dev/blog/react-lifecycle-cats</link>
+      <guid isPermaLink="true">https://blog.timdehof.dev/blog/react-lifecycle-cats</guid>
+      <pubDate>Sun, 25 Feb 2024 00:00:00 GMT</pubDate>
+      
+    </item>
+    <item>
+      <title><![CDATA[A Roadmap for Transferring Skills from Mechanical Design Engineering to Fullstack Development]]></title>
+      <description><![CDATA[A guide to help you transfer your skills and achieve success in the field of fullstack development]]></description>
+      <link>https://blog.timdehof.dev/blog/roadmap-for-transferring-skills-from-mechanical-design-engineering-to-fullstack-development</link>
+      <guid isPermaLink="true">https://blog.timdehof.dev/blog/roadmap-for-transferring-skills-from-mechanical-design-engineering-to-fullstack-development</guid>
+      <pubDate>Mon, 12 Dec 2022 00:29:22 GMT</pubDate>
+      <category>career</category>
+      <category>realworld</category>
+      <category>skills</category>
+      <category>fullstack</category>
+    </item>
+    <item>
+      <title><![CDATA[How to Summon a React Component: A Beginner's Guide]]></title>
+      <description><![CDATA[Dive into the mystical world of React and learn the incantations needed to summon your very first React component with humor and ease.]]></description>
+      <link>https://blog.timdehof.dev/blog/summon-component</link>
+      <guid isPermaLink="true">https://blog.timdehof.dev/blog/summon-component</guid>
+      <pubDate>Fri, 23 Feb 2024 00:00:00 GMT</pubDate>
+      
+    </item>
+    <item>
+      <title><![CDATA[The Power of a Growth Mindset in Software Development - How to Embrace Challenges and Advance Your Career]]></title>
+      <description><![CDATA[A guide to help you develop and maintain a growth mindset in software development]]></description>
+      <link>https://blog.timdehof.dev/blog/the-power-of-a-growth-mindset-in-software-development-how-to-embrace-challenges-and-advance-your-career</link>
+      <guid isPermaLink="true">https://blog.timdehof.dev/blog/the-power-of-a-growth-mindset-in-software-development-how-to-embrace-challenges-and-advance-your-career</guid>
+      <pubDate>Tue, 13 Dec 2022 02:53:49 GMT</pubDate>
+      <category>softwaredevelopment</category>
+      <category>growthmindset</category>
+      <category>personalgrowth</category>
+      <category>beginners</category>
+    </item>
+    <item>
+      <title><![CDATA[Unleash the Power of Java - A JavaScript Developer's Guide to Best Practices in Java Development]]></title>
+      <description><![CDATA[Learn how to unleash the power of Java in JavaScript development]]></description>
+      <link>https://blog.timdehof.dev/blog/unleash-the-power-of-java---a-javascript-developers-guide-to-best-practices-in-java-development</link>
+      <guid isPermaLink="true">https://blog.timdehof.dev/blog/unleash-the-power-of-java---a-javascript-developers-guide-to-best-practices-in-java-development</guid>
+      <pubDate>Sun, 05 Feb 2023 15:51:29 GMT</pubDate>
+      <category>java</category>
+      <category>javascript</category>
+      <category>learning</category>
+    </item>
+    <item>
+      <title><![CDATA[Unraveling the Mystery of an Empty API Response in Axios - A Debugging Adventure]]></title>
+      <description><![CDATA[Learn how to debug an empty API response in Axios]]></description>
+      <link>https://blog.timdehof.dev/blog/unraveling-the-mystery-of-an-empty-api-response-in-axios-a-debugging-adventure</link>
+      <guid isPermaLink="true">https://blog.timdehof.dev/blog/unraveling-the-mystery-of-an-empty-api-response-in-axios-a-debugging-adventure</guid>
+      <pubDate>Wed, 08 Mar 2023 03:26:38 GMT</pubDate>
+      <category>debugging</category>
+      <category>react</category>
+      <category>axios</category>
+      <category>api</category>
+    </item>
+  </channel>
+</rss>
