@@ -262,7 +262,7 @@
           @apply flex items-center space-x-2 cursor-pointer;
 
           .brand-gradient {
-            @apply bg-gradient-to-r from-indigo-800 via-blue-600 to-purple-600 dark:from-blue-300 dark:via-teal-300 dark:to-purple-400 bg-clip-text text-transparent hover:from-indigo-900 hover:via-blue-700 hover:to-purple-700 dark:hover:from-blue-200 dark:hover:via-teal-200 dark:hover:to-purple-300 transition-all;
+            @apply bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 dark:from-slate-300 dark:via-slate-200 dark:to-slate-300 bg-clip-text text-transparent hover:from-slate-800 hover:via-slate-700 hover:to-slate-800 dark:hover:from-slate-100 dark:hover:via-slate-200 dark:hover:to-slate-100 transition-all;
           }
           .logo {
             @apply w-6 h-6;
