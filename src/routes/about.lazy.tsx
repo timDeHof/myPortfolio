@@ -1,9 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { lazy, Suspense } from "react";
+import { createLazyFileRoute } from "@tanstack/react-router";
+import { Suspense } from "react";
 
 import { LoadingSpinner } from "../components/common/loading-spinner";
-
-const ContactPage = lazy(() => import("../pages/contact-page").then(module => ({ default: module.ContactPage })));
+import { AboutPage } from "../pages/about-page";
 
 const PageLoader = () => (
   <div className="h-full flex items-center justify-center">
@@ -11,10 +10,10 @@ const PageLoader = () => (
   </div>
 );
 
-export const Route = createFileRoute("/contact")({
+export const Route = createLazyFileRoute("/about")({
   component: () => (
     <Suspense fallback={<PageLoader />}>
-      <ContactPage />
+      <AboutPage />
     </Suspense>
   ),
 });

@@ -1,9 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { lazy, Suspense } from "react";
+import { createLazyFileRoute } from "@tanstack/react-router";
+import { Suspense } from "react";
 
 import { LoadingSpinner } from "../components/common/loading-spinner";
-
-const BlogPage = lazy(() => import("../pages/blog-page").then(module => ({ default: module.BlogPage })));
+import { BlogPage } from "../pages/blog-page";
 
 const PageLoader = () => (
   <div className="h-full flex items-center justify-center">
@@ -11,7 +10,7 @@ const PageLoader = () => (
   </div>
 );
 
-export const Route = createFileRoute("/blog")({
+export const Route = createLazyFileRoute("/blog")({
   component: () => (
     <Suspense fallback={<PageLoader />}>
       <BlogPage />

@@ -8,78 +8,83 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as ServicesRouteImport } from './routes/services'
-import { Route as ProjectsRouteImport } from './routes/projects'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as BlogRouteImport } from './routes/blog'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as ProjectsSlugRouteImport } from './routes/projects.$slug'
+import { createFileRoute } from '@tanstack/react-router'
 
-const ServicesRoute = ServicesRouteImport.update({
+import { Route as rootRouteImport } from './routes/__root'
+
+const ServicesLazyRouteImport = createFileRoute('/services')()
+const ProjectsLazyRouteImport = createFileRoute('/projects')()
+const ContactLazyRouteImport = createFileRoute('/contact')()
+const BlogLazyRouteImport = createFileRoute('/blog')()
+const AboutLazyRouteImport = createFileRoute('/about')()
+const IndexLazyRouteImport = createFileRoute('/')()
+const ProjectsSlugLazyRouteImport = createFileRoute('/projects/$slug')()
+
+const ServicesLazyRoute = ServicesLazyRouteImport.update({
   id: '/services',
   path: '/services',
   getParentRoute: () => rootRouteImport,
-} as any)
-const ProjectsRoute = ProjectsRouteImport.update({
+} as any).lazy(() => import('./routes/services.lazy').then((d) => d.Route))
+const ProjectsLazyRoute = ProjectsLazyRouteImport.update({
   id: '/projects',
   path: '/projects',
   getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
+} as any).lazy(() => import('./routes/projects.lazy').then((d) => d.Route))
+const ContactLazyRoute = ContactLazyRouteImport.update({
   id: '/contact',
   path: '/contact',
   getParentRoute: () => rootRouteImport,
-} as any)
-const BlogRoute = BlogRouteImport.update({
+} as any).lazy(() => import('./routes/contact.lazy').then((d) => d.Route))
+const BlogLazyRoute = BlogLazyRouteImport.update({
   id: '/blog',
   path: '/blog',
   getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
+} as any).lazy(() => import('./routes/blog.lazy').then((d) => d.Route))
+const AboutLazyRoute = AboutLazyRouteImport.update({
   id: '/about',
   path: '/about',
   getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
+} as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
+const IndexLazyRoute = IndexLazyRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const ProjectsSlugRoute = ProjectsSlugRouteImport.update({
+} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+const ProjectsSlugLazyRoute = ProjectsSlugLazyRouteImport.update({
   id: '/$slug',
   path: '/$slug',
-  getParentRoute: () => ProjectsRoute,
-} as any)
+  getParentRoute: () => ProjectsLazyRoute,
+} as any).lazy(() =>
+  import('./routes/projects.$slug.lazy').then((d) => d.Route),
+)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
-  '/contact': typeof ContactRoute
-  '/projects': typeof ProjectsRouteWithChildren
-  '/services': typeof ServicesRoute
-  '/projects/$slug': typeof ProjectsSlugRoute
+  '/': typeof IndexLazyRoute
+  '/about': typeof AboutLazyRoute
+  '/blog': typeof BlogLazyRoute
+  '/contact': typeof ContactLazyRoute
+  '/projects': typeof ProjectsLazyRouteWithChildren
+  '/services': typeof ServicesLazyRoute
+  '/projects/$slug': typeof ProjectsSlugLazyRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
-  '/contact': typeof ContactRoute
-  '/projects': typeof ProjectsRouteWithChildren
-  '/services': typeof ServicesRoute
-  '/projects/$slug': typeof ProjectsSlugRoute
+  '/': typeof IndexLazyRoute
+  '/about': typeof AboutLazyRoute
+  '/blog': typeof BlogLazyRoute
+  '/contact': typeof ContactLazyRoute
+  '/projects': typeof ProjectsLazyRouteWithChildren
+  '/services': typeof ServicesLazyRoute
+  '/projects/$slug': typeof ProjectsSlugLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
-  '/contact': typeof ContactRoute
-  '/projects': typeof ProjectsRouteWithChildren
-  '/services': typeof ServicesRoute
-  '/projects/$slug': typeof ProjectsSlugRoute
+  '/': typeof IndexLazyRoute
+  '/about': typeof AboutLazyRoute
+  '/blog': typeof BlogLazyRoute
+  '/contact': typeof ContactLazyRoute
+  '/projects': typeof ProjectsLazyRouteWithChildren
+  '/services': typeof ServicesLazyRoute
+  '/projects/$slug': typeof ProjectsSlugLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -112,12 +117,12 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  BlogRoute: typeof BlogRoute
-  ContactRoute: typeof ContactRoute
-  ProjectsRoute: typeof ProjectsRouteWithChildren
-  ServicesRoute: typeof ServicesRoute
+  IndexLazyRoute: typeof IndexLazyRoute
+  AboutLazyRoute: typeof AboutLazyRoute
+  BlogLazyRoute: typeof BlogLazyRoute
+  ContactLazyRoute: typeof ContactLazyRoute
+  ProjectsLazyRoute: typeof ProjectsLazyRouteWithChildren
+  ServicesLazyRoute: typeof ServicesLazyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -126,73 +131,73 @@ declare module '@tanstack/react-router' {
       id: '/services'
       path: '/services'
       fullPath: '/services'
-      preLoaderRoute: typeof ServicesRouteImport
+      preLoaderRoute: typeof ServicesLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projects': {
       id: '/projects'
       path: '/projects'
       fullPath: '/projects'
-      preLoaderRoute: typeof ProjectsRouteImport
+      preLoaderRoute: typeof ProjectsLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
+      preLoaderRoute: typeof ContactLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog': {
       id: '/blog'
       path: '/blog'
       fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
+      preLoaderRoute: typeof BlogLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+      preLoaderRoute: typeof AboutLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof IndexLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projects/$slug': {
       id: '/projects/$slug'
       path: '/$slug'
       fullPath: '/projects/$slug'
-      preLoaderRoute: typeof ProjectsSlugRouteImport
-      parentRoute: typeof ProjectsRoute
+      preLoaderRoute: typeof ProjectsSlugLazyRouteImport
+      parentRoute: typeof ProjectsLazyRoute
     }
   }
 }
 
-interface ProjectsRouteChildren {
-  ProjectsSlugRoute: typeof ProjectsSlugRoute
+interface ProjectsLazyRouteChildren {
+  ProjectsSlugLazyRoute: typeof ProjectsSlugLazyRoute
 }
 
-const ProjectsRouteChildren: ProjectsRouteChildren = {
-  ProjectsSlugRoute: ProjectsSlugRoute,
+const ProjectsLazyRouteChildren: ProjectsLazyRouteChildren = {
+  ProjectsSlugLazyRoute: ProjectsSlugLazyRoute,
 }
 
-const ProjectsRouteWithChildren = ProjectsRoute._addFileChildren(
-  ProjectsRouteChildren,
+const ProjectsLazyRouteWithChildren = ProjectsLazyRoute._addFileChildren(
+  ProjectsLazyRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  BlogRoute: BlogRoute,
-  ContactRoute: ContactRoute,
-  ProjectsRoute: ProjectsRouteWithChildren,
-  ServicesRoute: ServicesRoute,
+  IndexLazyRoute: IndexLazyRoute,
+  AboutLazyRoute: AboutLazyRoute,
+  BlogLazyRoute: BlogLazyRoute,
+  ContactLazyRoute: ContactLazyRoute,
+  ProjectsLazyRoute: ProjectsLazyRouteWithChildren,
+  ServicesLazyRoute: ServicesLazyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
