@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Github } from "lucide-react";
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Route } from "../routes/projects";
 import { m, AnimatePresence } from "framer-motion";
@@ -11,9 +11,11 @@ import { ProjectGrid } from "../components/projects/ProjectGrid";
 import { Button } from "../components/ui/button";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
 import { useProjects, useProject } from "../hooks/useProjects";
-import { ProjectDetailContent } from "./project-detail-page";
 import { pageSEO } from "../utils/seo";
-import { GitHubStatsSection } from "../components/github/github-stats-section";
+
+// Lazy load heavy modal components
+const ProjectDetailContent = lazy(() => import("./project-detail-page").then(m => ({ default: m.ProjectDetailContent })));
+const GitHubStatsSection = lazy(() => import("../components/github/github-stats-section").then(m => ({ default: m.GitHubStatsSection })));
 
 export const ProjectsPage: React.FC = () => {
   const { data: projects = [], isLoading, error, isError } = useProjects();
@@ -91,7 +93,9 @@ export const ProjectsPage: React.FC = () => {
 
       <ProjectGrid projects={projects} isLoading={isLoading} onProjectClick={handleProjectClick} />
 
-      <GitHubStatsSection />
+      <Suspense fallback={<div className="py-16" />}>
+        <GitHubStatsSection />
+      </Suspense>
 
       <AnimatedSection className="py-16 bg-gradient-to-br from-gray-50 via-teal-50/30 to-blue-50 dark:from-slate-800 dark:via-teal-900/30 dark:to-blue-900">
         <MaxWidthWrapper className="text-center">
@@ -128,30 +132,32 @@ export const ProjectsPage: React.FC = () => {
               tabIndex={0}
               aria-label="Close modal"
             />
-            <m.div
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="absolute inset-0 md:hidden bg-gray-50 dark:bg-slate-900 overflow-y-scroll"
-            >
-              {isProjectLoading ? (
-                <div className="p-4 space-y-4">
-                  <div className="h-8 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
-                  <div className="h-48 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
-                </div>
-              ) : selectedProject ? (
-                <ProjectDetailContent
-                  project={selectedProject}
-                  onClose={handleCloseModal}
-                  isModal
-                />
-              ) : (
-                <div className="p-4 text-center">
-                  <p className="text-gray-500">Project not found</p>
-                </div>
-              )}
-            </m.div>
+            <Suspense fallback={<div className="absolute inset-0 md:hidden bg-gray-50 dark:bg-slate-900 p-4 space-y-4"><div className="h-8 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" /><div className="h-48 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" /></div>}>
+              <m.div
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                className="absolute inset-0 md:hidden bg-gray-50 dark:bg-slate-900 overflow-y-scroll"
+              >
+                {isProjectLoading ? (
+                  <div className="p-4 space-y-4">
+                    <div className="h-8 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+                    <div className="h-48 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
+                  </div>
+                ) : selectedProject ? (
+                  <ProjectDetailContent
+                    project={selectedProject}
+                    onClose={handleCloseModal}
+                    isModal
+                  />
+                ) : (
+                  <div className="p-4 text-center">
+                    <p className="text-gray-500">Project not found</p>
+                  </div>
+                )}
+              </m.div>
+            </Suspense>
           </m.div>
         )}
       </AnimatePresence>
@@ -179,32 +185,34 @@ export const ProjectsPage: React.FC = () => {
             />
 
             {/* Modal */}
-            <m.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-                w-[95vw] max-w-5xl max-h-[90vh] rounded-xl bg-gray-50 dark:bg-slate-900
-                overflow-y-auto shadow-2xl"
-            >
-              {isProjectLoading ? (
-                <div className="p-8 space-y-4">
-                  <div className="h-8 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
-                  <div className="h-64 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
-                </div>
-              ) : selectedProject ? (
-                <ProjectDetailContent
-                  project={selectedProject}
-                  onClose={handleCloseModal}
-                  isModal
-                />
-              ) : (
-                <div className="p-8 text-center">
-                  <p className="text-gray-500">Project not found</p>
-                </div>
-              )}
-            </m.div>
+            <Suspense fallback={<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95vw] max-w-5xl max-h-[90vh] rounded-xl bg-gray-50 dark:bg-slate-900 p-8 space-y-4"><div className="h-8 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" /><div className="h-64 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" /></div>}>
+              <m.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+                  w-[95vw] max-w-5xl max-h-[90vh] rounded-xl bg-gray-50 dark:bg-slate-900
+                  overflow-y-auto shadow-2xl"
+              >
+                {isProjectLoading ? (
+                  <div className="p-8 space-y-4">
+                    <div className="h-8 w-48 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+                    <div className="h-64 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
+                  </div>
+                ) : selectedProject ? (
+                  <ProjectDetailContent
+                    project={selectedProject}
+                    onClose={handleCloseModal}
+                    isModal
+                  />
+                ) : (
+                  <div className="p-8 text-center">
+                    <p className="text-gray-500">Project not found</p>
+                  </div>
+                )}
+              </m.div>
+            </Suspense>
           </m.div>
         )}
       </AnimatePresence>

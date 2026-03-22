@@ -5,12 +5,21 @@ import { HelmetProvider } from "react-helmet-async";
 import { lazy, Suspense } from "react";
 
 import { ErrorBoundary } from "./components/common/error-boundary";
-import { RouterProvider } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import { useTheme } from "./hooks/use-theme";
 import { env } from "./lib/env";
 import { queryClient } from "./lib/query-client";
+
+// Create router instance
+const router = createRouter({ routeTree });
+
+// Register router types for TypeScript
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
 
 // Move lazy() call outside the component
 const ReactQueryDevtoolsProduction = env.VITE_NODE_ENV === "development" ? lazy(() => import("@tanstack/react-query-devtools").then(module => ({ default: module.ReactQueryDevtools }))) : null;
@@ -21,11 +30,9 @@ function AppContent() {
 
   return (
     <div className="App">
-      <RouterProvider router={routeTree} />
-      {/* TanStack Router Devtools - only in development */}
-      {env.VITE_NODE_ENV === "development" && (
-        <TanStackRouterDevtools initialIsOpen={false} position="bottom-right" />
-      )}
+      <RouterProvider router={router} />
+      {/* TanStack Router Devtools disabled due to compatibility issue with router instantiation */}
+      {/* TODO: Re-enable once TanStack Router devtools compatibility is resolved */}
     </div>
   );
 }
