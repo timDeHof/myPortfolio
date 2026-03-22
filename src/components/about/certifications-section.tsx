@@ -129,10 +129,10 @@ export const CertificationsSection: React.FC = () => {
             <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-700 to-teal-700 text-4xl text-white shadow-2xl dark:from-blue-400 dark:to-teal-400">
               <Award className="h-10 w-10" />
             </div>
-            <h2 className="mb-6 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 bg-clip-text text-4xl font-bold text-transparent dark:from-slate-200 dark:via-slate-300 dark:to-slate-200 md:text-5xl">
+            <h2 className="mb-6 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 bg-clip-text text-3xl font-bold text-transparent dark:from-slate-200 dark:via-slate-300 dark:to-slate-200 md:text-4xl">
               Certifications
             </h2>
-            <p className="mx-auto max-w-3xl text-xl leading-relaxed text-gray-600 dark:text-gray-300">
+            <p className="mx-auto max-w-2xl text-xl leading-relaxed text-gray-700 dark:text-gray-300">
               Professional certifications that validate my expertise and commitment to continuous learning
               in modern web development and technology.
             </p>

@@ -206,7 +206,7 @@ export function WorkflowTab({ project }: OverviewTabProps) {
                     </p>
                   )}
                   {step.description && (
-                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                    <p className="text-base text-gray-700 dark:text-gray-300 mt-1 leading-relaxed">
                       {step.description}
                     </p>
                   )}

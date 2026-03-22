@@ -1,4 +1,4 @@
-import { m } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import React from "react";
 
 type LoadingSpinnerProps = {
@@ -12,6 +12,8 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   className = "",
   color = "blue",
 }) => {
+  const prefersReducedMotion = useReducedMotion();
+  
   const sizeClasses = {
     sm: "w-4 h-4",
     md: "w-8 h-8",
@@ -26,11 +28,16 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   };
 
   return (
-    <div className={`flex items-center justify-center ${className}`} data-testid="loading-spinner">
+    <div className={`flex items-center justify-center ${className}`} data-testid="loading-spinner" role="status" aria-label="Loading">
       <m.div
         className={`${sizeClasses[size]} border-2 ${colorClasses[color]} rounded-full`}
-        animate={{ rotate: 360 }}
-        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+        animate={prefersReducedMotion ? { opacity: 0.5 } : { rotate: 360 }}
+        transition={{ 
+          duration: prefersReducedMotion ? 0.5 : 1, 
+          repeat: prefersReducedMotion ? Infinity : Infinity, 
+          ease: "linear",
+          opacity: { duration: 0.5, repeat: Infinity, repeatType: "reverse" }
+        }}
       />
     </div>
   );

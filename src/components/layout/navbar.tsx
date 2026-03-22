@@ -41,7 +41,7 @@ export function Navbar() {
   }, [isOpen]);
 
   return (
-    <nav className="navbar">
+    <header role="banner" className="navbar">
       <MaxWidthWrapper>
         <div className="inner">
           <div className="left">
@@ -80,7 +80,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={toggleTheme}
-              className="not-selected flex items-center gap-1 mr-4"
+              className="not-selected flex items-center justify-center min-w-[44px] min-h-[44px] -ml-2"
               aria-label={`Switch to ${effectiveTheme === "dark" ? "light" : "dark"} mode`}
             >
               {effectiveTheme === "dark" ? <Moon size={18} /> : <Sun size={18} />}
@@ -102,7 +102,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={toggleMenu}
-              className="toggle-menu"
+              className="toggle-menu min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label="Toggle menu"
               aria-expanded={isOpen}
               aria-controls="mobile-menu"
@@ -192,6 +192,6 @@ export function Navbar() {
           )}
         </AnimatePresence>
       </MaxWidthWrapper>
-    </nav>
+    </header>
   );
 }

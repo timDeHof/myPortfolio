@@ -228,8 +228,8 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
                             </div>
                             <div>
                               <h3 className="font-semibold text-gray-900 dark:text-gray-100">{step.title}</h3>
-                              {step.subtitle && <p className="text-sm text-gray-500 dark:text-gray-400">{step.subtitle}</p>}
-                              {step.description && <p className="text-sm text-gray-600 dark:text-gray-300">{step.description}</p>}
+                              {step.subtitle && <p className="text-sm text-gray-600 dark:text-gray-400">{step.subtitle}</p>}
+                              {step.description && <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed">{step.description}</p>}
                             </div>
                           </div>
                         );
