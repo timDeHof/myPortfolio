@@ -1,4 +1,4 @@
-import { m } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import {
   Download,
   ExternalLink,
@@ -201,16 +201,17 @@ const coreValues: CoreValue[] = [
 const SkillCard: React.FC<{
   skill: Skill;
   index: number;
-}> = ({ skill, index }) => {
+  shouldReduceMotion: boolean;
+}> = ({ skill, index, shouldReduceMotion }) => {
   const IconComponent = skill.icon;
 
   return (
     <m.div
-      initial={{ opacity: 0, y: 20, scale: 0.9 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20, scale: 0.9 }}
+      whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
+      transition={shouldReduceMotion ? undefined : { duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true }}
-      whileHover={{
+      whileHover={shouldReduceMotion ? undefined : {
         scale: 1.05,
         rotateY: 5,
         transition: { duration: 0.3 },
@@ -229,7 +230,7 @@ const SkillCard: React.FC<{
           <div className="flex flex-col items-center text-center space-y-4">
             <m.div
               className="transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
-              whileHover={{ scale: 1.2, rotate: 12 }}
+              whileHover={shouldReduceMotion ? undefined : { scale: 1.2, rotate: 12 }}
             >
               <IconComponent size={48} className="drop-shadow-lg" />
             </m.div>
@@ -242,9 +243,9 @@ const SkillCard: React.FC<{
             <m.div
               className="w-full h-1 rounded-full"
               style={{ backgroundColor: skill.color }}
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
+              initial={shouldReduceMotion ? undefined : { scaleX: 0 }}
+              whileInView={shouldReduceMotion ? undefined : { scaleX: 1 }}
+              transition={shouldReduceMotion ? undefined : { duration: 0.8, delay: index * 0.1 }}
               viewport={{ once: true }}
             />
           </div>
@@ -265,6 +266,8 @@ const SkillCard: React.FC<{
 };
 
 export const AboutPage: React.FC = () => {
+  const shouldReduceMotion = useReducedMotion() ?? false;
+
   return (
     <>
       <SEOHead seo={pageSEO.about} />
@@ -273,9 +276,9 @@ export const AboutPage: React.FC = () => {
       <section className="py-20 bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-teal-900 dark:to-blue-900">
         <MaxWidthWrapper>
           <m.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={shouldReduceMotion ? undefined : { opacity: 0, y: 30 }}
+            animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? undefined : { duration: 0.8 }}
             className="text-center"
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-gray-100 mb-6">
@@ -351,11 +354,11 @@ export const AboutPage: React.FC = () => {
                     {coreValues.map((value, index) => (
                       <m.div
                         key={value.title}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
+                        whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                        transition={shouldReduceMotion ? undefined : { duration: 0.5, delay: index * 0.1 }}
                         viewport={{ once: true }}
-                        whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                        whileHover={shouldReduceMotion ? undefined : { y: -4, transition: { duration: 0.2 } }}
                       >
                         {/* Card container with hover effects */}
                         <div className="group relative bg-white/60 dark:bg-slate-800/60 rounded-2xl p-5 border border-gray-200 dark:border-slate-600 hover:border-transparent hover:shadow-xl transition-all duration-300 overflow-hidden h-full">
@@ -401,9 +404,9 @@ export const AboutPage: React.FC = () => {
         <MaxWidthWrapper>
           <div className="text-center mb-16">
             <m.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
+              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={shouldReduceMotion ? undefined : { duration: 0.6 }}
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 dark:from-slate-200 dark:via-slate-300 dark:to-slate-200 bg-clip-text text-transparent mb-6">
@@ -420,9 +423,9 @@ export const AboutPage: React.FC = () => {
             {skillCategories.map((category, categoryIndex) => (
               <m.div
                 key={category.category}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: categoryIndex * 0.2 }}
+                initial={shouldReduceMotion ? undefined : { opacity: 0, y: 40 }}
+                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={shouldReduceMotion ? undefined : { duration: 0.8, delay: categoryIndex * 0.2 }}
                 viewport={{ once: true }}
                 className="relative"
               >
@@ -431,8 +434,8 @@ export const AboutPage: React.FC = () => {
                   <div className="relative inline-block mb-6">
                     <m.div
                       className={`w-20 h-20 rounded-3xl shadow-2xl bg-gradient-to-br ${category.color}`}
-                      whileHover={{ scale: 1.1, rotateY: 15 }}
-                      transition={{ duration: 0.3 }}
+                      whileHover={shouldReduceMotion ? undefined : { scale: 1.1, rotateY: 15 }}
+                      transition={shouldReduceMotion ? undefined : { duration: 0.3 }}
                     >
                       <div className="w-full h-full flex items-center justify-center">
                         <category.icon size={36} className="text-white" />
@@ -452,6 +455,7 @@ export const AboutPage: React.FC = () => {
                       key={skill.name}
                       skill={skill}
                       index={skillIndex}
+                      shouldReduceMotion={shouldReduceMotion}
                     />
                   ))}
                 </div>
@@ -465,9 +469,9 @@ export const AboutPage: React.FC = () => {
 
           {/* Skills Summary Stats */}
           <m.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            initial={shouldReduceMotion ? undefined : { opacity: 0, y: 30 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? undefined : { duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
             className="mt-20 text-center"
           >
@@ -476,7 +480,7 @@ export const AboutPage: React.FC = () => {
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8">Technical Expertise Overview</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   <m.div
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                     className="text-center"
                   >
                     <div className="text-4xl font-bold bg-gradient-to-r from-blue-700 to-cyan-700 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent mb-2">
@@ -485,7 +489,7 @@ export const AboutPage: React.FC = () => {
                     <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">Technologies</div>
                   </m.div>
                   <m.div
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                     className="text-center"
                   >
                     <div className="text-4xl font-bold bg-gradient-to-r from-teal-700 to-emerald-700 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent mb-2">
@@ -494,7 +498,7 @@ export const AboutPage: React.FC = () => {
                     <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">Specializations</div>
                   </m.div>
                   <m.div
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                     className="text-center"
                   >
                     <div className="text-4xl font-bold bg-gradient-to-r from-purple-700 to-pink-700 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-2">
@@ -539,9 +543,9 @@ export const AboutPage: React.FC = () => {
                 return (
                   <m.div
                     key={item.title}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.15 }}
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: 30 }}
+                    whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? undefined : { duration: 0.6, delay: index * 0.15 }}
                     viewport={{ once: true, margin: "-50px" }}
                     className={`relative flex flex-col md:flex-row items-center ${
                       isLeft ? "md:flex-row" : "md:flex-row-reverse"
@@ -554,7 +558,7 @@ export const AboutPage: React.FC = () => {
                         <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold mb-4 ${
                           isLeft ? "bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300" : "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
                         }`}>
-                          <span className="w-2 h-2 rounded-full bg-current animate-pulse" />
+                          <span className={`w-2 h-2 rounded-full bg-current ${shouldReduceMotion ? "" : "animate-pulse"}`} />
                           {item.year}
                         </div>
 
@@ -574,7 +578,7 @@ export const AboutPage: React.FC = () => {
                     <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex">
                       {/* Glowing dot on the timeline */}
                       <div className="relative">
-                        <div className="absolute inset-0 bg-gradient-to-br from-teal-400 to-blue-500 rounded-full blur-lg opacity-50 animate-pulse" />
+                        <div className={`absolute inset-0 bg-gradient-to-br from-teal-400 to-blue-500 rounded-full blur-lg opacity-50 ${shouldReduceMotion ? "" : "animate-pulse"}`} />
                         <div className={`relative w-14 h-14 rounded-2xl ${item.color} flex items-center justify-center shadow-2xl border-4 border-white dark:border-slate-900 group-hover:scale-110 transition-transform duration-300`}>
                           <item.icon size={24} className="text-white" />
                         </div>
@@ -589,7 +593,7 @@ export const AboutPage: React.FC = () => {
                       <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold ${
                         index % 2 === 0 ? "bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300" : "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
                       }`}>
-                        <span className="w-2 h-2 rounded-full bg-current animate-pulse" />
+                        <span className={`w-2 h-2 rounded-full bg-current ${shouldReduceMotion ? "" : "animate-pulse"}`} />
                         {item.year}
                       </div>
                     </div>

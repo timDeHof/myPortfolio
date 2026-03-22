@@ -76,8 +76,9 @@ export const ServicesPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
+      <div className="min-h-screen flex items-center justify-center" role="status" aria-live="polite">
+        <div className={`rounded-full h-12 w-12 border-b-2 border-teal-600 ${shouldReduceMotion ? "" : "animate-spin"}`} aria-hidden="true"></div>
+        <span className="sr-only">Loading…</span>
       </div>
     );
   }
@@ -220,22 +221,22 @@ export const ServicesPage: React.FC = () => {
                   viewport={{ once: true }}
                   className="relative"
                 >
+                  {/* Connecting line segment - left */}
+                  {index > 0 && (
+                    <div className="hidden lg:block absolute -left-4 top-1/2 -translate-y-1/2 w-4 h-0.5 bg-gradient-to-r from-transparent to-teal-300 dark:to-teal-600 z-10" />
+                  )}
+
+                  {/* Connecting line segment - right */}
+                  {index < processSteps.length - 1 && (
+                    <div className="hidden lg:block absolute -right-4 top-1/2 -translate-y-1/2 w-4 h-0.5 bg-gradient-to-l from-transparent to-teal-300 dark:to-teal-600 z-10" />
+                  )}
+
                   {/* Process Card */}
                   <m.div
                     whileHover={{ y: -4 }}
                     transition={{ duration: 0.2 }}
-                    className="group relative bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-100 dark:border-slate-700 transition-shadow duration-300 overflow-hidden"
+                    className="group relative bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-100 dark:border-slate-700 transition-shadow duration-300"
                   >
-                    {/* Connecting line segment - left */}
-                    {index > 0 && (
-                      <div className="hidden lg:block absolute -left-4 top-1/2 -translate-y-1/2 w-4 h-0.5 bg-gradient-to-r from-transparent to-teal-300 dark:to-teal-600 z-10" />
-                    )}
-
-                    {/* Connecting line segment - right */}
-                    {index < processSteps.length - 1 && (
-                      <div className="hidden lg:block absolute -right-4 top-1/2 -translate-y-1/2 w-4 h-0.5 bg-gradient-to-l from-transparent to-teal-300 dark:to-teal-600 z-10" />
-                    )}
-
                     {/* Large faded number in background */}
                     <div className="absolute -right-2 -bottom-2 text-7xl lg:text-8xl font-bold text-teal-100 dark:text-teal-900/30 select-none pointer-events-none opacity-50 group-hover:opacity-60 transition-opacity duration-300">
                       {phase.step}
