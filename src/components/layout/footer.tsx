@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { Separator } from "../ui/separator";
 import { usePortfolioData } from "@hooks/usePortfolioData";
-import { FileRouteTypes, Link } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { DEFAULT_NAV_ITEMS } from "@/lib/constants";
 
 const socialIconMap = {
@@ -55,7 +55,7 @@ export function Footer() {
               <h3>Quick Links</h3>
               <div className="links">
                 {navItems.map(link => (
-                  <Link key={link.href} to={link.href as FileRouteTypes["to"]}>
+                  <Link key={link.href} to={link.href} preload="intent">
                     <ArrowRight className="h-4 w-4 mr-1" />
                     <span>
                       {link.name}
@@ -71,7 +71,7 @@ export function Footer() {
               Let's discuss your next project.</p>
               <div className="contacts">
               <Button variant="default" size="lg" asChild className="cta">
-                <Link to="/contact">
+                <Link to="/contact" preload="intent">
                   <Mail className="h-5 w-5" />
                   Get In Touch
                 </Link>

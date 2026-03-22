@@ -55,6 +55,7 @@ export function Navbar() {
           <div className="left">
           <Link
             to="/"
+            preload="intent"
             className="brand"
             >
             <CodeXml className="logo" />
@@ -68,6 +69,7 @@ export function Navbar() {
               <Link
                 key={item.href}
                 to={item.href}
+                preload="intent"
                 className={isPathActive(item.href) ? "is-selected" : "not-selected"}
                 aria-current={isPathActive(item.href) ? "page" : undefined}
               >
@@ -151,6 +153,7 @@ export function Navbar() {
                   >
                     <Link
                       to={item.href}
+                      preload="intent"
                       onClick={() => setIsOpen(false)}
                       className={isPathActive(item.href) ? "is-selected" : "not-selected"}
                       aria-current={isPathActive(item.href) ? "page" : undefined}
