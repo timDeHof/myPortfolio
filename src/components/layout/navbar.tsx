@@ -1,6 +1,6 @@
 import { AnimatePresence, m } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import {Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "@tanstack/react-router";
 import { CodeXml, Download, Menu, Moon, Sun, X } from "lucide-react";
 
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";

@@ -1,10 +1,10 @@
 import { renderHook } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { useSEO, useSectionSEO } from "../../src/hooks/use-seo";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "@tanstack/react-router";
 
-// Mock react-router-dom
-vi.mock("react-router-dom", () => ({
+// Mock @tanstack/react-router
+vi.mock("@tanstack/react-router", () => ({
   useLocation: vi.fn(),
 }));
 

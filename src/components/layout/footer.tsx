@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { Separator } from "../ui/separator";
 import { usePortfolioData } from "@hooks/usePortfolioData";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 import { DEFAULT_NAV_ITEMS } from "../../lib/constants";
 
 const socialIconMap = {

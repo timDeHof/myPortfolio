@@ -1,6 +1,6 @@
 import { m, useReducedMotion, type Variants } from "framer-motion";
 import { Download, MapPin, MessageCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";

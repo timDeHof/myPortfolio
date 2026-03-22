@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Github } from "lucide-react";
 import React from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import { m, AnimatePresence } from "framer-motion";
 
 import { AnimatedSection } from "../components/common/animated-section";
@@ -14,10 +14,16 @@ import { ProjectDetailContent } from "./project-detail-page";
 import { pageSEO } from "../utils/seo";
 import { GitHubStatsSection } from "../components/github/github-stats-section";
 
+// Define search params interface for type-safe access
+interface ProjectsSearch {
+  project?: string;
+}
+
 export const ProjectsPage: React.FC = () => {
   const { data: projects = [], isLoading, error, isError } = useProjects();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const selectedSlug = searchParams.get("project");
+  const navigate = useNavigate();
+  const search = useSearch({ from: "/projects" }) as ProjectsSearch;
+  const selectedSlug = search.project;
 
   const { data: selectedProject, isLoading: isProjectLoading } = useProject(selectedSlug || "");
 
@@ -33,11 +39,11 @@ export const ProjectsPage: React.FC = () => {
   }, [selectedSlug]);
 
   const handleCloseModal = () => {
-    setSearchParams({});
+    navigate({ search: {} });
   };
 
   const handleProjectClick = (slug: string) => {
-    setSearchParams({ project: slug });
+    navigate({ search: { project: slug } });
   };
 
   if (isError) {

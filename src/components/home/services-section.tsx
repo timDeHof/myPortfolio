@@ -12,7 +12,7 @@ import {
   Zap,
 } from "lucide-react";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 
 import { AnimatedSection } from "../common/animated-section";
 import { Button } from "../ui/button";

@@ -1,24 +1,15 @@
 /* eslint-disable unicorn/filename-case */
 import { QueryClientProvider } from "@tanstack/react-query";
 import { domAnimation, LazyMotion } from "framer-motion";
-import { lazy, Suspense } from "react";
 import { HelmetProvider } from "react-helmet-async";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { lazy, Suspense } from "react";
 
 import { ErrorBoundary } from "./components/common/error-boundary";
-import { Layout } from "./components/layout/layout";
+import { router } from "./router/router";
+import { RouterProvider } from "@tanstack/react-router";
 import { useTheme } from "./hooks/use-theme";
 import { env } from "./lib/env";
 import { queryClient } from "./lib/query-client";
-
-// Lazy load pages for code splitting
-const HomePage = lazy(() => import("./pages/home-page").then(module => ({ default: module.HomePage })));
-const AboutPage = lazy(() => import("./pages/about-page").then(module => ({ default: module.AboutPage })));
-const ProjectsPage = lazy(() => import("./pages/projects-page").then(module => ({ default: module.ProjectsPage })));
-const ProjectDetailPage = lazy(() => import("./pages/project-detail-page").then(module => ({ default: module.ProjectDetailPage })));
-const ServicesPage = lazy(() => import("./pages/services-page").then(module => ({ default: module.ServicesPage })));
-const ContactPage = lazy(() => import("./pages/contact-page").then(module => ({ default: module.ContactPage })));
-const BlogPage = lazy(() => import("./pages/blog-page").then(module => ({ default: module.BlogPage })));
 
 // Move lazy() call outside the component
 const ReactQueryDevtoolsProduction = env.VITE_NODE_ENV === "development" ? lazy(() => import("@tanstack/react-query-devtools").then(module => ({ default: module.ReactQueryDevtools }))) : null;
@@ -29,17 +20,7 @@ function AppContent() {
 
   return (
     <div className="App">
-      <Routes>
-          <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="projects" element={<ProjectsPage />} />
-          <Route path="projects/:slug" element={<ProjectDetailPage />} />
-          <Route path="services" element={<ServicesPage />} />
-          <Route path="contact" element={<ContactPage />} />
-          <Route path="blog" element={<BlogPage />} />
-        </Route>
-      </Routes>
+      <RouterProvider router={router} />
     </div>
   );
 }
@@ -50,9 +31,7 @@ function App() {
       <HelmetProvider>
         <ErrorBoundary>
           <LazyMotion features={domAnimation} strict>
-            <Router>
-              <AppContent />
-            </Router>
+            <AppContent />
           </LazyMotion>
         </ErrorBoundary>
       </HelmetProvider>

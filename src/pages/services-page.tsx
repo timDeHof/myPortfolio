@@ -1,7 +1,7 @@
 import { m, useReducedMotion } from "framer-motion";
 import { ArrowRight, CheckCircle, Code, Cpu, Globe, Palette, Shield, Target, Users, Wrench, Zap } from "lucide-react";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 
 import { AnimatedSection } from "../components/common/animated-section";
 import { SEOHead } from "../components/common/seo-head";

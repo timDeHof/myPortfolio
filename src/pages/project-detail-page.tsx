@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowLeft, Clock, Code, ExternalLink, Github, Star, X } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "@tanstack/react-router";
 
 import { Button } from "@components/ui/button";
 import { Card, CardContent } from "@components/ui/card";
@@ -293,7 +293,7 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
 };
 
 export const ProjectDetailPage: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams({ from: "/projects/$slug" });
   const { data: project, isLoading, error } = useProject(slug!);
 
   if (isLoading) {
