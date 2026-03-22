@@ -1,4 +1,4 @@
-import { m, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion, type Variants } from "framer-motion";
 import { Download, MapPin, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -121,19 +121,27 @@ const itemVariants = {
   },
 };
 
-// Static variant for reduced motion - no animation
-const floatVariantsReduced = {
-  initial: false,
-  animate: false,
-};
-
-// Floating animation variants for background tech elements
-const floatVariants = {
+// Factory function to create floating variants with per-element random duration
+const createFloatVariants = (delay: number): Variants => ({
   initial: { y: 0 },
   animate: {
     y: [0, -8, 0],
     transition: {
       duration: 6 + Math.random() * 4,
+      delay,
+      repeat: Infinity,
+      ease: [0.45, 0, 0.55, 1] as const,
+    },
+  },
+});
+
+// Keep for backwards compatibility reference, but we'll generate per-element
+const _floatVariantsReference = {
+  initial: { y: 0 },
+  animate: {
+    y: [0, -8, 0],
+    transition: {
+      duration: 6,
       repeat: Infinity,
       ease: [0.45, 0, 0.55, 1] as const,
     },
@@ -161,52 +169,56 @@ export const HeroSection: React.FC = () => {
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         {/* Desktop keywords (hidden on mobile) */}
         <div className="hidden md:block">
-          {BACKGROUND_TECH.map((tech, index) => (
-            <m.div
-              key={`desktop-${tech.name}`}
-              variants={floatVariants}
-              initial="initial"
-              animate="animate"
-              style={{
-                animationDelay: `${index * 0.5}s`,
-              }}
-              className={`absolute ${tech.position} ${tech.size} font-bold tracking-tight select-none text-muted-foreground`}
-            >
-              <span
-                className="bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, hsl(var(--muted-foreground) / 0.15) 0%, hsl(var(--foreground) / 0.08) 100%)`,
-                }}
+          {BACKGROUND_TECH.map((tech, index) => {
+            const floatVariants = shouldReduceMotion
+              ? undefined
+              : createFloatVariants(index * 0.5);
+            return (
+              <m.div
+                key={`desktop-${tech.name}`}
+                variants={floatVariants}
+                initial="initial"
+                animate="animate"
+                className={`absolute ${tech.position} ${tech.size} font-bold tracking-tight select-none text-muted-foreground`}
               >
-                {tech.name}
-              </span>
-            </m.div>
-          ))}
+                <span
+                  className="bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, hsl(var(--muted-foreground) / 0.15) 0%, hsl(var(--foreground) / 0.08) 100%)`,
+                  }}
+                >
+                  {tech.name}
+                </span>
+              </m.div>
+            );
+          })}
         </div>
 
         {/* Mobile keywords (hidden on md: and larger) - fewer, smaller, at edges */}
         <div className="md:hidden">
-          {MOBILE_BACKGROUND_TECH.map((tech, index) => (
-            <m.div
-              key={`mobile-${tech.name}`}
-              variants={floatVariants}
-              initial="initial"
-              animate="animate"
-              style={{
-                animationDelay: `${index * 0.7}s`,
-              }}
-              className={`absolute ${tech.position} ${tech.size} font-bold tracking-tight select-none text-muted-foreground`}
-            >
-              <span
-                className="bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, hsl(var(--muted-foreground) / 0.12) 0%, hsl(var(--foreground) / 0.06) 100%)`,
-                }}
+          {MOBILE_BACKGROUND_TECH.map((tech, index) => {
+            const floatVariants = shouldReduceMotion
+              ? undefined
+              : createFloatVariants(index * 0.7);
+            return (
+              <m.div
+                key={`mobile-${tech.name}`}
+                variants={floatVariants}
+                initial="initial"
+                animate="animate"
+                className={`absolute ${tech.position} ${tech.size} font-bold tracking-tight select-none text-muted-foreground`}
               >
-                {tech.name}
-              </span>
-            </m.div>
-          ))}
+                <span
+                  className="bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, hsl(var(--muted-foreground) / 0.12) 0%, hsl(var(--foreground) / 0.06) 100%)`,
+                  }}
+                >
+                  {tech.name}
+                </span>
+              </m.div>
+            );
+          })}
         </div>
       </div>
 
