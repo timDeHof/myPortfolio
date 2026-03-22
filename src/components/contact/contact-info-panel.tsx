@@ -14,8 +14,8 @@ const contactInfo = [
   {
     icon: <Phone className="h-6 w-6" />,
     title: "Phone",
-    value: "+1 (555) 123-4567",
-    href: "tel:+15551234567",
+    value: "Shared after initial contact",
+    href: null,
   },
   {
     icon: <MapPin className="h-6 w-6" />,

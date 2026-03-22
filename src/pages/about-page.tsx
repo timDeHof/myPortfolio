@@ -1,5 +1,21 @@
-import { m } from "framer-motion";
-import { Download, ExternalLink } from "lucide-react";
+import { m, useReducedMotion } from "framer-motion";
+import {
+  Download,
+  ExternalLink,
+  Palette,
+  Cog,
+  Wrench,
+  HardHat,
+  Monitor,
+  GraduationCap,
+  Handshake,
+  Cloud,
+  Sparkles,
+  BookOpen,
+  Users,
+  Code2,
+  type LucideIcon
+} from "lucide-react";
 import React from "react";
 
 import { AnimatedSection } from "../components/common/animated-section";
@@ -34,122 +50,218 @@ import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
 import { env } from "../lib/env";
 import { pageSEO } from "../utils/seo";
 
+// Color token types for Tailwind-compatible theming
+type SkillColorVariant = 
+  | "react" | "typescript" | "nextjs" | "tailwind" | "framermotion"
+  | "nodejs" | "express" | "postgresql" | "mongodb" | "restapi"
+  | "git" | "docker" | "aws" | "vercel" | "figma"
+  | "printing" | "mechanical" | "problem" | "team" | "system";
+
+// Map color tokens to Tailwind background/text classes
+const skillColorMap: Record<SkillColorVariant, { bg: string; border: string; shadow: string }> = {
+  react: { bg: "bg-[#61DAFB]/10", border: "border-[#61DAFB]/30", shadow: "shadow-[#61DAFB]/20" },
+  typescript: { bg: "bg-[#3178C6]/10", border: "border-[#3178C6]/30", shadow: "shadow-[#3178C6]/20" },
+  nextjs: { bg: "bg-slate-900/10", border: "border-slate-900/30", shadow: "shadow-slate-900/20" },
+  tailwind: { bg: "bg-cyan-500/10", border: "border-cyan-500/30", shadow: "shadow-cyan-500/20" },
+  framermotion: { bg: "bg-pink-500/10", border: "border-pink-500/30", shadow: "shadow-pink-500/20" },
+  nodejs: { bg: "bg-[#339933]/10", border: "border-[#339933]/30", shadow: "shadow-[#339933]/20" },
+  express: { bg: "bg-slate-900/10", border: "border-slate-900/30", shadow: "shadow-slate-900/20" },
+  postgresql: { bg: "bg-[#336791]/10", border: "border-[#336791]/30", shadow: "shadow-[#336791]/20" },
+  mongodb: { bg: "bg-[#47A248]/10", border: "border-[#47A248]/30", shadow: "shadow-[#47A248]/20" },
+  restapi: { bg: "bg-orange-500/10", border: "border-orange-500/30", shadow: "shadow-orange-500/20" },
+  git: { bg: "bg-[#F05032]/10", border: "border-[#F05032]/30", shadow: "shadow-[#F05032]/20" },
+  docker: { bg: "bg-[#2496ED]/10", border: "border-[#2496ED]/30", shadow: "shadow-[#2496ED]/20" },
+  aws: { bg: "bg-[#FF9900]/10", border: "border-[#FF9900]/30", shadow: "shadow-[#FF9900]/20" },
+  vercel: { bg: "bg-slate-900/10", border: "border-slate-900/30", shadow: "shadow-slate-900/20" },
+  figma: { bg: "bg-[#F24E1E]/10", border: "border-[#F24E1E]/30", shadow: "shadow-[#F24E1E]/20" },
+  printing: { bg: "bg-orange-500/10", border: "border-orange-500/30", shadow: "shadow-orange-500/20" },
+  mechanical: { bg: "bg-blue-500/10", border: "border-blue-500/30", shadow: "shadow-blue-500/20" },
+  problem: { bg: "bg-purple-500/10", border: "border-purple-500/30", shadow: "shadow-purple-500/20" },
+  team: { bg: "bg-red-500/10", border: "border-red-500/30", shadow: "shadow-red-500/20" },
+  system: { bg: "bg-emerald-500/10", border: "border-emerald-500/30", shadow: "shadow-emerald-500/20" },
+};
+
+// Type definitions for about page data
+interface Skill {
+  name: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  colorVariant: SkillColorVariant;
+}
+
+interface SkillCategory {
+  category: string;
+  icon: LucideIcon;
+  color: string;
+  skills: Skill[];
+}
+
+interface TimelineEntry {
+  year: string;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  color: string;
+}
+
+interface CoreValue {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  gradient: string;
+}
+
 // Enhanced skills with actual technology icons (removed proficiency)
-const skillCategories = [
+const skillCategories: SkillCategory[] = [
   {
     category: "Frontend Development",
-    icon: "🎨",
+    icon: Palette,
     color: "from-blue-700 to-cyan-700 dark:from-blue-400 dark:to-cyan-400",
     skills: [
-      { name: "React", icon: ReactIcon, color: "#61DAFB" },
-      { name: "TypeScript", icon: TypeScriptIcon, color: "#3178C6" },
-      { name: "Next.js", icon: NextJSIcon, color: "#000000" },
-      { name: "Tailwind CSS", icon: TailwindIcon, color: "#06B6D4" },
-      { name: "Framer Motion", icon: FramerIcon, color: "#FF3366" },
+      { name: "React", icon: ReactIcon, colorVariant: "react" },
+      { name: "TypeScript", icon: TypeScriptIcon, colorVariant: "typescript" },
+      { name: "Next.js", icon: NextJSIcon, colorVariant: "nextjs" },
+      { name: "Tailwind CSS", icon: TailwindIcon, colorVariant: "tailwind" },
+      { name: "Framer Motion", icon: FramerIcon, colorVariant: "framermotion" },
     ],
   },
   {
     category: "Backend Development",
-    icon: "⚙️",
+    icon: Cog,
     color: "from-teal-700 to-emerald-700 dark:from-teal-400 dark:to-emerald-400",
     skills: [
-      { name: "Node.js", icon: NodeJSIcon, color: "#339933" },
-      { name: "Express", icon: ExpressIcon, color: "#000000" },
-      { name: "PostgreSQL", icon: PostgreSQLIcon, color: "#336791" },
-      { name: "MongoDB", icon: MongoDBIcon, color: "#47A248" },
-      { name: "REST APIs", icon: APIIcon, color: "#FF6B35" },
+      { name: "Node.js", icon: NodeJSIcon, colorVariant: "nodejs" },
+      { name: "Express", icon: ExpressIcon, colorVariant: "express" },
+      { name: "PostgreSQL", icon: PostgreSQLIcon, colorVariant: "postgresql" },
+      { name: "MongoDB", icon: MongoDBIcon, colorVariant: "mongodb" },
+      { name: "REST APIs", icon: APIIcon, colorVariant: "restapi" },
     ],
   },
   {
     category: "Development Tools",
-    icon: "🛠️",
+    icon: Wrench,
     color: "from-purple-700 to-pink-700 dark:from-purple-400 dark:to-pink-400",
     skills: [
-      { name: "Git", icon: GitIcon, color: "#F05032" },
-      { name: "Docker", icon: DockerIcon, color: "#2496ED" },
-      { name: "AWS", icon: AWSIcon, color: "#FF9900" },
-      { name: "Vercel", icon: VercelIcon, color: "#000000" },
-      { name: "Figma", icon: FigmaIcon, color: "#F24E1E" },
+      { name: "Git", icon: GitIcon, colorVariant: "git" },
+      { name: "Docker", icon: DockerIcon, colorVariant: "docker" },
+      { name: "AWS", icon: AWSIcon, colorVariant: "aws" },
+      { name: "Vercel", icon: VercelIcon, colorVariant: "vercel" },
+      { name: "Figma", icon: FigmaIcon, colorVariant: "figma" },
     ],
   },
   {
     category: "Engineering & Innovation",
-    icon: "🔧",
+    icon: HardHat,
     color: "from-slate-600 to-slate-500 dark:from-slate-300 dark:to-slate-400",
     skills: [
-      { name: "3D Printing", icon: PrintingIcon, color: "#FF6B35" },
-      { name: "Mechanical Engineering", icon: MechanicalIcon, color: "#4A90E2" },
-      { name: "Problem Solving", icon: PuzzleIcon, color: "#8E44AD" },
-      { name: "Team Leadership", icon: TeamIcon, color: "#E74C3C" },
-      { name: "System Design", icon: SystemIcon, color: "#2ECC71" },
+      { name: "3D Printing", icon: PrintingIcon, colorVariant: "printing" },
+      { name: "Mechanical Engineering", icon: MechanicalIcon, colorVariant: "mechanical" },
+      { name: "Problem Solving", icon: PuzzleIcon, colorVariant: "problem" },
+      { name: "Team Leadership", icon: TeamIcon, colorVariant: "team" },
+      { name: "System Design", icon: SystemIcon, colorVariant: "system" },
     ],
   },
 ];
 
-const timeline = [
+const timeline: TimelineEntry[] = [
   {
     year: "2024 - Present",
-    title: "Frontend Engineer (Volunteer)",
+    title: "Frontend Engineer",
     description: "Building the TeamForward networking platform using React, TypeScript, and Tailwind CSS. Developing accessible, user-friendly interfaces for an event planning application.",
-    icon: "🤝",
+    icon: Handshake,
     color: "bg-teal-700 dark:bg-teal-600",
+  },
+  {
+    year: "2024 - Present",
+    title: "AWS Cloud Institute Student",
+    description: "Pursuing cloud development certification through a structured 9-course curriculum covering Python, microservices, serverless architectures, CI/CD, Infrastructure as Code, and AI/ML on AWS. Preparing for AWS Certified Cloud Practitioner, Developer Associate, and AI Practitioner certifications.",
+    icon: Cloud,
+    color: "bg-orange-500 dark:bg-orange-600",
   },
   {
     year: "2023",
     title: "Full-Stack Developer",
     description: "Focusing on modern web technologies and building scalable applications.",
-    icon: "💻",
+    icon: Monitor,
     color: "bg-blue-700 dark:bg-blue-600",
   },
   {
     year: "2022",
     title: "Career Transition",
     description: "Completed intensive web development bootcamp and started building projects.",
-    icon: "🎓",
+    icon: GraduationCap,
     color: "bg-teal-700 dark:bg-teal-600",
   },
   {
     year: "2015-2022",
     title: "Mechanical Engineer",
     description: "Worked in manufacturing and 3D printing, developing problem-solving skills.",
-    icon: "🔧",
+    icon: Wrench,
     color: "bg-orange-700 dark:bg-orange-600",
+  },
+];
+
+// Core values data
+const coreValues: CoreValue[] = [
+  {
+    title: "Quality over Quantity",
+    description: "Every project receives full attention to detail and thoughtful implementation.",
+    icon: Sparkles,
+    gradient: "from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700",
+  },
+  {
+    title: "Continuous Learning",
+    description: "Staying current with emerging technologies and best practices.",
+    icon: BookOpen,
+    gradient: "from-teal-500 to-teal-600 dark:from-teal-600 dark:to-teal-700",
+  },
+  {
+    title: "User-Centered Design",
+    description: "Building interfaces that prioritize usability and accessibility.",
+    icon: Users,
+    gradient: "from-teal-500 to-emerald-500 dark:from-teal-600 dark:to-emerald-600",
+  },
+  {
+    title: "Clean Code",
+    description: "Writing maintainable, well-documented code that scales.",
+    icon: Code2,
+    gradient: "from-purple-500 to-purple-600 dark:from-purple-600 dark:to-purple-700",
   },
 ];
 
 // Skill card component with actual technology icons
 const SkillCard: React.FC<{
-  skill: { name: string; icon: React.ComponentType<any>; color: string };
+  skill: Skill;
   index: number;
-}> = ({ skill, index }) => {
+  shouldReduceMotion: boolean;
+}> = ({ skill, index, shouldReduceMotion }) => {
   const IconComponent = skill.icon;
+  const colorClasses = skillColorMap[skill.colorVariant];
 
   return (
     <m.div
-      initial={{ opacity: 0, y: 20, scale: 0.9 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20, scale: 0.9 }}
+      whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
+      transition={shouldReduceMotion ? undefined : { duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true }}
-      whileHover={{
+      whileHover={shouldReduceMotion ? undefined : {
         scale: 1.05,
         rotateY: 5,
         transition: { duration: 0.3 },
       }}
       className="group"
     >
-      <Card className="h-full bg-white dark:bg-slate-800 hover:shadow-2xl dark:hover:shadow-2xl transition-all duration-500 border-gray-200 dark:border-slate-600 rounded-2xl overflow-hidden">
+      <Card className={`h-full bg-white dark:bg-slate-800 hover:shadow-2xl dark:hover:shadow-2xl transition-all duration-500 border-gray-200 dark:border-slate-600 rounded-2xl overflow-hidden ${colorClasses.shadow}`}>
         <CardContent className="p-6 relative">
           {/* Background gradient overlay */}
           <div
-            className="absolute inset-0 opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-500"
-            style={{ backgroundColor: skill.color }}
+            className={`absolute inset-0 opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-500 ${colorClasses.bg}`}
           />
 
           {/* Icon and title */}
           <div className="flex flex-col items-center text-center space-y-4">
             <m.div
               className="transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
-              whileHover={{ scale: 1.2, rotate: 12 }}
+              whileHover={shouldReduceMotion ? undefined : { scale: 1.2, rotate: 12 }}
             >
               <IconComponent size={48} className="drop-shadow-lg" />
             </m.div>
@@ -160,23 +272,20 @@ const SkillCard: React.FC<{
 
             {/* Technology color indicator */}
             <m.div
-              className="w-full h-1 rounded-full"
-              style={{ backgroundColor: skill.color }}
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
+              className={`w-full h-1 rounded-full ${colorClasses.bg}`}
+              initial={shouldReduceMotion ? undefined : { scaleX: 0 }}
+              whileInView={shouldReduceMotion ? undefined : { scaleX: 1 }}
+              transition={shouldReduceMotion ? undefined : { duration: 0.8, delay: index * 0.1 }}
               viewport={{ once: true }}
             />
           </div>
 
           {/* Decorative elements */}
           <div
-            className="absolute top-4 right-4 w-2 h-2 rounded-full opacity-20 group-hover:opacity-40 transition-opacity"
-            style={{ backgroundColor: skill.color }}
+            className={`absolute top-4 right-4 w-2 h-2 rounded-full opacity-20 group-hover:opacity-40 transition-opacity ${colorClasses.bg}`}
           />
           <div
-            className="absolute bottom-4 left-4 w-1 h-1 rounded-full opacity-30 group-hover:opacity-60 transition-opacity"
-            style={{ backgroundColor: skill.color }}
+            className={`absolute bottom-4 left-4 w-1 h-1 rounded-full opacity-30 group-hover:opacity-60 transition-opacity ${colorClasses.bg}`}
           />
         </CardContent>
       </Card>
@@ -185,6 +294,8 @@ const SkillCard: React.FC<{
 };
 
 export const AboutPage: React.FC = () => {
+  const shouldReduceMotion = useReducedMotion() ?? false;
+
   return (
     <>
       <SEOHead seo={pageSEO.about} />
@@ -193,15 +304,15 @@ export const AboutPage: React.FC = () => {
       <section className="py-20 bg-gradient-to-br from-blue-50 via-teal-50 to-indigo-100 dark:from-slate-900 dark:via-teal-900 dark:to-blue-900">
         <MaxWidthWrapper>
           <m.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={shouldReduceMotion ? undefined : { opacity: 0, y: 30 }}
+            animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? undefined : { duration: 0.8 }}
             className="text-center"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-gray-100 mb-6">
               About Me
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-8">
               From mechanical engineering to web development, I bring a unique perspective
               to creating efficient and innovative digital solutions.
             </p>
@@ -222,9 +333,9 @@ export const AboutPage: React.FC = () => {
         <MaxWidthWrapper>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">My Journey</h2>
-              <div className="space-y-4 text-gray-600 dark:text-gray-300">
-                <p>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">My Journey</h2>
+              <div className="space-y-4 text-gray-700 dark:text-gray-300">
+                <p className="leading-relaxed">
                   With a background in mechanical engineering and 3D printing, I discovered my passion
                   for web development through the intersection of technology and problem-solving.
                   This unique combination gives me a distinctive perspective on building efficient,
@@ -259,27 +370,56 @@ export const AboutPage: React.FC = () => {
               </div>
             </div>
             <div className="relative">
-              <Card className="p-8 bg-gradient-to-br from-blue-50 via-teal-50 to-purple-50 dark:from-blue-900/20 dark:via-teal-900/20 dark:to-purple-900/20 border-gray-200 dark:border-slate-600">
-                <CardContent className="p-0">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Core Values</h3>
-                  <ul className="space-y-3">
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 bg-blue-700 dark:bg-blue-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                      <span className="text-gray-600 dark:text-gray-300">Quality over quantity in every project</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 bg-teal-700 dark:bg-teal-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                      <span className="text-gray-600 dark:text-gray-300">Continuous learning and improvement</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 bg-teal-700 dark:bg-teal-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                      <span className="text-gray-600 dark:text-gray-300">User-centered design and development</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="w-2 h-2 bg-purple-700 dark:bg-purple-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                      <span className="text-gray-600 dark:text-gray-300">Clean, maintainable code practices</span>
-                    </li>
-                  </ul>
+              <Card className="bg-gradient-to-br from-blue-50 via-teal-50 to-purple-50 dark:from-blue-900/20 dark:via-teal-900/20 dark:to-purple-900/20 border-gray-200 dark:border-slate-600 overflow-hidden relative">
+                <CardContent className="p-8 relative">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8 flex items-center justify-center gap-2">
+                    <Sparkles className="w-5 h-5 text-teal-600 dark:text-teal-400" />
+                    Core Values
+                  </h3>
+
+                  {/* Hybrid Layout - 2x2 grid with magazine styling */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {coreValues.map((value, index) => (
+                      <m.div
+                        key={value.title}
+                        initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
+                        whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                        transition={shouldReduceMotion ? undefined : { duration: 0.5, delay: index * 0.1 }}
+                        viewport={{ once: true }}
+                        whileHover={shouldReduceMotion ? undefined : { y: -4, transition: { duration: 0.2 } }}
+                      >
+                        {/* Card container with hover effects */}
+                        <div className="group relative bg-white/60 dark:bg-slate-800/60 rounded-2xl p-5 border border-gray-200 dark:border-slate-600 hover:border-transparent hover:shadow-xl transition-all duration-300 overflow-hidden h-full">
+
+                          {/* Background gradient that appears on hover */}
+                          <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${value.gradient} -z-10`} />
+
+                          <div className="flex items-start gap-4">
+                            {/* Large icon with glow effect */}
+                            <div className="relative flex-shrink-0">
+                              <div className={`absolute inset-0 bg-gradient-to-br ${value.gradient} rounded-xl blur-md opacity-30 group-hover:opacity-50 transition-opacity`} />
+                              <div className={`relative w-14 h-14 rounded-xl bg-gradient-to-br ${value.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+                                <value.icon className="w-7 h-7 text-white" />
+                              </div>
+                            </div>
+
+                            {/* Content */}
+                            <div className="flex-1 min-w-0">
+                              <h4 className="text-base font-bold text-gray-900 dark:text-gray-100 mb-1 group-hover:text-white dark:group-hover:text-white transition-colors">
+                                {value.title}
+                              </h4>
+                              <p className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-white/90 transition-colors leading-relaxed">
+                                {value.description}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* Bottom accent line */}
+                          <div className={`absolute bottom-0 left-0 h-1 w-0 group-hover:w-full bg-gradient-to-r ${value.gradient} transition-all duration-500 rounded-br-xl`} />
+                        </div>
+                      </m.div>
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
             </div>
@@ -292,15 +432,15 @@ export const AboutPage: React.FC = () => {
         <MaxWidthWrapper>
           <div className="text-center mb-16">
             <m.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
+              whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={shouldReduceMotion ? undefined : { duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 dark:from-slate-200 dark:via-slate-300 dark:to-slate-200 bg-clip-text text-transparent mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 dark:from-slate-200 dark:via-slate-300 dark:to-slate-200 bg-clip-text text-transparent mb-6">
                 Skills & Technologies
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
                 A comprehensive toolkit combining engineering precision with modern web development
                 expertise to build exceptional digital experiences.
               </p>
@@ -311,21 +451,25 @@ export const AboutPage: React.FC = () => {
             {skillCategories.map((category, categoryIndex) => (
               <m.div
                 key={category.category}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: categoryIndex * 0.2 }}
+                initial={shouldReduceMotion ? undefined : { opacity: 0, y: 40 }}
+                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                transition={shouldReduceMotion ? undefined : { duration: 0.8, delay: categoryIndex * 0.2 }}
                 viewport={{ once: true }}
                 className="relative"
               >
                 {/* Category Header */}
                 <div className="text-center mb-12">
-                  <m.div
-                    className={`inline-flex items-center justify-center w-20 h-20 rounded-3xl mb-6 shadow-2xl text-white text-4xl bg-gradient-to-br ${category.color}`}
-                    whileHover={{ scale: 1.1, rotateY: 15 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {category.icon}
-                  </m.div>
+                  <div className="relative inline-block mb-6">
+                    <m.div
+                      className={`w-20 h-20 rounded-3xl shadow-2xl bg-gradient-to-br ${category.color}`}
+                      whileHover={shouldReduceMotion ? undefined : { scale: 1.1, rotateY: 15 }}
+                      transition={shouldReduceMotion ? undefined : { duration: 0.3 }}
+                    >
+                      <div className="w-full h-full flex items-center justify-center">
+                        <category.icon size={36} className="text-white" />
+                      </div>
+                    </m.div>
+                  </div>
                   <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                     {category.category}
                   </h3>
@@ -339,6 +483,7 @@ export const AboutPage: React.FC = () => {
                       key={skill.name}
                       skill={skill}
                       index={skillIndex}
+                      shouldReduceMotion={shouldReduceMotion}
                     />
                   ))}
                 </div>
@@ -352,9 +497,9 @@ export const AboutPage: React.FC = () => {
 
           {/* Skills Summary Stats */}
           <m.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            initial={shouldReduceMotion ? undefined : { opacity: 0, y: 30 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? undefined : { duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
             className="mt-20 text-center"
           >
@@ -363,7 +508,7 @@ export const AboutPage: React.FC = () => {
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8">Technical Expertise Overview</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   <m.div
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                     className="text-center"
                   >
                     <div className="text-4xl font-bold bg-gradient-to-r from-blue-700 to-cyan-700 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent mb-2">
@@ -372,7 +517,7 @@ export const AboutPage: React.FC = () => {
                     <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">Technologies</div>
                   </m.div>
                   <m.div
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                     className="text-center"
                   >
                     <div className="text-4xl font-bold bg-gradient-to-r from-teal-700 to-emerald-700 dark:from-teal-400 dark:to-emerald-400 bg-clip-text text-transparent mb-2">
@@ -381,7 +526,7 @@ export const AboutPage: React.FC = () => {
                     <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">Specializations</div>
                   </m.div>
                   <m.div
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={shouldReduceMotion ? undefined : { scale: 1.05 }}
                     className="text-center"
                   >
                     <div className="text-4xl font-bold bg-gradient-to-r from-purple-700 to-pink-700 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent mb-2">
@@ -397,56 +542,93 @@ export const AboutPage: React.FC = () => {
       </AnimatedSection>
 
       {/* Timeline Section */}
-      <AnimatedSection className="py-20 bg-white dark:bg-slate-900">
-        <MaxWidthWrapper>
+      <AnimatedSection className="py-20 bg-white dark:bg-slate-900 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 opacity-5 dark:opacity-10">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-teal-400 to-blue-500 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-tr from-purple-400 to-pink-500 rounded-full blur-3xl" />
+        </div>
+
+        <MaxWidthWrapper className="relative">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-              Professional Timeline
+              My Journey
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Key milestones in my journey from engineering to web development.
+            <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+              From mechanical engineering to full-stack development — a path of continuous learning and growth.
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto">
-            {timeline.map((item, index) => (
-              <m.div
-                key={item.title}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="relative flex items-start mb-12 last:mb-0"
-              >
-                {/* Year */}
-                <div className="flex-shrink-0 w-24 text-right mr-8">
-                  <span className="text-lg font-bold text-teal-700 dark:text-teal-400">{item.year}</span>
-                </div>
+          {/* Timeline Container */}
+          <div className="relative max-w-5xl mx-auto">
+            {/* Center vertical line */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-teal-200 via-teal-400 to-teal-200 dark:from-teal-800 dark:via-teal-600 dark:to-teal-800 rounded-full hidden md:block" />
 
-                {/* Timeline Icon */}
-                <div className="flex-shrink-0 relative">
+            {/* Timeline items - alternating layout */}
+            <div className="space-y-12 md:space-y-0">
+              {timeline.map((item, index) => {
+                const isLeft = index % 2 === 0;
+                return (
                   <m.div
-                    whileHover={{ scale: 1.2, rotate: 15 }}
-                    className={`w-16 h-16 ${item.color} rounded-2xl flex items-center justify-center text-white text-2xl shadow-xl z-10 relative`}
+                    key={item.title}
+                    initial={shouldReduceMotion ? undefined : { opacity: 0, y: 30 }}
+                    whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                    transition={shouldReduceMotion ? undefined : { duration: 0.6, delay: index * 0.15 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    className={`group relative flex flex-col md:flex-row items-center ${
+                      isLeft ? "md:flex-row" : "md:flex-row-reverse"
+                    }`}
                   >
-                    {item.icon}
-                  </m.div>
-                  {index < timeline.length - 1 && (
-                    <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-0.5 h-20 bg-gradient-to-b from-teal-300 to-transparent dark:from-teal-600"></div>
-                  )}
-                </div>
+                    {/* Content Card */}
+                    <div className={`w-full md:w-[calc(50%-2rem)] ${isLeft ? "md:pr-16 md:text-right" : "md:pl-16 md:text-left"} mb-8 md:mb-0`}>
+                      <Card className="p-6 md:p-8 hover:shadow-2xl transition-all duration-500 bg-white dark:bg-slate-800 border-0 md:border md:border-gray-100 dark:md:border-slate-700 shadow-lg hover:-translate-y-1">
+                        {/* Year badge - hidden on mobile, shown from md up */}
+                        <div className={`hidden md:inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold mb-4 ${
+                          isLeft ? "bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300" : "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+                        }`}>
+                          <span className={`w-2 h-2 rounded-full bg-current ${shouldReduceMotion ? "" : "animate-pulse"}`} />
+                          {item.year}
+                        </div>
 
-                {/* Content */}
-                <div className="flex-1 ml-8">
-                  <Card className="p-6 hover:shadow-lg transition-shadow duration-300 bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-600">
-                    <CardContent className="p-0">
-                      <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">{item.title}</h3>
-                      <p className="text-gray-600 dark:text-gray-300">{item.description}</p>
-                    </CardContent>
-                  </Card>
-                </div>
-              </m.div>
-            ))}
+                        <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-teal-700 dark:group-hover:text-teal-300 transition-colors">
+                          {item.title}
+                        </h3>
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                          {item.description}
+                        </p>
+
+                        {/* Decorative gradient line */}
+                        <div className={`h-1 w-12 rounded-full mt-6 ${isLeft ? "md:ml-auto" : ""} bg-gradient-to-r from-teal-400 to-blue-500 group-hover:w-24 transition-all duration-500`} />
+                      </Card>
+                    </div>
+
+                    {/* Center Icon */}
+                    <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex">
+                      {/* Glowing dot on the timeline */}
+                      <div className="relative">
+                        <div className={`absolute inset-0 bg-gradient-to-br from-teal-400 to-blue-500 rounded-full blur-lg opacity-50 ${shouldReduceMotion ? "" : "animate-pulse"}`} />
+                        <div className={`relative w-14 h-14 rounded-2xl ${item.color} flex items-center justify-center shadow-2xl border-4 border-white dark:border-slate-900 group-hover:scale-110 transition-transform duration-300`}>
+                          <item.icon size={24} className="text-white" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Mobile: Icon above card */}
+                    <div className="flex md:hidden items-center gap-4 mb-4 w-full order-first">
+                      <div className={`w-12 h-12 rounded-xl ${item.color} flex items-center justify-center shadow-lg flex-shrink-0`}>
+                        <item.icon size={20} className="text-white" />
+                      </div>
+                      <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold ${
+                        index % 2 === 0 ? "bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300" : "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+                      }`}>
+                        <span className={`w-2 h-2 rounded-full bg-current ${shouldReduceMotion ? "" : "animate-pulse"}`} />
+                        {item.year}
+                      </div>
+                    </div>
+                  </m.div>
+                );
+              })}
+            </div>
           </div>
         </MaxWidthWrapper>
       </AnimatedSection>

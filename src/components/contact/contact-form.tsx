@@ -126,7 +126,7 @@ export const ContactForm: React.FC = () => {
     <m.div
       initial={{ opacity: 0, x: -20 }}
       whileInView={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.4 }}
       viewport={{ once: true }}
     >
       <Card className="shadow-lg bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-600">
@@ -136,9 +136,9 @@ export const ContactForm: React.FC = () => {
           </h2>
 
           {submitStatus !== "idle" && (
-            <m.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
+            <div
+              role="status"
+              aria-live="polite"
               className={`mb-6 p-4 rounded-lg flex items-start space-x-3 ${
                 submitStatus === "success"
                   ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-700"
@@ -153,7 +153,7 @@ export const ContactForm: React.FC = () => {
                     <AlertCircle className="h-5 w-5 mt-0.5 flex-shrink-0" />
                   )}
               <p className="text-sm leading-relaxed">{submitMessage}</p>
-            </m.div>
+            </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -171,13 +171,15 @@ export const ContactForm: React.FC = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 disabled={isSubmitting}
+                aria-describedby={errors.name ? "name-error" : undefined}
+                aria-invalid={!!errors.name}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-400 focus:border-transparent transition-colors disabled:bg-gray-50 dark:disabled:bg-slate-700 disabled:cursor-not-allowed bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 ${
                   errors.name ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-slate-600"
                 }`}
                 placeholder="Your full name"
               />
               {errors.name && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.name}</p>
+                <p id="name-error" role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.name}</p>
               )}
             </div>
 
@@ -195,13 +197,15 @@ export const ContactForm: React.FC = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 disabled={isSubmitting}
+                aria-describedby={errors.email ? "email-error" : undefined}
+                aria-invalid={!!errors.email}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-400 focus:border-transparent transition-colors disabled:bg-gray-50 dark:disabled:bg-slate-700 disabled:cursor-not-allowed bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 ${
                   errors.email ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-slate-600"
                 }`}
                 placeholder="your.email@example.com"
               />
               {errors.email && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>
+                <p id="email-error" role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>
               )}
             </div>
 
@@ -219,13 +223,15 @@ export const ContactForm: React.FC = () => {
                 value={formData.message}
                 onChange={handleInputChange}
                 disabled={isSubmitting}
+                aria-describedby={errors.message ? "message-error" : undefined}
+                aria-invalid={!!errors.message}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-400 focus:border-transparent transition-colors resize-none disabled:bg-gray-50 dark:disabled:bg-slate-700 disabled:cursor-not-allowed bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 ${
                   errors.message ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-slate-600"
                 }`}
                 placeholder="Tell me about your project..."
               />
               {errors.message && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.message}</p>
+                <p id="message-error" role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.message}</p>
               )}
             </div>
 

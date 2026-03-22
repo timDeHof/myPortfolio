@@ -31,14 +31,14 @@ export const ProjectsHero: React.FC<ProjectsHeroProps> = ({ isFetching, isLoadin
         >
           <div className="flex items-center justify-center mb-4">
             <Github className="h-8 w-8 text-gray-700 dark:text-gray-300 mr-3" />
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-gray-100">
               My Development Journey
             </h1>
             {isFetching && (
               <Loader className="h-6 w-6 text-teal-700 dark:text-teal-400 ml-3 animate-spin" />
             )}
           </div>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-6">
+          <p className="text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto mb-6">
             Explore my coding journey through personal projects and open-source contributions.
             Each project represents a step in my continuous learning and growth as a developer.
           </p>

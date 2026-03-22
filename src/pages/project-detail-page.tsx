@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { ArrowLeft, Clock, Code, ExternalLink, Github, Star, X } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
+import { Route as ProjectsSlugRoute } from "../routes/projects.$slug";
+import { Route as ProjectsRoute } from "../routes/projects";
 
 import { Button } from "@components/ui/button";
 import { Card, CardContent } from "@components/ui/card";
@@ -228,8 +230,8 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
                             </div>
                             <div>
                               <h3 className="font-semibold text-gray-900 dark:text-gray-100">{step.title}</h3>
-                              {step.subtitle && <p className="text-sm text-gray-500 dark:text-gray-400">{step.subtitle}</p>}
-                              {step.description && <p className="text-sm text-gray-600 dark:text-gray-300">{step.description}</p>}
+                              {step.subtitle && <p className="text-sm text-gray-600 dark:text-gray-400">{step.subtitle}</p>}
+                              {step.description && <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed">{step.description}</p>}
                             </div>
                           </div>
                         );
@@ -293,8 +295,9 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
 };
 
 export const ProjectDetailPage: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const { data: project, isLoading, error } = useProject(slug!);
+  // Use route-specific hook for type-safe params
+  const { slug } = ProjectsSlugRoute.useParams();
+  const { data: project, isLoading, error } = useProject(slug);
 
   if (isLoading) {
     return (
@@ -318,7 +321,7 @@ export const ProjectDetailPage: React.FC = () => {
               <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Project Not Found</h2>
               <p className="text-gray-600 dark:text-gray-400 mb-6">The project &quot;{slug}&quot; could not be found.</p>
               <Button asChild>
-                <Link to="/projects"><ArrowLeft className="h-4 w-4 mr-2" />Back to Projects</Link>
+                <Link to={ProjectsRoute}><ArrowLeft className="h-4 w-4 mr-2" />Back to Projects</Link>
               </Button>
             </CardContent>
           </Card>

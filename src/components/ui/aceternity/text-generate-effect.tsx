@@ -1,23 +1,32 @@
 "use client";
 import { useEffect } from "react";
-import { m, stagger, useAnimate } from "framer-motion";
+import { m, stagger, useAnimate, useReducedMotion } from "framer-motion";
 import { cn } from "../../../lib/utils";
 
 export const TextGenerateEffect = ({
   words,
   className,
-  filter = false,
   duration = 0.5,
 }: {
   words: string;
   className?: string;
-  filter?: boolean;
   duration?: number;
 }) => {
   const [scope, animate] = useAnimate();
+  const prefersReducedMotion = useReducedMotion();
   let wordsArray = words.split(" ");
   
   useEffect(() => {
+    if (prefersReducedMotion) {
+      // Show all text immediately if user prefers reduced motion
+      const spans = scope.current?.querySelectorAll("span");
+      spans?.forEach((span: Element) => {
+        (span as HTMLElement).style.opacity = "1";
+        (span as HTMLElement).style.transform = "translateY(0px)";
+      });
+      return;
+    }
+
     animate(
       "span",
       {
@@ -29,7 +38,7 @@ export const TextGenerateEffect = ({
         delay: stagger(0.1),
       }
     );
-  }, [scope.current]);
+  }, [scope.current, prefersReducedMotion, animate, duration]);
 
   return (
     <div className={cn("font-bold", className)}>
@@ -41,8 +50,8 @@ export const TextGenerateEffect = ({
                 key={word + idx}
                 className="dark:text-white text-black"
                 style={{
-                  opacity: 0,
-                  transform: "translateY(10px)",
+                  opacity: prefersReducedMotion ? 1 : 0,
+                  transform: prefersReducedMotion ? "translateY(0px)" : "translateY(10px)",
                   display: "inline-block",
                   marginRight: "0.25em"
                 }}
