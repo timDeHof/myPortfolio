@@ -4,7 +4,8 @@ import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { Separator } from "../ui/separator";
 import { usePortfolioData } from "@hooks/usePortfolioData";
 import { Link } from "@tanstack/react-router";
-import { DEFAULT_NAV_ITEMS } from "../../lib/constants";
+import { DEFAULT_NAV_ITEMS } from "@lib/constants";
+import { Route as ContactRoute } from "../../routes/contact";
 
 const socialIconMap = {
   GitHub: <GithubIcon className="h-6 w-6" />,
@@ -71,7 +72,7 @@ export function Footer() {
               Let's discuss your next project.</p>
               <div className="contacts">
               <Button variant="default" size="lg" asChild className="cta">
-                <Link to="/contact">
+                <Link to={ContactRoute.to}>
                   <Mail className="h-5 w-5" />
                   Get In Touch
                 </Link>

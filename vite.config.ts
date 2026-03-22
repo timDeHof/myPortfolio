@@ -7,6 +7,7 @@ import viteImagemin from 'vite-plugin-imagemin';
 import tailwindcss from '@tailwindcss/vite';
 import {visualizer} from "rollup-plugin-visualizer";
 import { cloudflare } from "@cloudflare/vite-plugin";
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -15,6 +16,11 @@ export default defineConfig(({ mode }) => ({
       emitFile: true,
       filename: 'stats.html',
       open: true
+    }),
+    // TanStack Router plugin must be before React plugin
+    tanstackRouter({
+      target: 'react',
+      autoCodeSplitting: true,
     }),
     react(),
     tailwindcss(),

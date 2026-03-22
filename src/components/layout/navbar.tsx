@@ -3,11 +3,12 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { CodeXml, Download, Menu, Moon, Sun, X } from "lucide-react";
 
-import { MaxWidthWrapper } from "../ui/max-width-wrapper";
+import { MaxWidthWrapper } from "@components/ui/max-width-wrapper";
 import { usePortfolioData } from "@hooks/usePortfolioData";
 import { useTheme } from "@hooks/use-theme";
-import { env } from "../../lib/env";
-import { DEFAULT_NAV_ITEMS } from "../../lib/constants";
+import { env } from "@lib/env";
+import { DEFAULT_NAV_ITEMS } from "@lib/constants";
+import { routeTree } from "../../routes/-routeTree.gen";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,7 +55,7 @@ export function Navbar() {
         <div className="inner">
           <div className="left">
           <Link
-            to="/"
+            to={routeTree.index}
             className="brand"
             >
             <CodeXml className="logo" />
