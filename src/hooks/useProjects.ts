@@ -76,6 +76,9 @@ export function useProjects() {
   });
 }
 
+// Re-export for use in route loaders
+export { fetchAllProjects };
+
 export function useProject(slug: string) {
   const entry = findProjectBySlug(slug);
 

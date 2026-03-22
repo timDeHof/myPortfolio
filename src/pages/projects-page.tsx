@@ -10,15 +10,16 @@ import { SEOHead } from "../components/common/seo-head";
 import { ProjectGrid } from "../components/projects/ProjectGrid";
 import { Button } from "../components/ui/button";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
-import { useProjects, useProject } from "../hooks/useProjects";
+import { useProject } from "../hooks/useProjects";
 import { pageSEO } from "../utils/seo";
+
 
 // Lazy load heavy modal components
 const ProjectDetailContent = lazy(() => import("./project-detail-page").then(m => ({ default: m.ProjectDetailContent })));
 const GitHubStatsSection = lazy(() => import("../components/github/github-stats-section").then(m => ({ default: m.GitHubStatsSection })));
 
 export const ProjectsPage: React.FC = () => {
-  const { data: projects = [], isLoading, error, isError } = useProjects();
+  const { projects } = Route.useLoaderData();
   const navigate = useNavigate();
   const search = Route.useSearch();
   const selectedSlug = search.project;
@@ -44,18 +45,15 @@ export const ProjectsPage: React.FC = () => {
     navigate({ search: { project: slug } });
   };
 
-  if (isError) {
+  if (!projects || projects.length === 0) {
     return (
       <>
         <SEOHead seo={pageSEO.projects} />
         <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-slate-900">
           <MaxWidthWrapper>
             <div className="text-center">
-              <p className="text-lg text-red-600 dark:text-red-400 mb-4">
-                Failed to load projects
-              </p>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
-                {error instanceof Error ? error.message : "Unknown error"}
+              <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
+                No projects found
               </p>
               <Button asChild>
                 <a href="https://github.com/timDeHof" target="_blank" rel="noopener noreferrer">
@@ -91,7 +89,7 @@ export const ProjectsPage: React.FC = () => {
         </MaxWidthWrapper>
       </AnimatedSection>
 
-      <ProjectGrid projects={projects} isLoading={isLoading} onProjectClick={handleProjectClick} />
+      <ProjectGrid projects={projects} onProjectClick={handleProjectClick} />
 
       <Suspense fallback={<div className="py-16" />}>
         <GitHubStatsSection />
