@@ -1,6 +1,7 @@
-import { m } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { ArrowRight, CheckCircle, Code, Cpu, Globe, Palette, Shield, Target, Users, Wrench, Zap } from "lucide-react";
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { AnimatedSection } from "../components/common/animated-section";
 import { SEOHead } from "../components/common/seo-head";
@@ -18,19 +19,19 @@ const serviceIcons = {
 
 const additionalServices = [
   {
-    icon: <Globe className="h-8 w-8" />,
+    icon: <Globe className="size-8" />,
     title: "Responsive Design",
     description: "Sites that work on every device—from phones to desktops.",
     color: "bg-teal-700 dark:bg-teal-600",
   },
   {
-    icon: <Shield className="h-8 w-8" />,
+    icon: <Shield className="size-8" />,
     title: "Security & Performance",
     description: "Built-in security, fast load times, and solid SEO foundations.",
     color: "bg-teal-700 dark:bg-teal-600",
   },
   {
-    icon: <Palette className="h-8 w-8" />,
+    icon: <Palette className="size-8" />,
     title: "UI/UX Consulting",
     description: "Help making your interface intuitive and your users happy.",
     color: "bg-teal-700 dark:bg-teal-600",
@@ -42,28 +43,28 @@ const processSteps = [
     step: "01",
     title: "Discovery",
     description: "Understanding your needs and project requirements",
-    icon: <Target />,
+    icon: <Target size={24} />,
     color: "bg-teal-700 dark:bg-teal-600",
   },
   {
     step: "02",
     title: "Planning",
     description: "Creating detailed project roadmap and timeline",
-    icon: <Code />,
+    icon: <Code size={24} />,
     color: "bg-teal-700 dark:bg-teal-600",
   },
   {
     step: "03",
     title: "Development",
     description: "Building your solution with clean, maintainable code",
-    icon: <Wrench />,
+    icon: <Wrench size={24} />,
     color: "bg-teal-700 dark:bg-teal-600",
   },
   {
     step: "04",
     title: "Delivery",
     description: "Testing, deployment, and ongoing support",
-    icon: <CheckCircle />,
+    icon: <CheckCircle size={24} />,
     color: "bg-teal-700 dark:bg-teal-600",
   },
 ];
@@ -71,11 +72,12 @@ const processSteps = [
 export const ServicesPage: React.FC = () => {
   const { data: portfolioData, isLoading } = usePortfolioData();
   const services = portfolioData?.services || [];
+  const shouldReduceMotion = useReducedMotion() ?? false;
 
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
       </div>
     );
   }
@@ -243,16 +245,16 @@ export const ServicesPage: React.FC = () => {
                     <div className="relative z-10">
                       {/* Numbered Circle Icon */}
                       <m.div
-                        initial={{ scale: 0 }}
+                        initial={shouldReduceMotion ? { scale: 1 } : { scale: 0 }}
                         whileInView={{ scale: 1 }}
-                        transition={{
+                        transition={shouldReduceMotion ? { duration: 0 } : {
                           type: "spring",
                           stiffness: 300,
                           damping: 15,
                           delay: index * 0.1 + 0.2,
                         }}
                         viewport={{ once: true }}
-                        whileHover={{ scale: 1.05 }}
+                        whileHover={shouldReduceMotion ? { scale: 1 } : { scale: 1.05 }}
                         className={`w-14 h-14 lg:w-16 lg:h-16 ${phase.color} rounded-xl lg:rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow duration-300 mb-4`}
                       >
                         <div className="text-white flex flex-col items-center">
@@ -325,8 +327,8 @@ export const ServicesPage: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-600">
-                <CardContent className="p-6">
+              <Card className="h-full bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-md">
+                <CardContent className="p-6 bg-white dark:bg-slate-800">
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
                     <Zap className="h-5 w-5 mr-2 text-teal-700 dark:text-teal-400" />
                     Backend
@@ -347,8 +349,8 @@ export const ServicesPage: React.FC = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-600">
-                <CardContent className="p-6">
+              <Card className="h-full bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-md">
+                <CardContent className="p-6 bg-white dark:bg-slate-800">
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
                     <Wrench className="h-5 w-5 mr-2 text-teal-700 dark:text-teal-400" />
                     DevOps
@@ -384,15 +386,15 @@ export const ServicesPage: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild className="bg-white text-teal-700 hover:bg-gray-100">
-                <a href="/contact">
+                <Link to="/contact">
                   Send a Message
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
+                </Link>
               </Button>
               <Button size="lg" variant="outline" asChild className="border-teal-500 text-white hover:bg-teal-600">
-                <a href="/projects">
+                <Link to="/projects">
                   See My Work
-                </a>
+                </Link>
               </Button>
             </div>
           </m.div>

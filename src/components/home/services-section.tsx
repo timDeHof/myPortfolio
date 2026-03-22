@@ -151,7 +151,7 @@ export const ServicesSection: React.FC = () => {
                 whileHover={{ y: -4 }}
                 className="group h-full"
               >
-                <Card className="h-full bg-white dark:bg-slate-800 shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100 dark:border-slate-600 rounded-2xl">
+                <Card className="h-full shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100 dark:border-slate-600 rounded-2xl">
                   <CardContent className="p-8 h-full bg-white dark:bg-slate-700 rounded-2xl">
                     {/* Service Icon & Header */}
                     <div className={`inline-flex items-center justify-center w-16 h-16 ${service.color} text-white rounded-xl mb-6 group-hover:scale-105 transition-transform duration-300`}>
@@ -233,8 +233,8 @@ export const ServicesSection: React.FC = () => {
                 viewport={{ once: true }}
                 className="text-center"
               >
-                <Card className="h-full bg-white dark:bg-slate-800 shadow-md border border-gray-100 dark:border-slate-600 rounded-2xl">
-                  <CardContent className="p-6 text-center bg-white dark:bg-slate-700 rounded-2xl">
+                <Card className="h-full shadow-md border border-gray-100 dark:border-slate-600 rounded-2xl">
+                  <CardContent className="p-6 text-center bg-white dark:bg-slate-700 rounded-2xl h-full">
                     {/* Phase number */}
                     <div className={`w-12 h-12 ${phase.color} text-white rounded-full flex items-center justify-center text-lg font-bold mx-auto mb-4`}>
                       {phase.phase}
@@ -261,7 +261,7 @@ export const ServicesSection: React.FC = () => {
           viewport={{ once: true }}
           className="text-center"
         >
-          <Card className="bg-white dark:bg-slate-800 shadow-md border border-gray-100 dark:border-slate-600 rounded-2xl">
+          <Card className="shadow-md border border-gray-100 dark:border-slate-600 rounded-2xl">
             <CardContent className="p-8 md:p-12 bg-white dark:bg-slate-700 rounded-2xl">
               <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">
                 Let's Work Together

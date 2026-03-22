@@ -55,7 +55,7 @@ export function Navbar() {
               </span>
           </Link>
             </div>
-          <div className="links">
+          <nav aria-label="Primary" className="links">
             {navItems.map(item => (
               <Link
                 key={item.href}
@@ -75,7 +75,7 @@ export function Navbar() {
                 )}
               </Link>
             ))}
-              </div>
+              </nav>
           <div className="right hidden md:flex">
             <button
               type="button"
@@ -122,7 +122,7 @@ export function Navbar() {
               className="mobile-menu"
               ref={mobileNavRef}
             >
-              <m.div 
+              <m.div
                 className="mobile-content"
                 initial="closed"
                 animate="open"
@@ -132,6 +132,7 @@ export function Navbar() {
                   closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
                 }}
               >
+                <nav aria-label="Mobile navigation">
                 {navItems.map(item => (
                   <m.div
                     key={item.href}
@@ -150,6 +151,7 @@ export function Navbar() {
                     </Link>
                   </m.div>
                 ))}
+                </nav>
                 <m.div
                   variants={{
                     open: { opacity: 1, y: 0 },

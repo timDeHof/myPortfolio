@@ -1,4 +1,4 @@
-import { m } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { Download, MapPin, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -76,6 +76,18 @@ const MOBILE_BACKGROUND_TECH = [
   { name: "GraphQL", position: "bottom-[20%] right-[1%]", size: "text-xs" },
 ] as const;
 
+// Motion-safe variants for reduced motion preference
+const containerVariantsReduced = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0,
+      delayChildren: 0,
+    },
+  },
+};
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -83,6 +95,16 @@ const containerVariants = {
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariantsReduced = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0,
     },
   },
 };
@@ -99,6 +121,12 @@ const itemVariants = {
   },
 };
 
+// Static variant for reduced motion - no animation
+const floatVariantsReduced = {
+  initial: false,
+  animate: false,
+};
+
 // Floating animation variants for background tech elements
 const floatVariants = {
   initial: { y: 0 },
@@ -113,21 +141,24 @@ const floatVariants = {
 };
 
 export const HeroSection: React.FC = () => {
+  const shouldReduceMotion = useReducedMotion() ?? false;
+
+  // Use motion-safe variants when reduced motion is preferred
+  const activeContainerVariants = shouldReduceMotion ? containerVariantsReduced : containerVariants;
+  const activeItemVariants = shouldReduceMotion ? itemVariantsReduced : itemVariants;
+
   return (
     <section className="relative flex min-h-[90vh] items-center justify-center overflow-hidden bg-[hsl(var(--background))]">
       {/* Subtle background pattern - minimal, professional */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.015] dark:opacity-[0.03]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}
+        className="pointer-events-none absolute inset-0 opacity-[0.015] dark:opacity-[0.03] bg-[url('data:image/svg+xml,%3Csvg%20width=%2760%27%20height=%2760%27%20viewBox=%270%200%2060%2060%27%20xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cg%20fill=%27none%27%20fill-rule=%27evenodd%27%3E%3Cg%20fill=%27%23000%27%20fill-opacity=%271%27%3E%3Cpath%20d=%27M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"
       />
 
       {/* Single accent line - distinctive, not overwhelming */}
       <div className="pointer-events-none absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-[hsl(var(--primary))]/20 to-transparent" />
 
       {/* Background tech keywords - subtle, faded, non-distracting */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         {/* Desktop keywords (hidden on mobile) */}
         <div className="hidden md:block">
           {BACKGROUND_TECH.map((tech, index) => (
@@ -181,13 +212,13 @@ export const HeroSection: React.FC = () => {
 
       <MaxWidthWrapper>
         <m.div
-          variants={containerVariants}
+          variants={activeContainerVariants}
           initial="hidden"
           animate="visible"
           className="relative z-20 px-4 py-16"
         >
           {/* Availability Badge */}
-          <m.div variants={itemVariants} className="mb-5 flex justify-center">
+          <m.div variants={activeItemVariants} className="mb-5 flex justify-center">
             <Badge
               variant="outline"
               className="border-emerald-500/50 bg-emerald-500/10 px-4 py-1 text-emerald-600 dark:border-emerald-400/50 dark:bg-emerald-400/10 dark:text-emerald-400"
@@ -199,7 +230,7 @@ export const HeroSection: React.FC = () => {
 
           {/* Name - Bold, distinctive, large */}
           <m.h1
-            variants={itemVariants}
+            variants={activeItemVariants}
             className="mb-1 text-center font-bold tracking-tight"
           >
             <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
@@ -209,7 +240,7 @@ export const HeroSection: React.FC = () => {
 
           {/* Title - Clear, professional */}
           <m.p
-            variants={itemVariants}
+            variants={activeItemVariants}
             className="mb-4 text-center text-xl text-muted-foreground sm:text-2xl md:text-3xl"
           >
             Full-Stack Developer
@@ -217,7 +248,7 @@ export const HeroSection: React.FC = () => {
 
           {/* Location & Experience - Quick credibility signals */}
           <m.div
-            variants={itemVariants}
+            variants={activeItemVariants}
             className="mb-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-sm text-muted-foreground sm:text-base"
           >
             <span className="flex items-center gap-1.5">
@@ -232,7 +263,7 @@ export const HeroSection: React.FC = () => {
 
           {/* Tagline - Short, punchy, no marketing speak */}
           <m.p
-            variants={itemVariants}
+            variants={activeItemVariants}
             className="mx-auto mb-8 max-w-xl text-center text-base text-muted-foreground sm:text-lg"
           >
             Building scalable web applications that solve real problems.
@@ -241,7 +272,7 @@ export const HeroSection: React.FC = () => {
 
           {/* CTAs - Distinctive, valuable actions */}
           <m.div
-            variants={itemVariants}
+            variants={activeItemVariants}
             className="flex flex-col items-center justify-center gap-3 sm:flex-row"
           >
             <Button

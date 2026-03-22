@@ -19,7 +19,7 @@ export const Layout: React.FC = () => {
 
       <div className="min-h-screen flex flex-col">
         <Navbar />
-        <main id="main-content" role="main" className="flex-1 pt-16">
+        <main id="main-content" role="main" className="flex-1 pt-16" tabIndex={-1}>
           <Suspense fallback={<div className="h-full flex items-center justify-center"><LoadingSpinner size="lg" /></div>}>
             <Outlet />
           </Suspense>

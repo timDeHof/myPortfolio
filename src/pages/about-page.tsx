@@ -1,12 +1,12 @@
 import { m } from "framer-motion";
-import { 
-  Download, 
-  ExternalLink, 
-  Palette, 
-  Cog, 
-  Wrench, 
+import {
+  Download,
+  ExternalLink,
+  Palette,
+  Cog,
+  Wrench,
   HardHat,
-  Monitor, 
+  Monitor,
   GraduationCap,
   Handshake,
   Cloud,
@@ -14,7 +14,7 @@ import {
   BookOpen,
   Users,
   Code2,
-  type LucideIcon 
+  type LucideIcon
 } from "lucide-react";
 import React from "react";
 
@@ -50,13 +50,37 @@ import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
 import { env } from "../lib/env";
 import { pageSEO } from "../utils/seo";
 
-// Enhanced skills with actual technology icons (removed proficiency)
-const skillCategories: Array<{
+// Type definitions for about page data
+interface Skill {
+  name: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  color: string;
+}
+
+interface SkillCategory {
   category: string;
   icon: LucideIcon;
   color: string;
-  skills: Array<{ name: string; icon: React.ComponentType<{ size?: number; className?: string }>; color: string }>;
-}> = [
+  skills: Skill[];
+}
+
+interface TimelineEntry {
+  year: string;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  color: string;
+}
+
+interface CoreValue {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  gradient: string;
+}
+
+// Enhanced skills with actual technology icons (removed proficiency)
+const skillCategories: SkillCategory[] = [
   {
     category: "Frontend Development",
     icon: Palette,
@@ -107,13 +131,7 @@ const skillCategories: Array<{
   },
 ];
 
-const timeline: Array<{
-  year: string;
-  title: string;
-  description: string;
-  icon: LucideIcon;
-  color: string;
-}> = [
+const timeline: TimelineEntry[] = [
   {
     year: "2024 - Present",
     title: "Frontend Engineer",
@@ -152,12 +170,7 @@ const timeline: Array<{
 ];
 
 // Core values data
-const coreValues: Array<{
-  title: string;
-  description: string;
-  icon: LucideIcon;
-  gradient: string;
-}> = [
+const coreValues: CoreValue[] = [
   {
     title: "Quality over Quantity",
     description: "Every project receives full attention to detail and thoughtful implementation.",
@@ -186,7 +199,7 @@ const coreValues: Array<{
 
 // Skill card component with actual technology icons
 const SkillCard: React.FC<{
-  skill: { name: string; icon: React.ComponentType<any>; color: string };
+  skill: Skill;
   index: number;
 }> = ({ skill, index }) => {
   const IconComponent = skill.icon;
@@ -326,13 +339,13 @@ export const AboutPage: React.FC = () => {
               </div>
             </div>
             <div className="relative">
-              <Card className="bg-gradient-to-br from-blue-50 via-teal-50 to-purple-50 dark:from-blue-900/20 dark:via-teal-900/20 dark:to-purple-900/20 border-gray-200 dark:border-slate-600 overflow-hidden relative group">
+              <Card className="bg-gradient-to-br from-blue-50 via-teal-50 to-purple-50 dark:from-blue-900/20 dark:via-teal-900/20 dark:to-purple-900/20 border-gray-200 dark:border-slate-600 overflow-hidden relative">
                 <CardContent className="p-8 relative">
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8 flex items-center justify-center gap-2">
                     <Sparkles className="w-5 h-5 text-teal-600 dark:text-teal-400" />
                     Core Values
                   </h3>
-                  
+
                   {/* Hybrid Layout - 2x2 grid with magazine styling */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {coreValues.map((value, index) => (
@@ -346,10 +359,10 @@ export const AboutPage: React.FC = () => {
                       >
                         {/* Card container with hover effects */}
                         <div className="group relative bg-white/60 dark:bg-slate-800/60 rounded-2xl p-5 border border-gray-200 dark:border-slate-600 hover:border-transparent hover:shadow-xl transition-all duration-300 overflow-hidden h-full">
-                          
+
                           {/* Background gradient that appears on hover */}
                           <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${value.gradient} -z-10`} />
-                          
+
                           <div className="flex items-start gap-4">
                             {/* Large icon with glow effect */}
                             <div className="relative flex-shrink-0">
@@ -358,7 +371,7 @@ export const AboutPage: React.FC = () => {
                                 <value.icon className="w-7 h-7 text-white" />
                               </div>
                             </div>
-                            
+
                             {/* Content */}
                             <div className="flex-1 min-w-0">
                               <h4 className="text-base font-bold text-gray-900 dark:text-gray-100 mb-1 group-hover:text-white dark:group-hover:text-white transition-colors">
@@ -369,7 +382,7 @@ export const AboutPage: React.FC = () => {
                               </p>
                             </div>
                           </div>
-                          
+
                           {/* Bottom accent line */}
                           <div className={`absolute bottom-0 left-0 h-1 w-0 group-hover:w-full bg-gradient-to-r ${value.gradient} transition-all duration-500 rounded-br-xl`} />
                         </div>
@@ -503,7 +516,7 @@ export const AboutPage: React.FC = () => {
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-teal-400 to-blue-500 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-tr from-purple-400 to-pink-500 rounded-full blur-3xl" />
         </div>
-        
+
         <MaxWidthWrapper className="relative">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
@@ -518,7 +531,7 @@ export const AboutPage: React.FC = () => {
           <div className="relative max-w-5xl mx-auto">
             {/* Center vertical line */}
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-teal-200 via-teal-400 to-teal-200 dark:from-teal-800 dark:via-teal-600 dark:to-teal-800 rounded-full hidden md:block" />
-            
+
             {/* Timeline items - alternating layout */}
             <div className="space-y-12 md:space-y-0">
               {timeline.map((item, index) => {
@@ -544,14 +557,14 @@ export const AboutPage: React.FC = () => {
                           <span className="w-2 h-2 rounded-full bg-current animate-pulse" />
                           {item.year}
                         </div>
-                        
+
                         <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-teal-700 dark:group-hover:text-teal-300 transition-colors">
                           {item.title}
                         </h3>
                         <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                           {item.description}
                         </p>
-                        
+
                         {/* Decorative gradient line */}
                         <div className={`h-1 w-12 rounded-full mt-6 ${isLeft ? "md:ml-auto" : ""} bg-gradient-to-r from-teal-400 to-blue-500 group-hover:w-24 transition-all duration-500`} />
                       </Card>
@@ -569,7 +582,7 @@ export const AboutPage: React.FC = () => {
                     </div>
 
                     {/* Mobile: Icon above card */}
-                    <div className="flex md:hidden items-center gap-4 mb-4 w-full">
+                    <div className="flex md:hidden items-center gap-4 mb-4 w-full order-first">
                       <div className={`w-12 h-12 rounded-xl ${item.color} flex items-center justify-center shadow-lg flex-shrink-0`}>
                         <item.icon size={20} className="text-white" />
                       </div>
