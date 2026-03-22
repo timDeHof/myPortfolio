@@ -96,6 +96,9 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4.1.18
         version: 4.1.18
+      '@tanstack/router-cli':
+        specifier: ^1.166.17
+        version: 1.166.17
       '@testing-library/jest-dom':
         specifier: ^6.9.1
         version: 6.9.1
@@ -2899,6 +2902,11 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  '@tanstack/router-cli@1.166.17':
+    resolution: {integrity: sha512-B65egNACz0gnC54VJnL7BQJABd4Y+LhbzWD1FhQm/c2kTFZ4Hnd9uajPIR7e6jbGJ9NFr6SJQY7jQjhCQFUJkw==}
+    engines: {node: '>=20.19'}
+    hasBin: true
 
   '@tanstack/router-core@1.168.2':
     resolution: {integrity: sha512-9wHR7syfY7y/qrvTvv8bugh6mrKk58TuiSQp44nbGW0BpE2+IIta1DBeL5jHr9AD1a+c5fVKSu/JXsKeniUc9w==}
@@ -10416,6 +10424,14 @@ snapshots:
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
       use-sync-external-store: 1.6.0(react@19.2.3)
+
+  '@tanstack/router-cli@1.166.17':
+    dependencies:
+      '@tanstack/router-generator': 1.166.16
+      chokidar: 3.6.0
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - supports-color
 
   '@tanstack/router-core@1.168.2':
     dependencies:

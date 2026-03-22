@@ -8,7 +8,6 @@ import { usePortfolioData } from "@hooks/usePortfolioData";
 import { useTheme } from "@hooks/use-theme";
 import { env } from "@/lib/env";
 import { DEFAULT_NAV_ITEMS } from "@/lib/constants";
-import { routeTree } from "../../routeTree.gen";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +54,7 @@ export function Navbar() {
         <div className="inner">
           <div className="left">
           <Link
-            to={routeTree.index}
+            to="/"
             className="brand"
             >
             <CodeXml className="logo" />
