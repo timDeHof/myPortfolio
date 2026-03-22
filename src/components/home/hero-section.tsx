@@ -136,19 +136,6 @@ const createFloatVariants = (delay: number): Variants => ({
   },
 });
 
-// Keep for backwards compatibility reference, but we'll generate per-element
-const _floatVariantsReference = {
-  initial: { y: 0 },
-  animate: {
-    y: [0, -8, 0],
-    transition: {
-      duration: 6,
-      repeat: Infinity,
-      ease: [0.45, 0, 0.55, 1] as const,
-    },
-  },
-};
-
 export const HeroSection: React.FC = () => {
   const shouldReduceMotion = useReducedMotion() ?? false;
 
@@ -182,12 +169,7 @@ export const HeroSection: React.FC = () => {
                 animate="animate"
                 className={`absolute ${tech.position} ${tech.size} font-bold tracking-tight select-none text-muted-foreground`}
               >
-                <span
-                  className="bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, hsl(var(--muted-foreground) / 0.15) 0%, hsl(var(--foreground) / 0.08) 100%)`,
-                  }}
-                >
+                <span className="bg-clip-text text-transparent bg-[linear-gradient(135deg,hsl(var(--muted-foreground)/0.15)_0%,hsl(var(--foreground)/0.08)_100%)]">
                   {tech.name}
                 </span>
               </m.div>
@@ -209,12 +191,7 @@ export const HeroSection: React.FC = () => {
                 animate="animate"
                 className={`absolute ${tech.position} ${tech.size} font-bold tracking-tight select-none text-muted-foreground`}
               >
-                <span
-                  className="bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, hsl(var(--muted-foreground) / 0.12) 0%, hsl(var(--foreground) / 0.06) 100%)`,
-                  }}
-                >
+                <span className="bg-clip-text text-transparent bg-[linear-gradient(135deg,hsl(var(--muted-foreground)/0.12)_0%,hsl(var(--foreground)/0.06)_100%)]">
                   {tech.name}
                 </span>
               </m.div>
@@ -236,7 +213,11 @@ export const HeroSection: React.FC = () => {
               variant="outline"
               className="border-emerald-500/50 bg-emerald-500/10 px-4 py-1 text-emerald-600 dark:border-emerald-400/50 dark:bg-emerald-400/10 dark:text-emerald-400"
             >
-              <span className="mr-2 inline-block h-2 w-2 animate-pulse rounded-full bg-emerald-500 dark:bg-emerald-400" />
+              <m.span
+                className="mr-2 inline-block h-2 w-2 rounded-full bg-emerald-500 dark:bg-emerald-400"
+                animate={shouldReduceMotion ? {} : { scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                transition={shouldReduceMotion ? {} : { duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              />
               Available for opportunities
             </Badge>
           </m.div>

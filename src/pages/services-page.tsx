@@ -91,9 +91,9 @@ export const ServicesPage: React.FC = () => {
       <section className="py-20 bg-slate-50 dark:bg-slate-900">
         <MaxWidthWrapper>
           <m.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.8 }}
             className="text-center"
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-gray-100 mb-6">
@@ -268,7 +268,7 @@ export const ServicesPage: React.FC = () => {
 
                       {/* Text Content */}
                       <div>
-                        <h3 className="text-xl lg:text-xl font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors duration-300">
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors duration-300">
                           {phase.title}
                         </h3>
                         <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
