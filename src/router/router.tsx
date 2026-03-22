@@ -21,10 +21,26 @@ const PageLoader: React.FC = () => (
   </div>
 );
 
+// Search params schema for projects page
+interface ProjectsSearchSchema {
+  project?: string;
+}
+
 // Root route with layout
 const rootRoute = createRootRoute({
   component: () => (
     <Layout />
+  ),
+  notFoundComponent: () => (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">404</h1>
+        <p className="text-gray-600 dark:text-gray-400 mb-6">Page not found</p>
+        <a href="/" className="text-teal-600 hover:text-teal-700 dark:text-teal-400">
+          Go home
+        </a>
+      </div>
+    </div>
   ),
 });
 
@@ -54,7 +70,7 @@ const aboutRoute = createRoute({
 const projectsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/projects",
-  validateSearch: (search: Record<string, unknown>) => {
+  validateSearch: (search: Record<string, unknown>): ProjectsSearchSchema => {
     return {
       project: search.project as string | undefined,
     };
@@ -125,6 +141,8 @@ const routeTree = rootRoute.addChildren([
 export const router = createRouter({
   routeTree,
   defaultPreload: "intent",
+  defaultPreloadStaleTime: 0,
+  scrollRestoration: true,
 });
 
 // Type declaration for route matching
@@ -133,3 +151,6 @@ declare module "@tanstack/react-router" {
     router: typeof router;
   }
 }
+
+// Export route tree for programmatic access
+export { routeTree, rootRoute };

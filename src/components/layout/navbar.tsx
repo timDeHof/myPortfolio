@@ -40,6 +40,14 @@ export function Navbar() {
     };
   }, [isOpen]);
 
+  // Helper to check if a path is active
+  const isPathActive = (path: string) => {
+    if (path === "/") {
+      return location.pathname === "/";
+    }
+    return location.pathname.startsWith(path);
+  };
+
   return (
     <header role="banner" className="navbar">
       <MaxWidthWrapper>
@@ -60,12 +68,11 @@ export function Navbar() {
               <Link
                 key={item.href}
                 to={item.href}
-                className={`${location.pathname === item.href
-                  ? "is-selected" : "not-selected"}`}
-                aria-current={location.pathname === item.href ? "page" : undefined}
+                className={isPathActive(item.href) ? "is-selected" : "not-selected"}
+                aria-current={isPathActive(item.href) ? "page" : undefined}
               >
                 {item.name}
-                {location.pathname === item.href && (
+                {isPathActive(item.href) && (
                   <m.div
                     layoutId="activeTab"
                     className="link-select"
@@ -145,9 +152,8 @@ export function Navbar() {
                     <Link
                       to={item.href}
                       onClick={() => setIsOpen(false)}
-                      className={`${location.pathname === item.href
-                        ? "is-selected" : "not-selected" }`}
-                      aria-current={location.pathname === item.href ? "page" : undefined}
+                      className={isPathActive(item.href) ? "is-selected" : "not-selected"}
+                      aria-current={isPathActive(item.href) ? "page" : undefined}
                     >
                       <span>{item.name}</span>
                     </Link>

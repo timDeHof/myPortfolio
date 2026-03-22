@@ -7,6 +7,7 @@ import { lazy, Suspense } from "react";
 import { ErrorBoundary } from "./components/common/error-boundary";
 import { router } from "./router/router";
 import { RouterProvider } from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useTheme } from "./hooks/use-theme";
 import { env } from "./lib/env";
 import { queryClient } from "./lib/query-client";
@@ -21,6 +22,10 @@ function AppContent() {
   return (
     <div className="App">
       <RouterProvider router={router} />
+      {/* TanStack Router Devtools - only in development */}
+      {env.VITE_NODE_ENV === "development" && (
+        <TanStackRouterDevtools initialIsOpen={false} position="bottom-right" />
+      )}
     </div>
   );
 }
