@@ -50,11 +50,42 @@ import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
 import { env } from "../lib/env";
 import { pageSEO } from "../utils/seo";
 
+// Color token types for Tailwind-compatible theming
+type SkillColorVariant = 
+  | "react" | "typescript" | "nextjs" | "tailwind" | "framermotion"
+  | "nodejs" | "express" | "postgresql" | "mongodb" | "restapi"
+  | "git" | "docker" | "aws" | "vercel" | "figma"
+  | "printing" | "mechanical" | "problem" | "team" | "system";
+
+// Map color tokens to Tailwind background/text classes
+const skillColorMap: Record<SkillColorVariant, { bg: string; border: string; shadow: string }> = {
+  react: { bg: "bg-[#61DAFB]/10", border: "border-[#61DAFB]/30", shadow: "shadow-[#61DAFB]/20" },
+  typescript: { bg: "bg-[#3178C6]/10", border: "border-[#3178C6]/30", shadow: "shadow-[#3178C6]/20" },
+  nextjs: { bg: "bg-slate-900/10", border: "border-slate-900/30", shadow: "shadow-slate-900/20" },
+  tailwind: { bg: "bg-cyan-500/10", border: "border-cyan-500/30", shadow: "shadow-cyan-500/20" },
+  framermotion: { bg: "bg-pink-500/10", border: "border-pink-500/30", shadow: "shadow-pink-500/20" },
+  nodejs: { bg: "bg-[#339933]/10", border: "border-[#339933]/30", shadow: "shadow-[#339933]/20" },
+  express: { bg: "bg-slate-900/10", border: "border-slate-900/30", shadow: "shadow-slate-900/20" },
+  postgresql: { bg: "bg-[#336791]/10", border: "border-[#336791]/30", shadow: "shadow-[#336791]/20" },
+  mongodb: { bg: "bg-[#47A248]/10", border: "border-[#47A248]/30", shadow: "shadow-[#47A248]/20" },
+  restapi: { bg: "bg-orange-500/10", border: "border-orange-500/30", shadow: "shadow-orange-500/20" },
+  git: { bg: "bg-[#F05032]/10", border: "border-[#F05032]/30", shadow: "shadow-[#F05032]/20" },
+  docker: { bg: "bg-[#2496ED]/10", border: "border-[#2496ED]/30", shadow: "shadow-[#2496ED]/20" },
+  aws: { bg: "bg-[#FF9900]/10", border: "border-[#FF9900]/30", shadow: "shadow-[#FF9900]/20" },
+  vercel: { bg: "bg-slate-900/10", border: "border-slate-900/30", shadow: "shadow-slate-900/20" },
+  figma: { bg: "bg-[#F24E1E]/10", border: "border-[#F24E1E]/30", shadow: "shadow-[#F24E1E]/20" },
+  printing: { bg: "bg-orange-500/10", border: "border-orange-500/30", shadow: "shadow-orange-500/20" },
+  mechanical: { bg: "bg-blue-500/10", border: "border-blue-500/30", shadow: "shadow-blue-500/20" },
+  problem: { bg: "bg-purple-500/10", border: "border-purple-500/30", shadow: "shadow-purple-500/20" },
+  team: { bg: "bg-red-500/10", border: "border-red-500/30", shadow: "shadow-red-500/20" },
+  system: { bg: "bg-emerald-500/10", border: "border-emerald-500/30", shadow: "shadow-emerald-500/20" },
+};
+
 // Type definitions for about page data
 interface Skill {
   name: string;
   icon: React.ComponentType<{ size?: number; className?: string }>;
-  color: string;
+  colorVariant: SkillColorVariant;
 }
 
 interface SkillCategory {
@@ -86,11 +117,11 @@ const skillCategories: SkillCategory[] = [
     icon: Palette,
     color: "from-blue-700 to-cyan-700 dark:from-blue-400 dark:to-cyan-400",
     skills: [
-      { name: "React", icon: ReactIcon, color: "#61DAFB" },
-      { name: "TypeScript", icon: TypeScriptIcon, color: "#3178C6" },
-      { name: "Next.js", icon: NextJSIcon, color: "#000000" },
-      { name: "Tailwind CSS", icon: TailwindIcon, color: "#06B6D4" },
-      { name: "Framer Motion", icon: FramerIcon, color: "#FF3366" },
+      { name: "React", icon: ReactIcon, colorVariant: "react" },
+      { name: "TypeScript", icon: TypeScriptIcon, colorVariant: "typescript" },
+      { name: "Next.js", icon: NextJSIcon, colorVariant: "nextjs" },
+      { name: "Tailwind CSS", icon: TailwindIcon, colorVariant: "tailwind" },
+      { name: "Framer Motion", icon: FramerIcon, colorVariant: "framermotion" },
     ],
   },
   {
@@ -98,11 +129,11 @@ const skillCategories: SkillCategory[] = [
     icon: Cog,
     color: "from-teal-700 to-emerald-700 dark:from-teal-400 dark:to-emerald-400",
     skills: [
-      { name: "Node.js", icon: NodeJSIcon, color: "#339933" },
-      { name: "Express", icon: ExpressIcon, color: "#000000" },
-      { name: "PostgreSQL", icon: PostgreSQLIcon, color: "#336791" },
-      { name: "MongoDB", icon: MongoDBIcon, color: "#47A248" },
-      { name: "REST APIs", icon: APIIcon, color: "#FF6B35" },
+      { name: "Node.js", icon: NodeJSIcon, colorVariant: "nodejs" },
+      { name: "Express", icon: ExpressIcon, colorVariant: "express" },
+      { name: "PostgreSQL", icon: PostgreSQLIcon, colorVariant: "postgresql" },
+      { name: "MongoDB", icon: MongoDBIcon, colorVariant: "mongodb" },
+      { name: "REST APIs", icon: APIIcon, colorVariant: "restapi" },
     ],
   },
   {
@@ -110,11 +141,11 @@ const skillCategories: SkillCategory[] = [
     icon: Wrench,
     color: "from-purple-700 to-pink-700 dark:from-purple-400 dark:to-pink-400",
     skills: [
-      { name: "Git", icon: GitIcon, color: "#F05032" },
-      { name: "Docker", icon: DockerIcon, color: "#2496ED" },
-      { name: "AWS", icon: AWSIcon, color: "#FF9900" },
-      { name: "Vercel", icon: VercelIcon, color: "#000000" },
-      { name: "Figma", icon: FigmaIcon, color: "#F24E1E" },
+      { name: "Git", icon: GitIcon, colorVariant: "git" },
+      { name: "Docker", icon: DockerIcon, colorVariant: "docker" },
+      { name: "AWS", icon: AWSIcon, colorVariant: "aws" },
+      { name: "Vercel", icon: VercelIcon, colorVariant: "vercel" },
+      { name: "Figma", icon: FigmaIcon, colorVariant: "figma" },
     ],
   },
   {
@@ -122,11 +153,11 @@ const skillCategories: SkillCategory[] = [
     icon: HardHat,
     color: "from-slate-600 to-slate-500 dark:from-slate-300 dark:to-slate-400",
     skills: [
-      { name: "3D Printing", icon: PrintingIcon, color: "#FF6B35" },
-      { name: "Mechanical Engineering", icon: MechanicalIcon, color: "#4A90E2" },
-      { name: "Problem Solving", icon: PuzzleIcon, color: "#8E44AD" },
-      { name: "Team Leadership", icon: TeamIcon, color: "#E74C3C" },
-      { name: "System Design", icon: SystemIcon, color: "#2ECC71" },
+      { name: "3D Printing", icon: PrintingIcon, colorVariant: "printing" },
+      { name: "Mechanical Engineering", icon: MechanicalIcon, colorVariant: "mechanical" },
+      { name: "Problem Solving", icon: PuzzleIcon, colorVariant: "problem" },
+      { name: "Team Leadership", icon: TeamIcon, colorVariant: "team" },
+      { name: "System Design", icon: SystemIcon, colorVariant: "system" },
     ],
   },
 ];
@@ -204,6 +235,7 @@ const SkillCard: React.FC<{
   shouldReduceMotion: boolean;
 }> = ({ skill, index, shouldReduceMotion }) => {
   const IconComponent = skill.icon;
+  const colorClasses = skillColorMap[skill.colorVariant];
 
   return (
     <m.div
@@ -218,12 +250,11 @@ const SkillCard: React.FC<{
       }}
       className="group"
     >
-      <Card className="h-full bg-white dark:bg-slate-800 hover:shadow-2xl dark:hover:shadow-2xl transition-all duration-500 border-gray-200 dark:border-slate-600 rounded-2xl overflow-hidden">
+      <Card className={`h-full bg-white dark:bg-slate-800 hover:shadow-2xl dark:hover:shadow-2xl transition-all duration-500 border-gray-200 dark:border-slate-600 rounded-2xl overflow-hidden ${colorClasses.shadow}`}>
         <CardContent className="p-6 relative">
           {/* Background gradient overlay */}
           <div
-            className="absolute inset-0 opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-500"
-            style={{ backgroundColor: skill.color }}
+            className={`absolute inset-0 opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-500 ${colorClasses.bg}`}
           />
 
           {/* Icon and title */}
@@ -241,8 +272,7 @@ const SkillCard: React.FC<{
 
             {/* Technology color indicator */}
             <m.div
-              className="w-full h-1 rounded-full"
-              style={{ backgroundColor: skill.color }}
+              className={`w-full h-1 rounded-full ${colorClasses.bg}`}
               initial={shouldReduceMotion ? undefined : { scaleX: 0 }}
               whileInView={shouldReduceMotion ? undefined : { scaleX: 1 }}
               transition={shouldReduceMotion ? undefined : { duration: 0.8, delay: index * 0.1 }}
@@ -252,12 +282,10 @@ const SkillCard: React.FC<{
 
           {/* Decorative elements */}
           <div
-            className="absolute top-4 right-4 w-2 h-2 rounded-full opacity-20 group-hover:opacity-40 transition-opacity"
-            style={{ backgroundColor: skill.color }}
+            className={`absolute top-4 right-4 w-2 h-2 rounded-full opacity-20 group-hover:opacity-40 transition-opacity ${colorClasses.bg}`}
           />
           <div
-            className="absolute bottom-4 left-4 w-1 h-1 rounded-full opacity-30 group-hover:opacity-60 transition-opacity"
-            style={{ backgroundColor: skill.color }}
+            className={`absolute bottom-4 left-4 w-1 h-1 rounded-full opacity-30 group-hover:opacity-60 transition-opacity ${colorClasses.bg}`}
           />
         </CardContent>
       </Card>
@@ -547,15 +575,15 @@ export const AboutPage: React.FC = () => {
                     whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
                     transition={shouldReduceMotion ? undefined : { duration: 0.6, delay: index * 0.15 }}
                     viewport={{ once: true, margin: "-50px" }}
-                    className={`relative flex flex-col md:flex-row items-center ${
+                    className={`group relative flex flex-col md:flex-row items-center ${
                       isLeft ? "md:flex-row" : "md:flex-row-reverse"
                     }`}
                   >
                     {/* Content Card */}
                     <div className={`w-full md:w-[calc(50%-2rem)] ${isLeft ? "md:pr-16 md:text-right" : "md:pl-16 md:text-left"} mb-8 md:mb-0`}>
-                      <Card className="group p-6 md:p-8 hover:shadow-2xl transition-all duration-500 bg-white dark:bg-slate-800 border-0 md:border md:border-gray-100 dark:md:border-slate-700 shadow-lg hover:-translate-y-1">
-                        {/* Year badge */}
-                        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold mb-4 ${
+                      <Card className="p-6 md:p-8 hover:shadow-2xl transition-all duration-500 bg-white dark:bg-slate-800 border-0 md:border md:border-gray-100 dark:md:border-slate-700 shadow-lg hover:-translate-y-1">
+                        {/* Year badge - hidden on mobile, shown from md up */}
+                        <div className={`hidden md:inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold mb-4 ${
                           isLeft ? "bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300" : "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
                         }`}>
                           <span className={`w-2 h-2 rounded-full bg-current ${shouldReduceMotion ? "" : "animate-pulse"}`} />

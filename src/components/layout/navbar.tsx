@@ -120,6 +120,7 @@ export function Navbar() {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
               className="mobile-menu"
+              id="mobile-menu"
               ref={mobileNavRef}
             >
               <m.div
@@ -146,6 +147,7 @@ export function Navbar() {
                       onClick={() => setIsOpen(false)}
                       className={`${location.pathname === item.href
                         ? "is-selected" : "not-selected" }`}
+                      aria-current={location.pathname === item.href ? "page" : undefined}
                     >
                       <span>{item.name}</span>
                     </Link>

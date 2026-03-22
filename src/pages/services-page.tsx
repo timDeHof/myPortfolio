@@ -124,11 +124,11 @@ export const ServicesPage: React.FC = () => {
             {services.map((service, index) => (
               <m.div
                 key={service.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                transition={shouldReduceMotion ? { duration: 0.5, delay: index * 0.1 } : { duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -4 }}
+                whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                 className="group"
               >
                 <Card className="h-full bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-2xl">
@@ -173,11 +173,11 @@ export const ServicesPage: React.FC = () => {
             {additionalServices.map((service, index) => (
               <m.div
                 key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                transition={shouldReduceMotion ? { duration: 0.5, delay: index * 0.1 } : { duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -4 }}
+                whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                 className="group"
               >
                 <Card className="h-full bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 shadow-md hover:shadow-lg transition-shadow duration-300">
@@ -301,8 +301,8 @@ export const ServicesPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <m.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -20 }}
+              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
@@ -323,8 +323,8 @@ export const ServicesPage: React.FC = () => {
             </m.div>
 
             <m.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
             >
@@ -345,8 +345,8 @@ export const ServicesPage: React.FC = () => {
             </m.div>
 
             <m.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: 20 }}
+              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
             >
