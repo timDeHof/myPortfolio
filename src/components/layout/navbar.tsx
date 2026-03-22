@@ -6,8 +6,8 @@ import { CodeXml, Download, Menu, Moon, Sun, X } from "lucide-react";
 import { MaxWidthWrapper } from "@components/ui/max-width-wrapper";
 import { usePortfolioData } from "@hooks/usePortfolioData";
 import { useTheme } from "@hooks/use-theme";
-import { env } from "@lib/env";
-import { DEFAULT_NAV_ITEMS } from "@lib/constants";
+import { env } from "@/lib/env";
+import { DEFAULT_NAV_ITEMS } from "@/lib/constants";
 import { routeTree } from "../../routes/-routeTree.gen";
 
 export function Navbar() {

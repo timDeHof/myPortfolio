@@ -4,7 +4,7 @@ import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { Separator } from "../ui/separator";
 import { usePortfolioData } from "@hooks/usePortfolioData";
 import { Link } from "@tanstack/react-router";
-import { DEFAULT_NAV_ITEMS } from "@lib/constants";
+import { DEFAULT_NAV_ITEMS } from "@/lib/constants";
 import { Route as ContactRoute } from "../../routes/contact";
 
 const socialIconMap = {
