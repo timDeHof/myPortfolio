@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { BackToTopButton } from "./back-to-top-button";
 import { ScrollIndicator } from "./scroll-indicator";
+import { env } from "@/lib/env";
 
 // Background tech keywords for desktop (md: and larger)
 // Positioned around edges with generous spacing from center content
@@ -293,7 +294,7 @@ export const HeroSection: React.FC = () => {
               className="group w-full sm:w-auto"
             >
               <a
-                href="/TimDeHof-Resume.pdf"
+                 href={env.VITE_RESUME_URL}
                 download
                 target="_blank"
                 rel="noopener noreferrer"
