@@ -7,7 +7,7 @@ import { lazy, Suspense } from "react";
 import { ErrorBoundary } from "./components/common/error-boundary";
 import { RouterProvider } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
-import { routeTree } from "./routes/-routeTree.gen";
+import { routeTree } from "./routeTree.gen";
 import { useTheme } from "./hooks/use-theme";
 import { env } from "./lib/env";
 import { queryClient } from "./lib/query-client";

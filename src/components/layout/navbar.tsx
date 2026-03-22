@@ -8,7 +8,7 @@ import { usePortfolioData } from "@hooks/usePortfolioData";
 import { useTheme } from "@hooks/use-theme";
 import { env } from "@/lib/env";
 import { DEFAULT_NAV_ITEMS } from "@/lib/constants";
-import { routeTree } from "../../routes/-routeTree.gen";
+import { routeTree } from "../../routeTree.gen";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
