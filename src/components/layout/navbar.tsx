@@ -1,13 +1,13 @@
 import { AnimatePresence, m } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import {Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "@tanstack/react-router";
 import { CodeXml, Download, Menu, Moon, Sun, X } from "lucide-react";
 
-import { MaxWidthWrapper } from "../ui/max-width-wrapper";
+import { MaxWidthWrapper } from "@components/ui/max-width-wrapper";
 import { usePortfolioData } from "@hooks/usePortfolioData";
 import { useTheme } from "@hooks/use-theme";
-import { env } from "../../lib/env";
-import { DEFAULT_NAV_ITEMS } from "../../lib/constants";
+import { env } from "@/lib/env";
+import { DEFAULT_NAV_ITEMS } from "@/lib/constants";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,13 +40,31 @@ export function Navbar() {
     };
   }, [isOpen]);
 
+  // Helper to check if a path is active (for styling - uses prefix match)
+  const isPathActive = (path: string) => {
+    if (path === "/") {
+      return location.pathname === "/";
+    }
+    return location.pathname.startsWith(path);
+  };
+
+  // Helper for exact path match (for aria-current accessibility)
+  const isExactPath = (path: string) => {
+    if (path === "/") {
+      return location.pathname === "/";
+    }
+    // Check exact match or match with trailing slash
+    return location.pathname === path || location.pathname === path + "/";
+  };
+
   return (
-    <nav className="navbar">
+    <header role="banner" className="navbar">
       <MaxWidthWrapper>
         <div className="inner">
           <div className="left">
           <Link
             to="/"
+            preload="intent"
             className="brand"
             >
             <CodeXml className="logo" />
@@ -55,17 +73,17 @@ export function Navbar() {
               </span>
           </Link>
             </div>
-          <div className="links">
+          <nav aria-label="Primary" className="links">
             {navItems.map(item => (
               <Link
                 key={item.href}
                 to={item.href}
-                className={`${location.pathname === item.href
-                  ? "is-selected" : "not-selected"}`}
-                aria-current={location.pathname === item.href ? "page" : undefined}
+                preload="intent"
+                className={isPathActive(item.href) ? "is-selected" : "not-selected"}
+                aria-current={isExactPath(item.href) ? "page" : undefined}
               >
                 {item.name}
-                {location.pathname === item.href && (
+                {isPathActive(item.href) && (
                   <m.div
                     layoutId="activeTab"
                     className="link-select"
@@ -75,12 +93,12 @@ export function Navbar() {
                 )}
               </Link>
             ))}
-              </div>
+              </nav>
           <div className="right hidden md:flex">
             <button
               type="button"
               onClick={toggleTheme}
-              className="not-selected flex items-center gap-1 mr-4"
+              className="not-selected flex items-center justify-center min-w-[44px] min-h-[44px] -ml-2"
               aria-label={`Switch to ${effectiveTheme === "dark" ? "light" : "dark"} mode`}
             >
               {effectiveTheme === "dark" ? <Moon size={18} /> : <Sun size={18} />}
@@ -102,7 +120,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={toggleMenu}
-              className="toggle-menu"
+              className="toggle-menu min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label="Toggle menu"
               aria-expanded={isOpen}
               aria-controls="mobile-menu"
@@ -120,9 +138,10 @@ export function Navbar() {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
               className="mobile-menu"
+              id="mobile-menu"
               ref={mobileNavRef}
             >
-              <m.div 
+              <m.div
                 className="mobile-content"
                 initial="closed"
                 animate="open"
@@ -132,6 +151,7 @@ export function Navbar() {
                   closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
                 }}
               >
+                <nav aria-label="Mobile navigation">
                 {navItems.map(item => (
                   <m.div
                     key={item.href}
@@ -142,14 +162,16 @@ export function Navbar() {
                   >
                     <Link
                       to={item.href}
+                      preload="intent"
                       onClick={() => setIsOpen(false)}
-                      className={`${location.pathname === item.href
-                        ? "is-selected" : "not-selected" }`}
+                      className={isPathActive(item.href) ? "is-selected" : "not-selected"}
+                      aria-current={isPathActive(item.href) ? "page" : undefined}
                     >
                       <span>{item.name}</span>
                     </Link>
                   </m.div>
                 ))}
+                </nav>
                 <m.div
                   variants={{
                     open: { opacity: 1, y: 0 },
@@ -192,6 +214,6 @@ export function Navbar() {
           )}
         </AnimatePresence>
       </MaxWidthWrapper>
-    </nav>
+    </header>
   );
 }
