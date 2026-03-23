@@ -1,4 +1,4 @@
-import { m } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   CheckCircle,
@@ -114,6 +114,8 @@ const philosophy = [
 ];
 
 export const ServicesSection: React.FC = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <AnimatedSection
       id="services-section"
@@ -122,8 +124,8 @@ export const ServicesSection: React.FC = () => {
       {/* Section Header */}
       <MaxWidthWrapper>
         <m.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
+          whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
           className="text-center mb-16"
@@ -144,11 +146,11 @@ export const ServicesSection: React.FC = () => {
             {services.map((service, index) => (
               <m.div
                 key={service.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
+                whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -4 }}
+                whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                 className="group h-full"
               >
                 <Card className="h-full shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-100 dark:border-slate-600 rounded-2xl">
@@ -208,8 +210,8 @@ export const ServicesSection: React.FC = () => {
       {/* Development Philosophy Section */}
       <MaxWidthWrapper>
         <m.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
+          whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
           className="mb-16"
@@ -227,8 +229,8 @@ export const ServicesSection: React.FC = () => {
             {philosophy.map((phase, index) => (
               <m.div
                 key={phase.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
+                whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 className="text-center"
@@ -255,8 +257,8 @@ export const ServicesSection: React.FC = () => {
       {/* Value Proposition & CTA */}
       <MaxWidthWrapper>
         <m.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
+          whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           viewport={{ once: true }}
           className="text-center"

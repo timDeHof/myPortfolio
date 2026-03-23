@@ -215,8 +215,8 @@ export const ServicesPage: React.FC = () => {
               {processSteps.map((phase, index) => (
                 <m.div
                   key={phase.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                  whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
                   className="relative"
@@ -233,7 +233,7 @@ export const ServicesPage: React.FC = () => {
 
                   {/* Process Card */}
                   <m.div
-                    whileHover={{ y: -4 }}
+                    whileHover={shouldReduceMotion ? undefined : { y: -4 }}
                     transition={{ duration: 0.2 }}
                     className="group relative bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-100 dark:border-slate-700 transition-shadow duration-300"
                   >
@@ -373,8 +373,8 @@ export const ServicesPage: React.FC = () => {
       <AnimatedSection className="py-20 bg-teal-700 dark:bg-teal-800 text-white">
         <MaxWidthWrapper className="text-center">
           <m.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >

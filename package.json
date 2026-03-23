@@ -16,7 +16,7 @@
     "prepare": "git submodule update --init --recursive",
     "dev": "vite",
     "dev:pages": "pnpm run build && pnpm exec wrangler pages dev build --port 4173",
-    "build": "vite build && tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint",
     "lint:fix": "eslint --fix",

@@ -269,21 +269,23 @@ export const HeroSection: React.FC = () => {
             variants={activeItemVariants}
             className="flex flex-col items-center justify-center gap-3 sm:flex-row"
           >
-            <Button
-              asChild
-              size="lg"
-              className="group w-full sm:w-auto"
-            >
-              <a
-                 href={env.VITE_RESUME_URL}
-                download
-                target="_blank"
-                rel="noopener noreferrer"
+            {env.VITE_RESUME_URL && (
+              <Button
+                asChild
+                size="lg"
+                className="group w-full sm:w-auto"
               >
-                <Download className="h-5 w-5 transition-transform group-hover:translate-y-0.5" />
-                Download Resume
-              </a>
-            </Button>
+                <a
+                  href={env.VITE_RESUME_URL}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Download className="h-5 w-5 transition-transform group-hover:translate-y-0.5" />
+                  Download Resume
+                </a>
+              </Button>
+            )}
             <Button
               variant="outline"
               size="lg"

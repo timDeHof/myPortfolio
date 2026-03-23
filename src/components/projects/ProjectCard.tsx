@@ -142,7 +142,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, on
 
           <div className="flex gap-2">
             <Button size="sm" asChild className="bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white">
-              <Link to={`/projects/${project.slug}`}>
+              <Link to={`/projects/${project.slug}`} preload="intent">
                 View Details
                 <ArrowRight className="h-4 w-4 ml-1" />
               </Link>

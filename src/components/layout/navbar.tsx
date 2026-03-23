@@ -40,12 +40,21 @@ export function Navbar() {
     };
   }, [isOpen]);
 
-  // Helper to check if a path is active
+  // Helper to check if a path is active (for styling - uses prefix match)
   const isPathActive = (path: string) => {
     if (path === "/") {
       return location.pathname === "/";
     }
     return location.pathname.startsWith(path);
+  };
+
+  // Helper for exact path match (for aria-current accessibility)
+  const isExactPath = (path: string) => {
+    if (path === "/") {
+      return location.pathname === "/";
+    }
+    // Check exact match or match with trailing slash
+    return location.pathname === path || location.pathname === path + "/";
   };
 
   return (
@@ -71,7 +80,7 @@ export function Navbar() {
                 to={item.href}
                 preload="intent"
                 className={isPathActive(item.href) ? "is-selected" : "not-selected"}
-                aria-current={isPathActive(item.href) ? "page" : undefined}
+                aria-current={isExactPath(item.href) ? "page" : undefined}
               >
                 {item.name}
                 {isPathActive(item.href) && (

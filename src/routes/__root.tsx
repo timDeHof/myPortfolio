@@ -1,4 +1,4 @@
-import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { createRootRoute, Outlet, Link } from "@tanstack/react-router";
 import { Navbar } from "../components/layout/navbar";
 import { Footer } from "../components/layout/footer";
 
@@ -27,9 +27,9 @@ export const Route = createRootRoute({
       <div className="text-center">
         <h1 className="text-6xl font-bold text-gray-900 dark:text-gray-100 mb-4">404</h1>
         <p className="text-xl text-gray-600 dark:text-gray-400 mb-6">Page not found</p>
-        <a href="/" className="text-teal-600 hover:text-teal-700 dark:text-teal-400 text-lg">
+        <Link to="/" className="text-teal-600 hover:text-teal-700 dark:text-teal-400 text-lg">
           Go home
-        </a>
+        </Link>
       </div>
     </div>
   ),
