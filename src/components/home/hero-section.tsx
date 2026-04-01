@@ -235,7 +235,7 @@ export const HeroSection: React.FC = () => {
           {/* Title - Clear, professional */}
           <m.p
             variants={activeItemVariants}
-            className="mb-4 text-center text-xl text-muted-foreground sm:text-2xl md:text-3xl"
+            className="mb-4 text-center text-xl text-secondary sm:text-2xl md:text-3xl"
           >
             Full-Stack Developer
           </m.p>
@@ -258,7 +258,7 @@ export const HeroSection: React.FC = () => {
           {/* Tagline - Short, punchy, no marketing speak */}
           <m.p
             variants={activeItemVariants}
-            className="mx-auto mb-8 max-w-xl text-center text-base text-muted-foreground sm:text-lg"
+            className="mx-auto mb-8 max-w-xl text-center text-base text-slate-400 leading-relaxed sm:text-lg"
           >
             Building scalable web applications that solve real problems.
             Focused on clean code and maintainable architecture.

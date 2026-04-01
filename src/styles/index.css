@@ -4,9 +4,18 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * DESIGN SYSTEM - Updated per DESIGN.md
+ * Primary: #3b82f6 (Blue 500) | Secondary: #14b8a6 (Teal 500)
+ * Dark Background: #0f172a | Font: Inter | Border Radius: 8px
+ */
+
 @theme inline {
+  /* Light Mode Colors */
   --color-background: 0 0% 100%;
   --color-foreground: 222.2 84% 4.9%;
+  --color-text-primary: 222.2 84% 4.9%;
+  --color-text-secondary: 215.4 16.3% 46.9%;
   --color-muted: 210 40% 98%;
   --color-muted-foreground: 215.4 16.3% 46.9%;
   --color-popover: 0 0% 100%;
@@ -15,38 +24,47 @@
   --color-input: 214.3 31.8% 91.4%;
   --color-card: 0 0% 100%;
   --color-card-foreground: 222.2 84% 4.9%;
-  --color-primary: 262.1 83.3% 57.8%;
-  --color-primary-foreground: 210 40% 98%;
-  --color-secondary: 210 40% 98%;
-  --color-secondary-foreground: 222.2 84% 4.9%;
+  /* Primary: Blue #3b82f6 */
+  --color-primary: 217.2 91.2% 53.9%;
+  --color-primary-foreground: 0 0% 100%;
+  /* Secondary: Teal #14b8a6 */
+  --color-secondary: 171.6 77.4% 41.6%;
+  --color-secondary-foreground: 0 0% 100%;
   --color-accent: 210 40% 98%;
   --color-accent-foreground: 222.2 84% 4.9%;
   --color-destructive: 0 84.2% 60.2%;
-  --color-destructive-foreground: 210 40% 98%;
-  --color-ring: 262.1 83.3% 57.8%;
+  --color-destructive-foreground: 0 0% 100%;
+  --color-ring: 217.2 91.2% 53.9%;
   --color-blue-600: 211 100% 43%;
   --color-blue-400: 212 97% 61%;
+  --color-teal-600: 172 80% 33%;
+  --color-teal-400: 168 73% 46%;
   --radius: 0.5rem;
 
-  --dark-background: 229 25% 34%;
-  --dark-foreground: 227 34% 75%;
-  --dark-muted: 227 23% 44%;
-  --dark-muted-foreground: 227 31% 71%;
-  --dark-popover: 229 25% 34%;
-  --dark-popover-foreground: 227 34% 75%;
-  --dark-border: 227 23% 44%;
-  --dark-input: 227 23% 44%;
-  --dark-card: 229 25% 34%;
-  --dark-card-foreground: 227 34% 75%;
-  --dark-primary: 258 86% 79%;
-  --dark-primary-foreground: 229 25% 34%;
-  --dark-secondary: 170 47% 65%;
-  --dark-secondary-foreground: 229 25% 34%;
+  /* Dark Mode Colors - #0f172a background */
+  --dark-background: 222.2 47.4% 5.9%;
+  --dark-foreground: 210 40% 96.1%;
+  --dark-text-primary: 210 40% 96.1%;
+  --dark-text-secondary: 215 20% 65.1%;
+  --dark-muted: 215 20% 17.5%;
+  --dark-muted-foreground: 215 20% 65.1%;
+  --dark-popover: 215 27.3% 11.8%;
+  --dark-popover-foreground: 210 40% 96.1%;
+  --dark-border: 215 20% 23.5%;
+  --dark-input: 215 20% 23.5%;
+  --dark-card: 215 27.3% 11.8%;
+  --dark-card-foreground: 210 40% 96.1%;
+  /* Primary: Blue #3b82f6 (lighter for dark mode) */
+  --dark-primary: 217.2 91.2% 65.9%;
+  --dark-primary-foreground: 222.2 47.4% 5.9%;
+  /* Secondary: Teal #14b8a6 */
+  --dark-secondary: 171.6 77.4% 40.4%;
+  --dark-secondary-foreground: 222.2 47.4% 5.9%;
   --dark-accent: 35 65% 64%;
-  --dark-accent-foreground: 229 25% 34%;
+  --dark-accent-foreground: 222.2 47.4% 5.9%;
   --dark-destructive: 0 62.8% 30.6%;
-  --dark-destructive-foreground: 210 40% 98%;
-  --dark-ring: 258 86% 79%;
+  --dark-destructive-foreground: 0 0% 100%;
+  --dark-ring: 217.2 91.2% 65.9%;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -78,6 +96,8 @@
   :root {
     --background: var(--color-background);
     --foreground: var(--color-foreground);
+    --text-primary: var(--color-text-primary);
+    --text-secondary: var(--color-text-secondary);
     --muted: var(--color-muted);
     --muted-foreground: var(--color-muted-foreground);
     --popover: var(--color-popover);
@@ -101,6 +121,8 @@
   .dark {
     --background: var(--dark-background);
     --foreground: var(--dark-foreground);
+    --text-primary: var(--dark-text-primary);
+    --text-secondary: var(--dark-text-secondary);
     --muted: var(--dark-muted);
     --muted-foreground: var(--dark-muted-foreground);
     --popover: var(--dark-popover);
@@ -153,25 +175,25 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-800;
+  @apply bg-slate-100 dark:bg-slate-800;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply rounded bg-gray-400 dark:bg-gray-600;
+  @apply rounded bg-slate-400 dark:bg-slate-600;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-500 dark:bg-gray-700;
+  @apply bg-slate-500 dark:bg-slate-700;
 }
 
 /* Focus visible styling */
 *:focus-visible {
-  @apply outline-offset-2 outline-3 outline-blue-600 dark:outline-blue-400;
+  @apply outline-offset-2 outline-3 outline-primary dark:outline-primary;
 }
 
 /* Selection styling */
 ::selection {
-  @apply bg-blue-200 text-blue-900 dark:bg-blue-900 dark:text-blue-100;
+  @apply bg-blue-200 text-blue-900 dark:bg-blue-800 dark:text-blue-100;
 }
 
 /* Print styles */
@@ -203,7 +225,7 @@
   }
 
   .focus-ring {
-    @apply outline-offset-2 outline-3 outline-blue-600 dark:outline-blue-400;
+    @apply outline-offset-2 outline-3 outline-primary dark:outline-primary;
   }
 
   .btn {
@@ -230,11 +252,11 @@
     }
 
     &.btn--link {
-      @apply text-secondary underline-offset-4 hover:underline;
+      @apply text-primary underline-offset-4 hover:underline;
     }
 
     &.btn--default {
-      @apply h-9 px-4 py-9;
+      @apply h-9 px-4 py-2;
     }
 
     &.btn--sm {
@@ -248,9 +270,9 @@
     &.btn--icon {
       @apply h-9 w-9;
     }
-}
+  }
   .navbar {
-    @apply fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 shadow-sm;
+    @apply fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 shadow-sm;
 
     .inner {
       @apply flex items-center justify-between h-16;
@@ -261,15 +283,19 @@
         .brand {
           @apply flex items-center space-x-2 cursor-pointer;
 
-          .brand-gradient {
-            @apply bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 dark:from-slate-300 dark:via-slate-200 dark:to-slate-300 bg-clip-text text-transparent hover:from-slate-800 hover:via-slate-700 hover:to-slate-800 dark:hover:from-slate-100 dark:hover:via-slate-200 dark:hover:to-slate-100 transition-all;
-          }
-          .logo {
-            @apply w-6 h-6;
+            .lucide {
+              color: #14b8a6;
+              stroke-width: 2px;
+              width: 32px;
+              height: 32px;
+            }
           }
 
+
           .name {
-            @apply text-xl font-extrabold;
+            @apply text-xl font-bold tracking-tighter;
+            /* Light mode: dark text, Dark mode: white text */
+            @apply text-slate-800 dark:text-white;
           }
         }
       }
@@ -278,45 +304,51 @@
 
         a {
           @apply relative px-3 py-2 text-sm font-medium transition-colors cursor-pointer;
+          color: hsl(var(--color-text-secondary));
 
-          &.is-selected {
-            @apply text-teal-800 dark:text-teal-300;
+          &:hover {
+            color: hsl(var(--color-primary));
           }
 
-          &.not-selected {
-            @apply text-gray-700 dark:text-gray-300 hover:text-teal-800 dark:hover:text-teal-300;
+          &.is-selected {
+            color: hsl(var(--color-primary));
           }
 
           .link-select {
-            @apply absolute bottom-0 left-0 right-0 h-0.5 bg-teal-800 dark:bg-teal-300;
+            @apply absolute bottom-0 left-0 right-0 h-0.5;
+            background-color: hsl(var(--color-primary));
           }
         }
       }
       .mobile {
         @apply md:hidden;
         .toggle-menu {
-           @apply p-2 text-gray-700 dark:text-gray-300 hover:text-teal-700 dark:hover:text-teal-400 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800;
+           @apply p-2 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800;
 
           &.open {
-            @apply bg-gray-200 dark:bg-gray-700;
+            @apply bg-slate-200 dark:bg-slate-700;
           }
         }
       }
     }
     .mobile-menu {
-      @apply md:hidden border-t border-gray-200 dark:border-gray-700;
+      @apply md:hidden border-t border-slate-200 dark:border-slate-700;
 
       .mobile-content {
         @apply py-4 space-y-2;
 
         a {
-          @apply flex items-center space-x-3 px-4 py-3 text-sm font-medium transition-colors rounded-lg hover:text-teal-700 dark:hover:text-teal-400 cursor-pointer;
+          @apply flex items-center space-x-3 px-4 py-3 text-sm font-medium transition-colors rounded-lg cursor-pointer;
+          color: hsl(var(--color-text-secondary));
 
-           &.is-selected {
-            @apply text-teal-800 dark:text-teal-300 bg-teal-50 dark:bg-teal-900/20;
+          &:hover {
+            color: hsl(var(--color-primary));
+            background-color: hsl(var(--color-muted));
           }
-          &.not-selected {
-            @apply text-gray-700 dark:text-gray-300 hover:text-teal-800 dark:hover:text-teal-300 hover:bg-gray-50 dark:hover:bg-gray-800;
+
+          &.is-selected {
+            color: hsl(var(--color-primary));
+            background-color: hsl(var(--color-primary) / 0.1);
           }
         }
       }
@@ -324,7 +356,7 @@
   }
 
   .footer {
-    @apply bg-gradient-to-br from-gray-900 via-slate-900 to-gray-900 text-white pt-16 pb-8;
+    @apply bg-gradient-to-br from-slate-900 via-slate-900 to-slate-900 text-white pt-16 pb-8;
 
     .inner {
       @apply mx-auto px-4;
@@ -336,11 +368,11 @@
           @apply text-center md:text-left;
 
           h3 {
-            @apply text-2xl font-bold mb-4 bg-gradient-to-r from-blue-300 via-teal-300 to-purple-400 bg-clip-text text-transparent;
+            @apply text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 via-teal-400 to-blue-400 bg-clip-text text-transparent;
           }
 
           p {
-            @apply text-gray-400 mb-6 leading-relaxed;
+            @apply text-slate-400 mb-6 leading-relaxed;
           }
           .actions {
             @apply flex items-center justify-center md:justify-start space-x-4;
@@ -354,7 +386,7 @@
             @apply flex flex-col;
 
             a {
-              @apply flex items-center text-gray-400 hover:text-teal-400 transition-all duration-300 py-3 px-4 md:py-2 md:px-0 rounded-xl md:rounded-none hover:bg-gray-800 md:hover:bg-transparent text-center md:text-left font-medium hover:translate-x-1 md:hover:translate-x-2;
+              @apply flex items-center text-slate-400 hover:text-teal-400 transition-all duration-300 py-3 px-4 md:py-2 md:px-0 rounded-xl md:rounded-none hover:bg-slate-800 md:hover:bg-transparent text-center md:text-left font-medium hover:translate-x-1 md:hover:translate-x-2;
             }
           }
           .contacts {
@@ -363,13 +395,13 @@
               @apply border-teal-600 bg-teal-600 text-white hover:bg-teal-700 hover:border-teal-700 dark:border-teal-400 dark:text-white dark:hover:bg-teal-900/20 w-full md:w-auto;
 
               a {
-                @apply text-gray-400 hover:text-gray-200 transition-colors;
+                @apply text-slate-400 hover:text-slate-200 transition-colors;
               }
             }
             .socials {
-              @apply flex justify-center w-full space-x-4 pt-2 border-t border-gray-700 md:border-t-0 md:pt-0 md:w-auto md:justify-start;
+              @apply flex justify-center w-full space-x-4 pt-2 border-t border-slate-700 md:border-t-0 md:pt-0 md:w-auto md:justify-start;
               a {
-                @apply text-gray-400 hover:text-teal-400 transition-all duration-300 p-3 hover:bg-gray-800 rounded-xl hover:scale-110;
+                @apply text-slate-400 hover:text-teal-400 transition-all duration-300 p-3 hover:bg-slate-800 rounded-xl hover:scale-110;
               }
             }
           }
@@ -379,17 +411,17 @@
         }
       }
       .separator {
-        @apply bg-gray-700 mb-6;
+        @apply bg-slate-700 mb-6;
       }
       .bottom {
         @apply flex md:flex-row items-center justify-between space-y-4 md:space-y-0;
 
         .copyright {
-          @apply text-gray-300 text-sm text-center md:text-left;
+          @apply text-slate-300 text-sm text-center md:text-left;
         }
 
         .back-to-top {
-          @apply flex items-center space-x-2 text-gray-300 hover:text-teal-400 transition-all duration-300 py-2 px-4 rounded-lg hover:bg-gray-800;
+          @apply flex items-center space-x-2 text-slate-300 hover:text-teal-400 transition-all duration-300 py-2 px-4 rounded-lg hover:bg-slate-800;
           & .back-to-top-icon {
             @apply h-4 w-4 hover:-translate-y-1 transition-transform;
           }
@@ -400,5 +432,4 @@
       }
     }
   }
-}
 

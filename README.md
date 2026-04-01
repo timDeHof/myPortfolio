@@ -4,20 +4,22 @@ A modern, responsive portfolio website built with React, TypeScript, and Tailwin
 
 ## Features
 
-- 🚀 Modern React with TypeScript
-- 🎨 Beautiful UI with Tailwind CSS and Framer Motion
+- 🚀 Modern React 19 with TypeScript
+- 🎨 Beautiful UI with Tailwind CSS v4 and Framer Motion
 - 📱 Fully responsive design
 - 📧 Contact form with EmailJS integration and auto-reply
 - ⚡ Fast performance with Vite
 - 🔍 SEO optimized
 - ♿ Accessible design
+- 📊 GitHub integration with contribution calendar and stats
+- 📝 Blog with content from git submodule
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
-- npm or yarn
+- Node.js (v20 or higher)
+- pnpm (v10 or higher)
 
 ### Installation
 
@@ -29,7 +31,7 @@ cd portfolio
 
 2. Install dependencies:
 ```bash
-npm install
+pnpm install
 ```
 
 3. Set up environment variables:
@@ -41,7 +43,7 @@ cp .env.example .env
 
 5. Start the development server:
 ```bash
-npm run dev
+pnpm dev
 ```
 
 ## EmailJS Setup
@@ -162,47 +164,149 @@ The auto-reply is optional - if you don't configure the `VITE_EMAILJS_AUTO_REPLY
 
 ## Available Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
+### Development
+```bash
+pnpm dev              # Start development server
+pnpm dev:pages        # Build and run with Cloudflare Pages
+```
+
+### Building
+```bash
+pnpm build            # Build for production
+pnpm preview          # Preview production build
+pnpm preview:worker   # Preview Cloudflare Worker
+```
+
+### Testing
+```bash
+pnpm test             # Run all tests
+pnpm test:browser     # Run browser tests with Playwright
+pnpm coverage         # Run tests with coverage report
+```
+
+### Linting and Type Checking
+```bash
+pnpm lint             # Run ESLint
+pnpm lint:fix         # Fix ESLint issues
+pnpm type-check       # Run TypeScript type check
+```
+
+### Deployment
+```bash
+pnpm deploy:worker    # Deploy Cloudflare Worker
+pnpm deploy:pages     # Deploy to Cloudflare Pages
+```
+
+## Blog Content
+
+The blog posts are loaded from a git submodule at `src/content/blog/`.
+
+### Updating Blog Posts
+
+```bash
+# Pull latest from blog submodule
+git submodule update --remote src/content/blog
+
+# Or run prepare script (runs automatically with pnpm install)
+pnpm prepare
+```
+
+### Build Requirements
+
+The submodule must be initialized before building:
+```bash
+pnpm install    # Runs prepare script via pnpm
+```
+
+## Testing
+
+The project uses Vitest for testing with @testing-library/react.
+
+### Test Structure
+
+- Unit tests: `src/services/api/__tests__/filename.test.ts`
+- Component tests: `tests/components/path/ComponentName.test.tsx`
+
+### Running Tests
+
+```bash
+# Run all tests
+pnpm test
+
+# Run a single test file
+pnpm test src/services/api/__tests__/github.test.ts
+
+# Run tests matching a pattern
+pnpm test -- --run "AnimatedIcon"
+
+# Run browser tests
+pnpm test:browser
+
+# Run tests with coverage
+pnpm coverage
+```
 
 ## Project Structure
 
 ```
 src/
 ├── components/          # Reusable UI components
-│   ├── common/         # Common components
-│   ├── layout/         # Layout components
-│   └── ui/             # UI components
+│   ├── blog/           # Blog components
+│   ├── common/         # Common components (SEO, animations, etc.)
+│   ├── contact/        # Contact components
+│   ├── github/         # GitHub integration components
+│   ├── home/           # Home page components
+│   ├── kibo-ui/        # Custom UI components
+│   ├── layout/         # Layout components (navbar, footer)
+│   ├── projects/       # Project components
+│   └── ui/             # UI components (shadcn/ui style)
 ├── data/               # Static data
 ├── hooks/              # Custom React hooks
+│   └── queries/        # TanStack Query hooks
+├── lib/                # Library utilities
 ├── pages/              # Page components
-├── services/           # External services (EmailJS, etc.)
-├── store/              # State management
-├── types/              # TypeScript type definitions
-├── utils/              # Utility functions
-└── index.tsx           # App entry point
+├── routes/             # React Router routes (file-based)
+├── services/           # External services (EmailJS, API)
+│   └── api/           # API services
+├── store/              # Zustand store
+├── styles/             # CSS styles
+├── types/              # TypeScript types
+└── utils/              # Utility functions
 ```
 
 ## Technologies Used
 
-- **React 18** - UI library
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
+- **React 19** - UI library
+- **TypeScript** - Type safety with strict mode
+- **Tailwind CSS v4** - Styling
 - **Framer Motion** - Animations
-- **React Router** - Routing
+- **TanStack Router** - File-based routing with lazy loading
+- **TanStack Query** - Server state management
 - **EmailJS** - Contact form functionality with auto-reply
 - **Vite** - Build tool
-- **Zustand** - State management
+- **Zustand** - Global state management
+- **Vitest** - Testing
+- **ESLint** - Code linting (Antfu's config)
+- **Zod** - Environment validation
 
 ## Deployment
 
-The project is configured for easy deployment to platforms like:
+The project is configured for deployment to:
 
+- **Cloudflare Pages** (primary)
 - Vercel
 - Netlify
 - GitHub Pages
+
+### Cloudflare Pages Deployment
+
+```bash
+# Deploy to Cloudflare Pages
+pnpm deploy:pages
+
+# Or deploy to Cloudflare Worker
+pnpm deploy:worker
+```
 
 Simply connect your repository and the platform will automatically build and deploy your site.
 

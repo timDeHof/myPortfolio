@@ -1,7 +1,7 @@
 import { AnimatePresence, m } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { CodeXml, Download, Menu, Moon, Sun, X } from "lucide-react";
+import { SquareTerminal, Download, Menu, Moon, Sun, X } from "lucide-react";
 
 import { MaxWidthWrapper } from "@components/ui/max-width-wrapper";
 import { usePortfolioData } from "@hooks/usePortfolioData";
@@ -67,8 +67,8 @@ export function Navbar() {
             preload="intent"
             className="brand"
             >
-            <CodeXml className="logo" />
-            <span className="name brand-gradient">
+            <SquareTerminal className="logo" />
+            <span className="name">
               Tim DeHof
               </span>
           </Link>
