@@ -16,6 +16,35 @@ interface ProjectCardProps {
 
 const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=200&fit=crop&auto=format&q=80";
 
+interface ProjectCardHeaderProps {
+  imageUrl: string;
+  project: Project;
+}
+
+/**
+ * Shared header with background image, number badge, and difficulty badge.
+ */
+const ProjectCardHeader: React.FC<ProjectCardHeaderProps> = ({ imageUrl, project }) => (
+  <div className="relative">
+    <div
+      className="h-48 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
+      style={{
+        backgroundImage: `url(${imageUrl})`,
+        backgroundColor: project.accentColor || "#1e293b"
+      }}
+    />
+    <div className="absolute top-3 left-3 bg-white/90 dark:bg-slate-800/90 px-2 py-1 rounded text-sm font-bold" style={{ color: project.accentColor }}>
+      {project.number}
+    </div>
+    {project.difficulty && (
+      <div className="absolute top-3 right-3 flex items-center space-x-1 bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 px-2 py-1 rounded-full text-xs font-medium">
+        <Star className="h-3 w-3" />
+        <span>{project.difficulty}</span>
+      </div>
+    )}
+  </div>
+);
+
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, onClick }) => {
   const imageUrl = project.image || DEFAULT_IMAGE;
 
@@ -30,24 +59,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, on
     >
       <Card className="h-full hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700">
         <CardContent className="p-0">
-          <div className="relative">
-            <div
-              className="h-48 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
-              style={{ 
-                backgroundImage: `url(${imageUrl})`,
-                backgroundColor: project.accentColor || "#1e293b"
-              }}
-            />
-            <div className="absolute top-3 left-3 bg-white/90 dark:bg-slate-800/90 px-2 py-1 rounded text-sm font-bold" style={{ color: project.accentColor }}>
-              {project.number}
-            </div>
-            {project.difficulty && (
-              <div className="absolute top-3 right-3 flex items-center space-x-1 bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 px-2 py-1 rounded-full text-xs font-medium">
-                <Star className="h-3 w-3" />
-                <span>{project.difficulty}</span>
-              </div>
-            )}
-          </div>
+          <ProjectCardHeader imageUrl={imageUrl} project={project} />
           <div className="p-6">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-1">
               {project.name}
@@ -72,30 +84,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, on
       className="group"
     >
       <Card className="h-full hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700">
-        <div className="relative">
-          <div
-            className="h-48 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
-            style={{ 
-              backgroundImage: `url(${imageUrl})`,
-              backgroundColor: project.accentColor || "#1e293b"
-            }}
-          />
-          <div className="absolute top-3 left-3 bg-white/90 dark:bg-slate-800/90 px-2 py-1 rounded text-sm font-bold" style={{ color: project.accentColor }}>
-            {project.number}
-          </div>
-          {project.difficulty && (
-            <div className="absolute top-3 right-3 flex items-center space-x-1 bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 px-2 py-1 rounded-full text-xs font-medium">
-              <Star className="h-3 w-3" />
-              <span>{project.difficulty}</span>
-            </div>
-          )}
-        </div>
+        <ProjectCardHeader imageUrl={imageUrl} project={project} />
 
         <CardContent className="p-6">
           <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-1">
             {project.name}
           </h3>
-          
+
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
             {project.tagline}
           </p>
@@ -142,7 +137,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, on
 
           <div className="flex gap-2">
             <Button size="sm" asChild className="bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white">
-              <Link to={`/projects/${project.slug}`} preload="intent">
+              <Link to={`/projects/$slug`} params={{ slug: project.slug }} preload="intent">
                 View Details
                 <ArrowRight className="h-4 w-4 ml-1" />
               </Link>
