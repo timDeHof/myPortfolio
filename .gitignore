@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist
+build
 dist-ssr
 *.local
 .env
@@ -35,3 +36,4 @@ GEMINI.md
 .agents/*
 .kombai
 .vscode
+.fallow
