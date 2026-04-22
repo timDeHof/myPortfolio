@@ -1,4 +1,7 @@
 import { useEffect } from "react";
+// fallow-ignore-file
+// TanStack Router's file routes require importing Route from generated route file
+// This is a false positive - runtime works correctly with this pattern
 import { Github } from "lucide-react";
 import React, { lazy, Suspense } from "react";
 import { useNavigate } from "@tanstack/react-router";
