@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://portfolio-api.ttdehof.workers.dev/api";
+import { API_BASE, fetchGitHubJson, type GitHubContentResponse } from "@/lib/github-api";
 
 export interface ServiceCard {
   id: number;
@@ -79,23 +79,11 @@ interface GitHubContentResponse {
 }
 
 async function fetchPortfolioData(): Promise<PortfolioData> {
-  const url = `${API_BASE}/github/repos/timDeHof/portfolio-metadata/contents/portfolio.json`;
-  const response = await fetch(url);
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch portfolio data: ${response.status}`);
+  const result = await fetchGitHubJson<PortfolioData>("timDeHof", "portfolio-metadata", "portfolio.json");
+  if (!result) {
+    throw new Error("No portfolio data found");
   }
-
-  const data: GitHubContentResponse = await response.json();
-
-  if (data.content) {
-    const decoded = new TextDecoder().decode(
-      Uint8Array.from(atob(data.content.replace(/\n/g, "")), c => c.charCodeAt(0))
-    );
-    return JSON.parse(decoded);
-  }
-
-  throw new Error("No content in response");
+  return result;
 }
 
 export function usePortfolioData() {
