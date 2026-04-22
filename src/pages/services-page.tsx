@@ -17,6 +17,80 @@ const serviceIcons = {
   "Web Development": <Code className="size-8" />,
 };
 
+interface ServiceCardWrapperProps {
+  children: React.ReactNode;
+  index: number;
+  shouldReduceMotion: boolean;
+  className?: string;
+  delayMultiplier?: number;
+}
+
+/**
+ * Shared wrapper with framer-motion animation for service cards.
+ */
+const ServiceCardWrapper: React.FC<ServiceCardWrapperProps> = ({
+  children,
+  index,
+  shouldReduceMotion,
+  className = "",
+  delayMultiplier = 0.1,
+}) => (
+  <m.div
+    initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+    whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay: index * delayMultiplier }}
+    viewport={{ once: true }}
+    whileHover={shouldReduceMotion ? undefined : { y: -4 }}
+    className={className}
+  >
+    {children}
+  </m.div>
+);
+
+interface TechCardProps {
+  icon: React.ReactNode;
+  title: string;
+  items: string[];
+  index: number;
+  shouldReduceMotion: boolean;
+  animationDelay?: number;
+  initial?: { opacity: number; x?: number; y?: number };
+}
+
+/**
+ * Shared tech stack card component.
+ */
+const TechCard: React.FC<TechCardProps> = ({
+  icon,
+  title,
+  items,
+  index,
+  shouldReduceMotion,
+  animationDelay = 0,
+  initial,
+}) => (
+  <m.div
+    initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, ...initial }}
+    whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0, y: 0 }}
+    transition={{ duration: 0.6, delay: animationDelay }}
+    viewport={{ once: true }}
+  >
+    <Card className="h-full bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-md">
+      <CardContent className="p-6 bg-white dark:bg-slate-800">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
+          {icon}
+          {title}
+        </h3>
+        <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+          {items.map(item => (
+            <div key={item}>• {item}</div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  </m.div>
+);
+
 const additionalServices = [
   {
     icon: <Globe className="size-8" />,
@@ -122,15 +196,7 @@ export const ServicesPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <m.div
-                key={service.id}
-                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-                transition={shouldReduceMotion ? { duration: 0.5, delay: index * 0.1 } : { duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={shouldReduceMotion ? undefined : { y: -4 }}
-                className="group"
-              >
+              <ServiceCardWrapper key={service.id} index={index} shouldReduceMotion={shouldReduceMotion} className="group">
                 <Card className="h-full bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-2xl">
                   <CardContent className="p-8 text-center bg-white dark:bg-slate-800 rounded-2xl">
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-700 dark:bg-teal-600 text-white rounded-full mb-6 group-hover:scale-105 transition-transform duration-300">
@@ -150,7 +216,7 @@ export const ServicesPage: React.FC = () => {
                     </div>
                   </CardContent>
                 </Card>
-              </m.div>
+              </ServiceCardWrapper>
             ))}
           </div>
         </MaxWidthWrapper>
@@ -171,15 +237,7 @@ export const ServicesPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {additionalServices.map((service, index) => (
-              <m.div
-                key={service.title}
-                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-                transition={shouldReduceMotion ? { duration: 0.5, delay: index * 0.1 } : { duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={shouldReduceMotion ? undefined : { y: -4 }}
-                className="group"
-              >
+              <ServiceCardWrapper key={service.title} index={index} shouldReduceMotion={shouldReduceMotion} className="group">
                 <Card className="h-full bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 shadow-md hover:shadow-lg transition-shadow duration-300">
                   <CardContent className="p-6 text-center bg-white dark:bg-slate-900 rounded-2xl">
                     <div className={`inline-flex items-center justify-center w-12 h-12 ${service.color} text-white rounded-full mb-4 group-hover:scale-105 transition-transform duration-300`}>
@@ -191,7 +249,7 @@ export const ServicesPage: React.FC = () => {
                     <p className="text-gray-700 dark:text-gray-300 text-base leading-relaxed">{service.description}</p>
                   </CardContent>
                 </Card>
-              </m.div>
+              </ServiceCardWrapper>
             ))}
           </div>
         </MaxWidthWrapper>
@@ -300,71 +358,33 @@ export const ServicesPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <m.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -20 }}
-              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Card className="h-full bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-md">
-                <CardContent className="p-6 bg-white dark:bg-slate-800">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
-                    <Code className="h-5 w-5 mr-2 text-teal-700 dark:text-teal-400" />
-                    Frontend
-                  </h3>
-                  <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                    <div>• React & TypeScript</div>
-                    <div>• Next.js & Tailwind CSS</div>
-                    <div>• Framer Motion</div>
-                    <div>• Responsive Design</div>
-                  </div>
-                </CardContent>
-              </Card>
-            </m.div>
-
-            <m.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              viewport={{ once: true }}
-            >
-              <Card className="h-full bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-md">
-                <CardContent className="p-6 bg-white dark:bg-slate-800">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
-                    <Zap className="h-5 w-5 mr-2 text-teal-700 dark:text-teal-400" />
-                    Backend
-                  </h3>
-                  <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                    <div>• Node.js & Express</div>
-                    <div>• PostgreSQL & MongoDB</div>
-                    <div>• REST APIs & GraphQL</div>
-                    <div>• Authentication & Security</div>
-                  </div>
-                </CardContent>
-              </Card>
-            </m.div>
-
-            <m.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: 20 }}
-              whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <Card className="h-full bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-md">
-                <CardContent className="p-6 bg-white dark:bg-slate-800">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
-                    <Wrench className="h-5 w-5 mr-2 text-teal-700 dark:text-teal-400" />
-                    DevOps
-                  </h3>
-                  <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                    <div>• Docker & AWS</div>
-                    <div>• CI/CD Pipelines</div>
-                    <div>• Git & Version Control</div>
-                    <div>• Performance Monitoring</div>
-                  </div>
-                </CardContent>
-              </Card>
-            </m.div>
+            <TechCard
+              icon={<Code className="h-5 w-5 mr-2 text-teal-700 dark:text-teal-400" />}
+              title="Frontend"
+              items={["React & TypeScript", "Next.js & Tailwind CSS", "Framer Motion", "Responsive Design"]}
+              index={0}
+              shouldReduceMotion={shouldReduceMotion}
+              animationDelay={0}
+              initial={{ opacity: 0, x: -20 }}
+            />
+            <TechCard
+              icon={<Zap className="h-5 w-5 mr-2 text-teal-700 dark:text-teal-400" />}
+              title="Backend"
+              items={["Node.js & Express", "PostgreSQL & MongoDB", "REST APIs & GraphQL", "Authentication & Security"]}
+              index={1}
+              shouldReduceMotion={shouldReduceMotion}
+              animationDelay={0.1}
+              initial={{ opacity: 0, y: 20 }}
+            />
+            <TechCard
+              icon={<Wrench className="h-5 w-5 mr-2 text-teal-700 dark:text-teal-400" />}
+              title="DevOps"
+              items={["Docker & AWS", "CI/CD Pipelines", "Git & Version Control", "Performance Monitoring"]}
+              index={2}
+              shouldReduceMotion={shouldReduceMotion}
+              animationDelay={0.2}
+              initial={{ opacity: 0, x: 20 }}
+            />
           </div>
         </MaxWidthWrapper>
       </AnimatedSection>
