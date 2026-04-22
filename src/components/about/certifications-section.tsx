@@ -1,12 +1,11 @@
-import { m } from "framer-motion";
 import { Award, ExternalLink } from "lucide-react";
 import React from "react";
 
-import { Card, CardContent } from "../ui/card";
+import { AnimatedCard } from "../common/animated-card";
 import { usePortfolioData } from "@hooks/usePortfolioData";
 
 // Certification type definition
-export type Certification = {
+type Certification = {
   name: string;
   issuer: string;
   date: string;
@@ -23,29 +22,21 @@ type CertificationCardProps = {
 
 const CertificationCard: React.FC<CertificationCardProps> = ({ certification, index }) => {
   return (
-    <m.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
-      className="h-full"
-    >
-      <Card className="flex h-full flex-col border-gray-200 bg-white dark:border-slate-600 dark:bg-slate-800">
-        <CardContent className="flex flex-1 flex-col p-6">
-          {/* Badge or Icon */}
-          <div className="mb-6 flex justify-center">
-            {certification.badgeUrl ? (
-              <img
-                src={certification.badgeUrl}
-                alt={`${certification.name} badge`}
-                className="h-32 w-32 rounded-full object-contain shadow-lg"
-              />
-            ) : (
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-700 to-teal-700 shadow-lg dark:from-blue-400 dark:to-teal-400">
-                <Award className="h-10 w-10 text-white" />
-              </div>
-            )}
+    <AnimatedCard index={index}>
+      {/* Badge or Icon */}
+      <div className="mb-6 flex justify-center">
+        {certification.badgeUrl ? (
+          <img
+            src={certification.badgeUrl}
+            alt={`${certification.name} badge`}
+            className="h-32 w-32 rounded-full object-contain shadow-lg"
+          />
+        ) : (
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-700 to-teal-700 shadow-lg dark:from-blue-400 dark:to-teal-400">
+            <Award className="h-10 w-10 text-white" />
           </div>
+        )}
+      </div>
 
           {/* Content */}
           <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-gray-100">
@@ -93,9 +84,7 @@ const CertificationCard: React.FC<CertificationCardProps> = ({ certification, in
               <ExternalLink className="ml-2 h-4 w-4" />
             </a>
           )}
-        </CardContent>
-      </Card>
-    </m.div>
+    </AnimatedCard>
   );
 };
 
