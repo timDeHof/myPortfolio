@@ -1,20 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { githubAPI } from "../github";
-
-// Helper function to mock fetch responses
-function mockFetch(status: number, body: any) {
-  return vi.fn(() =>
-    Promise.resolve({
-      ok: status >= 200 && status < 300,
-      status,
-      statusText: `Status ${status}`,
-      json: () => Promise.resolve(body),
-      text: () => Promise.resolve(typeof body === "string" ? body : JSON.stringify(body)),
-      headers: new Headers({ "Content-Type": "application/json" }),
-    } as Response),
-  );
-}
+import { createMockFetch } from "./test-utils";
 
 describe("githubAPI Proxy Integration", () => {
   beforeEach(() => {
@@ -25,7 +12,7 @@ describe("githubAPI Proxy Integration", () => {
 
   it("should use the standalone worker URL for API requests", async () => {
     const mockUser = { login: "timDeHof" };
-    globalThis.fetch = mockFetch(200, mockUser);
+    globalThis.fetch = createMockFetch(200, mockUser);
 
     await githubAPI.fetchUser();
 
