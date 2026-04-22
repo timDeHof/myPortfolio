@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
+  "ignorePatterns": [
+    "src/components/ui/**",
+    "src/content/blog/src/components/ui/**",
+    "**/routeTree.gen.ts"
+  ],
+  "ignoreDependencies": [
+    "@radix-ui/react-separator",
+    "@radix-ui/react-slot",
+    "@radix-ui/react-toast",
+    "class-variance-authority",
+    "mini-svg-data-uri",
+    "radix-ui",
+    "react-intersection-observer"
+  ]
+}
