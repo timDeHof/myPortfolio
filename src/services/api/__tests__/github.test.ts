@@ -10,6 +10,7 @@ import {
 } from '../github';
 import { queryClient } from '../../../lib/query-client';
 import { env } from '../../../lib/env';
+import { createMockFetch } from './test-utils';
 
 // Mock external dependencies
 vi.mock('../../../lib/query-client', () => ({
@@ -25,20 +26,6 @@ const consoleSpy = {
   log: vi.spyOn(console, 'log').mockImplementation(() => {}),
   error: vi.spyOn(console, 'error').mockImplementation(() => {}),
   warn: vi.spyOn(console, 'warn').mockImplementation(() => {}),
-};
-
-// Helper function to mock fetch responses
-const mockFetch = (status: number, body: any, headers: HeadersInit = { 'Content-Type': 'application/json' }) => {
-  return vi.fn(() =>
-    Promise.resolve({
-      ok: status >= 200 && status < 300,
-      status,
-      statusText: `Status ${status}`,
-      json: () => Promise.resolve(body),
-      text: () => Promise.resolve(typeof body === 'string' ? body : JSON.stringify(body)),
-      headers: new Headers(headers),
-    })
-  );
 };
 
 describe('GitHubAPIError', () => {
