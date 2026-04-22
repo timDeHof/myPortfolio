@@ -6,6 +6,23 @@ import { githubAPI } from "../api/github";
 const mockFetch = vi.fn();
 globalThis.fetch = mockFetch;
 
+/**
+ * Helper to mock GitHub API response with repository data.
+ */
+function mockGitHubApiResponse(repositories: unknown[]) {
+  mockFetch.mockResolvedValueOnce({
+    ok: true,
+    status: 200,
+    statusText: "OK",
+    headers: new Headers(),
+    redirected: false,
+    type: "basic",
+    url: "https://api.github.com/users/timDeHof/repos",
+    json: async () => repositories,
+    text: async () => JSON.stringify(repositories),
+  });
+}
+
 describe("gitHub Fork Filtering", () => {
   const mockRepositories = [
     {
@@ -91,17 +108,7 @@ describe("gitHub Fork Filtering", () => {
   });
 
   it("should filter out forked, private, and non-demo repositories", async () => {
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      status: 200,
-      statusText: "OK",
-      headers: new Headers(),
-      redirected: false,
-      type: "basic",
-      url: "https://api.github.com/users/timDeHof/repos",
-      json: async () => mockRepositories,
-      text: async () => JSON.stringify(mockRepositories),
-    });
+    mockGitHubApiResponse(mockRepositories);
 
     const result = await githubAPI.fetchRepositories();
 
@@ -123,17 +130,7 @@ describe("gitHub Fork Filtering", () => {
   });
 
   it("should maintain sorting by category and engagement", async () => {
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      status: 200,
-      statusText: "OK",
-      headers: new Headers(),
-      redirected: false,
-      type: "basic",
-      url: "https://api.github.com/users/timDeHof/repos",
-      json: async () => mockRepositories,
-      text: async () => JSON.stringify(mockRepositories),
-    });
+    mockGitHubApiResponse(mockRepositories);
 
     const result = await githubAPI.fetchRepositories();
 
