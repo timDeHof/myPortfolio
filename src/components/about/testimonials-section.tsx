@@ -1,7 +1,5 @@
 import { Quote } from "lucide-react";
 import React from "react";
-
-import { CardContent } from "../ui/card";
 import { AnimatedCard } from "../common/animated-card";
 import { useTestimonials, type Testimonial } from "../../hooks/useTestimonials";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";

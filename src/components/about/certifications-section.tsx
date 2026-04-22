@@ -1,6 +1,7 @@
 import { Award, ExternalLink } from "lucide-react";
 import React from "react";
-
+import {m} from "framer-motion";
+import { Card, CardContent } from "@components/ui/card";
 import { AnimatedCard } from "../common/animated-card";
 import { usePortfolioData } from "@hooks/usePortfolioData";
 
