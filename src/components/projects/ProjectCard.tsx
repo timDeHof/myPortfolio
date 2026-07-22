@@ -146,7 +146,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, on
           </div>
 
           <div className="flex gap-2">
-            <Button size="sm" asChild className="bg-primary text-primary-foreground hover:opacity-90">
+            <Button size="sm" asChild className="bg-primary text-primary-foreground">
               <Link to={`/projects/$slug`} params={{ slug: project.slug }} preload="intent">
                 View Details
                 <ArrowRight className="h-4 w-4 ml-1" />
@@ -154,14 +154,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, on
             </Button>
             {project.links?.github && (
               <Button variant="outline" size="sm" asChild>
-                <a href={project.links.github} target="_blank" rel="noopener noreferrer">
+                <a href={project.links.github} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.name} source code on GitHub`}>
                   <Github className="h-4 w-4" />
                 </a>
               </Button>
             )}
             {project.links?.demo && (
               <Button variant="outline" size="sm" asChild>
-                <a href={project.links.demo} target="_blank" rel="noopener noreferrer">
+                <a href={project.links.demo} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.name} live demo`}>
                   <ExternalLink className="h-4 w-4" />
                 </a>
               </Button>

@@ -107,6 +107,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           onClick={() => setIsOpen(!isOpen)}
           className="w-full flex items-start gap-4 p-6 text-left cursor-pointer"
           aria-expanded={isOpen}
+          aria-controls={`service-${service.id}-content`}
         >
           <div className={`flex items-center justify-center w-11 h-11 bg-primary/10 rounded-lg shrink-0 ${enrichment.accent}`}>
             {enrichment.icon}
@@ -136,7 +137,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
               transition={{ duration: 0.25, ease: "easeInOut" }}
               className="overflow-hidden"
             >
-              <div className="px-6 pb-6 pt-0">
+              <div className="px-6 pb-6 pt-0" id={`service-${service.id}-content`}>
                 <div className="border-t border-border pt-5">
                   {/* Full description */}
                   <div className="space-y-3 mb-5">
