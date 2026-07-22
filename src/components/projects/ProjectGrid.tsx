@@ -17,16 +17,16 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({ projects, isLoading, o
 
   if (isLoading) {
     return (
-      <AnimatedSection className="py-20 bg-white dark:bg-slate-900">
+      <AnimatedSection className="py-20 bg-background">
         <MaxWidthWrapper>
           <div className="text-center mb-8">
-            <p className="text-lg text-gray-700 dark:text-gray-300">
+            <p className="text-lg text-foreground">
               Loading projects...
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {Array.from({ length: SKELETON_COUNT }).map((_, idx) => (
-              <div key={`skeleton-${idx}`} className="h-96 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
+              <div key={`skeleton-${idx}`} className="h-96 bg-muted animate-pulse rounded-lg animate-pulse" />
             ))}
           </div>
         </MaxWidthWrapper>
@@ -36,10 +36,10 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({ projects, isLoading, o
 
   if (projects.length === 0) {
     return (
-      <AnimatedSection className="py-20 bg-white dark:bg-slate-900">
+      <AnimatedSection className="py-20 bg-background">
         <MaxWidthWrapper>
           <div className="text-center">
-            <p className="text-lg text-gray-600 dark:text-gray-400">
+            <p className="text-lg text-muted-foreground">
               No projects found.
             </p>
           </div>
@@ -49,7 +49,7 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({ projects, isLoading, o
   }
 
   return (
-    <AnimatedSection className="py-20 bg-white dark:bg-slate-900">
+    <AnimatedSection className="py-20 bg-background">
       <MaxWidthWrapper>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (

@@ -16,11 +16,11 @@ const ServicesSection = React.lazy(() =>
 
 // Loading fallback component
 const SectionLoader: React.FC<{ name: string }> = ({ name }) => (
-  <div className="min-h-[400px] flex items-center justify-center bg-gray-50 dark:bg-slate-900">
+  <div className="min-h-[400px] flex items-center justify-center bg-muted">
     <div className="text-center">
       <LoadingSpinner size="lg" color="blue" />
-      <p className="text-gray-600 dark:text-gray-400 mt-4 text-sm">
-        Loading
+      <p className="text-muted-foreground mt-4 text-sm">
+        Loading{" "}
         {name}
         ...
       </p>

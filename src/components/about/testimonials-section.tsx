@@ -13,7 +13,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, index })
   return (
     <AnimatedCard index={index}>
       <div className="mb-4 flex justify-start">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-teal-700 to-blue-700 shadow-lg dark:from-teal-400 dark:to-blue-400">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary shadow-lg">
           {testimonial.avatar ? (
             <img
               src={testimonial.avatar}
@@ -27,16 +27,16 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, index })
       </div>
 
       <blockquote className="mb-6 flex-1">
-        <p className="text-lg text-gray-700 dark:text-gray-300 italic">
+        <p className="text-lg text-foreground italic">
           "{testimonial.quote}"
         </p>
       </blockquote>
 
-      <div className="border-t border-gray-200 pt-4 dark:border-slate-600">
-        <h4 className="font-semibold text-gray-900 dark:text-gray-100">
+      <div className="border-t border pt-4">
+        <h4 className="font-semibold text-foreground">
           {testimonial.name}
         </h4>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+        <p className="text-sm text-muted-foreground">
           {testimonial.role}
           {testimonial.company && ` at ${testimonial.company}`}
         </p>
@@ -45,7 +45,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, index })
             href={testimonial.linkedinUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 inline-flex items-center text-sm text-teal-700 hover:text-teal-800 dark:text-teal-400 dark:hover:text-teal-300"
+            className="mt-2 inline-flex items-center text-sm text-secondary hover:text-secondary/80"
           >
             View on LinkedIn
             <svg
@@ -79,13 +79,13 @@ export const TestimonialsSection: React.FC = () => {
   }
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 via-teal-50/30 to-blue-50 dark:from-slate-800 dark:via-teal-900/20 dark:to-blue-900/20">
+    <section className="py-20 bg-muted">
       <MaxWidthWrapper>
         <div className="mb-16 text-center">
-          <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-gray-100 md:text-4xl">
+          <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">
             What People Say
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-300">
+          <p className="mx-auto max-w-2xl text-lg text-foreground">
             Recommendations from colleagues and collaborators
           </p>
         </div>

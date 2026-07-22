@@ -8,14 +8,14 @@ export const Route = createRootRoute({
       {/* Skip to main content link for keyboard users */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
       >
         Skip to main content
       </a>
 
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-[100dvh] flex flex-col">
         <Navbar />
-        <main id="main-content" role="main" className="flex-1 pt-16" tabIndex={-1}>
+        <main id="main-content" className="flex-1 pt-16" tabIndex={-1}>
           <Outlet />
         </main>
         <Footer />
@@ -23,11 +23,11 @@ export const Route = createRootRoute({
     </>
   ),
   notFoundComponent: () => (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-[100dvh] flex items-center justify-center">
       <div className="text-center">
-        <h1 className="text-6xl font-bold text-gray-900 dark:text-gray-100 mb-4">404</h1>
-        <p className="text-xl text-gray-600 dark:text-gray-400 mb-6">Page not found</p>
-        <Link to="/" className="text-teal-600 hover:text-teal-700 dark:text-teal-400 text-lg">
+        <h1 className="text-6xl font-bold text-foreground mb-4">404</h1>
+        <p className="text-xl text-muted-foreground mb-6">Page not found</p>
+        <Link to="/" className="text-secondary hover:text-secondary/80 text-lg">
           Go home
         </Link>
       </div>

@@ -52,7 +52,7 @@ export const ContributionCalendar: React.FC<{ username?: string }> = ({ username
 
   if (error || !contributionData) {
     return (
-      <Card className="overflow-hidden border-0 shadow-xl bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900 dark:to-orange-900">
+      <Card className="overflow-hidden border-0 shadow-xl bg-muted">
         <CardContent className="p-10 flex items-center justify-center h-96">
           <div className="text-center">
             <div className="w-16 h-16 bg-red-200 dark:bg-red-700 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -60,8 +60,8 @@ export const ContributionCalendar: React.FC<{ username?: string }> = ({ username
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <p className="text-slate-800 dark:text-slate-200 font-medium">Unable to load contribution calendar</p>
-            <p className="text-slate-600 dark:text-slate-400 text-sm mt-2">Please try again later</p>
+            <p className="text-foreground font-medium">Unable to load contribution calendar</p>
+            <p className="text-muted-foreground text-sm mt-2">Please try again later</p>
           </div>
         </CardContent>
       </Card>
@@ -74,7 +74,7 @@ export const ContributionCalendar: React.FC<{ username?: string }> = ({ username
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
     >
-      <Card className="overflow-hidden border-0 shadow-xl bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800">
+      <Card className="overflow-hidden border-0 shadow-xl bg-card">
         <CardContent className="p-10 w-full">
           <div className="w-full">
             <ContributionGraph

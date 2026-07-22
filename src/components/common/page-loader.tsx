@@ -5,7 +5,7 @@ interface PageLoaderProps {
 }
 
 export const PageLoader = ({ size = "lg" }: PageLoaderProps) => (
-  <div className="min-h-screen flex items-center justify-center">
+  <div className="min-h-[100dvh] flex items-center justify-center">
     <LoadingSpinner size={size} />
   </div>
 );

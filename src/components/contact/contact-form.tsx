@@ -129,9 +129,9 @@ export const ContactForm: React.FC = () => {
       transition={{ duration: 0.4 }}
       viewport={{ once: true }}
     >
-      <Card className="shadow-lg bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-600">
+      <Card className="shadow-lg bg-card border">
         <CardContent className="p-8">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+          <h2 className="text-2xl font-bold text-foreground mb-6">
             Send me a message
           </h2>
 
@@ -160,7 +160,7 @@ export const ContactForm: React.FC = () => {
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 Name *
               </label>
@@ -171,10 +171,11 @@ export const ContactForm: React.FC = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 disabled={isSubmitting}
+                required
                 aria-describedby={errors.name ? "name-error" : undefined}
                 aria-invalid={!!errors.name}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-400 focus:border-transparent transition-colors disabled:bg-gray-50 dark:disabled:bg-slate-700 disabled:cursor-not-allowed bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 ${
-                  errors.name ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-slate-600"
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-colors disabled:bg-muted disabled:cursor-not-allowed bg-card text-foreground placeholder-muted-foreground ${
+                  errors.name ? "border-red-500 dark:border-red-400" : "border"
                 }`}
                 placeholder="Your full name"
               />
@@ -186,7 +187,7 @@ export const ContactForm: React.FC = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 Email *
               </label>
@@ -197,10 +198,11 @@ export const ContactForm: React.FC = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 disabled={isSubmitting}
+                required
                 aria-describedby={errors.email ? "email-error" : undefined}
                 aria-invalid={!!errors.email}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-400 focus:border-transparent transition-colors disabled:bg-gray-50 dark:disabled:bg-slate-700 disabled:cursor-not-allowed bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 ${
-                  errors.email ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-slate-600"
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-colors disabled:bg-muted disabled:cursor-not-allowed bg-card text-foreground placeholder-muted-foreground ${
+                  errors.email ? "border-red-500 dark:border-red-400" : "border"
                 }`}
                 placeholder="your.email@example.com"
               />
@@ -212,7 +214,7 @@ export const ContactForm: React.FC = () => {
             <div>
               <label
                 htmlFor="message"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 Message *
               </label>
@@ -223,10 +225,11 @@ export const ContactForm: React.FC = () => {
                 value={formData.message}
                 onChange={handleInputChange}
                 disabled={isSubmitting}
+                required
                 aria-describedby={errors.message ? "message-error" : undefined}
                 aria-invalid={!!errors.message}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-400 focus:border-transparent transition-colors resize-none disabled:bg-gray-50 dark:disabled:bg-slate-700 disabled:cursor-not-allowed bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 ${
-                  errors.message ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-slate-600"
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-colors resize-none disabled:bg-muted disabled:cursor-not-allowed bg-card text-foreground placeholder-muted-foreground ${
+                  errors.message ? "border-red-500 dark:border-red-400" : "border"
                 }`}
                 placeholder="Tell me about your project..."
               />
@@ -238,7 +241,7 @@ export const ContactForm: React.FC = () => {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white"
+              className="w-full bg-primary text-primary-foreground hover:opacity-90"
               size="lg"
             >
               {isSubmitting

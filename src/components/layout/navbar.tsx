@@ -12,6 +12,7 @@ import { DEFAULT_NAV_ITEMS } from "@/lib/constants";
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const mobileNavRef = useRef<HTMLDivElement>(null);
+  const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const location = useLocation();
   const { data: portfolioData } = usePortfolioData();
   const { effectiveTheme, toggleTheme } = useTheme();
@@ -23,12 +24,14 @@ export function Navbar() {
     const keydownHandler = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
         setIsOpen(false);
+        toggleButtonRef.current?.focus();
       }
     };
 
     const mousedownHandler = (e: MouseEvent) => {
       if (isOpen && mobileNavRef.current && !mobileNavRef.current.contains(e.target as Node)) {
         setIsOpen(false);
+        toggleButtonRef.current?.focus();
       }
     };
 
@@ -38,6 +41,39 @@ export function Navbar() {
       document.removeEventListener("keydown", keydownHandler);
       document.removeEventListener("mousedown", mousedownHandler);
     };
+  }, [isOpen]);
+
+  // Focus trap for mobile menu
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const menuEl = mobileNavRef.current;
+    if (!menuEl) return;
+
+    // Focus first interactive element
+    const focusable = menuEl.querySelectorAll<HTMLElement>("a, button, [tabindex]");
+    if (focusable.length > 0) {
+      focusable[0].focus();
+    }
+
+    const handleTabTrap = (e: KeyboardEvent) => {
+      if (e.key !== "Tab" || !menuEl) return;
+
+      const els = menuEl.querySelectorAll<HTMLElement>("a, button, [tabindex]");
+      const first = els[0];
+      const last = els[els.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleTabTrap);
+    return () => document.removeEventListener("keydown", handleTabTrap);
   }, [isOpen]);
 
   // Helper to check if a path is active (for styling - uses prefix match)
@@ -58,7 +94,7 @@ export function Navbar() {
   };
 
   return (
-    <header role="banner" className="navbar">
+    <header className="navbar">
       <MaxWidthWrapper>
         <div className="inner">
           <div className="left">
@@ -68,7 +104,7 @@ export function Navbar() {
             className="brand"
             >
             <CodeXml className="logo" />
-            <span className="name brand-gradient">
+            <span className="name brand-text">
               Tim DeHof
               </span>
           </Link>
@@ -119,6 +155,7 @@ export function Navbar() {
           <div className="mobile">
             <button
               type="button"
+              ref={toggleButtonRef}
               onClick={toggleMenu}
               className="toggle-menu min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label="Toggle menu"
@@ -165,7 +202,7 @@ export function Navbar() {
                       preload="intent"
                       onClick={() => setIsOpen(false)}
                       className={isPathActive(item.href) ? "is-selected" : "not-selected"}
-                      aria-current={isPathActive(item.href) ? "page" : undefined}
+                      aria-current={isExactPath(item.href) ? "page" : undefined}
                     >
                       <span>{item.name}</span>
                     </Link>

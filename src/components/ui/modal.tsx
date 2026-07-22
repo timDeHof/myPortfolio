@@ -48,20 +48,20 @@ export function Modal({ isOpen, onClose, children, className = "" }: ModalProps)
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className={`absolute inset-0 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 
               md:w-full md:max-w-4xl md:max-h-[90vh] md:rounded-xl 
-              bg-gray-50 dark:bg-slate-900 overflow-hidden flex flex-col
+              bg-muted overflow-hidden flex flex-col
               ${className}`}
           >
             {/* Close button */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-800 transition-colors md:hidden"
+              className="absolute top-4 right-4 z-10 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-card/80 hover:bg-card transition-colors md:hidden"
             >
               <X className="h-5 w-5" />
             </button>
             
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-800 transition-colors hidden md:block"
+              className="absolute top-4 right-4 z-10 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-card/80 hover:bg-card transition-colors hidden md:block"
             >
               <X className="h-5 w-5" />
             </button>

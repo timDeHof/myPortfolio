@@ -37,7 +37,7 @@ const ProjectCardHeader: React.FC<ProjectCardHeaderProps> = ({ imageUrl, project
       {project.number}
     </div>
     {project.difficulty && (
-      <div className="absolute top-3 right-3 flex items-center space-x-1 bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 px-2 py-1 rounded-full text-xs font-medium">
+      <div className="absolute top-3 right-3 flex items-center space-x-1 bg-white/90 dark:bg-slate-800/90 text-foreground px-2 py-1 rounded-full text-xs font-medium">
         <Star className="h-3 w-3" />
         <span>{project.difficulty}</span>
       </div>
@@ -57,17 +57,17 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, on
       className="group cursor-pointer"
       onClick={onClick}
     >
-      <Card className="h-full hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700">
+      <Card className="h-full hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card border">
         <CardContent className="p-0">
           <ProjectCardHeader imageUrl={imageUrl} project={project} />
           <div className="p-6">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-1">
+            <h3 className="text-xl font-semibold text-foreground group-hover:text-secondary transition-colors mb-1">
               {project.name}
             </h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+            <p className="text-sm text-muted-foreground mb-3">
               {project.tagline}
             </p>
-            <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Clock className="h-4 w-4" />
               <span>{project.timeEstimate}</span>
             </div>
@@ -83,19 +83,19 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, on
       viewport={{ once: true }}
       className="group"
     >
-      <Card className="h-full hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700">
+      <Card className="h-full hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card border">
         <ProjectCardHeader imageUrl={imageUrl} project={project} />
 
         <CardContent className="p-6">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-1">
+          <h3 className="text-xl font-semibold text-foreground group-hover:text-secondary transition-colors mb-1">
             {project.name}
           </h3>
 
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+          <p className="text-sm text-muted-foreground mb-3">
             {project.tagline}
           </p>
 
-          <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 min-h-[3rem]">
+          <p className="text-foreground mb-4 line-clamp-2 min-h-[3rem]">
             {project.description}
           </p>
 
@@ -122,7 +122,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, on
               {project.tags.slice(0, 4).map((tag: string) => (
                 <span
                   key={tag}
-                  className="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs rounded"
+                  className="px-2 py-0.5 bg-muted text-foreground text-xs rounded"
                 >
                   {tag}
                 </span>
@@ -130,27 +130,27 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, on
             </div>
           )}
 
-          <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
             <Clock className="h-4 w-4" />
             <span>{project.timeEstimate}</span>
           </div>
 
           <div className="flex gap-2">
-            <Button size="sm" asChild className="bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white">
+            <Button size="sm" asChild className="bg-primary text-primary-foreground hover:opacity-90">
               <Link to={`/projects/$slug`} params={{ slug: project.slug }} preload="intent">
                 View Details
                 <ArrowRight className="h-4 w-4 ml-1" />
               </Link>
             </Button>
             {project.links?.github && (
-              <Button variant="outline" size="sm" asChild className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+              <Button variant="outline" size="sm" asChild>
                 <a href={project.links.github} target="_blank" rel="noopener noreferrer">
                   <Github className="h-4 w-4" />
                 </a>
               </Button>
             )}
             {project.links?.demo && (
-              <Button variant="outline" size="sm" asChild className="border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+              <Button variant="outline" size="sm" asChild>
                 <a href={project.links.demo} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="h-4 w-4" />
                 </a>

@@ -23,7 +23,7 @@ export const GitHubStatsCard: React.FC = () => {
     return (
       <Card className="h-64">
         <CardContent className="p-6 flex items-center justify-center h-full">
-          <p className="text-gray-500">Unable to load GitHub stats</p>
+          <p className="text-muted-foreground">Unable to load GitHub stats</p>
         </CardContent>
       </Card>
     );
@@ -145,7 +145,7 @@ export const GitHubStatsCard: React.FC = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="text-center p-3 bg-white/10 rounded-lg backdrop-blur-sm hover:bg-white/15 transition-colors"
+                className="text-center p-3 bg-white/10 rounded-lg hover:bg-white/15 transition-colors"
               >
                 <div className={`inline-flex p-2 rounded-lg ${item.bgColor} mb-2 ${item.color}`}>
                   {item.icon}

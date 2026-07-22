@@ -22,7 +22,7 @@ export const LanguageChart: React.FC = () => {
     return (
       <Card>
         <CardContent className="p-6 flex items-center justify-center h-64">
-          <p className="text-gray-500">Unable to load language stats</p>
+          <p className="text-muted-foreground">Unable to load language stats</p>
         </CardContent>
       </Card>
     );
@@ -39,7 +39,7 @@ export const LanguageChart: React.FC = () => {
     >
       <Card>
         <CardContent className="p-6">
-          <h3 className="text-lg font-semibold dark:text-white text-gray-900 mb-6">
+          <h3 className="text-lg font-semibold dark:text-white text-foreground mb-6">
             Most Used Languages
           </h3>
 
@@ -59,17 +59,17 @@ export const LanguageChart: React.FC = () => {
                       className="w-3 h-3 rounded-full"
                       style={{ backgroundColor: language.color }}
                     />
-                    <span className="text-sm font-medium text-gray-900 dark:text-gray-200">
+                    <span className="text-sm font-medium text-foreground">
                       {language.name}
                     </span>
                   </div>
-                  <span className="text-sm text-gray-500 dark:text-gray-300">
+                  <span className="text-sm text-muted-foreground">
                     {language.percentage.toFixed(1)}
                     %
                   </span>
                 </div>
 
-                <div className="relative h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div className="relative h-2 bg-muted rounded-full overflow-hidden">
                   <m.div
                     className="absolute top-0 left-0 h-full rounded-full"
                     style={{ backgroundColor: language.color }}
@@ -84,7 +84,7 @@ export const LanguageChart: React.FC = () => {
 
           {/* Language Circles Visualization */}
           <div className="mt-8">
-            <h4 className="text-sm font-medium text-gray-700 mb-4 dark:text-gray-200">
+            <h4 className="text-sm font-medium text-foreground mb-4">
               Language Distribution
             </h4>
             <div className="flex flex-wrap gap-2">
@@ -113,12 +113,12 @@ export const LanguageChart: React.FC = () => {
                     </div>
 
                     {/* Tooltip */}
-                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
+                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-foreground text-background text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
                       {language.name}
                       :
                       {language.percentage.toFixed(1)}
                       %
-                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-foreground"></div>
                     </div>
                   </m.div>
                 );
@@ -127,16 +127,16 @@ export const LanguageChart: React.FC = () => {
           </div>
 
           {/* Summary */}
-          <div className="mt-6 pt-6 border-t border-gray-200">
+          <div className="mt-6 pt-6 border-t border">
             <div className="text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-muted-foreground">
                 Analyzed across
                 {" "}
                 <strong>{stats.repositories.total}</strong>
                 {" "}
                 repositories
               </p>
-              <p className="text-xs text-gray-600 dark:text-gray-500 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Based on lines of code and project composition
               </p>
             </div>

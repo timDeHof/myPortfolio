@@ -70,7 +70,7 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
   const tabs: Tab[] = getProjectTabs(hasCaseStudy);
 
   return (
-    <div className="bg-gray-50 dark:bg-slate-900">
+    <div className="bg-muted">
       {/* Header with background image */}
       <div 
         className="relative p-4 pb-16"
@@ -88,7 +88,8 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
           {isModal && onClose && (
             <button
               onClick={onClose}
-              className="absolute top-0 right-0 p-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-colors"
+              aria-label="Close"
+              className="absolute top-0 right-0 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
             >
               <X className="h-5 w-5 text-white" />
             </button>
@@ -106,11 +107,11 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
             {project.tagline}
           </p>
           <div className="flex flex-wrap items-center gap-3 text-sm text-gray-300">
-            <span className="flex items-center bg-white/20 backdrop-blur-sm px-2 py-1 rounded-full">
+            <span className="flex items-center bg-card/20 px-2 py-1 rounded-full">
               <Clock className="h-4 w-4 mr-1" />
               {project.timeEstimate}
             </span>
-            <span className="flex items-center bg-white/20 backdrop-blur-sm px-2 py-1 rounded-full">
+            <span className="flex items-center bg-card/20 px-2 py-1 rounded-full">
               <Star className="h-4 w-4 mr-1" />
               {project.difficulty}
             </span>
@@ -120,16 +121,16 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
 
       {/* Tabs - Only show in modal */}
       {isModal && (
-        <div className="px-4 py-2 border-b border-gray-200 dark:border-slate-700">
+        <div className="px-4 py-2 border-b border">
           <div className="flex gap-1 overflow-x-auto -mx-4 px-4">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg whitespace-nowrap transition-colors ${
+                className={`flex items-center gap-1.5 px-3 py-2 min-h-[44px] text-sm font-medium rounded-lg whitespace-nowrap transition-colors ${
                   activeTab === tab.id
-                    ? "bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300"
-                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    ? "bg-muted text-primary"
+                    : "text-muted-foreground hover:bg-accent"
                 }`}
               >
                 {tab.icon}
@@ -151,7 +152,7 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
           <div className="space-y-6">
             {galleryImages.length > 0 && (
               <div className="space-y-4">
-                <div className="rounded-lg overflow-hidden bg-gray-100 dark:bg-slate-800">
+                <div className="rounded-lg overflow-hidden bg-muted">
                   <img
                     src={galleryImages[0]?.url}
                     alt={project.name}
@@ -162,32 +163,32 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
             )}
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Overview</h2>
-                <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap">{project.description}</p>
+                <h2 className="text-2xl font-semibold text-foreground mb-4">Overview</h2>
+                <p className="text-foreground whitespace-pre-wrap">{project.description}</p>
               </CardContent>
             </Card>
             {project.useCase && (
               <Card>
                 <CardContent className="p-6">
-                  <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Use Case</h2>
-                  <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap">{project.useCase}</p>
+                  <h2 className="text-2xl font-semibold text-foreground mb-4">Use Case</h2>
+                  <p className="text-foreground whitespace-pre-wrap">{project.useCase}</p>
                 </CardContent>
               </Card>
             )}
             {project.advancedFeatures && (
               <Card>
                 <CardContent className="p-6">
-                  <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Advanced Features</h2>
+                  <h2 className="text-2xl font-semibold text-foreground mb-4">Advanced Features</h2>
                   <div className="space-y-4">
                     {Array.isArray(project.advancedFeatures) && project.advancedFeatures.map((feature) => {
                       const featureKey = typeof feature === "string" ? feature : (feature as ProjectAdvancedFeature).title;
                       return (
                         <div key={featureKey}>
-                          <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                          <h3 className="font-medium text-foreground mb-2">
                             {typeof feature === "string" ? feature : (feature as ProjectAdvancedFeature).title}
                           </h3>
                           {typeof feature !== "string" && (
-                            <p className="text-gray-600 dark:text-gray-300">{(feature as ProjectAdvancedFeature).description}</p>
+                            <p className="text-foreground">{(feature as ProjectAdvancedFeature).description}</p>
                           )}
                         </div>
                       );
@@ -199,7 +200,7 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
             {project.workflow && (
               <Card>
                 <CardContent className="p-6">
-                  <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Development Workflow</h2>
+                  <h2 className="text-2xl font-semibold text-foreground mb-4">Development Workflow</h2>
                   <div className="space-y-4">
                     {typeof project.workflow === "string" ? (
                       <div className="flex flex-wrap gap-2">
@@ -212,7 +213,7 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
                                 <div className="px-3 py-1.5 rounded-full text-white text-sm font-medium" style={{ backgroundColor: project.accentColor }}>
                                   {step.trim()}
                                 </div>
-                                {index < steps.length - 1 && <span className="mx-1 text-gray-400">→</span>}
+                                {index < steps.length - 1 && <span className="mx-1 text-muted-foreground">→</span>}
                               </div>
                             );
                           });
@@ -227,9 +228,9 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
                               {step.number}
                             </div>
                             <div>
-                              <h3 className="font-semibold text-gray-900 dark:text-gray-100">{step.title}</h3>
-                              {step.subtitle && <p className="text-sm text-gray-600 dark:text-gray-400">{step.subtitle}</p>}
-                              {step.description && <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed">{step.description}</p>}
+                              <h3 className="font-semibold text-foreground">{step.title}</h3>
+                              {step.subtitle && <p className="text-sm text-muted-foreground">{step.subtitle}</p>}
+                              {step.description && <p className="text-base text-foreground leading-relaxed">{step.description}</p>}
                             </div>
                           </div>
                         );
@@ -242,10 +243,10 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Card>
                 <CardContent className="p-6">
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Links</h2>
+                  <h2 className="text-lg font-semibold text-foreground mb-4">Links</h2>
                   <div className="space-y-2">
                     {project.links?.github && (
-                      <Button asChild className="w-full bg-blue-700 hover:bg-blue-800 text-white">
+                      <Button asChild className="w-full bg-primary text-primary-foreground hover:opacity-90">
                         <a href={project.links.github} target="_blank" rel="noopener noreferrer"><Github className="h-4 w-4 mr-2" />View Source</a>
                       </Button>
                     )}
@@ -257,14 +258,14 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
               </Card>
               <Card>
                 <CardContent className="p-6">
-                  <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Tech Stack</h2>
+                  <h2 className="text-lg font-semibold text-foreground mb-4">Tech Stack</h2>
                   <div className="space-y-2">
                     {project.techStack.map((item) => {
                       const techKey = typeof item === "string" ? item : (item as ProjectTechStackItem).tech;
                       return (
                         <div key={techKey} className="flex items-center gap-2">
                           <Code className="h-4 w-4" style={{ color: project.accentColor }} />
-                          <span className="text-sm text-gray-600 dark:text-gray-300">
+                          <span className="text-sm text-foreground">
                             {techKey}
                           </span>
                         </div>
@@ -279,7 +280,7 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
                 <CardContent className="p-6">
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag: string) => (
-                      <span key={tag} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded">{tag}</span>
+                      <span key={tag} className="px-3 py-1 bg-muted text-foreground text-sm rounded">{tag}</span>
                     ))}
                   </div>
                 </CardContent>
@@ -299,11 +300,11 @@ export const ProjectDetailPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-slate-900 py-20">
+      <div className="min-h-[100dvh] bg-muted py-20">
         <MaxWidthWrapper>
           <div className="animate-pulse space-y-8">
-            <div className="h-8 w-48 bg-gray-200 dark:bg-gray-700 rounded" />
-            <div className="h-64 bg-gray-200 dark:bg-gray-700 rounded-lg" />
+            <div className="h-8 w-48 bg-muted animate-pulse rounded" />
+            <div className="h-64 bg-muted animate-pulse rounded-lg" />
           </div>
         </MaxWidthWrapper>
       </div>
@@ -312,12 +313,12 @@ export const ProjectDetailPage: React.FC = () => {
 
   if (error || !project) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-slate-900 py-20">
+      <div className="min-h-[100dvh] bg-muted py-20">
         <MaxWidthWrapper>
-          <Card className="max-w-lg mx-auto bg-white dark:bg-slate-800">
+          <Card className="max-w-lg mx-auto bg-card">
             <CardContent className="p-8 text-center">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Project Not Found</h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">The project &quot;{slug}&quot; could not be found.</p>
+              <h2 className="text-xl font-semibold text-foreground mb-2">Project Not Found</h2>
+              <p className="text-muted-foreground mb-6">The project &quot;{slug}&quot; could not be found.</p>
               <Button asChild>
                 <Link to="/projects"><ArrowLeft className="h-4 w-4 mr-2" />Back to Projects</Link>
               </Button>
