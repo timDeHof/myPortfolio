@@ -141,7 +141,7 @@ export const ContactForm: React.FC = () => {
               aria-live="polite"
               className={`mb-6 p-4 rounded-lg flex items-start space-x-3 ${
                 submitStatus === "success"
-                  ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-700"
+                  ? "bg-accent/10 text-accent border border-accent/20"
                   : "bg-destructive/10 text-destructive border border-destructive/20"
               }`}
             >

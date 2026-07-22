@@ -79,6 +79,9 @@
 
   :root {
     --footer: 222 47% 11%;
+    --btn-primary-shadow: 221 83% 40%;
+    --btn-destructive-shadow: 0 72% 41%;
+    --btn-secondary-shadow: 168 68% 28%;
     --background: var(--color-background);
     --foreground: var(--color-foreground);
     --muted: var(--color-muted);
@@ -103,6 +106,9 @@
 
   .dark {
     --footer: 222 47% 11%;
+    --btn-primary-shadow: 168 45% 32%;
+    --btn-destructive-shadow: 0 50% 22%;
+    --btn-secondary-shadow: 221 73% 43%;
     --background: var(--dark-background);
     --foreground: var(--dark-foreground);
     --muted: var(--dark-muted);
@@ -252,31 +258,31 @@
     /* Hard-offset depth — the "pop" effect */
     &.btn--primary {
       @apply bg-blue-600 text-white;
-      box-shadow: 0 2px 0 0 #1d4ed8;
+      box-shadow: 0 2px 0 0 hsl(var(--btn-primary-shadow));
     }
     &.btn--primary:hover {
       @apply bg-blue-500;
-      box-shadow: 0 3px 0 0 #1d4ed8;
+      box-shadow: 0 3px 0 0 hsl(var(--btn-primary-shadow));
       transform: translateY(-1px);
     }
     &.btn--primary:active {
       @apply bg-blue-700;
-      box-shadow: 0 0px 0 0 #1d4ed8;
+      box-shadow: 0 0px 0 0 hsl(var(--btn-primary-shadow));
       transform: translateY(1px);
     }
 
     &.btn--destructive {
       @apply bg-red-600 text-white;
-      box-shadow: 0 2px 0 0 #b91c1c;
+      box-shadow: 0 2px 0 0 hsl(var(--btn-destructive-shadow));
     }
     &.btn--destructive:hover {
       @apply bg-red-500;
-      box-shadow: 0 3px 0 0 #b91c1c;
+      box-shadow: 0 3px 0 0 hsl(var(--btn-destructive-shadow));
       transform: translateY(-1px);
     }
     &.btn--destructive:active {
       @apply bg-red-700;
-      box-shadow: 0 0px 0 0 #b91c1c;
+      box-shadow: 0 0px 0 0 hsl(var(--btn-destructive-shadow));
       transform: translateY(1px);
     }
 
@@ -286,7 +292,7 @@
     }
     &.btn--outline:hover {
       @apply bg-primary/10;
-      box-shadow: 0 2px 0 0 #1d4ed8;
+      box-shadow: 0 2px 0 0 hsl(var(--btn-primary-shadow));
       transform: translateY(-1px);
     }
     &.btn--outline:active {
@@ -297,16 +303,16 @@
 
     &.btn--secondary {
       @apply bg-teal-500 text-white;
-      box-shadow: 0 2px 0 0 #0f766e;
+      box-shadow: 0 2px 0 0 hsl(var(--btn-secondary-shadow));
     }
     &.btn--secondary:hover {
       @apply bg-teal-400;
-      box-shadow: 0 3px 0 0 #0f766e;
+      box-shadow: 0 3px 0 0 hsl(var(--btn-secondary-shadow));
       transform: translateY(-1px);
     }
     &.btn--secondary:active {
       @apply bg-teal-600;
-      box-shadow: 0 0px 0 0 #0f766e;
+      box-shadow: 0 0px 0 0 hsl(var(--btn-secondary-shadow));
       transform: translateY(1px);
     }
 
