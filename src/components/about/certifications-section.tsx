@@ -3,6 +3,7 @@ import React from "react";
 import {m} from "framer-motion";
 import { Card, CardContent } from "@components/ui/card";
 import { AnimatedCard } from "../common/animated-card";
+import { MaxWidthWrapper } from "@components/ui/max-width-wrapper";
 import { usePortfolioData } from "@hooks/usePortfolioData";
 
 // Certification type definition
@@ -96,18 +97,18 @@ export const CertificationsSection: React.FC = () => {
   if (isLoading) {
     return (
       <section className="bg-muted py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <MaxWidthWrapper>
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
           </div>
-        </div>
+        </MaxWidthWrapper>
       </section>
     );
   }
 
   return (
     <section className="bg-muted py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <MaxWidthWrapper>
         {/* Section Header */}
         <div className="mb-16 text-center">
           <m.div
@@ -116,7 +117,7 @@ export const CertificationsSection: React.FC = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-secondary text-4xl text-secondary-foreground shadow-2xl">
+            <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-secondary text-secondary-foreground shadow-2xl">
               <Award className="h-10 w-10" />
             </div>
             <h2 className="mb-6 text-3xl font-bold text-foreground md:text-4xl">
@@ -204,7 +205,7 @@ export const CertificationsSection: React.FC = () => {
             </Card>
           </m.div>
         )}
-      </div>
+      </MaxWidthWrapper>
     </section>
   );
 };

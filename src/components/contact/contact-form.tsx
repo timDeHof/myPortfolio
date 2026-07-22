@@ -142,7 +142,7 @@ export const ContactForm: React.FC = () => {
               className={`mb-6 p-4 rounded-lg flex items-start space-x-3 ${
                 submitStatus === "success"
                   ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-700"
-                  : "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-700"
+                  : "bg-destructive/10 text-destructive border border-destructive/20"
               }`}
             >
               {submitStatus === "success"
@@ -175,12 +175,12 @@ export const ContactForm: React.FC = () => {
                 aria-describedby={errors.name ? "name-error" : undefined}
                 aria-invalid={!!errors.name}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-colors disabled:bg-muted disabled:cursor-not-allowed bg-card text-foreground placeholder-muted-foreground ${
-                  errors.name ? "border-red-500 dark:border-red-400" : "border"
+                  errors.name ? "border-destructive" : "border"
                 }`}
                 placeholder="Your full name"
               />
               {errors.name && (
-                <p id="name-error" role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.name}</p>
+                <p id="name-error" role="alert" className="mt-1 text-sm text-destructive">{errors.name}</p>
               )}
             </div>
 
@@ -202,12 +202,12 @@ export const ContactForm: React.FC = () => {
                 aria-describedby={errors.email ? "email-error" : undefined}
                 aria-invalid={!!errors.email}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-colors disabled:bg-muted disabled:cursor-not-allowed bg-card text-foreground placeholder-muted-foreground ${
-                  errors.email ? "border-red-500 dark:border-red-400" : "border"
+                  errors.email ? "border-destructive" : "border"
                 }`}
                 placeholder="your.email@example.com"
               />
               {errors.email && (
-                <p id="email-error" role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>
+                <p id="email-error" role="alert" className="mt-1 text-sm text-destructive">{errors.email}</p>
               )}
             </div>
 
@@ -229,20 +229,20 @@ export const ContactForm: React.FC = () => {
                 aria-describedby={errors.message ? "message-error" : undefined}
                 aria-invalid={!!errors.message}
                 className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-colors resize-none disabled:bg-muted disabled:cursor-not-allowed bg-card text-foreground placeholder-muted-foreground ${
-                  errors.message ? "border-red-500 dark:border-red-400" : "border"
+                  errors.message ? "border-destructive" : "border"
                 }`}
                 placeholder="Tell me about your project..."
               />
               {errors.message && (
-                <p id="message-error" role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.message}</p>
+                <p id="message-error" role="alert" className="mt-1 text-sm text-destructive">{errors.message}</p>
               )}
             </div>
 
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-primary text-primary-foreground hover:opacity-90"
               size="lg"
+              className="w-full"
             >
               {isSubmitting
                 ? (
