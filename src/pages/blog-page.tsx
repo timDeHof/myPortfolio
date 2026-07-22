@@ -19,7 +19,7 @@ export const BlogPage: React.FC = () => {
         <div className="min-h-[100dvh] flex items-center justify-center bg-muted">
           <MaxWidthWrapper>
             <div className="text-center">
-              <p className="text-lg text-red-600 dark:text-red-400 mb-4">
+              <p className="text-lg text-destructive mb-4">
                 Failed to load blog posts
               </p>
               <p className="text-muted-foreground mb-6">

@@ -31,7 +31,7 @@ const serviceEnrichments: Record<string, {
   "Experience": {
     title: "Engineering-Led Development",
     icon: <Users className="size-6" />,
-    accent: "text-blue-700 dark:text-blue-400",
+    accent: "text-primary",
     deliverables: [
       "Technical architecture and system design",
       "Code reviews and team mentorship",
@@ -42,7 +42,7 @@ const serviceEnrichments: Record<string, {
   "Cutting-edge Technologies": {
     title: "Modern Tech Stack Implementation",
     icon: <Cpu className="size-6" />,
-    accent: "text-teal-600 dark:text-teal-400",
+    accent: "text-accent",
     deliverables: [
       "React / TypeScript frontends",
       "Node.js and serverless backends",
@@ -53,7 +53,7 @@ const serviceEnrichments: Record<string, {
   "Web Development": {
     title: "Full-Stack Web Applications",
     icon: <Code className="size-6" />,
-    accent: "text-blue-700 dark:text-blue-400",
+    accent: "text-primary",
     deliverables: [
       "Responsive, accessible interfaces",
       "RESTful and GraphQL APIs",
@@ -372,7 +372,7 @@ export const ServicesPage: React.FC = () => {
               and let's see if we're a good fit.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild className="bg-white text-blue-700 hover:bg-white/90 shadow-[2px_2px_0_rgba(0,0,0,0.15)]">
+              <Button size="lg" asChild className="bg-white text-primary hover:bg-white/90 shadow-[2px_2px_0_rgba(0,0,0,0.15)]">
                 <Link to="/contact">
                   Send a Message
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -382,7 +382,7 @@ export const ServicesPage: React.FC = () => {
                 size="lg"
                 variant="ghost"
                 asChild
-                className="text-white hover:bg-white/10"
+                className="text-primary-foreground hover:bg-white/10"
               >
                 <Link to="/projects">See My Work</Link>
               </Button>

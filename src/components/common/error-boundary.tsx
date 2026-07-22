@@ -43,6 +43,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -59,6 +60,7 @@ export class ErrorBoundary extends Component<Props, State> {
               We're sorry, but something unexpected happened. Please try refreshing the page.
             </p>
             <button
+              type="button"
               onClick={() => window.location.reload()}
               className="w-full bg-primary text-primary-foreground py-2 px-4 rounded-md hover:opacity-90 transition-colors"
             >

@@ -58,6 +58,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, on
       viewport={{ once: true }}
       className="group cursor-pointer"
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClick?.(e as unknown as React.MouseEvent);
+        }
+      }}
+      role="button"
+      tabIndex={0}
     >
       <Card className="h-full hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card border">
         <CardContent className="p-0">

@@ -35,7 +35,7 @@ const CertificationCard: React.FC<CertificationCardProps> = ({ certification, in
           />
         ) : (
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-secondary shadow-lg">
-            <Award className="h-10 w-10 text-white" />
+            <Award className="h-10 w-10 text-secondary-foreground" />
           </div>
         )}
       </div>
