@@ -198,7 +198,7 @@ export function CaseStudyTab({ data, accentColor = DEFAULT_ACCENT }: CaseStudyTa
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
       >
-        <Card className="border-l-4" style={{ borderLeftColor: accentColor }}>
+        <Card className="border-0 bg-accent/5">
           <CardContent className="p-6">
             <div className="flex items-center gap-3 mb-4">
               <Lightbulb className="h-5 w-5" style={{ color: accentColor }} />
