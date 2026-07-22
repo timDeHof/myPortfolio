@@ -27,6 +27,8 @@ interface ProjectCardHeaderProps {
 const ProjectCardHeader: React.FC<ProjectCardHeaderProps> = ({ imageUrl, project }) => (
   <div className="relative">
     <div
+      role="img"
+      aria-label={`${project.name} project screenshot`}
       className="h-48 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
       style={{
         backgroundImage: `url(${imageUrl})`,

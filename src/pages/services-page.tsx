@@ -112,9 +112,9 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             {enrichment.icon}
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-semibold text-foreground">
+            <h2 className="text-lg font-semibold text-foreground">
               {enrichment.title}
-            </h3>
+            </h2>
             <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
               {service.paragraphs[0]}
             </p>

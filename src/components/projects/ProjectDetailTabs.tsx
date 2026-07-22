@@ -179,7 +179,7 @@ export function WorkflowTab({ project }: OverviewTabProps) {
                   {step.trim()}
                 </div>
                 {index < steps.length - 1 && (
-                  <span className="mx-2 text-gray-400">→</span>
+                  <span className="mx-2 text-muted-foreground">→</span>
                 )}
               </div>
             ));

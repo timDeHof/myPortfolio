@@ -10,14 +10,10 @@ interface TimelineSectionProps {
 export const TimelineSection: React.FC<TimelineSectionProps> = ({ shouldReduceMotion }) => {
   return (
     <>
-      {/* Background decoration */}
-      <div className="absolute inset-0 opacity-5 dark:opacity-10">
-      </div>
-
       <MaxWidthWrapper className="relative">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            My Journey
+            Career Timeline
           </h2>
           <p className="text-lg text-foreground max-w-2xl mx-auto">
             From mechanical engineering to full-stack development, a path of continuous learning and growth.
