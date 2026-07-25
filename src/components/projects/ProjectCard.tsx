@@ -61,7 +61,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, on
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          onClick?.(e as unknown as React.MouseEvent);
+          onClick?.({} as React.MouseEvent);
         }
       }}
       role="button"
