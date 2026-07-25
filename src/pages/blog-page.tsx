@@ -54,7 +54,7 @@ export const BlogPage: React.FC = () => {
             <p className="mt-4 text-muted-foreground">
               {posts.length} posts published
             </p>
-            <Button asChild className="mt-6 bg-secondary text-secondary-foreground hover:opacity-90">
+            <Button asChild className="mt-6 bg-primary text-primary-foreground hover:opacity-90">
               <a href={BLOG_URL} target="_blank" rel="noopener noreferrer">
                 <PenLine className="h-4 w-4 mr-2" />
                 Visit Full Blog

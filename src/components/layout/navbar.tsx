@@ -59,7 +59,7 @@ export function Navbar() {
     const handleTabTrap = (e: KeyboardEvent) => {
       if (e.key !== "Tab" || !menuEl) return;
 
-      const els = menuEl.querySelectorAll<HTMLElement>("a, button, [tabindex]");
+      const els = menuEl.querySelectorAll<HTMLElement>("a, button, [tabindex]:not([tabindex='-1'])");
       const first = els[0];
       const last = els[els.length - 1];
 
