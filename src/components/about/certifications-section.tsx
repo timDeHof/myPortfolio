@@ -3,6 +3,7 @@ import React from "react";
 import {m} from "framer-motion";
 import { Card, CardContent } from "@components/ui/card";
 import { AnimatedCard } from "../common/animated-card";
+import { MaxWidthWrapper } from "@components/ui/max-width-wrapper";
 import { usePortfolioData } from "@hooks/usePortfolioData";
 
 // Certification type definition
@@ -33,28 +34,28 @@ const CertificationCard: React.FC<CertificationCardProps> = ({ certification, in
             className="h-32 w-32 rounded-full object-contain shadow-lg"
           />
         ) : (
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-700 to-teal-700 shadow-lg dark:from-blue-400 dark:to-teal-400">
-            <Award className="h-10 w-10 text-white" />
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-secondary shadow-lg">
+            <Award className="h-10 w-10 text-secondary-foreground" />
           </div>
         )}
       </div>
 
           {/* Content */}
-          <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-gray-100">
+          <h3 className="mb-2 text-xl font-bold text-foreground">
             {certification.name}
           </h3>
 
           <div className="mb-3 space-y-1">
-            <p className="text-sm font-semibold text-teal-700 dark:text-teal-400">
+            <p className="text-sm font-semibold text-secondary">
               {certification.issuer}
             </p>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-muted-foreground">
               Earned: {certification.date}
             </p>
           </div>
 
           {certification.description && (
-            <p className="mb-4 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+            <p className="mb-4 text-sm leading-relaxed text-foreground">
               {certification.description}
             </p>
           )}
@@ -65,7 +66,7 @@ const CertificationCard: React.FC<CertificationCardProps> = ({ certification, in
               {certification.skills.map(skill => (
                 <span
                   key={skill}
-                  className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
+                  className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-primary"
                 >
                   {skill}
                 </span>
@@ -79,7 +80,7 @@ const CertificationCard: React.FC<CertificationCardProps> = ({ certification, in
               href={certification.verificationUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-auto inline-flex items-center justify-center rounded-lg bg-teal-50 px-4 py-2 text-sm font-medium text-teal-700 transition-colors hover:bg-teal-100 dark:bg-teal-900/20 dark:text-teal-400 dark:hover:bg-teal-900/40"
+              className="mt-auto inline-flex items-center justify-center rounded-lg bg-muted px-4 py-2 text-sm font-medium text-secondary transition-colors hover:bg-muted/80"
             >
               Verify Credential
               <ExternalLink className="ml-2 h-4 w-4" />
@@ -95,19 +96,19 @@ export const CertificationsSection: React.FC = () => {
 
   if (isLoading) {
     return (
-      <section className="bg-gradient-to-br from-blue-50 via-teal-50 to-purple-50 py-20 dark:from-slate-800 dark:via-blue-900/30 dark:to-purple-900/30">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="bg-muted py-20">
+        <MaxWidthWrapper>
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
           </div>
-        </div>
+        </MaxWidthWrapper>
       </section>
     );
   }
 
   return (
-    <section className="bg-gradient-to-br from-blue-50 via-teal-50 to-purple-50 py-20 dark:from-slate-800 dark:via-blue-900/30 dark:to-purple-900/30">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="bg-muted py-20">
+      <MaxWidthWrapper>
         {/* Section Header */}
         <div className="mb-16 text-center">
           <m.div
@@ -116,13 +117,13 @@ export const CertificationsSection: React.FC = () => {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-700 to-teal-700 text-4xl text-white shadow-2xl dark:from-blue-400 dark:to-teal-400">
+            <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-3xl bg-secondary text-secondary-foreground shadow-2xl">
               <Award className="h-10 w-10" />
             </div>
-            <h2 className="mb-6 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 bg-clip-text text-3xl font-bold text-transparent dark:from-slate-200 dark:via-slate-300 dark:to-slate-200 md:text-4xl">
+            <h2 className="mb-6 text-3xl font-bold text-foreground md:text-4xl">
               Certifications
             </h2>
-            <p className="mx-auto max-w-2xl text-xl leading-relaxed text-gray-700 dark:text-gray-300">
+            <p className="mx-auto max-w-2xl text-xl leading-relaxed text-foreground">
               Professional certifications that validate my expertise and commitment to continuous learning
               in modern web development and technology.
             </p>
@@ -148,15 +149,15 @@ export const CertificationsSection: React.FC = () => {
             viewport={{ once: true }}
             className="py-12 text-center"
           >
-            <Card className="mx-auto max-w-2xl border-gray-200 bg-white dark:border-slate-600 dark:bg-slate-800">
+            <Card className="mx-auto max-w-2xl border bg-card">
               <CardContent className="p-12">
-                <Award className="mx-auto mb-4 h-16 w-16 text-gray-400 dark:text-gray-600" />
-                <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-gray-100">
-                  Certifications Coming Soon
+                <Award className="mx-auto mb-4 h-16 w-16 text-muted-foreground" />
+                <h3 className="mb-2 text-xl font-semibold text-foreground">
+                  Always Learning
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  I'm currently working on obtaining industry-recognized certifications.
-                  Check back soon for updates!
+                <p className="text-muted-foreground">
+                  I focus on hands-on experience and real-world project delivery.
+                  Formal certifications are on the roadmap — watch this space.
                 </p>
               </CardContent>
             </Card>
@@ -172,30 +173,30 @@ export const CertificationsSection: React.FC = () => {
             viewport={{ once: true }}
             className="mt-16"
           >
-            <Card className="overflow-hidden border-gray-200 bg-gradient-to-br from-white to-gray-50 shadow-2xl dark:border-slate-600 dark:from-slate-800 dark:to-slate-700">
+            <Card className="overflow-hidden border bg-card shadow-2xl">
               <CardContent className="p-10">
                 <div className="grid gap-8 text-center sm:grid-cols-3">
                   <div>
-                    <div className="mb-2 bg-gradient-to-r from-blue-700 to-teal-700 bg-clip-text text-4xl font-bold text-transparent dark:from-blue-400 dark:to-teal-400">
+                    <div className="mb-2 text-4xl font-bold text-primary">
                       {certifications.length}
                     </div>
-                    <div className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                    <div className="text-sm font-medium text-muted-foreground">
                       Active Certifications
                     </div>
                   </div>
                   <div>
-                    <div className="mb-2 bg-gradient-to-r from-teal-700 to-emerald-700 bg-clip-text text-4xl font-bold text-transparent dark:from-teal-400 dark:to-emerald-400">
+                    <div className="mb-2 text-4xl font-bold text-primary">
                       {new Set(certifications.map(c => c.issuer)).size}
                     </div>
-                    <div className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                    <div className="text-sm font-medium text-muted-foreground">
                       Issuing Organizations
                     </div>
                   </div>
                   <div>
-                    <div className="mb-2 bg-gradient-to-r from-purple-700 to-pink-700 bg-clip-text text-4xl font-bold text-transparent dark:from-purple-400 dark:to-pink-400">
+                    <div className="mb-2 text-4xl font-bold text-primary">
                       {certifications.filter(c => c.verificationUrl).length}
                     </div>
-                    <div className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                    <div className="text-sm font-medium text-muted-foreground">
                       Verified Credentials
                     </div>
                   </div>
@@ -204,7 +205,7 @@ export const CertificationsSection: React.FC = () => {
             </Card>
           </m.div>
         )}
-      </div>
+      </MaxWidthWrapper>
     </section>
   );
 };

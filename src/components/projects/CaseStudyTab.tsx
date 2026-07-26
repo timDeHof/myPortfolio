@@ -21,33 +21,33 @@ export function CaseStudyTab({ data, accentColor = DEFAULT_ACCENT }: CaseStudyTa
         transition={{ duration: 0.5 }}
         className="text-center"
       >
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium mb-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-muted text-primary rounded-full text-sm font-medium mb-4">
           <Trophy className="h-4 w-4" />
           Featured Case Study
         </div>
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-3">
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
           {data.hero.impactStatement}
         </h2>
-        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        <p className="text-lg text-foreground max-w-2xl mx-auto">
           {data.hero.tagline}
         </p>
 
         {/* Stats Badges */}
         <div className="flex flex-wrap justify-center gap-3 mt-6">
-          <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+          <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-lg">
             <StarIcon className="h-5 w-5 text-yellow-500" />
-            <span className="font-semibold text-gray-900 dark:text-gray-100">{data.stats.stars}</span>
-            <span className="text-gray-500 dark:text-gray-400">stars</span>
+            <span className="font-semibold text-foreground">{data.stats.stars}</span>
+            <span className="text-muted-foreground">stars</span>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
-            <ForkIcon className="h-5 w-5 text-gray-500" />
-            <span className="font-semibold text-gray-900 dark:text-gray-100">{data.stats.forks}</span>
-            <span className="text-gray-500 dark:text-gray-400">forks</span>
+          <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-lg">
+            <ForkIcon className="h-5 w-5 text-muted-foreground" />
+            <span className="font-semibold text-foreground">{data.stats.forks}</span>
+            <span className="text-muted-foreground">forks</span>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+          <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-lg">
             <Code className="h-5 w-5 text-green-500" />
-            <span className="font-semibold text-gray-900 dark:text-gray-100">{data.stats.license}</span>
-            <span className="text-gray-500 dark:text-gray-400">license</span>
+            <span className="font-semibold text-foreground">{data.stats.license}</span>
+            <span className="text-muted-foreground">license</span>
           </div>
           {data.stats.featuredOnShadcn && (
             <div className="flex items-center gap-2 px-4 py-2 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-lg">
@@ -73,11 +73,11 @@ export function CaseStudyTab({ data, accentColor = DEFAULT_ACCENT }: CaseStudyTa
               >
                 <Target className="h-5 w-5" style={{ color: accentColor }} />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+              <h3 className="text-xl font-semibold text-foreground">
                 {data.problem.title}
               </h3>
             </div>
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+            <p className="text-foreground leading-relaxed">
               {data.problem.content}
             </p>
           </CardContent>
@@ -90,7 +90,7 @@ export function CaseStudyTab({ data, accentColor = DEFAULT_ACCENT }: CaseStudyTa
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+        <h3 className="text-xl font-semibold text-foreground mb-4">
           {data.technicalApproach.title}
         </h3>
         <div className="grid gap-4 md:grid-cols-3">
@@ -103,10 +103,10 @@ export function CaseStudyTab({ data, accentColor = DEFAULT_ACCENT }: CaseStudyTa
                 >
                   <BookOpen className="h-5 w-5" style={{ color: accentColor }} />
                 </div>
-                <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                <h4 className="font-semibold text-foreground mb-2">
                   {decision.title}
                 </h4>
-                <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+                <p className="text-base text-foreground leading-relaxed">
                   {decision.description}
                 </p>
               </CardContent>
@@ -121,7 +121,7 @@ export function CaseStudyTab({ data, accentColor = DEFAULT_ACCENT }: CaseStudyTa
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+        <h3 className="text-xl font-semibold text-foreground mb-4">
           {data.challenges.title}
         </h3>
         <div className="space-y-3">
@@ -136,10 +136,10 @@ export function CaseStudyTab({ data, accentColor = DEFAULT_ACCENT }: CaseStudyTa
                     {index + 1}
                   </div>
                   <div className="flex-1">
-                    <h4 className="font-semibold text-gray-900 dark:text-gray-100">
+                    <h4 className="font-semibold text-foreground">
                       {item.challenge}
                     </h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                    <p className="text-sm text-foreground mt-1">
                       {item.solution}
                     </p>
                   </div>
@@ -156,7 +156,7 @@ export function CaseStudyTab({ data, accentColor = DEFAULT_ACCENT }: CaseStudyTa
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
       >
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+        <h3 className="text-xl font-semibold text-foreground mb-4">
           {data.impact.title}
         </h3>
 
@@ -165,12 +165,12 @@ export function CaseStudyTab({ data, accentColor = DEFAULT_ACCENT }: CaseStudyTa
           {data.impact.metrics.map((metric, index) => (
             <div
               key={`metric-${index}`}
-              className="text-center p-4 bg-gray-50 dark:bg-gray-800 rounded-lg"
+              className="text-center p-4 bg-muted rounded-lg"
             >
               <div className="text-2xl font-bold" style={{ color: accentColor }}>
                 {metric.value}
               </div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
+              <div className="text-sm text-muted-foreground">
                 {metric.label}
               </div>
             </div>
@@ -184,7 +184,7 @@ export function CaseStudyTab({ data, accentColor = DEFAULT_ACCENT }: CaseStudyTa
               {data.impact.achievements.map((achievement, index) => (
                 <li key={`achievement-${index}`} className="flex items-start gap-3">
                   <Check className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-600 dark:text-gray-300">{achievement}</span>
+                  <span className="text-foreground">{achievement}</span>
                 </li>
               ))}
             </ul>
@@ -198,17 +198,17 @@ export function CaseStudyTab({ data, accentColor = DEFAULT_ACCENT }: CaseStudyTa
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
       >
-        <Card className="border-l-4" style={{ borderLeftColor: accentColor }}>
+        <Card className="border-0 bg-accent/5">
           <CardContent className="p-6">
             <div className="flex items-center gap-3 mb-4">
               <Lightbulb className="h-5 w-5" style={{ color: accentColor }} />
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+              <h3 className="text-xl font-semibold text-foreground">
                 {data.learnings.title}
               </h3>
             </div>
             <ul className="space-y-2">
               {data.learnings.items.map((item, index) => (
-                <li key={`learning-${index}`} className="flex items-start gap-2 text-gray-600 dark:text-gray-300">
+                <li key={`learning-${index}`} className="flex items-start gap-2 text-foreground">
                   <ArrowRight className="h-4 w-4 mt-1 flex-shrink-0" style={{ color: accentColor }} />
                   {item}
                 </li>
@@ -225,7 +225,7 @@ export function CaseStudyTab({ data, accentColor = DEFAULT_ACCENT }: CaseStudyTa
         transition={{ duration: 0.5, delay: 0.6 }}
         className="flex flex-col sm:flex-row gap-3 justify-center py-2"
       >
-        <Button asChild className="bg-gray-900 hover:bg-gray-800 dark:bg-gray-100 dark:hover:bg-gray-200 py-4">
+        <Button asChild className="bg-foreground text-background hover:opacity-90 py-4">
           <a href={data.links.github} target="_blank" rel="noopener noreferrer">
             <Github className="h-4 w-4 mr-2" />
             View on GitHub

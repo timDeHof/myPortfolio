@@ -14,7 +14,7 @@ export const BlogGrid: React.FC<BlogGridProps> = ({ posts, isLoading }) => {
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="h-80 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"
+            className="h-80 bg-muted animate-pulse rounded-lg"
           />
         ))}
       </div>
@@ -24,7 +24,7 @@ export const BlogGrid: React.FC<BlogGridProps> = ({ posts, isLoading }) => {
   if (posts.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500 dark:text-gray-400">
+        <p className="text-muted-foreground">
           No blog posts found.
         </p>
       </div>

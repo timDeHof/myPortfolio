@@ -38,7 +38,7 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   id,
 }) => {
   const { ref, isIntersecting } = useIntersectionObserver({
-    threshold: 0.1,
+    threshold: 0.2,
     triggerOnce: true,
   });
 

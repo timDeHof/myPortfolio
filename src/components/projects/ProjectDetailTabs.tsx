@@ -30,29 +30,29 @@ export function OverviewTab({ project }: OverviewTabProps) {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
+        <p className="text-muted-foreground whitespace-pre-wrap">
           {project.description}
         </p>
       </div>
 
       {project.useCase && (
         <div>
-          <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Use Case</h3>
-          <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
+          <h3 className="font-semibold text-foreground mb-2">Use Case</h3>
+          <p className="text-muted-foreground whitespace-pre-wrap">
             {project.useCase}
           </p>
         </div>
       )}
 
       <div>
-        <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Links</h3>
+        <h3 className="font-semibold text-foreground mb-3">Links</h3>
         <div className="flex flex-wrap gap-2">
           {project.links?.github && (
             <a
               href={project.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 bg-blue-700 hover:bg-blue-800 text-white text-sm rounded-lg"
+              className="px-3 py-1.5 bg-primary text-primary-foreground hover:opacity-90 text-sm rounded-lg"
             >
               Source
             </a>
@@ -62,7 +62,7 @@ export function OverviewTab({ project }: OverviewTabProps) {
               href={project.links.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 text-sm rounded-lg"
+              className="px-3 py-1.5 border border text-foreground hover:bg-accent text-sm rounded-lg"
             >
               Demo
             </a>
@@ -76,7 +76,7 @@ export function OverviewTab({ project }: OverviewTabProps) {
             {project.tags.map((tag: string) => (
               <span
                 key={tag}
-                className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded"
+                className="px-2 py-1 bg-muted text-foreground text-xs rounded"
               >
                 {tag}
               </span>
@@ -103,11 +103,11 @@ export function FeaturesTab({ project }: OverviewTabProps) {
               {index + 1}
             </div>
             <div className="pt-0.5">
-              <h3 className="font-medium text-gray-900 dark:text-gray-100">
+              <h3 className="font-medium text-foreground">
                 {typeof feature === "string" ? feature : feature.title}
               </h3>
               {typeof feature !== "string" && feature.description && (
-                <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                <p className="text-muted-foreground text-sm mt-1">
                   {feature.description}
                 </p>
               )}
@@ -115,7 +115,7 @@ export function FeaturesTab({ project }: OverviewTabProps) {
           </li>
         ))
       ) : (
-        <p className="text-gray-500 text-center py-8">No features listed</p>
+        <p className="text-muted-foreground text-center py-8">No features listed</p>
       )}
     </ol>
   );
@@ -126,27 +126,27 @@ export function TechStackTab({ project }: OverviewTabProps) {
     <div className="overflow-x-auto">
       <table className="w-full">
         <thead>
-          <tr className="border-b border-gray-200 dark:border-gray-700">
-            <th className="text-left py-3 px-4 font-semibold text-gray-900 dark:text-gray-100">Layer</th>
-            <th className="text-left py-3 px-4 font-semibold text-gray-900 dark:text-gray-100">Technology</th>
+          <tr className="border-b border">
+            <th className="text-left py-3 px-4 font-semibold text-foreground">Layer</th>
+            <th className="text-left py-3 px-4 font-semibold text-foreground">Technology</th>
           </tr>
         </thead>
         <tbody>
           {project.techStack.map((item, index) => (
-            <tr key={`tech-${typeof item === 'string' ? item : item.category}-${index}`} className="border-b border-gray-100 dark:border-gray-800">
-              <td className="py-3 px-4 text-gray-600 dark:text-gray-400">
+            <tr key={`tech-${typeof item === 'string' ? item : item.category}-${index}`} className="border-b border">
+              <td className="py-3 px-4 text-muted-foreground">
                 {typeof item === "string" ? "-" : item.category}
               </td>
               <td className="py-3 px-4">
                 {typeof item === "string" ? (
-                  <span className="font-medium text-gray-900 dark:text-gray-100">{item}</span>
+                  <span className="font-medium text-foreground">{item}</span>
                 ) : (
                   <div>
-                    <span className="font-medium text-gray-900 dark:text-gray-100">
+                    <span className="font-medium text-foreground">
                       {item.tech}
                     </span>
                     {item.purpose && (
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-muted-foreground">
                         {item.purpose}
                       </p>
                     )}
@@ -179,7 +179,7 @@ export function WorkflowTab({ project }: OverviewTabProps) {
                   {step.trim()}
                 </div>
                 {index < steps.length - 1 && (
-                  <span className="mx-2 text-gray-400">→</span>
+                  <span className="mx-2 text-muted-foreground">→</span>
                 )}
               </div>
             ));
@@ -197,16 +197,16 @@ export function WorkflowTab({ project }: OverviewTabProps) {
                   {step.number}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                  <h3 className="font-semibold text-foreground">
                     {step.title}
                   </h3>
                   {step.subtitle && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm text-muted-foreground">
                       {step.subtitle}
                     </p>
                   )}
                   {step.description && (
-                    <p className="text-base text-gray-700 dark:text-gray-300 mt-1 leading-relaxed">
+                    <p className="text-base text-foreground mt-1 leading-relaxed">
                       {step.description}
                     </p>
                   )}
@@ -216,7 +216,7 @@ export function WorkflowTab({ project }: OverviewTabProps) {
           </Card>
         ))
       ) : (
-        <p className="text-gray-500 text-center py-8">No workflow defined</p>
+        <p className="text-muted-foreground text-center py-8">No workflow defined</p>
       )}
     </div>
   );

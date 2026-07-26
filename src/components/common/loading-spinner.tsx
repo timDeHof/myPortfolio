@@ -21,10 +21,10 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   };
 
   const colorClasses = {
-    blue: "border-gray-300 dark:border-gray-600 border-t-blue-600 dark:border-t-blue-400",
-    teal: "border-gray-300 dark:border-gray-600 border-t-teal-600 dark:border-t-teal-400",
-    purple: "border-gray-300 dark:border-gray-600 border-t-purple-600 dark:border-t-purple-400",
-    gray: "border-gray-300 dark:border-gray-600 border-t-gray-600 dark:border-t-gray-400",
+    blue: "border border-t-blue-600 dark:border-t-blue-400",
+    teal: "border border-t-teal-600 dark:border-t-teal-400",
+    purple: "border border-t-purple-600 dark:border-t-purple-400",
+    gray: "border border-t-gray-600 dark:border-t-gray-400",
   };
 
   return (

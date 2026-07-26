@@ -1,159 +1,293 @@
-import { m, useReducedMotion } from "framer-motion";
-import { ArrowRight, CheckCircle, Code, Cpu, Globe, Palette, Shield, Target, Users, Wrench, Zap } from "lucide-react";
-import React from "react";
+import { m, useReducedMotion, AnimatePresence } from "framer-motion";
+import {
+  ArrowRight,
+  Check,
+  ChevronDown,
+  Code,
+  Cpu,
+  MessageSquare,
+  Users,
+} from "lucide-react";
+import React, { useState } from "react";
 import { Link } from "@tanstack/react-router";
 
 import { AnimatedSection } from "../components/common/animated-section";
 import { SEOHead } from "../components/common/seo-head";
 import { Button } from "../components/ui/button";
-import { Card, CardContent } from "../components/ui/card";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
 import { usePortfolioData } from "../hooks/usePortfolioData";
 import { pageSEO } from "../utils/seo";
 
-const serviceIcons = {
-  "Experience": <Users className="size-8" />,
-  "Cutting-edge Technologies": <Cpu className="size-8"/>,
-  "Web Development": <Code className="size-8" />,
+/**
+ * Title mapping: overrides vague GitHub data titles with concrete deliverables.
+ * Also adds deliverables, icon, and accent color per service.
+ */
+const serviceEnrichments: Record<string, {
+  title: string;
+  icon: React.ReactNode;
+  accent: string;
+  deliverables: string[];
+}> = {
+  "Experience": {
+    title: "Engineering-Led Development",
+    icon: <Users className="size-6" />,
+    accent: "text-primary",
+    deliverables: [
+      "Technical architecture and system design",
+      "Code reviews and team mentorship",
+      "Performance audits and optimization",
+      "CI/CD pipeline setup and DevOps",
+    ],
+  },
+  "Cutting-edge Technologies": {
+    title: "Modern Tech Stack Implementation",
+    icon: <Cpu className="size-6" />,
+    accent: "text-accent",
+    deliverables: [
+      "React / TypeScript frontends",
+      "Node.js and serverless backends",
+      "Database design and API development",
+      "Cloud deployment (AWS, Vercel, Cloudflare)",
+    ],
+  },
+  "Web Development": {
+    title: "Full-Stack Web Applications",
+    icon: <Code className="size-6" />,
+    accent: "text-primary",
+    deliverables: [
+      "Responsive, accessible interfaces",
+      "RESTful and GraphQL APIs",
+      "Authentication and authorization",
+      "Testing and documentation",
+    ],
+  },
 };
 
-interface ServiceCardWrapperProps {
-  children: React.ReactNode;
+/** Fallback for services not in the enrichment map. */
+const defaultEnrichment = {
+  icon: <Code className="size-6" />,
+  accent: "text-blue-700 dark:text-blue-400",
+  deliverables: [] as string[],
+};
+
+interface ServiceCardProps {
+  service: { id: number; title: string; paragraphs: string[] };
   index: number;
   shouldReduceMotion: boolean;
-  className?: string;
-  delayMultiplier?: number;
 }
 
-/**
- * Shared wrapper with framer-motion animation for service cards.
- */
-const ServiceCardWrapper: React.FC<ServiceCardWrapperProps> = ({
-  children,
+/** Expandable service card with deliverables checklist. */
+const ServiceCard: React.FC<ServiceCardProps> = ({
+  service,
   index,
   shouldReduceMotion,
-  className = "",
-  delayMultiplier = 0.1,
-}) => (
-  <m.div
-    initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-    whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: index * delayMultiplier }}
-    viewport={{ once: true }}
-    whileHover={shouldReduceMotion ? undefined : { y: -4 }}
-    className={className}
-  >
-    {children}
-  </m.div>
-);
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const enrichment = serviceEnrichments[service.title] ?? {
+    title: service.title,
+    ...defaultEnrichment,
+  };
 
-interface TechCardProps {
-  icon: React.ReactNode;
+  return (
+    <m.div
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+      whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={{ once: true }}
+    >
+      <div
+        className={`border rounded-xl transition-colors duration-200 ${
+          isOpen
+            ? "border-primary/30 bg-card"
+            : "border-border bg-card hover:border-primary/20"
+        }`}
+      >
+        {/* Header — always visible */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-full flex items-start gap-4 p-6 text-left cursor-pointer"
+          aria-expanded={isOpen}
+          aria-controls={`service-${service.id}-content`}
+        >
+          <div className={`flex items-center justify-center w-11 h-11 bg-primary/10 rounded-lg shrink-0 ${enrichment.accent}`}>
+            {enrichment.icon}
+          </div>
+          <div className="flex-1 min-w-0">
+            <h2 className="text-lg font-semibold text-foreground">
+              {enrichment.title}
+            </h2>
+            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+              {service.paragraphs[0]}
+            </p>
+          </div>
+          <ChevronDown
+            className={`size-5 text-muted-foreground shrink-0 mt-1 transition-transform duration-200 ${
+              isOpen ? "rotate-180" : ""
+            }`}
+          />
+        </button>
+
+        {/* Expandable detail */}
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <m.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <div className="px-6 pb-6 pt-0" id={`service-${service.id}-content`}>
+                <div className="border-t border-border pt-5">
+                  {/* Full description */}
+                  <div className="space-y-3 mb-5">
+                    {service.paragraphs.map((paragraph) => (
+                      <p
+                        key={paragraph}
+                        className="text-sm text-muted-foreground leading-relaxed"
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+
+                  {/* Deliverables checklist */}
+                  {enrichment.deliverables.length > 0 && (
+                    <div>
+                      <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">
+                        What you get
+                      </h4>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {enrichment.deliverables.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-2 text-sm text-foreground"
+                          >
+                            <Check className="size-4 text-primary shrink-0 mt-0.5" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </m.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </m.div>
+  );
+};
+
+/** Process step */
+const ProcessStep: React.FC<{
   title: string;
-  items: string[];
-  index: number;
+  description: string;
   shouldReduceMotion: boolean;
-  animationDelay?: number;
-  initial?: { opacity: number; x?: number; y?: number };
-}
-
-/**
- * Shared tech stack card component.
- */
-const TechCard: React.FC<TechCardProps> = ({
-  icon,
-  title,
-  items,
-  index,
-  shouldReduceMotion,
-  animationDelay = 0,
-  initial,
-}) => (
+  index: number;
+}> = ({ title, description, shouldReduceMotion, index }) => (
   <m.div
-    initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, ...initial }}
-    whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0, y: 0 }}
-    transition={{ duration: 0.6, delay: animationDelay }}
+    initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+    whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+    transition={{ duration: 0.4, delay: index * 0.1 }}
     viewport={{ once: true }}
+    className="flex gap-4"
   >
-    <Card className="h-full bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-md">
-      <CardContent className="p-6 bg-white dark:bg-slate-800">
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
-          {icon}
-          {title}
-        </h3>
-        <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-          {items.map(item => (
-            <div key={item}>• {item}</div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+    <div>
+      <h3 className="text-base font-semibold text-foreground mb-1">{title}</h3>
+      <p className="text-sm text-muted-foreground leading-relaxed">
+        {description}
+      </p>
+    </div>
   </m.div>
 );
-
-const additionalServices = [
-  {
-    icon: <Globe className="size-8" />,
-    title: "Responsive Design",
-    description: "Sites that work on every device—from phones to desktops.",
-    color: "bg-teal-700 dark:bg-teal-600",
-  },
-  {
-    icon: <Shield className="size-8" />,
-    title: "Security & Performance",
-    description: "Built-in security, fast load times, and solid SEO foundations.",
-    color: "bg-teal-700 dark:bg-teal-600",
-  },
-  {
-    icon: <Palette className="size-8" />,
-    title: "UI/UX Consulting",
-    description: "Help making your interface intuitive and your users happy.",
-    color: "bg-teal-700 dark:bg-teal-600",
-  },
-];
 
 const processSteps = [
   {
-    step: "01",
     title: "Discovery",
-    description: "Understanding your needs and project requirements",
-    icon: <Target size={24} />,
-    color: "bg-teal-700 dark:bg-teal-600",
+    description:
+      "We talk through your goals, constraints, and users. I ask hard questions before writing a line of code.",
   },
   {
-    step: "02",
-    title: "Planning",
-    description: "Creating detailed project roadmap and timeline",
-    icon: <Code size={24} />,
-    color: "bg-teal-700 dark:bg-teal-600",
+    title: "Architecture",
+    description:
+      "Technical decisions documented upfront — stack choices, data models, API contracts. No surprises later.",
   },
   {
-    step: "03",
-    title: "Development",
-    description: "Building your solution with clean, maintainable code",
-    icon: <Wrench size={24} />,
-    color: "bg-teal-700 dark:bg-teal-600",
+    title: "Build & Iterate",
+    description:
+      "Working software in short cycles. You see progress weekly, not monthly. Feedback shapes the next iteration.",
   },
   {
-    step: "04",
-    title: "Delivery",
-    description: "Testing, deployment, and ongoing support",
-    icon: <CheckCircle size={24} />,
-    color: "bg-teal-700 dark:bg-teal-600",
+    title: "Ship & Support",
+    description:
+      "Deployment, monitoring, handoff. I don't disappear after launch — you get documentation and a contact who knows the code.",
   },
 ];
 
 export const ServicesPage: React.FC = () => {
-  const { data: portfolioData, isLoading } = usePortfolioData();
+  const { data: portfolioData, isLoading, isError } = usePortfolioData();
   const services = portfolioData?.services || [];
   const shouldReduceMotion = useReducedMotion() ?? false;
 
+  // Loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" role="status" aria-live="polite">
-        <div className={`rounded-full h-12 w-12 border-b-2 border-teal-600 ${shouldReduceMotion ? "" : "animate-spin"}`} aria-hidden="true"></div>
-        <span className="sr-only">Loading…</span>
+      <div className="min-h-[100dvh] flex items-center justify-center" role="status" aria-live="polite">
+        <div className={`rounded-full h-12 w-12 border-b-2 border-primary ${shouldReduceMotion ? "" : "animate-spin"}`} aria-hidden="true" />
+        <span className="sr-only">Loading services…</span>
       </div>
+    );
+  }
+
+  // Error state
+  if (isError) {
+    return (
+      <>
+        <SEOHead seo={pageSEO.services} />
+        <div className="min-h-[100dvh] flex items-center justify-center px-6">
+          <div className="text-center max-w-md">
+            <p className="text-lg text-foreground font-medium mb-2">
+              Something went wrong loading services.
+            </p>
+            <p className="text-muted-foreground mb-6">
+              Try refreshing the page, or reach out directly — I'd love to hear about your project.
+            </p>
+            <Button asChild>
+              <Link to="/contact">
+                <MessageSquare className="mr-2 h-4 w-4" />
+                Send a Message
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  // Empty state
+  if (services.length === 0) {
+    return (
+      <>
+        <SEOHead seo={pageSEO.services} />
+        <div className="min-h-[100dvh] flex items-center justify-center px-6">
+          <div className="text-center max-w-md">
+            <p className="text-lg text-foreground font-medium mb-2">
+              Services coming soon.
+            </p>
+            <p className="text-muted-foreground mb-6">
+              In the meantime, let's talk about what I can build for you.
+            </p>
+            <Button asChild>
+              <Link to="/contact">
+                <MessageSquare className="mr-2 h-4 w-4" />
+                Get in Touch
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </>
     );
   }
 
@@ -161,236 +295,69 @@ export const ServicesPage: React.FC = () => {
     <>
       <SEOHead seo={pageSEO.services} />
 
-      {/* Hero Section */}
-      <section className="py-20 bg-slate-50 dark:bg-slate-900">
+      {/* Entry heading — no hero section, saves ~200px of scroll */}
+      <AnimatedSection className="pt-24 pb-12 bg-background">
         <MaxWidthWrapper>
           <m.div
-            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
             animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.8 }}
-            className="text-center"
+            transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-gray-100 mb-6">
-              Services & Expertise
+            <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
+              Services
             </h1>
-            <p className="text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
-              I build fast, maintainable web applications—from React frontends to Node.js backends.
-              Code you'll actually want to maintain later.
+            <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
+              What I build, how I work, and what you can expect.
             </p>
           </m.div>
         </MaxWidthWrapper>
-      </section>
+      </AnimatedSection>
 
-      {/* Main Services Section */}
-      <AnimatedSection className="py-20 bg-white dark:bg-slate-900">
+      {/* Services — expandable cards, not identical grid */}
+      <AnimatedSection className="py-12 bg-background">
         <MaxWidthWrapper>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-              What I Offer
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Drawing from my unique background in engineering and web development
-              to provide comprehensive solutions.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="space-y-4">
             {services.map((service, index) => (
-              <ServiceCardWrapper key={service.id} index={index} shouldReduceMotion={shouldReduceMotion} className="group">
-                <Card className="h-full bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 shadow-md hover:shadow-lg transition-shadow duration-300 rounded-2xl">
-                  <CardContent className="p-8 text-center bg-white dark:bg-slate-800 rounded-2xl">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-700 dark:bg-teal-600 text-white rounded-full mb-6 group-hover:scale-105 transition-transform duration-300">
-                      {serviceIcons[service.title as keyof typeof serviceIcons]}
-                    </div>
-
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">
-                      {service.title}
-                    </h3>
-
-                    <div className="space-y-4 text-gray-700 dark:text-gray-300">
-                      {service.paragraphs.map(paragraph => (
-                        <p key={paragraph} className="text-base leading-relaxed">
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </ServiceCardWrapper>
+              <ServiceCard
+                key={service.id}
+                service={service}
+                index={index}
+                shouldReduceMotion={shouldReduceMotion}
+              />
             ))}
           </div>
         </MaxWidthWrapper>
       </AnimatedSection>
 
-      {/* Additional Services Section */}
-      <AnimatedSection className="py-20 bg-gray-50 dark:bg-slate-800">
+      {/* Process — differentiates from homepage */}
+      <AnimatedSection className="py-16 bg-muted">
         <MaxWidthWrapper>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-              Additional Services
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Specialized services to ensure your project meets the highest standards
-              of quality and performance.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {additionalServices.map((service, index) => (
-              <ServiceCardWrapper key={service.title} index={index} shouldReduceMotion={shouldReduceMotion} className="group">
-                <Card className="h-full bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 shadow-md hover:shadow-lg transition-shadow duration-300">
-                  <CardContent className="p-6 text-center bg-white dark:bg-slate-900 rounded-2xl">
-                    <div className={`inline-flex items-center justify-center w-12 h-12 ${service.color} text-white rounded-full mb-4 group-hover:scale-105 transition-transform duration-300`}>
-                      {service.icon}
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-700 dark:text-gray-300 text-base leading-relaxed">{service.description}</p>
-                  </CardContent>
-                </Card>
-              </ServiceCardWrapper>
-            ))}
-          </div>
-        </MaxWidthWrapper>
-      </AnimatedSection>
-
-      {/* Process Section - Horizontal 1x4 Grid */}
-      <AnimatedSection className="py-20 bg-slate-50 dark:bg-slate-800">
-        <MaxWidthWrapper>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-              How I Work
-            </h2>
-            <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
-              A straightforward approach to turning your ideas into working software.
-            </p>
-          </div>
-
-          {/* Process Grid - 1x4 horizontal on desktop, stacked on mobile */}
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-4 relative">
-              {processSteps.map((phase, index) => (
-                <m.div
-                  key={phase.title}
-                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
-                  whileInView={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="relative"
-                >
-                  {/* Connecting line segment - left */}
-                  {index > 0 && (
-                    <div className="hidden lg:block absolute -left-4 top-1/2 -translate-y-1/2 w-4 h-0.5 bg-gradient-to-r from-transparent to-teal-300 dark:to-teal-600 z-10" />
-                  )}
-
-                  {/* Connecting line segment - right */}
-                  {index < processSteps.length - 1 && (
-                    <div className="hidden lg:block absolute -right-4 top-1/2 -translate-y-1/2 w-4 h-0.5 bg-gradient-to-l from-transparent to-teal-300 dark:to-teal-600 z-10" />
-                  )}
-
-                  {/* Process Card */}
-                  <m.div
-                    whileHover={shouldReduceMotion ? undefined : { y: -4 }}
-                    transition={{ duration: 0.2 }}
-                    className="group relative bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-100 dark:border-slate-700 transition-shadow duration-300"
-                  >
-                    {/* Large faded number in background */}
-                    <div className="absolute -right-2 -bottom-2 text-7xl lg:text-8xl font-bold text-teal-100 dark:text-teal-900/30 select-none pointer-events-none opacity-50 group-hover:opacity-60 transition-opacity duration-300">
-                      {phase.step}
-                    </div>
-
-                    {/* Content */}
-                    <div className="relative z-10">
-                      {/* Numbered Circle Icon */}
-                      <m.div
-                        initial={shouldReduceMotion ? { scale: 1 } : { scale: 0 }}
-                        whileInView={{ scale: 1 }}
-                        transition={shouldReduceMotion ? { duration: 0 } : {
-                          type: "spring",
-                          stiffness: 300,
-                          damping: 15,
-                          delay: index * 0.1 + 0.2,
-                        }}
-                        viewport={{ once: true }}
-                        whileHover={shouldReduceMotion ? { scale: 1 } : { scale: 1.05 }}
-                        className={`w-14 h-14 lg:w-16 lg:h-16 ${phase.color} rounded-xl lg:rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow duration-300 mb-4`}
-                      >
-                        <div className="text-white flex flex-col items-center">
-                          <span className="text-xs font-bold opacity-80">{phase.step}</span>
-                          <span className="w-6 h-6 lg:w-7 lg:h-7 -mt-1">
-                            {phase.icon}
-                          </span>
-                        </div>
-                      </m.div>
-
-                      {/* Text Content */}
-                      <div>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors duration-300">
-                          {phase.title}
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                          {phase.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Subtle accent line on hover */}
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-400 to-teal-600 dark:from-teal-500 dark:to-teal-700 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                  </m.div>
-                </m.div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+                How I Work
+              </h2>
+              <p className="text-muted-foreground leading-relaxed">
+                A predictable process that keeps you in the loop. No black boxes, no
+                surprise invoices.
+              </p>
+            </div>
+            <div className="space-y-6">
+              {processSteps.map((step, index) => (
+                <ProcessStep
+                  key={step.title}
+                  {...step}
+                  shouldReduceMotion={shouldReduceMotion}
+                  index={index}
+                />
               ))}
             </div>
           </div>
         </MaxWidthWrapper>
       </AnimatedSection>
 
-      {/* Technologies Showcase */}
-      <AnimatedSection className="py-20 bg-white dark:bg-slate-900">
-        <MaxWidthWrapper>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-              Technologies I Work With
-            </h2>
-            <p className="text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
-              Tools I've used to ship real projects—not just tutorials.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <TechCard
-              icon={<Code className="h-5 w-5 mr-2 text-teal-700 dark:text-teal-400" />}
-              title="Frontend"
-              items={["React & TypeScript", "Next.js & Tailwind CSS", "Framer Motion", "Responsive Design"]}
-              index={0}
-              shouldReduceMotion={shouldReduceMotion}
-              animationDelay={0}
-              initial={{ opacity: 0, x: -20 }}
-            />
-            <TechCard
-              icon={<Zap className="h-5 w-5 mr-2 text-teal-700 dark:text-teal-400" />}
-              title="Backend"
-              items={["Node.js & Express", "PostgreSQL & MongoDB", "REST APIs & GraphQL", "Authentication & Security"]}
-              index={1}
-              shouldReduceMotion={shouldReduceMotion}
-              animationDelay={0.1}
-              initial={{ opacity: 0, y: 20 }}
-            />
-            <TechCard
-              icon={<Wrench className="h-5 w-5 mr-2 text-teal-700 dark:text-teal-400" />}
-              title="DevOps"
-              items={["Docker & AWS", "CI/CD Pipelines", "Git & Version Control", "Performance Monitoring"]}
-              index={2}
-              shouldReduceMotion={shouldReduceMotion}
-              animationDelay={0.2}
-              initial={{ opacity: 0, x: 20 }}
-            />
-          </div>
-        </MaxWidthWrapper>
-      </AnimatedSection>
-
-      {/* Call to Action */}
-      <AnimatedSection className="py-20 bg-teal-700 dark:bg-teal-800 text-white">
+      {/* CTA — cobalt background for visual distinction */}
+      <AnimatedSection className="py-20 bg-primary text-primary-foreground">
         <MaxWidthWrapper className="text-center">
           <m.div
             initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
@@ -401,21 +368,24 @@ export const ServicesPage: React.FC = () => {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Let's Work Together
             </h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto text-teal-100">
+            <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
               Got a project in mind? I'd love to hear about it. Send me a message
               and let's see if we're a good fit.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild className="bg-white text-teal-700 hover:bg-gray-100">
+              <Button size="lg" asChild className="bg-white text-primary hover:bg-white/90 shadow-[2px_2px_0_rgba(0,0,0,0.15)]">
                 <Link to="/contact">
                   Send a Message
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild className="border-teal-500 text-white hover:bg-teal-600">
-                <Link to="/projects">
-                  See My Work
-                </Link>
+              <Button
+                size="lg"
+                variant="ghost"
+                asChild
+                className="text-primary-foreground hover:bg-white/10"
+              >
+                <Link to="/projects">See My Work</Link>
               </Button>
             </div>
           </m.div>

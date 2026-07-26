@@ -16,13 +16,13 @@ export const BlogPage: React.FC = () => {
     return (
       <>
         <SEOHead seo={pageSEO.blog} />
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-slate-900">
+        <div className="min-h-[100dvh] flex items-center justify-center bg-muted">
           <MaxWidthWrapper>
             <div className="text-center">
-              <p className="text-lg text-red-600 dark:text-red-400 mb-4">
+              <p className="text-lg text-destructive mb-4">
                 Failed to load blog posts
               </p>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
+              <p className="text-muted-foreground mb-6">
                 {error instanceof Error ? error.message : "Unknown error"}
               </p>
               <Button asChild>
@@ -42,19 +42,19 @@ export const BlogPage: React.FC = () => {
     <>
       <SEOHead seo={pageSEO.blog} />
 
-      <AnimatedSection className="py-20 bg-gradient-to-br from-gray-50 via-teal-50/30 to-blue-50 dark:from-slate-800 dark:via-teal-900/30 dark:to-blue-900">
+      <AnimatedSection className="py-20 bg-muted">
         <MaxWidthWrapper>
           <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4">
               Blog
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-xl text-foreground max-w-2xl mx-auto">
               Thoughts on web development, React, and building modern applications.
             </p>
-            <p className="mt-4 text-gray-500 dark:text-gray-400">
+            <p className="mt-4 text-muted-foreground">
               {posts.length} posts published
             </p>
-            <Button asChild className="mt-6 bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white">
+            <Button asChild className="mt-6 bg-primary text-primary-foreground hover:opacity-90">
               <a href={BLOG_URL} target="_blank" rel="noopener noreferrer">
                 <PenLine className="h-4 w-4 mr-2" />
                 Visit Full Blog
@@ -68,15 +68,15 @@ export const BlogPage: React.FC = () => {
         <BlogGrid posts={posts} isLoading={isLoading} />
       </MaxWidthWrapper>
 
-      <AnimatedSection className="py-16 bg-gradient-to-br from-gray-50 via-teal-50/30 to-blue-50 dark:from-slate-800 dark:via-teal-900/30 dark:to-blue-900">
+      <AnimatedSection className="py-16 bg-muted">
         <MaxWidthWrapper className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+          <h2 className="text-2xl font-bold text-foreground mb-4">
             Want to read more?
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
+          <p className="text-muted-foreground mb-6">
             Check out my full blog for more articles and tutorials.
           </p>
-          <Button asChild className="bg-teal-700 hover:bg-teal-800 dark:bg-teal-600 dark:hover:bg-teal-700 text-white py-4 px-6">
+          <Button asChild className="bg-secondary text-secondary-foreground hover:opacity-90 py-4 px-6">
             <a href={BLOG_URL} target="_blank" rel="noopener noreferrer">
               <PenLine className="h-4 w-4 mr-2" />
               Visit Full Blog

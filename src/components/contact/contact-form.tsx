@@ -129,9 +129,9 @@ export const ContactForm: React.FC = () => {
       transition={{ duration: 0.4 }}
       viewport={{ once: true }}
     >
-      <Card className="shadow-lg bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-600">
+      <Card className="shadow-lg bg-card border">
         <CardContent className="p-8">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+          <h2 className="text-2xl font-bold text-foreground mb-6">
             Send me a message
           </h2>
 
@@ -141,8 +141,8 @@ export const ContactForm: React.FC = () => {
               aria-live="polite"
               className={`mb-6 p-4 rounded-lg flex items-start space-x-3 ${
                 submitStatus === "success"
-                  ? "bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-700"
-                  : "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-700"
+                  ? "bg-accent/10 text-accent border border-accent/20"
+                  : "bg-destructive/10 text-destructive border border-destructive/20"
               }`}
             >
               {submitStatus === "success"
@@ -160,7 +160,7 @@ export const ContactForm: React.FC = () => {
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 Name *
               </label>
@@ -171,22 +171,23 @@ export const ContactForm: React.FC = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 disabled={isSubmitting}
+                required
                 aria-describedby={errors.name ? "name-error" : undefined}
                 aria-invalid={!!errors.name}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-400 focus:border-transparent transition-colors disabled:bg-gray-50 dark:disabled:bg-slate-700 disabled:cursor-not-allowed bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 ${
-                  errors.name ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-slate-600"
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-colors disabled:bg-muted disabled:cursor-not-allowed bg-card text-foreground placeholder-muted-foreground ${
+                  errors.name ? "border-destructive" : "border"
                 }`}
                 placeholder="Your full name"
               />
               {errors.name && (
-                <p id="name-error" role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.name}</p>
+                <p id="name-error" role="alert" className="mt-1 text-sm text-destructive">{errors.name}</p>
               )}
             </div>
 
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 Email *
               </label>
@@ -197,22 +198,23 @@ export const ContactForm: React.FC = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 disabled={isSubmitting}
+                required
                 aria-describedby={errors.email ? "email-error" : undefined}
                 aria-invalid={!!errors.email}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-400 focus:border-transparent transition-colors disabled:bg-gray-50 dark:disabled:bg-slate-700 disabled:cursor-not-allowed bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 ${
-                  errors.email ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-slate-600"
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-colors disabled:bg-muted disabled:cursor-not-allowed bg-card text-foreground placeholder-muted-foreground ${
+                  errors.email ? "border-destructive" : "border"
                 }`}
                 placeholder="your.email@example.com"
               />
               {errors.email && (
-                <p id="email-error" role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>
+                <p id="email-error" role="alert" className="mt-1 text-sm text-destructive">{errors.email}</p>
               )}
             </div>
 
             <div>
               <label
                 htmlFor="message"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 Message *
               </label>
@@ -223,28 +225,29 @@ export const ContactForm: React.FC = () => {
                 value={formData.message}
                 onChange={handleInputChange}
                 disabled={isSubmitting}
+                required
                 aria-describedby={errors.message ? "message-error" : undefined}
                 aria-invalid={!!errors.message}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-400 focus:border-transparent transition-colors resize-none disabled:bg-gray-50 dark:disabled:bg-slate-700 disabled:cursor-not-allowed bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 ${
-                  errors.message ? "border-red-500 dark:border-red-400" : "border-gray-300 dark:border-slate-600"
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-colors resize-none disabled:bg-muted disabled:cursor-not-allowed bg-card text-foreground placeholder-muted-foreground ${
+                  errors.message ? "border-destructive" : "border"
                 }`}
                 placeholder="Tell me about your project..."
               />
               {errors.message && (
-                <p id="message-error" role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.message}</p>
+                <p id="message-error" role="alert" className="mt-1 text-sm text-destructive">{errors.message}</p>
               )}
             </div>
 
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white"
               size="lg"
+              className="w-full"
             >
               {isSubmitting
                 ? (
                     <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" aria-hidden="true"></div>
                       Sending...
                     </>
                   )

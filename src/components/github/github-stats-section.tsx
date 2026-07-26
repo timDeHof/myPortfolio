@@ -9,12 +9,12 @@ import { ContributionCalendar } from "./contribution-calendar";
 
 // Section styling constants to avoid magic values and repeated classes
 const SECTION_STYLES = {
-  container: "py-20 bg-gray-50 dark:bg-slate-800",
+  container: "py-20 bg-muted",
   header: {
     wrapper: "text-center mb-16",
-    title: "text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4",
+    title: "text-3xl md:text-4xl font-bold text-foreground mb-4",
     description:
-      "text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto",
+      "text-lg text-foreground max-w-2xl mx-auto",
   },
   content: "space-y-8",
 } as const;

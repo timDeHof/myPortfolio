@@ -35,14 +35,15 @@ export class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-          <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-6">
-            <div className="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full mb-4">
+        <div className="min-h-[100dvh] flex items-center justify-center bg-muted">
+          <div className="max-w-md w-full bg-card shadow-lg rounded-lg p-6">
+            <div className="flex items-center justify-center w-12 h-12 mx-auto bg-destructive/10 rounded-full mb-4">
               <svg
-                className="w-6 h-6 text-red-600"
+                className="w-6 h-6 text-destructive"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -52,15 +53,16 @@ export class ErrorBoundary extends Component<Props, State> {
                 />
               </svg>
             </div>
-            <h2 className="text-xl font-semibold text-gray-900 text-center mb-2">
+            <h2 className="text-xl font-semibold text-foreground text-center mb-2">
               Something went wrong
             </h2>
-            <p className="text-gray-600 text-center mb-4">
+            <p className="text-muted-foreground text-center mb-4">
               We're sorry, but something unexpected happened. Please try refreshing the page.
             </p>
             <button
+              type="button"
               onClick={() => window.location.reload()}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+              className="w-full bg-primary text-primary-foreground py-2 px-4 rounded-md hover:opacity-90 transition-colors"
             >
               Refresh Page
             </button>
