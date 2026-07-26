@@ -28,16 +28,22 @@ export const projectsIndex: ProjectIndexEntry[] = [
     path: "roomify.json",
   },
   {
+    slug: "3d-product-configurator",
+    owner: "timDeHof",
+    repo: "portfolio-metadata",
+    path: "3d-product-configurator.json",
+  },
+  {
     slug: "habitgate-mobile",
     owner: "timDeHof",
     repo: "portfolio-metadata",
     path: "habitgate-mobile.json",
   },
   {
-    slug: "3d-product-configurator",
+    slug: "scanpic",
     owner: "timDeHof",
     repo: "portfolio-metadata",
-    path: "3d-product-configurator.json",
+    path: "scanpic.json",
   }
 ];
 
