@@ -26,7 +26,7 @@ Clean code, real impact. Every screen reinforces that this is a developer who wr
 - **Secondary CTA**: Let's Talk — contact form for visitors ready to reach out.
 - **The line a visitor remembers after 10 seconds**: "I build things that work, and I can prove it."
 - **Belief ladder**: (1) He's a real developer with real projects → (2) His code is clean and well-structured → (3) His work produces measurable results → (4) He'd be a strong addition to my team
-- **Proof on hand**: Case studies in `src/data/case-studies/`, testimonials section on the About page, certifications section, GitHub integration showing activity. Reference files by path; no external proof assets on hand yet.
+- **Proof on hand**: Testimonials section on the About page, certifications section, GitHub integration showing activity. No external proof assets on hand yet.
 
 ## Brand Personality
 

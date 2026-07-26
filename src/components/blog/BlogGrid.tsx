@@ -14,7 +14,7 @@ export const BlogGrid: React.FC<BlogGridProps> = ({ posts, isLoading }) => {
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="h-80 bg-muted animate-pulse rounded-lg animate-pulse"
+            className="h-80 bg-muted animate-pulse rounded-lg"
           />
         ))}
       </div>

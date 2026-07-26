@@ -85,9 +85,7 @@ font-feature-settings: "rlig" 1, "calt" 1;
 
 ### Container
 
-```css
-.mx-auto.max-w-7xl.px-4.sm:px-6.lg:px-8
-```
+Responsive container: `mx-auto max-w-7xl px-4 sm:px-6 lg:px-8`
 
 ### Spacing Scale
 
@@ -201,7 +199,7 @@ rounded-full px-3 py-1 text-xs font-medium
 
 - Fixed top, full width
 - Frosted glass effect
-- Brand: gradient text (`from-slate-700 via-slate-600 to-slate-700`)
+- Brand: gradient text with `bg-gradient-to-r bg-clip-text text-transparent from-slate-700 via-slate-600 to-slate-700`
 - Links: `text-sm font-medium`, teal on active, gray on inactive
 - Mobile: Hamburger menu with slide-down panel
 - Active indicator: Teal bottom border (`h-0.5 bg-teal-800 dark:bg-teal-300`)
@@ -249,8 +247,8 @@ Motion should feel **intentional and polished** — not flashy. Every animation 
 ### Focus Management
 
 - **Focus ring:** `outline-offset-2 outline-3 outline-blue-600 dark:outline-blue-400`
-- **Visible on keyboard only** via `focus-visible`
-- **No focus ring on mouse click**
+- **Visible on keyboard interaction** via `focus-visible` (note: browsers may retain the ring for mouse users after prior keyboard interaction)
+- **No focus ring on mouse click** (unless the element received keyboard focus earlier in the session)
 
 ### Color Contrast
 
@@ -290,7 +288,7 @@ System preference with manual toggle. Uses `.dark` class on root element.
 
 ### Dark Mode Tokens
 
-All tokens are defined in `index.css` under `.dark` selector. Key differences:
+All tokens are defined in `src/styles/index.css` under `.dark` selector. Key differences:
 
 | Token | Light → Dark |
 |-------|-------------|
