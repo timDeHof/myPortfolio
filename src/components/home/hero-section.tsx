@@ -1,13 +1,13 @@
+import { Link } from "@tanstack/react-router";
 import { m, useReducedMotion } from "framer-motion";
 import { Download, MapPin, MessageCircle } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+
+import { env } from "@/lib/env";
 
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
-import { BackToTopButton } from "./back-to-top-button";
 import { HeroIllustration } from "./hero-illustration";
-import { env } from "@/lib/env";
 
 // Motion-safe variants for reduced motion preference
 const containerVariantsReduced = {
@@ -183,9 +183,6 @@ export const HeroSection: React.FC = () => {
           </m.div>
         </div>
       </MaxWidthWrapper>
-
-      {/* Back to Top Button */}
-      <BackToTopButton />
     </section>
   );
 };
