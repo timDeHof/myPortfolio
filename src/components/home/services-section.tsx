@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { m, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
@@ -6,7 +7,6 @@ import {
   Zap,
 } from "lucide-react";
 import React from "react";
-import { Link } from "@tanstack/react-router";
 
 import { AnimatedSection } from "../common/animated-section";
 import { Button } from "../ui/button";
@@ -18,21 +18,21 @@ const services = [
     id: 1,
     icon: <Code className="h-6 w-6" />,
     title: "Full-Stack Development",
-    description: "Building web apps from frontend to backend. React, Node.js, databases, the whole thing.",
+    description: "I build and improve web apps with growth in mind, whether starting from a blank screen or picking up an existing codebase. Frontend, backend, database, the full stack. Owning every layer means I can trace a problem to its source fast and fix it without waiting on someone else. In legacy systems, that means understanding what is already there before changing anything. When requirements shift, I adapt across all layers at once, keeping the foundation solid enough to handle more users, more data, and more complexity over time. One person, one consistent approach, built to last.",
     featured: true,
   },
   {
     id: 2,
     icon: <Palette className="h-6 w-6" />,
     title: "UI/UX Design & Development",
-    description: "Interfaces that actually work for your users, not just ones that look good in screenshots.",
+    description: "Interfaces that actually work for your users, not just ones that look good in screenshots. Real user feedback shapes every iteration, so what gets built is what people actually need, not what looked right on paper.",
     featured: false,
   },
   {
     id: 3,
     icon: <Zap className="h-6 w-6" />,
     title: "Performance Optimization",
-    description: "Making your existing app faster. Better Core Web Vitals, quicker load times, happier users.",
+    description: "Making your existing app faster. Better Core Web Vitals, quicker load times, happier users. That means finding the bottlenecks first, whether it is a slow database query, an oversized asset, or too many render-blocking requests, then fixing what actually moves the needle instead of optimizing things that do not matter.",
     featured: false,
   },
 ];
@@ -145,16 +145,19 @@ export const ServicesSection: React.FC = () => {
         >
           <Card className="shadow-sm border rounded-xl">
             <CardContent className="p-8 md:p-10 bg-card rounded-xl">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex flex-col md:flex-row items-center justify-evenly gap-6">
                 <div>
                   <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
                     Let's Work Together
                   </h3>
-                  <p className="text-muted-foreground">
-                    Have a project in mind? I'd love to hear about it.
+                  <p className="text-muted-foreground ">
+                    Have a project in mind?
+                    {" "}
+                    <br className="md:hidden" />
+                    I'd love to hear about it.
                   </p>
                 </div>
-                <div className="flex gap-3 shrink-0">
+                <div className="flex flex-col md:flex-row gap-3 shrink-0">
                   <Button asChild size="lg">
                     <Link to="/contact">
                       Start Your Project
