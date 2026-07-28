@@ -1,16 +1,17 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
 import React from "react";
+import { describe, expect, it } from "vitest";
+
 import {
   Card,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-  CardDescription,
   CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from "../../../src/components/ui/card";
 
-describe("Card Components", () => {
+describe("card Components", () => {
   it("renders all card sub-components correctly", () => {
     render(
       <Card className="custom-card">
@@ -24,14 +25,14 @@ describe("Card Components", () => {
         <CardFooter>
           <button>Action</button>
         </CardFooter>
-      </Card>
+      </Card>,
     );
 
     expect(screen.getByText("Card Title")).toBeInTheDocument();
     expect(screen.getByText("Card Description")).toBeInTheDocument();
     expect(screen.getByText("Card Content")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /action/i })).toBeInTheDocument();
-    
+
     const card = screen.getByText("Card Title").closest(".custom-card");
     expect(card).toBeInTheDocument();
     expect(card).toHaveClass("rounded-xl border bg-card text-card-foreground shadow");

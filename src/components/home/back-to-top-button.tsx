@@ -1,6 +1,8 @@
+import type { JSX } from "react";
+
 import { m as motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { ArrowUp } from "lucide-react";
-import { JSX, useState } from "react";
+import { useState } from "react";
 
 export function BackToTopButton(): JSX.Element | null {
   const [show, setShow] = useState(false);

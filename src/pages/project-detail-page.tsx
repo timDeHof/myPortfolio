@@ -1,18 +1,21 @@
-import { useState } from "react";
-import { ArrowLeft, Clock, Code, ExternalLink, Github, Star, X } from "lucide-react";
-import { Link, useParams } from "@tanstack/react-router";
+import type { CaseStudyData } from "@hooks/useCaseStudy";
 
+import { CaseStudyTab } from "@components/projects/CaseStudyTab";
+import { ProjectDetailHeader } from "@components/projects/ProjectDetailHeader";
+import { FeaturesTab, getProjectTabs, OverviewTab, TechStackTab, WorkflowTab } from "@components/projects/ProjectDetailTabs";
 import { Button } from "@components/ui/button";
 import { Card, CardContent } from "@components/ui/card";
 import { MaxWidthWrapper } from "@components/ui/max-width-wrapper";
-
-import { useProject } from "@hooks/useProjects";
 import { useCaseStudy } from "@hooks/useCaseStudy";
-import type { ProjectGalleryItem, ProjectAdvancedFeature, ProjectWorkflowStep, ProjectTechStackItem } from "../types/project";
-import { OverviewTab, FeaturesTab, TechStackTab, WorkflowTab, getProjectTabs } from "@components/projects/ProjectDetailTabs";
-import { CaseStudyTab } from "@components/projects/CaseStudyTab";
+import { useProject } from "@hooks/useProjects";
+import { Link, useParams } from "@tanstack/react-router";
+import { ArrowLeft, Code, ExternalLink, Github } from "lucide-react";
+import { useState } from "react";
 
-import type { CaseStudyData } from "@hooks/useCaseStudy";
+import type { ProjectAdvancedFeature, ProjectTechStackItem, ProjectWorkflowStep } from "../types/project";
+
+import { CASE_STUDY_SLUGS } from "../types/project";
+import { normalizeGallery } from "../utils/gallery";
 
 interface Tab {
   id: string;
@@ -29,9 +32,11 @@ interface TabContentProps {
 const TabContent: React.FC<TabContentProps> = ({ activeTab, project, caseStudyData }) => {
   switch (activeTab) {
     case "case-study":
-      return caseStudyData ? (
-        <CaseStudyTab data={caseStudyData} accentColor={project.accentColor} />
-      ) : null;
+      return caseStudyData
+        ? (
+            <CaseStudyTab data={caseStudyData} accentColor={project.accentColor} />
+          )
+        : null;
     case "overview":
       return <OverviewTab project={project} />;
     case "features":
@@ -54,76 +59,21 @@ interface ProjectDetailContentProps {
 const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, onClose, isModal }) => {
   const [activeTab, setActiveTab] = useState("overview");
 
-  const hasCaseStudy = project.slug === "shadcn-timeline";
+  const hasCaseStudy = CASE_STUDY_SLUGS.includes(project.slug);
   const { data: caseStudyData } = useCaseStudy(project.slug);
 
-  const galleryImages: ProjectGalleryItem[] = (() => {
-    if (!project.gallery || (Array.isArray(project.gallery) && project.gallery.length === 0)) {
-      return project.image ? [{ url: project.image, alt: project.name, type: "image" as const }] : [];
-    }
-    if (typeof project.gallery[0] === "string") {
-      return (project.gallery as string[]).map((url) => ({ url, alt: project.name, type: "image" as const }));
-    }
-    return project.gallery as ProjectGalleryItem[];
-  })();
-
+  const galleryImages = normalizeGallery(project.gallery, project.image, project.name);
   const tabs: Tab[] = getProjectTabs(hasCaseStudy);
 
   return (
     <div className="bg-muted">
-      {/* Header with background image */}
-      <div 
-        className="relative p-4 pb-16"
-        style={{
-          backgroundImage: project.image ? `url(${project.image})` : undefined,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent" />
-        
-        {/* Content */}
-        <div className="relative z-10">
-          {isModal && onClose && (
-            <button
-              onClick={onClose}
-              aria-label="Close"
-              className="absolute top-0 right-0 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-            >
-              <X className="h-5 w-5 text-white" />
-            </button>
-          )}
-          
-          <div className="flex items-center gap-3 mb-2">
-            <span className="text-4xl font-bold text-white drop-shadow-lg" style={{ color: project.accentColor }}>
-              {project.number}
-            </span>
-          </div>
-          <h1 className="text-2xl font-bold text-white drop-shadow-lg mb-1">
-            {project.name}
-          </h1>
-          <p className="text-base text-gray-200 drop-shadow-md mb-3">
-            {project.tagline}
-          </p>
-          <div className="flex flex-wrap items-center gap-3 text-sm text-gray-300">
-            <span className="flex items-center bg-card/20 px-2 py-1 rounded-full">
-              <Clock className="h-4 w-4 mr-1" />
-              {project.timeEstimate}
-            </span>
-            <span className="flex items-center bg-card/20 px-2 py-1 rounded-full">
-              <Star className="h-4 w-4 mr-1" />
-              {project.difficulty}
-            </span>
-          </div>
-        </div>
-      </div>
+      <ProjectDetailHeader project={project} isModal={isModal} onClose={onClose} />
 
       {/* Tabs - Only show in modal */}
       {isModal && (
         <div className="px-4 py-2 border-b border">
           <div className="flex gap-1 overflow-x-auto -mx-4 px-4">
-            {tabs.map((tab) => (
+            {tabs.map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
@@ -202,40 +152,42 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
                 <CardContent className="p-6">
                   <h2 className="text-2xl font-semibold text-foreground mb-4">Development Workflow</h2>
                   <div className="space-y-4">
-                    {typeof project.workflow === "string" ? (
-                      <div className="flex flex-wrap gap-2">
-                        {(() => {
-                          const steps = project.workflow.split("→");
-                          return steps.map((step, index) => {
-                            const stepKey = `step-${index}-${step.trim()}`;
+                    {typeof project.workflow === "string"
+                      ? (
+                          <div className="flex flex-wrap gap-2">
+                            {(() => {
+                              const steps = project.workflow.split("→");
+                              return steps.map((step, index) => {
+                                const stepKey = `step-${index}-${step.trim()}`;
+                                return (
+                                  <div key={stepKey} className="flex items-center">
+                                    <div className="px-3 py-1.5 rounded-full text-white text-sm font-medium" style={{ backgroundColor: project.accentColor }}>
+                                      {step.trim()}
+                                    </div>
+                                    {index < steps.length - 1 && <span className="mx-1 text-muted-foreground">→</span>}
+                                  </div>
+                                );
+                              });
+                            })()}
+                          </div>
+                        )
+                      : (
+                          project.workflow.map((step: ProjectWorkflowStep) => {
+                            const stepKey = step.number || step.title;
                             return (
-                              <div key={stepKey} className="flex items-center">
-                                <div className="px-3 py-1.5 rounded-full text-white text-sm font-medium" style={{ backgroundColor: project.accentColor }}>
-                                  {step.trim()}
+                              <div key={stepKey} className="flex items-start gap-3">
+                                <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0" style={{ backgroundColor: project.accentColor }}>
+                                  {step.number}
                                 </div>
-                                {index < steps.length - 1 && <span className="mx-1 text-muted-foreground">→</span>}
+                                <div>
+                                  <h3 className="font-semibold text-foreground">{step.title}</h3>
+                                  {step.subtitle && <p className="text-sm text-muted-foreground">{step.subtitle}</p>}
+                                  {step.description && <p className="text-foreground leading-relaxed">{step.description}</p>}
+                                </div>
                               </div>
                             );
-                          });
-                        })()}
-                      </div>
-                    ) : (
-                      project.workflow.map((step: ProjectWorkflowStep) => {
-                        const stepKey = step.number || step.title;
-                        return (
-                          <div key={stepKey} className="flex items-start gap-3">
-                            <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0" style={{ backgroundColor: project.accentColor }}>
-                              {step.number}
-                            </div>
-                            <div>
-                              <h3 className="font-semibold text-foreground">{step.title}</h3>
-                              {step.subtitle && <p className="text-sm text-muted-foreground">{step.subtitle}</p>}
-                              {step.description && <p className="text-base text-foreground leading-relaxed">{step.description}</p>}
-                            </div>
-                          </div>
-                        );
-                      })
-                    )}
+                          })
+                        )}
                   </div>
                 </CardContent>
               </Card>
@@ -247,11 +199,19 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
                   <div className="space-y-2">
                     {project.links?.github && (
                       <Button asChild className="w-full bg-primary text-primary-foreground hover:opacity-90">
-                        <a href={project.links.github} target="_blank" rel="noopener noreferrer"><Github className="h-4 w-4 mr-2" />View Source</a>
+                        <a href={project.links.github} target="_blank" rel="noopener noreferrer">
+                          <Github className="h-4 w-4 mr-2" />
+                          View Source
+                        </a>
                       </Button>
                     )}
                     {project.links?.demo && (
-                      <Button variant="outline" asChild className="w-full"><a href={project.links.demo} target="_blank" rel="noopener noreferrer"><ExternalLink className="h-4 w-4 mr-2" />Live Demo</a></Button>
+                      <Button variant="outline" asChild className="w-full">
+                        <a href={project.links.demo} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          Live Demo
+                        </a>
+                      </Button>
                     )}
                   </div>
                 </CardContent>
@@ -318,9 +278,16 @@ export const ProjectDetailPage: React.FC = () => {
           <Card className="max-w-lg mx-auto bg-card">
             <CardContent className="p-8 text-center">
               <h2 className="text-xl font-semibold text-foreground mb-2">Project Not Found</h2>
-              <p className="text-muted-foreground mb-6">The project &quot;{slug}&quot; could not be found.</p>
+              <p className="text-muted-foreground mb-6">
+                The project &quot;
+                {slug}
+                &quot; could not be found.
+              </p>
               <Button asChild>
-                <Link to="/projects"><ArrowLeft className="h-4 w-4 mr-2" />Back to Projects</Link>
+                <Link to="/projects">
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Back to Projects
+                </Link>
               </Button>
             </CardContent>
           </Card>

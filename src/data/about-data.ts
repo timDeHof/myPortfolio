@@ -1,17 +1,20 @@
 import {
-  Palette,
-  Cog,
-  Wrench,
-  HardHat,
-  Handshake,
-  Cloud,
-  Monitor,
-  GraduationCap,
-  Sparkles,
   BookOpen,
-  Users,
+  Cloud,
   Code2,
+  Cog,
+  GraduationCap,
+  Handshake,
+  HardHat,
+  Monitor,
+  Palette,
+  Sparkles,
+  Users,
+  Wrench,
 } from "lucide-react";
+
+import type { CoreValue, SkillCategory, SkillColorVariant, TimelineEntry } from "@/types/about";
+
 import {
   APIIcon,
   AWSIcon,
@@ -34,7 +37,6 @@ import {
   TypeScriptIcon,
   VercelIcon,
 } from "@/components/common/technology-icons";
-import type { SkillColorVariant, SkillCategory, TimelineEntry, CoreValue } from "@/types/about";
 
 // Map color tokens to Tailwind background/text classes
 export const skillColorMap: Record<SkillColorVariant, { bg: string; border: string; shadow: string }> = {

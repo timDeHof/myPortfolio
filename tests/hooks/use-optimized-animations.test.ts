@@ -1,12 +1,13 @@
-import { renderHook, act } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { act, renderHook } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { useOptimizedAnimations } from "../../src/hooks/use-optimized-animations";
 
 describe("useOptimizedAnimations", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.stubGlobal("requestAnimationFrame", vi.fn((cb) => setTimeout(cb, 0)));
-    vi.stubGlobal("cancelAnimationFrame", vi.fn((id) => clearTimeout(id)));
+    vi.stubGlobal("requestAnimationFrame", vi.fn(cb => setTimeout(cb, 0)));
+    vi.stubGlobal("cancelAnimationFrame", vi.fn(id => clearTimeout(id)));
   });
 
   it("schedules an animation using requestAnimationFrame", async () => {
@@ -18,7 +19,7 @@ describe("useOptimizedAnimations", () => {
     });
 
     expect(window.requestAnimationFrame).toHaveBeenCalled();
-    
+
     // Wait for the mock timer
     await vi.waitFor(() => expect(callback).toHaveBeenCalled());
   });

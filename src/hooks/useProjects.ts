@@ -1,12 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 
-import type { Project } from "../types/project";
-import { projectsIndex, findProjectBySlug } from "../data/projectsIndex";
-import { fetchGitHubJson } from "@/lib/github-api";
+import { githubAPI } from "@/services/api/github";
 
-async function fetchProjectJson(owner: string, repo: string, path: string): Promise<Project | null> {
-  return fetchGitHubJson<Project>(owner, repo, path);
-}
+import type { Project } from "../types/project";
+
+import { findProjectBySlug, projectsIndex } from "../data/projectsIndex";
 
 export interface ProjectWithSource extends Project {
   source: "project-json" | "fallback";
@@ -16,27 +14,26 @@ export interface ProjectWithSource extends Project {
  * Shared helper that fetches project data from GitHub with fallback to static data.
  */
 async function fetchProjectWithFallback(
-  entry: { owner: string; repo: string; path: string; slug: string; fallbackData?: Project }
+  entry: { owner: string; repo: string; path: string; slug: string; fallbackData?: Project },
 ): Promise<ProjectWithSource> {
-  const projectJson = await fetchProjectJson(entry.owner, entry.repo, entry.path);
-
-  if (projectJson) {
+  try {
+    const projectJson = await githubAPI.fetchContents<Project>(entry.owner, entry.repo, entry.path);
     return {
       ...projectJson,
       slug: entry.slug,
       source: "project-json" as const,
     };
   }
-
-  if (entry.fallbackData) {
-    return {
-      ...entry.fallbackData,
-      slug: entry.slug,
-      source: "fallback" as const,
-    } as ProjectWithSource;
+  catch {
+    if (entry.fallbackData) {
+      return {
+        ...entry.fallbackData,
+        slug: entry.slug,
+        source: "fallback" as const,
+      } as ProjectWithSource;
+    }
+    throw new Error(`No data found for project: ${entry.slug}`);
   }
-
-  throw new Error(`No data found for project: ${entry.slug}`);
 }
 
 async function fetchAllProjects(): Promise<ProjectWithSource[]> {
@@ -44,10 +41,11 @@ async function fetchAllProjects(): Promise<ProjectWithSource[]> {
     projectsIndex.map(async (entry) => {
       try {
         return await fetchProjectWithFallback(entry);
-      } catch {
+      }
+      catch {
         return null;
       }
-    })
+    }),
   );
 
   return results.filter((p): p is ProjectWithSource => p !== null);

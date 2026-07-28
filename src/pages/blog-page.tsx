@@ -1,12 +1,12 @@
-import React from "react";
 import { PenLine } from "lucide-react";
+import React from "react";
 
+import { BlogGrid } from "../components/blog/BlogGrid";
 import { AnimatedSection } from "../components/common/animated-section";
 import { SEOHead } from "../components/common/seo-head";
-import { BlogGrid } from "../components/blog/BlogGrid";
 import { Button } from "../components/ui/button";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
-import { useBlogPosts, BLOG_URL } from "../services/api/blog";
+import { BLOG_URL, useBlogPosts } from "../services/api/blog";
 import { pageSEO } from "../utils/seo";
 
 export const BlogPage: React.FC = () => {
@@ -52,7 +52,9 @@ export const BlogPage: React.FC = () => {
               Thoughts on web development, React, and building modern applications.
             </p>
             <p className="mt-4 text-muted-foreground">
-              {posts.length} posts published
+              {posts.length}
+              {" "}
+              posts published
             </p>
             <Button asChild className="mt-6 bg-primary text-primary-foreground hover:opacity-90">
               <a href={BLOG_URL} target="_blank" rel="noopener noreferrer">

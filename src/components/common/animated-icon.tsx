@@ -1,9 +1,11 @@
 import type { LucideIcon } from "lucide-react";
+
 import { m, useReducedMotion } from "framer-motion";
 import React from "react";
+
 import { useIntersectionObserver } from "../../hooks/use-intersection-observer";
 
-type AnimatedIconProps = {
+interface AnimatedIconProps {
   /**
    * The icon item to render, containing the icon component and its coordinates.
    */
@@ -33,7 +35,7 @@ type AnimatedIconProps = {
    * Optional index for key generation.
    */
   index?: number;
-};
+}
 
 /**
  * A component that renders an icon with animations and intersection observer support.

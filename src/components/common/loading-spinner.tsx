@@ -1,11 +1,11 @@
 import { m, useReducedMotion } from "framer-motion";
 import React from "react";
 
-type LoadingSpinnerProps = {
+interface LoadingSpinnerProps {
   size?: "sm" | "md" | "lg";
   className?: string;
   color?: "blue" | "teal" | "purple" | "gray";
-};
+}
 
 export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   size = "md",
@@ -13,7 +13,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   color = "blue",
 }) => {
   const prefersReducedMotion = useReducedMotion();
-  
+
   const sizeClasses = {
     sm: "w-4 h-4",
     md: "w-8 h-8",
@@ -32,11 +32,11 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
       <m.div
         className={`${sizeClasses[size]} border-2 ${colorClasses[color]} rounded-full`}
         animate={prefersReducedMotion ? { opacity: 0.5 } : { rotate: 360 }}
-        transition={{ 
-          duration: prefersReducedMotion ? 0.5 : 1, 
-          repeat: prefersReducedMotion ? Infinity : Infinity, 
+        transition={{
+          duration: prefersReducedMotion ? 0.5 : 1,
+          repeat: prefersReducedMotion ? Infinity : Infinity,
           ease: "linear",
-          opacity: { duration: 0.5, repeat: Infinity, repeatType: "reverse" }
+          opacity: { duration: 0.5, repeat: Infinity, repeatType: "reverse" },
         }}
       />
     </div>

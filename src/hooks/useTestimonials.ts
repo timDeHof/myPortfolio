@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { fetchGitHubJson, type GitHubContentResponse } from "@/lib/github-api";
+import { githubAPI } from "@/services/api/github";
 
 export interface Testimonial {
   id: string;
@@ -13,17 +13,8 @@ export interface Testimonial {
   date: string;
 }
 
-interface GitHubContentResponse {
-  content?: string;
-  encoding?: string;
-}
-
 async function fetchTestimonials(): Promise<Testimonial[]> {
-  const result = await fetchGitHubJson<Testimonial[]>("timDeHof", "portfolio-metadata", "testimonials.json");
-  if (!result) {
-    throw new Error("No testimonials found");
-  }
-  return result;
+  return githubAPI.fetchContents<Testimonial[]>("timDeHof", "portfolio-metadata", "testimonials.json");
 }
 
 export function useTestimonials() {

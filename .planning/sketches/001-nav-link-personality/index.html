@@ -1,0 +1,1644 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sketch 001: Nav Link Personality</title>
+    <link rel="stylesheet" href="../themes/default.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background: var(--color-bg);
+        color: var(--color-text);
+        min-height: 100vh;
+      }
+
+      /* ═══ Variant Tab Bar ═══ */
+      #variant-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 9998;
+        background: var(--color-surface);
+        border-bottom: 1px solid var(--color-border);
+        padding: 8px 16px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-family: var(--font-sans);
+      }
+      .variant-tab {
+        padding: 6px 14px;
+        border-radius: var(--radius-md);
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--color-text-muted);
+        font-size: var(--text-sm);
+        font-family: var(--font-sans);
+        cursor: pointer;
+        transition: all var(--duration-fast) ease;
+      }
+      .variant-tab:hover {
+        color: var(--color-text);
+        background: var(--color-surface-hover);
+      }
+      .variant-tab.active {
+        color: var(--color-text);
+        background: var(--color-surface-hover);
+        border-color: var(--color-border);
+      }
+      .variant-label {
+        font-size: var(--text-xs);
+        color: var(--color-text-dim);
+        margin-left: auto;
+        font-family: var(--font-mono);
+      }
+
+      /* ═══ Variant Containers ═══ */
+      .variant {
+        display: none;
+        padding-top: 48px;
+        min-height: 100vh;
+      }
+      .variant.active {
+        display: block;
+      }
+
+      /* ═══ Page Content (placeholder below nav) ═══ */
+      .page-content {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 80px 24px;
+      }
+      .page-content h1 {
+        font-size: var(--text-3xl);
+        font-weight: 700;
+        margin-bottom: var(--space-4);
+      }
+      .page-content p {
+        color: var(--color-text-muted);
+        line-height: 1.7;
+        font-size: var(--text-lg);
+      }
+
+      /* ═══════════════════════════════════════════
+       VARIANT A: Code-Editor Style
+       Monospace, // prefix, sharp geometry, cursor blink
+    ═══════════════════════════════════════════ */
+
+      .nav-a {
+        position: fixed;
+        top: 48px;
+        left: 0;
+        right: 0;
+        z-index: 9997;
+        background: var(--color-bg);
+        border-bottom: 1px solid var(--color-border);
+        backdrop-filter: blur(12px);
+        background: rgba(10, 10, 11, 0.85);
+      }
+      [data-theme="light"] .nav-a {
+        background: rgba(250, 250, 250, 0.85);
+      }
+      .nav-a .inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        height: 56px;
+      }
+      .nav-a .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--color-text);
+        font-family: var(--font-mono);
+        font-weight: 600;
+        font-size: var(--text-sm);
+      }
+      .nav-a .brand .icon {
+        width: 28px;
+        height: 28px;
+        border-radius: var(--radius-sm);
+        background: var(--color-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 14px;
+      }
+      .nav-a .links {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
+      .nav-a .link {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--color-text-muted);
+        transition: all var(--duration-fast) ease;
+        letter-spacing: -0.01em;
+      }
+      .nav-a .link .prefix {
+        color: var(--color-text-dim);
+        font-weight: 400;
+        transition: color var(--duration-fast) ease;
+      }
+      .nav-a .link .cursor {
+        display: inline-block;
+        width: 2px;
+        height: 14px;
+        background: var(--color-accent);
+        margin-left: 2px;
+        opacity: 0;
+        transition: opacity var(--duration-fast) ease;
+      }
+      .nav-a .link:hover {
+        color: var(--color-text);
+        background: var(--color-surface-hover);
+      }
+      .nav-a .link:hover .prefix {
+        color: var(--color-accent);
+      }
+      .nav-a .link:hover .cursor {
+        opacity: 1;
+        animation: blink 1s step-end infinite;
+      }
+      .nav-a .link.active {
+        color: var(--color-text);
+        background: var(--color-accent-muted);
+      }
+      .nav-a .link.active .prefix {
+        color: var(--color-accent);
+      }
+      .nav-a .link.active .cursor {
+        opacity: 1;
+        animation: blink 1s step-end infinite;
+      }
+
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .nav-a .right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .nav-a .icon-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--color-border);
+        background: transparent;
+        color: var(--color-text-muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all var(--duration-fast) ease;
+        font-size: 16px;
+      }
+      .nav-a .icon-btn:hover {
+        color: var(--color-text);
+        border-color: var(--color-text-dim);
+        background: var(--color-surface-hover);
+      }
+      .nav-a .resume-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 14px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--color-border);
+        background: transparent;
+        color: var(--color-text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        cursor: pointer;
+        text-decoration: none;
+        transition: all var(--duration-fast) ease;
+      }
+      .nav-a .resume-btn:hover {
+        color: var(--color-text);
+        border-color: var(--color-accent);
+        background: var(--color-accent-muted);
+      }
+
+      /* ═══════════════════════════════════════════
+       VARIANT B: Floating Pills
+       Rounded containers, fluid hover, warm confidence
+    ═══════════════════════════════════════════ */
+
+      .nav-b {
+        position: fixed;
+        top: 48px;
+        left: 0;
+        right: 0;
+        z-index: 9997;
+        display: flex;
+        justify-content: center;
+        padding: 12px 24px;
+      }
+      .nav-b .pill-bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-full);
+        padding: 6px 8px;
+        box-shadow: var(--shadow-lg);
+        backdrop-filter: blur(16px);
+      }
+      .nav-b .brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px 6px 10px;
+        text-decoration: none;
+        color: var(--color-text);
+        font-weight: 600;
+        font-size: var(--text-sm);
+        border-right: 1px solid var(--color-border);
+        margin-right: 4px;
+      }
+      .nav-b .brand .icon {
+        width: 26px;
+        height: 26px;
+        border-radius: var(--radius-full);
+        background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .nav-b .link {
+        position: relative;
+        padding: 8px 16px;
+        border-radius: var(--radius-full);
+        text-decoration: none;
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--color-text-muted);
+        transition: all var(--duration-normal) var(--ease-out-expo);
+      }
+      .nav-b .link:hover {
+        color: var(--color-text);
+        background: var(--color-surface-hover);
+      }
+      .nav-b .link.active {
+        color: var(--color-text);
+        background: var(--color-primary);
+        box-shadow: var(--shadow-glow-blue);
+      }
+      .nav-b .right {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-left: 4px;
+        padding-left: 10px;
+        border-left: 1px solid var(--color-border);
+      }
+      .nav-b .icon-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: var(--radius-full);
+        border: none;
+        background: transparent;
+        color: var(--color-text-muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all var(--duration-normal) var(--ease-out-expo);
+        font-size: 16px;
+      }
+      .nav-b .icon-btn:hover {
+        color: var(--color-text);
+        background: var(--color-surface-hover);
+        transform: scale(1.05);
+      }
+
+      /* ═══════════════════════════════════════════
+       VARIANT C: Underline Sweep
+       Minimal base, animated accent line from left
+    ═══════════════════════════════════════════ */
+
+      .nav-c {
+        position: fixed;
+        top: 48px;
+        left: 0;
+        right: 0;
+        z-index: 9997;
+        background: transparent;
+        border-bottom: 1px solid var(--color-border-subtle);
+      }
+      .nav-c .inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        height: 60px;
+      }
+      .nav-c .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--color-text);
+        font-weight: 700;
+        font-size: var(--text-base);
+        letter-spacing: -0.02em;
+      }
+      .nav-c .brand .icon {
+        width: 30px;
+        height: 30px;
+        border-radius: var(--radius-md);
+        background: var(--color-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 15px;
+        transition: transform var(--duration-normal) var(--ease-out-back);
+      }
+      .nav-c .brand:hover .icon {
+        transform: rotate(-8deg) scale(1.05);
+      }
+      .nav-c .links {
+        display: flex;
+        align-items: center;
+        gap: 0;
+      }
+      .nav-c .link-wrap {
+        position: relative;
+        padding: 0;
+      }
+      .nav-c .link {
+        position: relative;
+        display: block;
+        padding: 8px 18px;
+        text-decoration: none;
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--color-text-muted);
+        transition: color var(--duration-fast) ease;
+      }
+      .nav-c .link:hover {
+        color: var(--color-text);
+      }
+      .nav-c .link.active {
+        color: var(--color-text);
+      }
+
+      /* The sweep underline */
+      .nav-c .link-wrap .underline-bar {
+        position: absolute;
+        bottom: 0;
+        left: 18px;
+        right: 18px;
+        height: 2px;
+        background: var(--color-accent);
+        border-radius: 1px;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform var(--duration-normal) var(--ease-out-expo);
+      }
+      .nav-c .link-wrap:hover .underline-bar {
+        transform: scaleX(1);
+      }
+      .nav-c .link-wrap.active .underline-bar {
+        transform: scaleX(1);
+        background: var(--color-primary);
+      }
+
+      /* Active tab sliding indicator */
+      .nav-c .active-indicator {
+        position: absolute;
+        bottom: 0;
+        height: 2px;
+        background: var(--color-primary);
+        border-radius: 1px;
+        transition:
+          left var(--duration-slow) var(--ease-out-expo),
+          width var(--duration-slow) var(--ease-out-expo);
+      }
+
+      .nav-c .right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .nav-c .icon-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: var(--radius-full);
+        border: 1px solid var(--color-border);
+        background: transparent;
+        color: var(--color-text-muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all var(--duration-normal) ease;
+        font-size: 16px;
+      }
+      .nav-c .icon-btn:hover {
+        color: var(--color-text);
+        border-color: var(--color-text-dim);
+        background: var(--color-surface-hover);
+        transform: rotate(15deg);
+      }
+      .nav-c .resume-link {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: var(--radius-full);
+        border: 1px solid var(--color-border);
+        color: var(--color-text-muted);
+        text-decoration: none;
+        font-size: var(--text-sm);
+        font-weight: 500;
+        transition: all var(--duration-normal) var(--ease-out-expo);
+      }
+      .nav-c .resume-link:hover {
+        color: var(--color-text);
+        border-color: var(--color-accent);
+        background: var(--color-accent-muted);
+        transform: translateY(-1px);
+      }
+
+      /* ═══ Viewport Control ═══ */
+      .viewport-wrap {
+        transition: max-width var(--duration-slow) var(--ease-out-expo);
+        margin: 0 auto;
+      }
+      .viewport-phone .viewport-wrap {
+        max-width: 375px;
+      }
+      .viewport-tablet .viewport-wrap {
+        max-width: 768px;
+      }
+      .viewport-desktop .viewport-wrap {
+        max-width: 1280px;
+      }
+
+      /* ═══════════════════════════════════════════
+       VARIANT D: Synthesis — Code-Editor + Floating Pills
+       Monospace // prefix inside a centered pill bar
+    ═══════════════════════════════════════════ */
+
+      .nav-d {
+        position: fixed;
+        top: 48px;
+        left: 0;
+        right: 0;
+        z-index: 9997;
+        display: flex;
+        justify-content: center;
+        padding: 12px 24px;
+      }
+      .nav-d .pill-bar {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-full);
+        padding: 5px 8px;
+        box-shadow: var(--shadow-lg);
+        backdrop-filter: blur(16px);
+      }
+      .nav-d .brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px 6px 10px;
+        text-decoration: none;
+        color: var(--color-text);
+        font-family: var(--font-mono);
+        font-weight: 600;
+        font-size: var(--text-sm);
+        border-right: 1px solid var(--color-border);
+        margin-right: 4px;
+      }
+      .nav-d .brand .icon {
+        width: 26px;
+        height: 26px;
+        border-radius: var(--radius-full);
+        background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .nav-d .link {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 8px 14px;
+        border-radius: var(--radius-full);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--color-text-muted);
+        transition: all var(--duration-normal) var(--ease-out-expo);
+        letter-spacing: -0.01em;
+      }
+      .nav-d .link .prefix {
+        color: var(--color-text-dim);
+        font-weight: 400;
+        transition: color var(--duration-fast) ease;
+      }
+      .nav-d .link .cursor {
+        display: inline-block;
+        width: 2px;
+        height: 13px;
+        background: var(--color-accent);
+        margin-left: 1px;
+        opacity: 0;
+        transition: opacity var(--duration-fast) ease;
+      }
+      .nav-d .link:hover {
+        color: var(--color-text);
+        background: var(--color-surface-hover);
+      }
+      .nav-d .link:hover .prefix {
+        color: var(--color-accent);
+      }
+      .nav-d .link:hover .cursor {
+        opacity: 1;
+        animation: blink 1s step-end infinite;
+      }
+      .nav-d .link.active {
+        color: #fff;
+        background: var(--color-primary);
+        box-shadow: var(--shadow-glow-blue);
+      }
+      .nav-d .link.active .prefix {
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .nav-d .link.active .cursor {
+        opacity: 0;
+      }
+      .nav-d .right {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-left: 4px;
+        padding-left: 10px;
+        border-left: 1px solid var(--color-border);
+      }
+      .nav-d .icon-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: var(--radius-full);
+        border: none;
+        background: transparent;
+        color: var(--color-text-muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all var(--duration-normal) var(--ease-out-expo);
+        font-size: 16px;
+      }
+      .nav-d .icon-btn:hover {
+        color: var(--color-text);
+        background: var(--color-surface-hover);
+        transform: scale(1.08);
+      }
+      .nav-d .resume-pill {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 7px 14px;
+        border-radius: var(--radius-full);
+        border: 1px solid var(--color-border);
+        background: transparent;
+        color: var(--color-text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        cursor: pointer;
+        text-decoration: none;
+        transition: all var(--duration-normal) var(--ease-out-expo);
+      }
+      .nav-d .resume-pill:hover {
+        color: var(--color-text);
+        border-color: var(--color-accent);
+        background: var(--color-accent-muted);
+        transform: translateY(-1px);
+      }
+
+      /* ═══════════════════════════════════════════
+       VARIANT E: Scroll Morph — Sharp + Techy
+       Code-editor at top → floating terminal panel on scroll
+       Always sharp corners, always monospace, always techy
+    ═══════════════════════════════════════════ */
+
+      .nav-e {
+        position: fixed;
+        top: 48px;
+        left: 0;
+        right: 0;
+        z-index: 9997;
+        background: transparent;
+        border-bottom: 1px solid var(--color-border-subtle);
+        transition: all 0.5s var(--ease-out-expo);
+      }
+      .nav-e.scrolled {
+        background: transparent;
+        border-bottom: 1px solid transparent;
+      }
+      .nav-e .bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+        height: 56px;
+        max-width: 1100px;
+        margin: 0 auto;
+        transition: all 0.5s var(--ease-out-expo);
+      }
+      /* Scrolled: floating terminal panel — SHARP corners, accent left border */
+      .nav-e.scrolled .bar {
+        max-width: 820px;
+        height: auto;
+        margin: 12px auto;
+        padding: 8px 16px;
+        background: rgba(15, 15, 16, 0.92);
+        border: 1px solid var(--color-border);
+        border-left: 2px solid var(--color-accent);
+        border-radius: var(--radius-sm);
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.4),
+          0 0 0 1px rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px);
+        justify-content: center;
+      }
+      [data-theme="light"] .nav-e.scrolled .bar {
+        background: rgba(250, 250, 250, 0.92);
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.1),
+          0 0 0 1px rgba(0, 0, 0, 0.05);
+      }
+
+      /* Brand */
+      .nav-e .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--color-text);
+        font-family: var(--font-mono);
+        font-weight: 600;
+        font-size: var(--text-sm);
+        transition: all 0.4s var(--ease-out-expo);
+      }
+      .nav-e .brand .icon {
+        width: 28px;
+        height: 28px;
+        border-radius: var(--radius-sm);
+        background: var(--color-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 14px;
+        transition: all 0.4s var(--ease-out-expo);
+      }
+      .nav-e.scrolled .brand .icon {
+        width: 22px;
+        height: 22px;
+        background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        font-size: 11px;
+      }
+      .nav-e.scrolled .brand {
+        padding: 8px 16px 8px 12px;
+        border-right: 1px solid var(--color-border);
+        margin-right: 12px;
+        font-size: var(--text-xs);
+      }
+      .nav-e.scrolled .brand span {
+        /* Name hides when floating — keeps it compact */
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: all 0.4s var(--ease-out-expo);
+      }
+
+      /* Links */
+      .nav-e .links {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        transition: all 0.4s var(--ease-out-expo);
+      }
+      .nav-e.scrolled .links {
+        gap: 6px;
+      }
+      .nav-e .link {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border-radius: var(--radius-sm);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        color: var(--color-text-muted);
+        transition: all 0.4s var(--ease-out-expo);
+        letter-spacing: -0.01em;
+      }
+      /* Scrolled: tighter padding, still sharp */
+      .nav-e.scrolled .link {
+        padding: 8px 16px;
+        font-size: var(--text-xs);
+        border-radius: var(--radius-sm);
+      }
+      .nav-e .link .prefix {
+        color: var(--color-text-dim);
+        font-weight: 400;
+        transition: all 0.4s var(--ease-out-expo);
+      }
+      /* Scrolled: prefix stays visible but shrinks */
+      .nav-e.scrolled .link .prefix {
+        font-size: 10px;
+      }
+      .nav-e .link .cursor {
+        display: inline-block;
+        width: 2px;
+        height: 14px;
+        background: var(--color-accent);
+        margin-left: 2px;
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+      .nav-e .link:hover {
+        color: var(--color-text);
+        background: var(--color-surface-hover);
+      }
+      .nav-e .link:hover .prefix {
+        color: var(--color-accent);
+      }
+      .nav-e .link:hover .cursor {
+        opacity: 1;
+        animation: blink 1s step-end infinite;
+      }
+      .nav-e .link.active {
+        color: var(--color-text);
+        background: var(--color-accent-muted);
+      }
+      .nav-e .link.active .prefix {
+        color: var(--color-accent);
+      }
+      .nav-e .link.active .cursor {
+        opacity: 1;
+        animation: blink 1s step-end infinite;
+      }
+      /* Scrolled active: subtle highlight, still sharp */
+      .nav-e.scrolled .link.active {
+        color: var(--color-accent);
+        background: rgba(59, 130, 246, 0.08);
+        box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.2);
+      }
+
+      /* Right section */
+      .nav-e .right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.4s var(--ease-out-expo);
+      }
+      .nav-e.scrolled .right {
+        gap: 8px;
+        margin-left: 12px;
+        padding-left: 14px;
+        border-left: 1px solid var(--color-border);
+      }
+      .nav-e .icon-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--color-border);
+        background: transparent;
+        color: var(--color-text-muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.4s var(--ease-out-expo);
+        font-size: 16px;
+      }
+      .nav-e.scrolled .icon-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--color-border);
+        font-size: 14px;
+      }
+      .nav-e .icon-btn:hover {
+        color: var(--color-text);
+        border-color: var(--color-text-dim);
+        background: var(--color-surface-hover);
+      }
+      .nav-e .resume-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 14px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--color-border);
+        background: transparent;
+        color: var(--color-text-muted);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.4s var(--ease-out-expo);
+      }
+      .nav-e .resume-btn:hover {
+        color: var(--color-text);
+        border-color: var(--color-accent);
+        background: var(--color-accent-muted);
+      }
+      .nav-e.scrolled .resume-btn {
+        padding: 7px 16px;
+        font-size: var(--text-xs);
+        border-radius: var(--radius-sm);
+      }
+
+      /* Scroll hint banner */
+      .scroll-hint {
+        position: fixed;
+        top: 110px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9996;
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-accent);
+        background: var(--color-accent-muted);
+        border: 1px solid var(--color-accent);
+        border-radius: var(--radius-sm);
+        padding: 6px 16px;
+        opacity: 1;
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+      }
+      .scroll-hint.hidden {
+        opacity: 0;
+      }
+
+      /* Hero section for scroll demo */
+      .hero-demo {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 40px 24px;
+      }
+      .hero-demo h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 700;
+        margin-bottom: var(--space-4);
+        letter-spacing: -0.03em;
+      }
+      .hero-demo p {
+        color: var(--color-text-muted);
+        font-size: var(--text-lg);
+        max-width: 500px;
+        line-height: 1.6;
+      }
+      .hero-demo .arrow {
+        margin-top: 48px;
+        font-size: 24px;
+        color: var(--color-text-dim);
+        animation: bounce 2s ease-in-out infinite;
+      }
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(10px);
+        }
+      }
+
+      /* Scroll sections for demo */
+      .scroll-section {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 80px 24px;
+        border-top: 1px solid var(--color-border);
+      }
+      .scroll-section h2 {
+        font-size: var(--text-2xl);
+        font-weight: 700;
+        margin-bottom: var(--space-4);
+      }
+      .scroll-section p {
+        color: var(--color-text-muted);
+        line-height: 1.7;
+        font-size: var(--text-lg);
+      }
+
+      /* ═══ Annotation overlay ═══ */
+      .annotation {
+        display: none;
+      }
+      .show-annotations .annotation {
+        display: block;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.8);
+        color: #0f0;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        padding: 2px 6px;
+        border-radius: 3px;
+        pointer-events: none;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ═══ Variant Tab Bar ═══ -->
+    <div id="variant-nav">
+      <button class="variant-tab active" onclick="showVariant('a')">A: Code-Editor</button>
+      <button class="variant-tab" onclick="showVariant('b')">B: Floating Pills</button>
+      <button class="variant-tab" onclick="showVariant('c')">C: Underline Sweep</button>
+      <button class="variant-tab" onclick="showVariant('d')">★ D: Synthesis</button>
+      <button class="variant-tab" onclick="showVariant('e')">★ E: Scroll Morph</button>
+      <span class="variant-label">sketch 001</span>
+    </div>
+
+    <!-- ═══ VARIANT A: Code-Editor ═══ -->
+    <div id="variant-a" class="variant active">
+      <nav class="nav-a">
+        <div class="inner">
+          <a href="#" class="brand">
+            <div class="icon">&lt;/&gt;</div>
+            <span>Tim DeHof</span>
+          </a>
+          <div class="links">
+            <a
+              href="#"
+              class="link"
+              onclick="
+                setActive(this, 'a');
+                return false;
+              "
+              data-nav="a"
+            >
+              <span class="prefix">//</span> about<span class="cursor"></span>
+            </a>
+            <a
+              href="#"
+              class="link"
+              onclick="
+                setActive(this, 'a');
+                return false;
+              "
+              data-nav="a"
+            >
+              <span class="prefix">//</span> services<span class="cursor"></span>
+            </a>
+            <a
+              href="#"
+              class="link active"
+              onclick="
+                setActive(this, 'a');
+                return false;
+              "
+              data-nav="a"
+            >
+              <span class="prefix">//</span> projects<span class="cursor"></span>
+            </a>
+            <a
+              href="#"
+              class="link"
+              onclick="
+                setActive(this, 'a');
+                return false;
+              "
+              data-nav="a"
+            >
+              <span class="prefix">//</span> blog<span class="cursor"></span>
+            </a>
+            <a
+              href="#"
+              class="link"
+              onclick="
+                setActive(this, 'a');
+                return false;
+              "
+              data-nav="a"
+            >
+              <span class="prefix">//</span> contact<span class="cursor"></span>
+            </a>
+          </div>
+          <div class="right">
+            <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme">☀</button>
+            <a href="#" class="resume-btn">↓ resume</a>
+          </div>
+        </div>
+      </nav>
+      <div class="viewport-wrap">
+        <div class="page-content">
+          <h1>Variant A: Code-Editor</h1>
+          <p>
+            Monospace font, <code style="color: var(--color-accent); font-family: var(--font-mono)">//</code> prefix on
+            each link, blinking cursor on hover/active. Sharp corners, techy feel. The nav speaks the language of code —
+            precise, structured, with a hint of personality in the blinking cursor.
+          </p>
+          <br />
+          <p>
+            <strong>Hover over the links</strong> to see the cursor blink and the prefix light up. Click to switch the
+            active state.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ VARIANT B: Floating Pills ═══ -->
+    <div id="variant-b" class="variant" style="display: none">
+      <nav class="nav-b">
+        <div class="pill-bar">
+          <a href="#" class="brand">
+            <div class="icon">T</div>
+            <span>Tim DeHof</span>
+          </a>
+          <a
+            href="#"
+            class="link"
+            onclick="
+              setActive(this, 'b');
+              return false;
+            "
+            data-nav="b"
+            >About</a
+          >
+          <a
+            href="#"
+            class="link"
+            onclick="
+              setActive(this, 'b');
+              return false;
+            "
+            data-nav="b"
+            >Services</a
+          >
+          <a
+            href="#"
+            class="link active"
+            onclick="
+              setActive(this, 'b');
+              return false;
+            "
+            data-nav="b"
+            >Projects</a
+          >
+          <a
+            href="#"
+            class="link"
+            onclick="
+              setActive(this, 'b');
+              return false;
+            "
+            data-nav="b"
+            >Blog</a
+          >
+          <a
+            href="#"
+            class="link"
+            onclick="
+              setActive(this, 'b');
+              return false;
+            "
+            data-nav="b"
+            >Contact</a
+          >
+          <div class="right">
+            <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme">☀</button>
+          </div>
+        </div>
+      </nav>
+      <div class="viewport-wrap">
+        <div class="page-content">
+          <h1>Variant B: Floating Pills</h1>
+          <p>
+            A single floating bar centered in the viewport. Each link is a pill shape. The active state uses the primary
+            color with a subtle glow. Hover scales the icon buttons. Feels like a confident, self-contained unit — bold
+            without being heavy.
+          </p>
+          <br />
+          <p>
+            <strong>Hover over the links</strong> to see the fluid background transition. The active pill glows with the
+            brand color.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ VARIANT C: Underline Sweep ═══ -->
+    <div id="variant-c" class="variant" style="display: none">
+      <nav class="nav-c">
+        <div class="inner">
+          <a href="#" class="brand">
+            <div class="icon">&lt;/&gt;</div>
+            <span>Tim DeHof</span>
+          </a>
+          <div class="links" id="nav-c-links">
+            <div
+              class="link-wrap"
+              onclick="
+                setActiveC(this);
+                return false;
+              "
+            >
+              <a href="#" class="link">About</a>
+              <div class="underline-bar"></div>
+            </div>
+            <div
+              class="link-wrap"
+              onclick="
+                setActiveC(this);
+                return false;
+              "
+            >
+              <a href="#" class="link">Services</a>
+              <div class="underline-bar"></div>
+            </div>
+            <div
+              class="link-wrap active"
+              onclick="
+                setActiveC(this);
+                return false;
+              "
+            >
+              <a href="#" class="link">Projects</a>
+              <div class="underline-bar"></div>
+            </div>
+            <div
+              class="link-wrap"
+              onclick="
+                setActiveC(this);
+                return false;
+              "
+            >
+              <a href="#" class="link">Blog</a>
+              <div class="underline-bar"></div>
+            </div>
+            <div
+              class="link-wrap"
+              onclick="
+                setActiveC(this);
+                return false;
+              "
+            >
+              <a href="#" class="link">Contact</a>
+              <div class="underline-bar"></div>
+            </div>
+          </div>
+          <div class="right">
+            <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme">☀</button>
+            <a href="#" class="resume-link">↓ Resume</a>
+          </div>
+        </div>
+      </nav>
+      <div class="viewport-wrap">
+        <div class="page-content">
+          <h1>Variant C: Underline Sweep</h1>
+          <p>
+            Clean, confident text links with a horizontal accent line that sweeps in from the left on hover. The active
+            state has a solid underline. Minimal base, fluid motion. The brand icon rotates on hover for a playful
+            touch.
+          </p>
+          <br />
+          <p>
+            <strong>Hover over the links</strong> to see the underline sweep animation. The brand icon tilts on hover.
+            Click to switch active state.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ VARIANT D: Synthesis — Code-Editor + Floating Pills ═══ -->
+    <div id="variant-d" class="variant" style="display: none">
+      <nav class="nav-d">
+        <div class="pill-bar">
+          <a href="#" class="brand">
+            <div class="icon">&lt;/&gt;</div>
+            <span>Tim DeHof</span>
+          </a>
+          <a
+            href="#"
+            class="link"
+            onclick="
+              setActive(this, 'd');
+              return false;
+            "
+            data-nav="d"
+          >
+            <span class="prefix">//</span> about<span class="cursor"></span>
+          </a>
+          <a
+            href="#"
+            class="link"
+            onclick="
+              setActive(this, 'd');
+              return false;
+            "
+            data-nav="d"
+          >
+            <span class="prefix">//</span> services<span class="cursor"></span>
+          </a>
+          <a
+            href="#"
+            class="link active"
+            onclick="
+              setActive(this, 'd');
+              return false;
+            "
+            data-nav="d"
+          >
+            <span class="prefix">//</span> projects<span class="cursor"></span>
+          </a>
+          <a
+            href="#"
+            class="link"
+            onclick="
+              setActive(this, 'd');
+              return false;
+            "
+            data-nav="d"
+          >
+            <span class="prefix">//</span> blog<span class="cursor"></span>
+          </a>
+          <a
+            href="#"
+            class="link"
+            onclick="
+              setActive(this, 'd');
+              return false;
+            "
+            data-nav="d"
+          >
+            <span class="prefix">//</span> contact<span class="cursor"></span>
+          </a>
+          <div class="right">
+            <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme">☀</button>
+            <a href="#" class="resume-pill">↓ resume</a>
+          </div>
+        </div>
+      </nav>
+      <div class="viewport-wrap">
+        <div class="page-content">
+          <h1>★ Variant D: Synthesis</h1>
+          <p>
+            The best of both worlds. Code-editor monospace font with
+            <code style="color: var(--color-accent); font-family: var(--font-mono)">//</code> prefix and blinking cursor
+            — but inside a centered floating pill bar with rounded corners, shadow, and glass morphism. The active pill
+            fills with the brand color and glows. Resume gets a pill button too.
+          </p>
+          <br />
+          <p>
+            <strong>Hover the links</strong> — the cursor blinks and prefix lights up.
+            <strong>Click to activate</strong> — the pill fills blue with a glow. This is the recommended direction.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ VARIANT E: Scroll Morph — Code-Editor → Floating Terminal ═══ -->
+    <div id="variant-e" class="variant" style="display: none">
+      <div id="scroll-hint" class="scroll-hint">↓ scroll to morph the navbar</div>
+      <nav class="nav-e" id="nav-e">
+        <div class="bar">
+          <a href="#" class="brand">
+            <div class="icon">&lt;/&gt;</div>
+            <span>Tim DeHof</span>
+          </a>
+          <div class="links">
+            <a
+              href="#"
+              class="link"
+              onclick="
+                setActive(this, 'e');
+                return false;
+              "
+              data-nav="e"
+            >
+              <span class="prefix">//</span> about<span class="cursor"></span>
+            </a>
+            <a
+              href="#"
+              class="link"
+              onclick="
+                setActive(this, 'e');
+                return false;
+              "
+              data-nav="e"
+            >
+              <span class="prefix">//</span> services<span class="cursor"></span>
+            </a>
+            <a
+              href="#"
+              class="link active"
+              onclick="
+                setActive(this, 'e');
+                return false;
+              "
+              data-nav="e"
+            >
+              <span class="prefix">//</span> projects<span class="cursor"></span>
+            </a>
+            <a
+              href="#"
+              class="link"
+              onclick="
+                setActive(this, 'e');
+                return false;
+              "
+              data-nav="e"
+            >
+              <span class="prefix">//</span> blog<span class="cursor"></span>
+            </a>
+            <a
+              href="#"
+              class="link"
+              onclick="
+                setActive(this, 'e');
+                return false;
+              "
+              data-nav="e"
+            >
+              <span class="prefix">//</span> contact<span class="cursor"></span>
+            </a>
+          </div>
+          <div class="right">
+            <button class="icon-btn" onclick="toggleTheme()" title="Toggle theme">☀</button>
+            <a href="#" class="resume-btn">↓ resume</a>
+          </div>
+        </div>
+      </nav>
+      <div class="hero-demo">
+        <h1>★ Variant E: Scroll Morph</h1>
+        <p>
+          The navbar starts as a full-width code-editor bar. Scroll down and it morphs into a compact floating terminal
+          panel — sharp corners, accent left border, monospace everything.
+        </p>
+        <div class="arrow">↓</div>
+      </div>
+      <div class="scroll-section">
+        <h2>What changes on scroll</h2>
+        <p>
+          The bar shrinks from full-width to a centered floating panel. Background goes dark glass. A blue accent line
+          appears on the left edge. Brand name hides, leaving just the icon. Links tighten up. Everything stays sharp —
+          no pills, no rounds. It's a code editor toolbar that detached from the wall and started floating.
+        </p>
+      </div>
+      <div class="scroll-section">
+        <h2>Key design decisions</h2>
+        <p>
+          Sharp corners everywhere. Monospace font stays. The
+          <code style="color: var(--color-accent); font-family: var(--font-mono)">//</code> prefix shrinks but never
+          disappears. The cursor still blinks on hover. The active state uses a subtle blue tint with an inset border —
+          like a selected line in an editor. The accent left border is the signature detail: it says "this is a code
+          panel."
+        </p>
+      </div>
+      <div class="scroll-section">
+        <h2>Scroll more to see the morph in action</h2>
+        <p>
+          The transition uses
+          <code style="font-family: var(--font-mono); color: var(--color-accent)">ease-out-expo</code> — fast start,
+          smooth settle. 500ms for the container, 400ms for inner elements. Everything animates together so it feels
+          like one fluid motion, not a cascade of properties.
+        </p>
+      </div>
+      <div class="scroll-section" style="min-height: 40vh">
+        <h2>That's the full scroll morph.</h2>
+        <p>Scroll back up to see it transition back to the full-width bar.</p>
+      </div>
+    </div>
+
+    <!-- ═══ Sketch Toolbar ═══ -->
+    <div
+      id="sketch-tools"
+      style="
+        position: fixed;
+        bottom: 12px;
+        right: 12px;
+        z-index: 9999;
+        font-family: system-ui;
+        font-size: 12px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 10px 14px;
+        border-radius: 10px;
+        opacity: 0.35;
+        transition: opacity 0.2s;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      "
+      onmouseenter="this.style.opacity = '1'"
+      onmouseleave="this.style.opacity = '0.35'"
+    >
+      <select
+        id="theme-switcher"
+        onchange="document.querySelector('link[href*=themes]').href = '../themes/' + this.value + '.css'"
+        style="
+          background: rgba(255, 255, 255, 0.1);
+          color: white;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 4px;
+          padding: 2px 6px;
+          font-size: 11px;
+        "
+      >
+        <option value="default">Default</option>
+      </select>
+      <div style="display: flex; gap: 4px">
+        <button
+          onclick="setViewport('phone')"
+          style="
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 11px;
+            cursor: pointer;
+          "
+        >
+          📱
+        </button>
+        <button
+          onclick="setViewport('tablet')"
+          style="
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 11px;
+            cursor: pointer;
+          "
+        >
+          📋
+        </button>
+        <button
+          onclick="setViewport('desktop')"
+          style="
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 11px;
+            cursor: pointer;
+          "
+        >
+          🖥
+        </button>
+      </div>
+      <button
+        onclick="toggleAnnotations()"
+        style="
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          color: white;
+          border-radius: 4px;
+          padding: 2px 8px;
+          font-size: 11px;
+          cursor: pointer;
+        "
+      >
+        📐
+      </button>
+    </div>
+
+    <script>
+      // ═══ Variant Switching ═══
+      function showVariant(id) {
+        document.querySelectorAll(".variant").forEach((v) => {
+          v.style.display = "none";
+          v.classList.remove("active");
+        });
+        document.querySelectorAll(".variant-tab").forEach((t) => t.classList.remove("active"));
+        const target = document.getElementById("variant-" + id);
+        if (target) {
+          target.style.display = "block";
+          target.classList.add("active");
+        }
+        event.target.classList.add("active");
+      }
+
+      // ═══ Active State (Variants A & B) ═══
+      function setActive(el, navId) {
+        document.querySelectorAll(`[data-nav="${navId}"]`).forEach((l) => l.classList.remove("active"));
+        el.classList.add("active");
+      }
+
+      // ═══ Active State (Variant C — underline sweep) ═══
+      function setActiveC(wrap) {
+        wrap
+          .closest(".links")
+          .querySelectorAll(".link-wrap")
+          .forEach((w) => w.classList.remove("active"));
+        wrap.classList.add("active");
+      }
+
+      // ═══ Theme Toggle ═══
+      let isDark = true;
+      function toggleTheme() {
+        isDark = !isDark;
+        document.documentElement.setAttribute("data-theme", isDark ? "" : "light");
+        document.querySelectorAll(".icon-btn").forEach((b) => (b.textContent = isDark ? "☀" : "☾"));
+      }
+
+      // ═══ Viewport Preview ═══
+      function setViewport(size) {
+        document.body.classList.remove("viewport-phone", "viewport-tablet", "viewport-desktop");
+        if (size !== "desktop") document.body.classList.add("viewport-" + size);
+      }
+
+      // ═══ Annotations ═══
+      let annotationsVisible = false;
+      function toggleAnnotations() {
+        annotationsVisible = !annotationsVisible;
+        document.body.classList.toggle("show-annotations", annotationsVisible);
+      }
+
+      // ═══ Variant E: Scroll Morph ═══
+      function initScrollMorph() {
+        const nav = document.getElementById("nav-e");
+        const hint = document.getElementById("scroll-hint");
+        if (!nav) return;
+
+        const SCROLL_THRESHOLD = 60;
+
+        window.addEventListener(
+          "scroll",
+          () => {
+            const scrolled = window.scrollY > SCROLL_THRESHOLD;
+            nav.classList.toggle("scrolled", scrolled);
+            if (hint) hint.classList.toggle("hidden", scrolled);
+          },
+          { passive: true },
+        );
+      }
+
+      // Init on load and when switching to variant E
+      const origShowVariant = showVariant;
+      showVariant = function (id) {
+        origShowVariant(id);
+        if (id === "e") {
+          requestAnimationFrame(initScrollMorph);
+        }
+      };
+    </script>
+  </body>
+</html>

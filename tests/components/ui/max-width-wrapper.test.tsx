@@ -1,14 +1,15 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
 import React from "react";
+import { describe, expect, it } from "vitest";
+
 import { MaxWidthWrapper } from "../../../src/components/ui/max-width-wrapper";
 
-describe("MaxWidthWrapper", () => {
+describe("maxWidthWrapper", () => {
   it("renders children and applies base classes", () => {
     render(
       <MaxWidthWrapper>
         <div data-testid="child">Content</div>
-      </MaxWidthWrapper>
+      </MaxWidthWrapper>,
     );
 
     const wrapper = screen.getByTestId("child").parentElement;
@@ -20,7 +21,7 @@ describe("MaxWidthWrapper", () => {
     render(
       <MaxWidthWrapper className="custom-class">
         <div>Content</div>
-      </MaxWidthWrapper>
+      </MaxWidthWrapper>,
     );
 
     const wrapper = screen.getByText("Content").parentElement;

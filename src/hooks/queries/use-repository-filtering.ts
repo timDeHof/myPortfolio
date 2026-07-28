@@ -4,9 +4,9 @@ import type { GitHubRepository } from "../../services/api/github";
 
 export type ProjectType = "all" | "showcase" | "personal" | "contributions";
 
-type UseRepositoryFilteringOptions = {
+interface UseRepositoryFilteringOptions {
   repositories: GitHubRepository[];
-};
+}
 
 export function useRepositoryFiltering({ repositories }: UseRepositoryFilteringOptions) {
   const [selectedLanguage, setSelectedLanguage] = useState<string>("All");
@@ -20,21 +20,22 @@ export function useRepositoryFiltering({ repositories }: UseRepositoryFilteringO
 
     repositories.forEach((repo) => {
       switch (repo.category) {
-        case 'showcase':
+        case "showcase":
           showcase.push(repo);
           break;
-        case 'personal':
+        case "personal":
           personal.push(repo);
           break;
-        case 'contribution':
-        case 'fork':
+        case "contribution":
+        case "fork":
           contributions.push(repo);
           break;
         default:
           // Fallback for repos without category
           if (repo.fork) {
             contributions.push(repo);
-          } else {
+          }
+          else {
             personal.push(repo);
           }
       }
@@ -73,7 +74,6 @@ export function useRepositoryFiltering({ repositories }: UseRepositoryFilteringO
 
   // Filter repositories by language
   const filteredRepositories = useMemo(() => {
-
     if (repositoriesByType.length === 0) {
       return [];
     }
@@ -87,7 +87,6 @@ export function useRepositoryFiltering({ repositories }: UseRepositoryFilteringO
   }, [repositoriesByType, selectedLanguage]);
 
   const handleLanguageChange = useCallback((language: string) => {
-
     setSelectedLanguage(language);
   }, []);
 

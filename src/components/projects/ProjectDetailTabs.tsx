@@ -1,8 +1,8 @@
 import { BookOpen, Code, Layout, List, Workflow } from "lucide-react";
 
-import { Card, CardContent } from "../ui/card";
+import type { ProjectAdvancedFeature, ProjectTechStackItem, ProjectWorkflowStep } from "../../types/project";
 
-import type { ProjectTechStackItem, ProjectWorkflowStep, ProjectAdvancedFeature } from "../../types/project";
+import { Card, CardContent } from "../ui/card";
 
 interface Project {
   name: string;
@@ -90,33 +90,35 @@ export function OverviewTab({ project }: OverviewTabProps) {
 
 export function FeaturesTab({ project }: OverviewTabProps) {
   const features = project.advancedFeatures;
-  
+
   return (
     <ol className="list-none space-y-4">
-      {Array.isArray(features) && features.length > 0 ? (
-        features.map((feature, index: number) => (
-          <li key={`feature-${typeof feature === 'string' ? feature : feature.title}-${index}`} className="flex gap-3">
-            <div 
-              className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-white font-bold text-sm"
-              style={{ backgroundColor: project.accentColor }}
-            >
-              {index + 1}
-            </div>
-            <div className="pt-0.5">
-              <h3 className="font-medium text-foreground">
-                {typeof feature === "string" ? feature : feature.title}
-              </h3>
-              {typeof feature !== "string" && feature.description && (
-                <p className="text-muted-foreground text-sm mt-1">
-                  {feature.description}
-                </p>
-              )}
-            </div>
-          </li>
-        ))
-      ) : (
-        <p className="text-muted-foreground text-center py-8">No features listed</p>
-      )}
+      {Array.isArray(features) && features.length > 0
+        ? (
+            features.map((feature, index: number) => (
+              <li key={`feature-${typeof feature === "string" ? feature : feature.title}-${index}`} className="flex gap-3">
+                <div
+                  className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-white font-bold text-sm"
+                  style={{ backgroundColor: project.accentColor }}
+                >
+                  {index + 1}
+                </div>
+                <div className="pt-0.5">
+                  <h3 className="font-medium text-foreground">
+                    {typeof feature === "string" ? feature : feature.title}
+                  </h3>
+                  {typeof feature !== "string" && feature.description && (
+                    <p className="text-muted-foreground text-sm mt-1">
+                      {feature.description}
+                    </p>
+                  )}
+                </div>
+              </li>
+            ))
+          )
+        : (
+            <p className="text-muted-foreground text-center py-8">No features listed</p>
+          )}
     </ol>
   );
 }
@@ -133,25 +135,27 @@ export function TechStackTab({ project }: OverviewTabProps) {
         </thead>
         <tbody>
           {project.techStack.map((item, index) => (
-            <tr key={`tech-${typeof item === 'string' ? item : item.category}-${index}`} className="border-b border">
+            <tr key={`tech-${typeof item === "string" ? item : item.category}-${index}`} className="border-b border">
               <td className="py-3 px-4 text-muted-foreground">
                 {typeof item === "string" ? "-" : item.category}
               </td>
               <td className="py-3 px-4">
-                {typeof item === "string" ? (
-                  <span className="font-medium text-foreground">{item}</span>
-                ) : (
-                  <div>
-                    <span className="font-medium text-foreground">
-                      {item.tech}
-                    </span>
-                    {item.purpose && (
-                      <p className="text-xs text-muted-foreground">
-                        {item.purpose}
-                      </p>
+                {typeof item === "string"
+                  ? (
+                      <span className="font-medium text-foreground">{item}</span>
+                    )
+                  : (
+                      <div>
+                        <span className="font-medium text-foreground">
+                          {item.tech}
+                        </span>
+                        {item.purpose && (
+                          <p className="text-xs text-muted-foreground">
+                            {item.purpose}
+                          </p>
+                        )}
+                      </div>
                     )}
-                  </div>
-                )}
               </td>
             </tr>
           ))}
@@ -163,67 +167,71 @@ export function TechStackTab({ project }: OverviewTabProps) {
 
 export function WorkflowTab({ project }: OverviewTabProps) {
   const workflow = project.workflow;
-  
+
   return (
     <div className="space-y-4">
-      {typeof workflow === "string" ? (
-        <div className="flex flex-wrap gap-2">
-          {(() => {
-            const steps = workflow.split("→");
-            return steps.map((step, index) => (
-              <div key={`step-${step.trim()}-${index}`} className="flex items-center">
-                <div 
-                  className="px-3 py-2 rounded-full text-white text-sm font-medium"
-                  style={{ backgroundColor: project.accentColor }}
-                >
-                  {step.trim()}
-                </div>
-                {index < steps.length - 1 && (
-                  <span className="mx-2 text-muted-foreground">→</span>
-                )}
-              </div>
-            ));
-          })()}
-        </div>
-      ) : Array.isArray(workflow) && workflow.length > 0 ? (
-        workflow.map((step: ProjectWorkflowStep, index: number) => (
-          <Card key={`workflow-${step.number || index}`}>
-            <CardContent className="p-4">
-              <div className="flex items-start gap-3">
-                <div 
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
-                  style={{ backgroundColor: project.accentColor }}
-                >
-                  {step.number}
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground">
-                    {step.title}
-                  </h3>
-                  {step.subtitle && (
-                    <p className="text-sm text-muted-foreground">
-                      {step.subtitle}
-                    </p>
-                  )}
-                  {step.description && (
-                    <p className="text-base text-foreground mt-1 leading-relaxed">
-                      {step.description}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))
-      ) : (
-        <p className="text-muted-foreground text-center py-8">No workflow defined</p>
-      )}
+      {typeof workflow === "string"
+        ? (
+            <div className="flex flex-wrap gap-2">
+              {(() => {
+                const steps = workflow.split("→");
+                return steps.map((step, index) => (
+                  <div key={`step-${step.trim()}-${index}`} className="flex items-center">
+                    <div
+                      className="px-3 py-2 rounded-full text-white text-sm font-medium"
+                      style={{ backgroundColor: project.accentColor }}
+                    >
+                      {step.trim()}
+                    </div>
+                    {index < steps.length - 1 && (
+                      <span className="mx-2 text-muted-foreground">→</span>
+                    )}
+                  </div>
+                ));
+              })()}
+            </div>
+          )
+        : Array.isArray(workflow) && workflow.length > 0
+          ? (
+              workflow.map((step: ProjectWorkflowStep, index: number) => (
+                <Card key={`workflow-${step.number || index}`}>
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
+                        style={{ backgroundColor: project.accentColor }}
+                      >
+                        {step.number}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-foreground">
+                          {step.title}
+                        </h3>
+                        {step.subtitle && (
+                          <p className="text-sm text-muted-foreground">
+                            {step.subtitle}
+                          </p>
+                        )}
+                        {step.description && (
+                          <p className="text-base text-foreground mt-1 leading-relaxed">
+                            {step.description}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            )
+          : (
+              <p className="text-muted-foreground text-center py-8">No workflow defined</p>
+            )}
     </div>
   );
 }
 
 export function getProjectTabs(
-  hasCaseStudy: boolean = false
+  hasCaseStudy: boolean = false,
 ): { id: string; label: string; icon: React.ReactNode }[] {
   const tabs = [
     { id: "overview", label: "Overview", icon: <Layout className="h-4 w-4" /> },

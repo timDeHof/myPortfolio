@@ -34,8 +34,8 @@ export const AnimatedCard: React.FC<AnimatedCardProps> = ({
     >
       <Card
         className={
-          cardClassName ??
-          "flex h-full flex-col border bg-card"
+          cardClassName
+          ?? "flex h-full flex-col border bg-card"
         }
       >
         <CardContent

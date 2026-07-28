@@ -22,17 +22,20 @@ A modern, responsive portfolio website built with React, TypeScript, and Tailwin
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/timDeHof/portfolio.git
 cd portfolio
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Set up environment variables:
+
 ```bash
 cp .env.example .env
 ```
@@ -40,6 +43,7 @@ cp .env.example .env
 4. Configure EmailJS (see EmailJS Setup section below)
 
 5. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -114,6 +118,7 @@ For urgent matters, you can reach me directly at tim@timdehof.dev
 ```
 
 **Important Settings for Auto-Reply Template:**
+
 - Set "To Email" field to: `{{to_email}}`
 - Set "From Name" to: `Tim DeHof`
 - Set "From Email" to your email address (e.g., `tim@timdehof.dev`)

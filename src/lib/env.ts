@@ -14,7 +14,7 @@ type EnvSchema = z.infer<typeof EnvSchema>;
 // Create environment object with only string values
 const envWithNodeEnv = {
   ...Object.fromEntries(
-    Object.entries(import.meta.env).filter(([, value]) => typeof value === 'string')
+    Object.entries(import.meta.env).filter(([, value]) => typeof value === "string"),
   ),
   VITE_NODE_ENV: import.meta.env.VITE_NODE_ENV || import.meta.env.MODE || "development",
 };

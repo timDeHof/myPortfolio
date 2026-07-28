@@ -7,12 +7,14 @@ This file provides guidelines for AI agents operating in this repository.
 ## 1. Build, Lint, and Test Commands
 
 ### Development
+
 ```bash
 pnpm dev              # Start development server
 pnpm dev:pages        # Build and run with Cloudflare Pages
 ```
 
 ### Building
+
 ```bash
 pnpm build            # Build for production
 pnpm preview          # Preview production build
@@ -20,6 +22,7 @@ pnpm preview:worker   # Preview Cloudflare Worker
 ```
 
 ### Testing
+
 ```bash
 pnpm test             # Run all tests
 pnpm test:browser     # Run browser tests with Playwright
@@ -35,6 +38,7 @@ pnpm test -- --run "github"
 ```
 
 ### Linting and Type Checking
+
 ```bash
 pnpm lint             # Run ESLint
 pnpm lint:fix         # Fix ESLint issues
@@ -46,12 +50,14 @@ pnpm type-check       # Run TypeScript type check
 ## 2. Code Style Guidelines
 
 ### General Principles
+
 - Use **Antfu's ESLint config** (see `eslint.config.js`)
 - Follow **TypeScript strict mode** (enabled in `tsconfig.app.json`)
 - Write **self-documenting code** - avoid comments unless explaining complex logic
 - Keep functions **small and focused** (single responsibility)
 
 ### Formatting (Pre-configured by Antfu)
+
 - **Indentation**: 2 spaces
 - **Quotes**: Double quotes
 - **Semicolons**: Yes
@@ -63,16 +69,19 @@ pnpm type-check       # Run TypeScript type check
 ## 3. Import Conventions
 
 ### Path Aliases
+
 The project uses path aliases configured in `tsconfig.app.json`:
+
 ```typescript
 // Use these aliases instead of relative paths
 import { Button } from "@components/ui/button";
-import { useBlogPosts } from "@services/api/blog";
 import { useTheme } from "@hooks/use-theme";
 import { HomePage } from "@pages/home-page";
+import { useBlogPosts } from "@services/api/blog";
 ```
 
 ### Import Order (Enforced by ESLint)
+
 1. React/Node built-ins
 2. External libraries (react, framer-motion, lucide-react)
 3. Internal aliases (@components, @hooks, @pages, @services)
@@ -80,16 +89,18 @@ import { HomePage } from "@pages/home-page";
 5. Type imports
 
 ```typescript
-// Example import order
-import { useState, useEffect } from "react";           // React
-import { m } from "framer-motion";                     // External
-import { Calendar, ExternalLink } from "lucide-react";  // External
-import { Button } from "@components/ui/button";        // Alias
+import { Button } from "@components/ui/button"; // Alias
 import { Card, CardContent } from "@components/ui/card"; // Alias
+import { m } from "framer-motion"; // External
+import { Calendar, ExternalLink } from "lucide-react"; // External
+// Example import order
+import { useEffect, useState } from "react"; // React
+
 import type { BlogPost } from "../../services/api/blog"; // Relative
 ```
 
 ### Named vs Default Exports
+
 - **Prefer named exports** for components, hooks, and utilities
 - Default exports are acceptable for page components (e.g., `export default BlogPage`)
 
@@ -98,7 +109,9 @@ import type { BlogPost } from "../../services/api/blog"; // Relative
 ## 4. TypeScript Guidelines
 
 ### Strict Mode
+
 All TypeScript code must pass strict mode:
+
 ```typescript
 // Always define return types for async functions
 export const fetchBlogPosts = async (): Promise<BlogPost[]> => { ... }
@@ -111,6 +124,7 @@ interface BlogPostCardProps {
 ```
 
 ### Type Definitions
+
 - Put types in `src/types/` directory
 - Use interfaces for public APIs, types for unions/intersections
 - Export types that are used across modules
@@ -125,7 +139,9 @@ export interface Project {
 ```
 
 ### Generics
+
 Use generics when creating reusable components:
+
 ```typescript
 function useQuery<T>({
   queryKey,
@@ -141,6 +157,7 @@ function useQuery<T>({
 ## 5. Naming Conventions
 
 ### Files
+
 - **Components**: PascalCase (`BlogPostCard.tsx`, `ProjectGrid.tsx`)
 - **Hooks**: camelCase with `use` prefix (`useBlogPosts.ts`, `useTheme.ts`)
 - **Utils**: camelCase (`cn.ts`, `validation.ts`)
@@ -148,12 +165,14 @@ function useQuery<T>({
 - **Tests**: Same as file + `.test.tsx` suffix
 
 ### Variables and Functions
+
 - **Variables**: camelCase
 - **Constants**: UPPER_SNAKE_CASE for true constants, camelCase otherwise
 - **Functions**: camelCase, verb-prefixed for actions (`fetchBlogPosts`, `useBlogPost`)
 - **Booleans**: Use `is`, `has`, `can` prefixes (`isLoading`, `hasError`, `canEdit`)
 
 ### React Components
+
 ```typescript
 // Component file: BlogPostCard.tsx
 export const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, index = 0 }) => { ... }
@@ -167,7 +186,9 @@ export function BlogPostCard({ post, index = 0 }: BlogPostCardProps) { ... }
 ## 6. Error Handling
 
 ### API Error Handling
+
 Use custom error classes and proper error typing:
+
 ```typescript
 // Custom error class
 export class GitHubAPIError extends Error {
@@ -185,7 +206,8 @@ export class GitHubAPIError extends Error {
 // Usage
 try {
   const data = await fetchData();
-} catch (error) {
+}
+catch (error) {
   if (error instanceof GitHubAPIError) {
     console.error(`API Error: ${error.status} - ${error.message}`);
   }
@@ -194,6 +216,7 @@ try {
 ```
 
 ### React Query Error Handling
+
 ```typescript
 const { data, isLoading, error, isError } = useBlogPosts();
 
@@ -207,7 +230,9 @@ if (isError) {
 ```
 
 ### Environment Variables
+
 Use Zod for environment validation:
+
 ```typescript
 // src/lib/env.ts
 import { z } from "zod";
@@ -225,6 +250,7 @@ export const env = EnvSchema.parse(import.meta.env);
 ## 7. Component Patterns
 
 ### Component Structure
+
 ```typescript
 import { m } from "framer-motion";  // Animations
 import { Calendar } from "lucide-react";  // Icons
@@ -263,6 +289,7 @@ export const ComponentName: React.FC<ComponentNameProps> = ({
 ```
 
 ### Props with Multiple Optional Props
+
 ```typescript
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "default" | "outline" | "ghost";
@@ -276,10 +303,12 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 ## 8. Testing Guidelines
 
 ### Test File Location
+
 - Unit tests: `src/services/api/__tests__/filename.test.ts`
 - Component tests: `tests/components/path/ComponentName.test.tsx`
 
 ### Test Patterns
+
 ```typescript
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
@@ -312,8 +341,10 @@ describe("ComponentName", () => {
 ```
 
 ### Testing Hooks
+
 ```typescript
 import { renderHook, waitFor } from "@testing-library/react";
+
 import { useBlogPosts } from "../../services/api/blog";
 
 it("fetches blog posts", async () => {
@@ -334,6 +365,7 @@ it("fetches blog posts", async () => {
 The blog posts are loaded from a git submodule at `src/content/blog/`.
 
 ### Updating Blog Posts
+
 ```bash
 # Pull latest from blog submodule
 git submodule update --remote src/content/blog
@@ -343,7 +375,9 @@ pnpm prepare
 ```
 
 ### Build Requirements
+
 The submodule must be initialized before building:
+
 ```bash
 pnpm install    # Runs prepare script via pnpm
 ```
@@ -353,17 +387,21 @@ pnpm install    # Runs prepare script via pnpm
 ## 10. Key Libraries and Patterns
 
 ### State Management
+
 - **Zustand** for global state: `src/store/use-app-store.ts`
 - **TanStack Query** for server state: Use `useQuery` hooks
 
 ### UI Components
+
 - **shadcn/ui** pattern with Radix UI primitives
 - **Tailwind CSS** for styling (v4)
 - **Framer Motion** for animations
 
 ### Data Fetching
+
 - **TanStack Query** (`@tanstack/react-query`)
 - Custom query keys pattern:
+
 ```typescript
 export const blogKeys = {
   all: ["blog"] as const,
@@ -377,6 +415,7 @@ export const blogKeys = {
 ## 11. Common Patterns
 
 ### Lazy Loading Pages
+
 ```typescript
 // src/App.tsx
 const BlogPage = lazy(() => import("./pages/blog-page").then(module => ({ default: module.BlogPage })));
@@ -386,6 +425,7 @@ const BlogPage = lazy(() => import("./pages/blog-page").then(module => ({ defaul
 ```
 
 ### SEO Head
+
 ```typescript
 import { SEOHead } from "../components/common/seo-head";
 import { pageSEO } from "../utils/seo";
@@ -395,6 +435,7 @@ import { pageSEO } from "../utils/seo";
 ```
 
 ### Animated Sections
+
 ```typescript
 import { AnimatedSection } from "@components/common/animated-section";
 

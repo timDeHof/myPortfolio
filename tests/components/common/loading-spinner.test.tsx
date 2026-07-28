@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import React from "react";
 // tests/components/common/loading-spinner.test.tsx
 import { describe, expect, it } from "vitest";
 

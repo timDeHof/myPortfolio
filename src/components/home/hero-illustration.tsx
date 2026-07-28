@@ -91,18 +91,18 @@ export const HeroIllustration: React.FC = () => {
           animate={floatAnimation}
           style={{ originX: "0%", originY: "0%" }}
         >
-            <rect
-              x="60"
-              y="120"
-              width="140"
-              height="100"
-              rx="8"
-              fill="white"
-              className="dark:fill-background"
-              stroke="#3568e8"
-              strokeWidth="1"
-              opacity="0.9"
-            />
+          <rect
+            x="60"
+            y="120"
+            width="140"
+            height="100"
+            rx="8"
+            fill="white"
+            className="dark:fill-background"
+            stroke="#3568e8"
+            strokeWidth="1"
+            opacity="0.9"
+          />
           <rect x="70" y="130" width="40" height="6" rx="3" fill="#3568e8" opacity="0.7" />
           <rect x="70" y="142" width="80" height="4" rx="2" fill="#2aab9a" opacity="0.5" />
           <rect x="70" y="152" width="60" height="4" rx="2" fill="#6b7280" opacity="0.4" />
@@ -117,18 +117,18 @@ export const HeroIllustration: React.FC = () => {
           animate={shouldReduceMotion ? {} : { y: [0, 6, 0] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
         >
-            <rect
-              x="400"
-              y="160"
-              width="150"
-              height="90"
-              rx="8"
-              fill="white"
-              className="dark:fill-background"
-              stroke="#2aab9a"
-              strokeWidth="1"
-              opacity="0.9"
-            />
+          <rect
+            x="400"
+            y="160"
+            width="150"
+            height="90"
+            rx="8"
+            fill="white"
+            className="dark:fill-background"
+            stroke="#2aab9a"
+            strokeWidth="1"
+            opacity="0.9"
+          />
           <rect x="400" y="160" width="150" height="24" rx="8" fill="#1a2332" opacity="0.1" />
           <circle cx="414" cy="172" r="4" fill="#ef4444" opacity="0.7" />
           <circle cx="428" cy="172" r="4" fill="#f59e0b" opacity="0.7" />

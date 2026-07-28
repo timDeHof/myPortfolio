@@ -1,82 +1,29 @@
-import { AnimatePresence, m } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "@tanstack/react-router";
-import { CodeXml, Download, Menu, Moon, Sun, X } from "lucide-react";
-
+import { MobileDrawer } from "@components/layout/mobile-drawer";
 import { MaxWidthWrapper } from "@components/ui/max-width-wrapper";
-import { usePortfolioData } from "@hooks/usePortfolioData";
+import { useScrollPosition } from "@hooks/use-scroll-position";
 import { useTheme } from "@hooks/use-theme";
-import { env } from "@/lib/env";
+import { usePortfolioData } from "@hooks/usePortfolioData";
+import { Link, useLocation } from "@tanstack/react-router";
+import { AnimatePresence } from "framer-motion";
+import { CodeXml, Download, Menu, Moon, Sun } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
+
 import { DEFAULT_NAV_ITEMS } from "@/lib/constants";
+import { env } from "@/lib/env";
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const mobileNavRef = useRef<HTMLDivElement>(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const location = useLocation();
   const { data: portfolioData } = usePortfolioData();
   const { effectiveTheme, toggleTheme } = useTheme();
+  const { isScrolled } = useScrollPosition(60);
   const navItems = portfolioData?.navigation?.navItems || DEFAULT_NAV_ITEMS;
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const openDrawer = useCallback(() => setIsDrawerOpen(true), []);
+  const closeDrawer = useCallback(() => setIsDrawerOpen(false), []);
 
-  useEffect(() => {
-    const keydownHandler = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        setIsOpen(false);
-        toggleButtonRef.current?.focus();
-      }
-    };
-
-    const mousedownHandler = (e: MouseEvent) => {
-      if (isOpen && mobileNavRef.current && !mobileNavRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-        toggleButtonRef.current?.focus();
-      }
-    };
-
-    document.addEventListener("keydown", keydownHandler);
-    document.addEventListener("mousedown", mousedownHandler);
-    return () => {
-      document.removeEventListener("keydown", keydownHandler);
-      document.removeEventListener("mousedown", mousedownHandler);
-    };
-  }, [isOpen]);
-
-  // Focus trap for mobile menu
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const menuEl = mobileNavRef.current;
-    if (!menuEl) return;
-
-    // Focus first interactive element
-    const focusable = menuEl.querySelectorAll<HTMLElement>("a, button, [tabindex]");
-    if (focusable.length > 0) {
-      focusable[0].focus();
-    }
-
-    const handleTabTrap = (e: KeyboardEvent) => {
-      if (e.key !== "Tab" || !menuEl) return;
-
-      const els = menuEl.querySelectorAll<HTMLElement>("a, button, [tabindex]:not([tabindex='-1'])");
-      const first = els[0];
-      const last = els[els.length - 1];
-
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    };
-
-    document.addEventListener("keydown", handleTabTrap);
-    return () => document.removeEventListener("keydown", handleTabTrap);
-  }, [isOpen]);
-
-  // Helper to check if a path is active (for styling - uses prefix match)
+  // Helper to check if a path is active (prefix match)
   const isPathActive = (path: string) => {
     if (path === "/") {
       return location.pathname === "/";
@@ -84,57 +31,50 @@ export function Navbar() {
     return location.pathname.startsWith(path);
   };
 
-  // Helper for exact path match (for aria-current accessibility)
+  // Helper for exact path match (aria-current)
   const isExactPath = (path: string) => {
     if (path === "/") {
       return location.pathname === "/";
     }
-    // Check exact match or match with trailing slash
-    return location.pathname === path || location.pathname === path + "/";
+    return location.pathname === path || location.pathname === `${path}/`;
   };
 
   return (
-    <header className="navbar">
+    <header
+      className={`navbar ${isScrolled ? "scrolled" : ""}`}
+      data-scrolled={isScrolled || undefined}
+    >
       <MaxWidthWrapper>
-        <div className="inner">
-          <div className="left">
-          <Link
-            to="/"
-            preload="intent"
-            className="brand"
-            >
-            <CodeXml className="logo" />
-            <span className="name brand-text">
-              Tim DeHof
-              </span>
+        <div className="bar">
+          {/* Brand */}
+          <Link to="/" preload="intent" className="brand" aria-label="Home">
+            <CodeXml className="brand-icon" />
+            <span className="brand-name">Tim DeHof</span>
           </Link>
-            </div>
+
+          {/* Desktop links */}
           <nav aria-label="Primary" className="links">
             {navItems.map(item => (
               <Link
                 key={item.href}
                 to={item.href}
                 preload="intent"
-                className={isPathActive(item.href) ? "is-selected" : "not-selected"}
+                className={`link ${isPathActive(item.href) ? "is-selected" : ""}`}
                 aria-current={isExactPath(item.href) ? "page" : undefined}
               >
-                {item.name}
-                {isPathActive(item.href) && (
-                  <m.div
-                    layoutId="activeTab"
-                    className="link-select"
-                    initial={false}
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                  />
-                )}
+                <span className="link-prefix">{"// "}</span>
+                <span className="link-text">{item.name}</span>
+                <span className="link-cursor" aria-hidden="true" />
               </Link>
             ))}
-              </nav>
-          <div className="right hidden md:flex">
+          </nav>
+
+          {/* Desktop right section */}
+          <div className="right">
             <button
               type="button"
               onClick={toggleTheme}
-              className="not-selected flex items-center justify-center min-w-[44px] min-h-[44px] -ml-2"
+              className="right-btn"
               aria-label={`Switch to ${effectiveTheme === "dark" ? "light" : "dark"} mode`}
             >
               {effectiveTheme === "dark" ? <Moon size={18} /> : <Sun size={18} />}
@@ -144,113 +84,44 @@ export function Navbar() {
                 href={env.VITE_RESUME_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="not-selected flex items-center gap-1"
-                >
+                className="right-btn resume-link"
+              >
                 <Download size={16} aria-hidden="true" />
                 <span>Resume</span>
               </a>
             )}
-            </div>
+          </div>
 
-          <div className="mobile">
+          {/* Mobile hamburger */}
+          <div className="mobile-toggle">
             <button
               type="button"
               ref={toggleButtonRef}
-              onClick={toggleMenu}
-              className="toggle-menu min-w-[44px] min-h-[44px] flex items-center justify-center"
-              aria-label="Toggle menu"
-              aria-expanded={isOpen}
-              aria-controls="mobile-menu"
+              onClick={openDrawer}
+              className="hamburger"
+              aria-label="Open menu"
+              aria-expanded={isDrawerOpen}
+              aria-controls="mobile-drawer"
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              <Menu size={24} />
             </button>
-              </div>
           </div>
-
-        <AnimatePresence>
-          {isOpen && (
-            <m.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="mobile-menu"
-              id="mobile-menu"
-              ref={mobileNavRef}
-            >
-              <m.div
-                className="mobile-content"
-                initial="closed"
-                animate="open"
-                exit="closed"
-                variants={{
-                  open: { transition: { staggerChildren: 0.05 } },
-                  closed: { transition: { staggerChildren: 0.05, staggerDirection: -1 } }
-                }}
-              >
-                <nav aria-label="Mobile navigation">
-                {navItems.map(item => (
-                  <m.div
-                    key={item.href}
-                    variants={{
-                      open: { opacity: 1, y: 0 },
-                      closed: { opacity: 0, y: -10 }
-                    }}
-                  >
-                    <Link
-                      to={item.href}
-                      preload="intent"
-                      onClick={() => setIsOpen(false)}
-                      className={isPathActive(item.href) ? "is-selected" : "not-selected"}
-                      aria-current={isExactPath(item.href) ? "page" : undefined}
-                    >
-                      <span>{item.name}</span>
-                    </Link>
-                  </m.div>
-                ))}
-                </nav>
-                <m.div
-                  variants={{
-                    open: { opacity: 1, y: 0 },
-                    closed: { opacity: 0, y: -10 }
-                  }}
-                >
-                  <button
-                    type="button"
-                    onClick={() => {
-                      toggleTheme();
-                      setIsOpen(false);
-                    }}
-                    className="not-selected flex items-center gap-1 w-full"
-                  >
-                    {effectiveTheme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-                    <span>{effectiveTheme === "dark" ? "Light Mode" : "Dark Mode"}</span>
-                  </button>
-                </m.div>
-                {env.VITE_RESUME_URL && (
-                  <m.div
-                    variants={{
-                      open: { opacity: 1, y: 0 },
-                      closed: { opacity: 0, y: -10 }
-                    }}
-                  >
-                    <a
-                      href={env.VITE_RESUME_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setIsOpen(false)}
-                      className="not-selected flex items-center gap-1"
-                    >
-                      <Download size={16} aria-hidden="true" />
-                      <span>Resume</span>
-                    </a>
-                  </m.div>
-                )}
-              </m.div>
-            </m.div>
-          )}
-        </AnimatePresence>
+        </div>
       </MaxWidthWrapper>
+
+      {/* Mobile side drawer */}
+      <AnimatePresence>
+        <MobileDrawer
+          isOpen={isDrawerOpen}
+          onClose={closeDrawer}
+          navItems={navItems}
+          isPathActive={isPathActive}
+          isExactPath={isExactPath}
+          effectiveTheme={effectiveTheme}
+          toggleTheme={toggleTheme}
+          resumeUrl={env.VITE_RESUME_URL}
+        />
+      </AnimatePresence>
     </header>
   );
 }

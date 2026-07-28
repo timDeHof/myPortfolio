@@ -2,32 +2,33 @@ import { m } from "framer-motion";
 import React, { useMemo } from "react";
 
 import type { ContributionDay } from "../../services/api/github-stats";
+import type { Activity } from "../kibo-ui/contribution-graph";
 
 import { useGitHubContributions } from "../../hooks/queries/use-github-stats";
-import { Card, CardContent } from "../ui/card";
-import { Badge } from "../ui/badge";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "../ui/tooltip";
-import {
+
   ContributionGraph,
   ContributionGraphBlock,
   ContributionGraphCalendar,
   ContributionGraphFooter,
   ContributionGraphLegend,
   ContributionGraphTotalCount,
-  type Activity,
 } from "../kibo-ui/contribution-graph";
+import { Badge } from "../ui/badge";
+import { Card, CardContent } from "../ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 export const ContributionCalendar: React.FC<{ username?: string }> = ({ username = "timDeHof" }) => {
   const { data, error } = useGitHubContributions(username);
   const contributionData = data?.contributions;
 
   const { activities, total } = useMemo(() => {
-    if (!contributionData) return { activities: [], total: 0 };
+    if (!contributionData)
+      return { activities: [], total: 0 };
 
     let totalCount = 0;
     const allDays: ContributionDay[] = [];
@@ -39,12 +40,12 @@ export const ContributionCalendar: React.FC<{ username?: string }> = ({ username
       });
     });
 
-    const activitiesData: Activity[] = contributionData.flatMap((week) =>
-      week.days.map((day) => ({
+    const activitiesData: Activity[] = contributionData.flatMap(week =>
+      week.days.map(day => ({
         date: day.date,
         count: day.count,
         level: day.level,
-      }))
+      })),
     );
 
     return { activities: activitiesData, total: totalCount };
@@ -89,21 +90,25 @@ export const ContributionCalendar: React.FC<{ username?: string }> = ({ username
                     <TooltipTrigger asChild>
                       <g>
 
-                  <ContributionGraphBlock
-                    className="cursor-pointer"
-                    activity={activity}
-                    dayIndex={dayIndex}
-                    weekIndex={weekIndex}
-                    />
-                    </g>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <div className="flex flex-col gap-0.5">
-                      <p className="font-semibold">{activity.date}</p>
-                      <p className="text-muted-foreground">{activity.count} contributions</p>
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
+                        <ContributionGraphBlock
+                          className="cursor-pointer"
+                          activity={activity}
+                          dayIndex={dayIndex}
+                          weekIndex={weekIndex}
+                        />
+                      </g>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <div className="flex flex-col gap-0.5">
+                        <p className="font-semibold">{activity.date}</p>
+                        <p className="text-muted-foreground">
+                          {activity.count}
+                          {" "}
+                          contributions
+                        </p>
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
                 )}
               </ContributionGraphCalendar>
               <ContributionGraphFooter>
@@ -111,13 +116,19 @@ export const ContributionCalendar: React.FC<{ username?: string }> = ({ username
                   {({ totalCount, year }) => (
                     <div className="flex items-center gap-2">
                       <span className="text-muted-foreground text-sm font-medium">
-                        Year{" "}{year}:
+                        Year
+                        {" "}
+                        {year}
+                        :
                       </span>
                       <Badge className="text-sm font-bold text-emerald-600
                       bg-emerald-300 dark:bg-emerald-900
                       border-emerald-400 dark:border-emerald-700
-                      dark:text-emerald-400">
-                        {totalCount.toLocaleString()}{" "}contributions
+                      dark:text-emerald-400"
+                      >
+                        {totalCount.toLocaleString()}
+                        {" "}
+                        contributions
                       </Badge>
                     </div>
                   )}

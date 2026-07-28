@@ -5,10 +5,10 @@ import type { SEOData } from "../../utils/seo";
 
 import { defaultSEO } from "../../utils/seo";
 
-type SEOHeadProps = {
+interface SEOHeadProps {
   seo?: Partial<SEOData>;
   structuredData?: object;
-};
+}
 
 const defaultSEOProp: Partial<SEOData> = {};
 
@@ -33,8 +33,8 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ seo = defaultSEOProp, structur
     noFollow = false,
   } = { ...defaultSEO, ...seo };
 
-  const robotsContent = `${noIndex ? 'noindex' : 'index'}, ${noFollow ? 'nofollow' : 'follow'}`;
-  const fullImageUrl = image?.startsWith('http') ? image : `${window.location.origin}${image}`;
+  const robotsContent = `${noIndex ? "noindex" : "index"}, ${noFollow ? "nofollow" : "follow"}`;
+  const fullImageUrl = image?.startsWith("http") ? image : `${window.location.origin}${image}`;
 
   return (
     <Helmet>
@@ -45,7 +45,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ seo = defaultSEOProp, structur
       {author && <meta name="author" content={author} />}
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="robots" content={robotsContent} />
-      
+
       {/* Canonical URL */}
       <link rel="canonical" href={canonicalUrl || url} />
 
@@ -61,7 +61,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ seo = defaultSEOProp, structur
       {publishedTime && <meta property="article:published_time" content={publishedTime} />}
       {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
       {author && <meta property="article:author" content={author} />}
-      {tags?.map((tag) => (
+      {tags?.map(tag => (
         <meta key={tag} property="article:tag" content={tag} />
       ))}
 
@@ -76,7 +76,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ seo = defaultSEOProp, structur
       {/* Additional SEO Meta Tags */}
       <meta name="theme-color" content="#3b82f6" />
       <meta name="msapplication-TileColor" content="#3b82f6" />
-      
+
       {/* Structured Data */}
       {structuredData && (
         <script type="application/ld+json">

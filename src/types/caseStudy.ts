@@ -44,8 +44,3 @@ export interface CaseStudyData {
     npm?: string;
   };
 }
-
-export interface GitHubContentResponse {
-  content?: string;
-  encoding?: string;
-}

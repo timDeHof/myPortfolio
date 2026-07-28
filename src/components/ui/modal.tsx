@@ -1,6 +1,6 @@
-import { useEffect, useCallback } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useCallback, useEffect } from "react";
 
 interface ModalProps {
   isOpen: boolean;

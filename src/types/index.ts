@@ -1,13 +1,14 @@
-export type ServiceCard = {
-  id: number;
-  title: string;
-  paragraphs: string[];
-  icon?: string;
-};
+export * from "./about";
+export * from "./blog";
+export * from "./caseStudy";
+// Domain-organized type re-exports
+export * from "./github";
+export * from "./portfolio";
+export * from "./project";
 
-export type ContactForm = {
+// Contact form type (not domain-organized, kept here for convenience)
+export interface ContactForm {
   name: string;
   email: string;
   message: string;
-};
-
+}

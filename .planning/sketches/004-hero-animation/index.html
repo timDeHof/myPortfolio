@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sketch 004: Hero Animation Feel</title>
+  <link rel="stylesheet" href="../themes/default.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--color-bg); color: var(--color-text);
+      font-family: var(--font-sans); min-height: 100vh; padding-top: 52px;
+    }
+
+    /* ─── Variant Nav ─── */
+    .variant-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9998;
+      background: var(--color-surface); border-bottom: 1px solid var(--color-border);
+      padding: 8px 16px; display: flex; gap: 8px; font-family: var(--font-mono); font-size: 12px;
+    }
+    .variant-tab {
+      background: transparent; color: var(--color-text-muted); border: 1px solid transparent;
+      padding: 6px 14px; border-radius: var(--radius-sm); cursor: pointer;
+      transition: all 0.15s ease; font-family: inherit; font-size: inherit;
+    }
+    .variant-tab:hover { color: var(--color-text); background: var(--color-surface-hover); }
+    .variant-tab.active { color: var(--color-primary); border-color: var(--color-primary); background: rgba(59,130,246,0.08); }
+    .variant { display: none; }
+    .variant.active { display: block; }
+
+    /* ─── Hero Layout ─── */
+    .hero {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      max-width: 1200px; margin: 0 auto; padding: 80px 32px; align-items: center; min-height: 80vh;
+      position: relative;
+    }
+    [data-theme="light"] .hero::before {
+      content: ''; position: absolute; inset: 0; z-index: -1;
+      background-image: radial-gradient(circle, #d4d4d8 1px, transparent 1px);
+      background-size: 24px 24px; opacity: 0.4;
+    }
+    @media (max-width: 768px) { .hero { grid-template-columns: 1fr; padding: 40px 20px; } .hero-illu { max-width: 400px; margin: 0 auto; } }
+
+    /* ─── Left: Text ─── */
+    .hero-text h1 { font-size: 3.5rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 12px; }
+    .hero-text .subtitle { font-size: 1.5rem; color: var(--color-text-muted); margin-bottom: 16px; }
+    .hero-text .meta { font-size: 0.875rem; color: var(--color-text-dim); margin-bottom: 24px; display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-text .tagline { font-size: 1rem; color: var(--color-text-muted); max-width: 480px; margin-bottom: 32px; line-height: 1.6; }
+    .hero-text .ctas { display: flex; gap: 12px; }
+    .btn {
+      font-family: var(--font-mono); font-size: 0.875rem; padding: 10px 20px;
+      border-radius: var(--radius-sm); border: 1px solid var(--color-border);
+      cursor: pointer; transition: all 0.15s ease; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+    .btn-primary:hover { background: var(--color-primary-hover); }
+    .btn-ghost { background: transparent; color: var(--color-text-muted); }
+    .btn-ghost:hover { color: var(--color-text); background: var(--color-surface-hover); }
+    [data-theme="light"] .btn-ghost {
+      border-color: #d4d4d8; background: rgba(0,0,0,0.02);
+    }
+    [data-theme="light"] .btn-ghost:hover {
+      background: rgba(0,0,0,0.05); border-color: #a1a1aa;
+    }
+
+    /* ─── Terminal Shell ─── */
+    .terminal {
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm); overflow: hidden; font-family: var(--font-mono);
+      font-size: 13px; box-shadow: var(--shadow-lg); position: relative;
+    }
+    [data-theme="light"] .terminal {
+      box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 3px rgba(0,0,0,0.08);
+      border-color: #d4d4d8;
+    }
+    .terminal-bar {
+      display: flex; align-items: center; gap: 8px; padding: 10px 14px;
+      background: var(--color-border-subtle); border-bottom: 1px solid var(--color-border);
+    }
+    .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .terminal-dot.red { background: #ef4444; }
+    .terminal-dot.yellow { background: #f59e0b; }
+    .terminal-dot.green { background: #22c55e; }
+    .terminal-title { font-size: 11px; color: var(--color-text-dim); margin-left: 8px; }
+    .terminal-body { padding: 16px; line-height: 1.7; min-height: 360px; }
+    .glow-wrapper { position: relative; }
+    .glow-wrapper::before {
+      content: ''; position: absolute; inset: -20px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
+      pointer-events: none; z-index: -1;
+    }
+    [data-theme="light"] .glow-wrapper::before {
+      background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 70%);
+    }
+
+    /* ─── Shared line styles ─── */
+    .t-line { opacity: 0; }
+    .t-line .prompt { color: var(--color-code-green); }
+    .t-line .cmd { color: var(--color-text); }
+    .t-line .output { color: var(--color-text-dim); }
+    .t-line .success { color: var(--color-code-green); }
+    .t-line .accent { color: var(--color-primary); }
+    .t-line .cmt { color: var(--color-text-dim); font-style: italic; }
+    .t-line .dim { color: var(--color-text-dim); opacity: 0.7; }
+    .t-line .warn { color: #f59e0b; }
+    .t-line .info { color: var(--color-code-blue); }
+    .t-cursor {
+      display: inline-block; width: 7px; height: 15px; background: var(--color-primary);
+      vertical-align: text-bottom;
+    }
+
+    /* ─── Variant A: Typing ─── */
+    .typing .t-line { animation: fadeIn 0.15s ease forwards; }
+    .typing .t-cursor { animation: blink 1s step-end infinite; }
+
+    /* ─── Variant B: Streaming ─── */
+    .streaming .t-line { animation: slideUp 0.4s var(--ease-out-expo) forwards; }
+    .streaming .t-cursor { animation: pulse-glow 2s ease-in-out infinite; }
+
+    /* ─── Variant C: Ambient ─── */
+    .ambient .t-line { opacity: 1; }
+    .ambient .t-cursor { animation: blink 1s step-end infinite; }
+    .ambient .terminal { animation: float 6s ease-in-out infinite; }
+    .ambient::after {
+      content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+      border-radius: calc(var(--radius-sm) + 2px);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent), var(--color-primary));
+      background-size: 200% 200%;
+      animation: gradient-shift 4s ease infinite;
+      z-index: -1; opacity: 0.3;
+    }
+
+    /* ─── Variant D: Stream + Type (synthesis) ─── */
+    .stream-type .t-line { animation: slideUp 0.4s var(--ease-out-expo) forwards; }
+    .stream-type .t-line.type-line { animation: none; opacity: 0; }
+    .stream-type .t-line.type-line.typing-active { opacity: 1; }
+    .stream-type .t-cursor { animation: pulse-glow 2s ease-in-out infinite; }
+    .stream-type .t-line.type-line .t-cursor { animation: blink 1s step-end infinite; }
+    .stream-type .t-line:last-child .t-cursor { animation: blink 1s step-end infinite; }
+
+    /* ─── Keyframes ─── */
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes blink { 50% { opacity: 0; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 4px rgba(59,130,246,0.4); }
+      50% { box-shadow: 0 0 12px rgba(59,130,246,0.8); }
+    }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    @keyframes gradient-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .typing .t-line, .streaming .t-line, .stream-type .t-line { animation: none; opacity: 1; }
+      .typing .t-cursor, .streaming .t-cursor, .ambient .t-cursor, .stream-type .t-cursor { animation: none; }
+      .ambient .terminal { animation: none; }
+      .ambient::after { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="variant-nav">
+    <button class="variant-tab active" onclick="showVariant('a')">A: Typing</button>
+    <button class="variant-tab" onclick="showVariant('b')">B: Streaming</button>
+    <button class="variant-tab" onclick="showVariant('c')">C: Ambient</button>
+    <button class="variant-tab" onclick="showVariant('d')">D: Stream + Type ★</button>
+  </div>
+
+  <!-- ═══════ Shared Hero Text ═══════ -->
+  <div class="hero" style="display:grid;grid-template-columns:1fr 1fr;gap:48px;max-width:1200px;margin:0 auto;padding:80px 32px;align-items:center;min-height:80vh">
+    <div class="hero-text">
+      <h1>Tim DeHof</h1>
+      <p class="subtitle">Full-Stack Developer</p>
+      <div class="meta">
+        <span>Remote · Jacksonville, FL</span>
+        <span>3+ Years Experience</span>
+        <span>20+ Projects Delivered</span>
+      </div>
+      <p class="tagline">Building scalable web applications that solve real problems. Focused on clean code and maintainable architecture.</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#">↓ Download Resume</a>
+        <a class="btn btn-ghost" href="#">💬 Let's Talk</a>
+      </div>
+    </div>
+
+    <!-- ═══════ Variant A: Typing ═══════ -->
+    <div id="variant-a" class="variant active">
+      <div class="hero-illu">
+        <div class="glow-wrapper">
+          <div class="terminal typing" id="term-typing">
+            <div class="terminal-bar">
+              <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+              <span class="terminal-title">~/portfolio</span>
+            </div>
+            <div class="terminal-body" id="body-typing"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ Variant B: Streaming ═══════ -->
+    <div id="variant-b" class="variant">
+      <div class="hero-illu">
+        <div class="glow-wrapper">
+          <div class="terminal streaming" id="term-streaming">
+            <div class="terminal-bar">
+              <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+              <span class="terminal-title">~/portfolio</span>
+            </div>
+            <div class="terminal-body" id="body-streaming"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ Variant C: Ambient ═══════ -->
+    <div id="variant-c" class="variant">
+      <div class="hero-illu">
+        <div class="glow-wrapper ambient">
+          <div class="terminal" id="term-ambient">
+            <div class="terminal-bar">
+              <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+              <span class="terminal-title">~/portfolio</span>
+            </div>
+            <div class="terminal-body" id="body-ambient"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ Variant D: Stream + Type (synthesis) ═══════ -->
+    <div id="variant-d" class="variant">
+      <div class="hero-illu">
+        <div class="glow-wrapper">
+          <div class="terminal stream-type" id="term-stream-type">
+            <div class="terminal-bar">
+              <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+              <span class="terminal-title">~/portfolio</span>
+            </div>
+            <div class="terminal-body" id="body-stream-type"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sketch Toolbar -->
+  <div id="sketch-tools" style="position:fixed;bottom:12px;right:12px;z-index:9999;font-family:system-ui;font-size:12px;background:rgba(0,0,0,0.7);color:white;padding:8px 12px;border-radius:8px;opacity:0.4;transition:opacity 0.2s;display:flex;gap:8px;align-items:center" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.4'">
+    <select onchange="toggleTheme(this.value)" style="background:transparent;color:white;border:1px solid rgba(255,255,255,0.2);border-radius:4px;padding:2px 6px;font-size:11px">
+      <option value="dark">Dark</option>
+      <option value="light" selected>Light</option>
+    </select>
+    <button onclick="restartAll()" style="background:transparent;color:white;border:1px solid rgba(255,255,255,0.2);border-radius:4px;padding:2px 8px;cursor:pointer;font-size:11px">↻ Replay</button>
+  </div>
+
+  <script>
+    const lines = [
+      { type: 'prompt', text: '$ deploy --production' },
+      { type: 'dim', text: '  Running pre-deploy checks...' },
+      { type: 'success', text: '  ✓ Lint passed (0 warnings)' },
+      { type: 'success', text: '  ✓ Type-check passed' },
+      { type: 'output', text: '' },
+      { type: 'output', text: '  Bundling assets...' },
+      { type: 'dim', text: '    index.js        14.2 kB  (gzipped)' },
+      { type: 'dim', text: '    vendor.js       38.7 kB  (gzipped)' },
+      { type: 'dim', text: '    styles.css       6.1 kB  (gzipped)' },
+      { type: 'success', text: '  ✓ Build complete — 59.0 kB total' },
+      { type: 'output', text: '' },
+      { type: 'success', text: '  ✓ Uploaded to Cloudflare' },
+      { type: 'success', text: '  ✓ Deployed to edge' },
+      { type: 'warn', text: '  ⚠ Cache purge pending (~30s)' },
+      { type: 'success', text: '  ✓ Health check passed' },
+      { type: 'accent', text: '  → https://timdehof.dev' },
+      { type: 'success', text: '' },
+      { type: 'success', text: '  ✓ Live — 0 errors, 14.8s' },
+      { type: 'prompt', text: '$ ' },
+    ];
+
+    function showVariant(id) {
+      document.querySelectorAll('.variant').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.variant-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('variant-' + id).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    function toggleTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+
+    function renderLines(containerId, mode) {
+      const body = document.getElementById(containerId);
+      body.innerHTML = '';
+      lines.forEach((line, i) => {
+        const div = document.createElement('div');
+        div.className = 't-line';
+        const cursorHtml = (i === lines.length - 1) ? '<span class="t-cursor"></span>' : '';
+        if (line.type === 'prompt') {
+          div.innerHTML = `<span class="prompt">❯ </span><span class="cmd">${line.text.slice(2)}</span>${cursorHtml}`;
+        } else {
+          div.innerHTML = `<span class="${line.type}">${line.text}</span>`;
+        }
+        if (mode === 'typing') {
+          div.style.animationDelay = (i * 0.2) + 's';
+        } else if (mode === 'streaming') {
+          div.style.animationDelay = (i * 0.08) + 's';
+        }
+        body.appendChild(div);
+      });
+    }
+
+    function renderStreamType() {
+      const body = document.getElementById('body-stream-type');
+      body.innerHTML = '';
+      const cmd = 'deploy --production';
+      // First line: typing effect
+      const firstLine = document.createElement('div');
+      firstLine.className = 't-line type-line';
+      firstLine.innerHTML = `<span class="prompt">❯ </span><span class="cmd" id="type-target"></span><span class="t-cursor"></span>`;
+      body.appendChild(firstLine);
+      // Remaining lines: streaming
+      lines.slice(1).forEach((line, i) => {
+        const div = document.createElement('div');
+        div.className = 't-line';
+        const cursorHtml = (i === lines.length - 2) ? '<span class="t-cursor"></span>' : '';
+        if (line.type === 'prompt') {
+          div.innerHTML = `<span class="prompt">❯ </span><span class="cmd">${line.text.slice(2)}</span>${cursorHtml}`;
+        } else {
+          div.innerHTML = `<span class="${line.type}">${line.text}</span>`;
+        }
+        div.style.animationDelay = (1.2 + i * 0.08) + 's';
+        body.appendChild(div);
+      });
+      // Type the command with natural speed variation
+      const target = document.getElementById('type-target');
+      firstLine.classList.add('typing-active');
+      let ci = 0;
+      function getTypingDelay(char, index) {
+        // Common letter sequences are faster
+        const fastChars = new Set('abcdefghijklmnopqrstuvwxyz ');
+        // Special chars and capital letters get a slight pause
+        if (char === '-' || char === '/' || char === '.') return 100 + Math.random() * 60;
+        if (char === char.toUpperCase() && char !== char.toLowerCase()) return 80 + Math.random() * 50;
+        if (fastChars.has(char)) return 45 + Math.random() * 35;
+        return 60 + Math.random() * 40;
+      }
+      function typeChar() {
+        if (ci < cmd.length) {
+          target.textContent += cmd[ci];
+          ci++;
+          setTimeout(typeChar, getTypingDelay(cmd[ci - 1], ci));
+        } else {
+          // Typing done — remove cursor from first line, pause, then stream
+          const typingCursor = firstLine.querySelector('.t-cursor');
+          if (typingCursor) typingCursor.remove();
+          setTimeout(() => {
+            body.querySelectorAll('.t-line:not(.type-line)').forEach(l => l.style.animationPlayState = 'running');
+          }, 500);
+        }
+      }
+      // Pause streaming lines until typing finishes
+      body.querySelectorAll('.t-line:not(.type-line)').forEach(l => l.style.animationPlayState = 'paused');
+      setTimeout(typeChar, 400);
+    }
+
+    function restartAll() {
+      renderLines('body-typing', 'typing');
+      renderLines('body-streaming', 'streaming');
+      renderLines('body-ambient', 'ambient');
+      renderStreamType();
+    }
+
+    restartAll();
+  </script>
+</body>
+</html>

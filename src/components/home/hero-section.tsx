@@ -68,10 +68,6 @@ export const HeroSection: React.FC = () => {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 opacity-[0.04] dark:opacity-[0.06] bg-[url('data:image/svg+xml,%3Csvg%20width=%2760%27%20height=%2760%27%20viewBox=%270%200%2060%2060%27%20xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cg%20fill=%27none%27%20fill-rule=%27evenodd%27%3E%3Cg%20fill=%27%23000%27%20fill-opacity=%271%27%3E%3Cpath%20d=%27M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"
       />
-
-      {/* Single accent line - distinctive, not overwhelming */}
-      <div aria-hidden="true" className="pointer-events-none absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-[hsl(var(--primary))]/20 to-transparent" />
-
       <MaxWidthWrapper>
         <div className="relative z-20 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center py-16">
           {/* Left: Text content */}
@@ -113,20 +109,20 @@ export const HeroSection: React.FC = () => {
               Full-Stack Developer
             </m.p>
 
-            {/* Location & Experience - Quick credibility signals */}
-            <m.div
-              variants={activeItemVariants}
-              className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-sm text-muted-foreground sm:text-base"
-            >
-              <span className="flex items-center gap-1.5">
-                <MapPin className="h-4 w-4" />
-                <span>Remote · Jacksonville, FL</span>
-              </span>
-              <span className="hidden sm:inline">·</span>
-              <span>3+ Years Experience</span>
-              <span className="hidden sm:inline">·</span>
-              <span>20+ Projects Delivered</span>
-            </m.div>
+              {/* Location & Experience - Quick credibility signals */}
+              <m.div
+                variants={activeItemVariants}
+                className="mb-5 flex flex-col gap-1.5 text-sm text-muted-foreground xl:flex-row xl:flex-wrap xl:items-center xl:gap-x-2 xl:gap-y-1 xl:text-base"
+              >
+                <span className="flex items-center gap-1.5">
+                  <MapPin className="h-4 w-4" />
+                  <span>Remote · Jacksonville, FL</span>
+                </span>
+                <span aria-hidden="true" className="hidden xl:inline text-muted-foreground/40">·</span>
+                <span>3+ Years Experience</span>
+                <span aria-hidden="true" className="hidden xl:inline text-muted-foreground/40">·</span>
+                <span>20+ Projects Delivered</span>
+              </m.div>
 
             {/* Tagline - Short, punchy, no marketing speak */}
             <m.p

@@ -1,9 +1,10 @@
 "use client";
-import { useEffect } from "react";
 import { m, stagger, useAnimate, useReducedMotion } from "framer-motion";
+import { useEffect } from "react";
+
 import { cn } from "../../../lib/utils";
 
-export const TextGenerateEffect = ({
+export function TextGenerateEffect({
   words,
   className,
   duration = 0.5,
@@ -11,11 +12,11 @@ export const TextGenerateEffect = ({
   words: string;
   className?: string;
   duration?: number;
-}) => {
+}) {
   const [scope, animate] = useAnimate();
   const prefersReducedMotion = useReducedMotion();
-  let wordsArray = words.split(" ");
-  
+  const wordsArray = words.split(" ");
+
   useEffect(() => {
     if (prefersReducedMotion) {
       // Show all text immediately if user prefers reduced motion
@@ -34,9 +35,9 @@ export const TextGenerateEffect = ({
         transform: "translateY(0px)",
       },
       {
-        duration: duration ? duration : 1,
+        duration: duration || 1,
         delay: stagger(0.1),
-      }
+      },
     );
   }, [scope.current, prefersReducedMotion, animate, duration]);
 
@@ -53,7 +54,7 @@ export const TextGenerateEffect = ({
                   opacity: prefersReducedMotion ? 1 : 0,
                   transform: prefersReducedMotion ? "translateY(0px)" : "translateY(10px)",
                   display: "inline-block",
-                  marginRight: "0.25em"
+                  marginRight: "0.25em",
                 }}
               >
                 {word}
@@ -64,4 +65,4 @@ export const TextGenerateEffect = ({
       </div>
     </div>
   );
-};
+}

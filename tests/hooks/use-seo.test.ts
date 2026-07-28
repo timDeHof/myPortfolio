@@ -1,7 +1,8 @@
-import { renderHook } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { useSEO, useSectionSEO } from "../../src/hooks/use-seo";
 import { useLocation } from "@tanstack/react-router";
+import { renderHook } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import { useSectionSEO, useSEO } from "../../src/hooks/use-seo";
 
 // Mock @tanstack/react-router
 vi.mock("@tanstack/react-router", () => ({
@@ -27,11 +28,11 @@ describe("useSEO", () => {
       pathname: "/",
       search: "",
     });
-    
+
     // Mock window.location.origin
-    Object.defineProperty(window, 'location', {
+    Object.defineProperty(window, "location", {
       value: { origin: "http://localhost" },
-      writable: true
+      writable: true,
     });
   });
 
@@ -46,7 +47,7 @@ describe("useSEO", () => {
       pathname: "/about",
       search: "",
     });
-    
+
     const { result } = renderHook(() => useSEO());
     expect(result.current.title).toBe("About Title");
   });

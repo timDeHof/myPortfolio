@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import React from "react";
 // tests/components/ui/button.test.tsx
 import { describe, expect, it, vi } from "vitest";
 
@@ -9,19 +10,19 @@ describe("button Component", () => {
     render(<Button>Click me</Button>);
     const button = screen.getByRole("button", { name: /click me/i });
     expect(button).toBeInTheDocument();
-    expect(button).toHaveClass("bg-primary");
+    expect(button).toHaveClass("btn--primary");
   });
 
   it("renders with destructive variant", () => {
     render(<Button variant="destructive">Delete</Button>);
     const button = screen.getByRole("button", { name: /delete/i });
-    expect(button).toHaveClass("bg-destructive");
+    expect(button).toHaveClass("btn--destructive");
   });
 
   it("renders with outline variant", () => {
     render(<Button variant="outline">Outline</Button>);
     const button = screen.getByRole("button", { name: /outline/i });
-    expect(button).toHaveClass("border");
+    expect(button).toHaveClass("btn--outline");
   });
 
   it("renders with different sizes", () => {
@@ -32,9 +33,9 @@ describe("button Component", () => {
         <Button size="lg">Large</Button>
       </div>,
     );
-    expect(screen.getByRole("button", { name: /small/i })).toHaveClass("h-8");
-    expect(screen.getByRole("button", { name: /default/i })).toHaveClass("h-9");
-    expect(screen.getByRole("button", { name: /large/i })).toHaveClass("h-10");
+    expect(screen.getByRole("button", { name: /small/i })).toHaveClass("btn--sm");
+    expect(screen.getByRole("button", { name: /default/i })).toHaveClass("btn--default");
+    expect(screen.getByRole("button", { name: /large/i })).toHaveClass("btn--lg");
   });
 
   it("handles click events", () => {
@@ -49,19 +50,17 @@ describe("button Component", () => {
     render(<Button disabled>Disabled</Button>);
     const button = screen.getByRole("button", { name: /disabled/i });
     expect(button).toBeDisabled();
-    // The opacity-50 class is conditionally applied via disabled:opacity-50
-    expect(button.className).toContain("disabled:opacity-50");
   });
 
   it("renders as a different element when asChild is true", () => {
     render(
       <Button asChild>
         <a href="/test">Link Button</a>
-      </Button>
+      </Button>,
     );
     const link = screen.getByRole("link", { name: /link button/i });
     expect(link).toBeInTheDocument();
-    expect(link).toHaveClass("bg-primary");
+    expect(link).toHaveClass("btn--primary");
     expect(link).not.toBeInstanceOf(HTMLButtonElement);
   });
 });

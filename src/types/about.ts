@@ -2,11 +2,11 @@ import type { LucideIcon } from "lucide-react";
 import type React from "react";
 
 // Color token types for Tailwind-compatible theming
-export type SkillColorVariant =
-  | "react" | "typescript" | "nextjs" | "tailwind" | "framermotion"
-  | "nodejs" | "express" | "postgresql" | "mongodb" | "restapi"
-  | "git" | "docker" | "aws" | "vercel" | "figma"
-  | "printing" | "mechanical" | "problem" | "team" | "system";
+export type SkillColorVariant
+  = | "react" | "typescript" | "nextjs" | "tailwind" | "framermotion"
+    | "nodejs" | "express" | "postgresql" | "mongodb" | "restapi"
+    | "git" | "docker" | "aws" | "vercel" | "figma"
+    | "printing" | "mechanical" | "problem" | "team" | "system";
 
 export interface Skill {
   name: string;

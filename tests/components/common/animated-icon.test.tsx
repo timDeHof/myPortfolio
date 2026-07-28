@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
 import React from "react";
+import { describe, expect, it, vi } from "vitest";
+
 import AnimatedIcon from "../../../src/components/common/animated-icon";
 
 // Mock framer-motion to avoid animation issues in tests
@@ -29,7 +30,7 @@ vi.mock("../../../src/hooks/use-intersection-observer", () => ({
 
 const MockIcon = ({ size }: { size?: number }) => <svg data-testid="mock-icon" width={size} height={size} />;
 
-describe("AnimatedIcon", () => {
+describe("animatedIcon", () => {
   const defaultProps = {
     item: {
       Icon: MockIcon,
