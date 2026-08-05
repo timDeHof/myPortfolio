@@ -456,7 +456,8 @@
         0 0 0 1px rgba(255, 255, 255, 0.04);
     }
 
-    .light &.scrolled .bar {
+    /* Light mode scrolled background — theme class is applied to <html> (use-theme.ts) */
+    html.light &.scrolled .bar {
       background: rgba(250, 250, 250, 0.92);
       box-shadow:
         0 1px 3px rgba(0, 0, 0, 0.06),
@@ -675,8 +676,13 @@
   }
 
   @keyframes cursor-blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
   }
 
   /* ─── Mobile Drawer ─── */

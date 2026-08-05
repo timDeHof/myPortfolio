@@ -50,7 +50,7 @@ interface ButtonProps
  * A versatile button component with multiple variants and sizes.
  * Built on Radix UI's Slot primitive for flexible rendering.
  */
-function Button({ ref, className, variant, size, asChild = false, ...props }: ButtonProps & { ref?: React.RefObject<HTMLButtonElement | null> }) {
+function Button({ ref, className, variant, size, asChild = false, ...props }: ButtonProps & { ref?: React.Ref<HTMLButtonElement> }) {
   const Comp = asChild ? Slot : "button";
   return (
     <Comp

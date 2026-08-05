@@ -21,15 +21,45 @@ const EXCLUDED_REPOS = [
   // Add any repo names you want to hide
 ];
 
+// Base64 alphabet used by the pure-JS fallback decoder below
+const BASE64_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+/**
+ * Decodes a base64 string to a binary string.
+ * Uses the global `atob` when available (browser, Node 16+); falls back to a
+ * pure-JS decoder so this also works in SSR/Node environments without `atob`.
+ */
+function decodeBase64(input: string): string {
+  if (typeof atob === "function") {
+    return atob(input.replace(/\n/g, ""));
+  }
+
+  let output = "";
+  let buffer = 0;
+  let bits = 0;
+  for (const char of input) {
+    if (char === "=") {
+      break;
+    }
+    const value = BASE64_ALPHABET.indexOf(char);
+    if (value === -1) {
+      continue; // Skip whitespace / line breaks
+    }
+    buffer = (buffer << 6) | value;
+    bits += 6;
+    if (bits >= 8) {
+      bits -= 8;
+      output += String.fromCharCode((buffer >> bits) & 0xFF);
+    }
+  }
+  return output;
+}
+
 // Simplified fetch wrapper for the proxy
 async function githubFetch<T>(url: string): Promise<T> {
-  console.log(`🚀 Proxied GitHub API Request: ${url}`);
-
   try {
     // Fetch directly from GitHub API (proxy handles the routing)
     const response = await fetch(url);
-
-    console.log(`📡 Response Status: ${response.status} ${response.statusText}`);
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -73,7 +103,6 @@ async function githubFetch<T>(url: string): Promise<T> {
     }
 
     const data = await response.json();
-    console.log(`✅ GitHub API Success: Received data from ${url}`);
     return data;
   }
   catch (error) {
@@ -99,23 +128,12 @@ export const githubAPI = {
     const url = `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100&type=all`;
     const repositories = await githubFetch<GitHubRepository[]>(url);
 
-    console.log("📊 Total repositories fetched:", repositories.length);
-
     // Filter for public, non-archived, non-excluded repositories with demo links
     const publicRepos = repositories.filter((repo) => {
       const isPublic = !repo.private;
       const isNotArchived = !repo.archived;
       const isNotExcluded = !EXCLUDED_REPOS.includes(repo.name);
       const hasDemo = repo.homepage && repo.homepage.trim() !== "";
-
-      if (!isPublic)
-        console.log(`🔒 Filtering out private repo: ${repo.name}`);
-      if (!isNotArchived)
-        console.log(`📦 Filtering out archived repo: ${repo.name}`);
-      if (!isNotExcluded)
-        console.log(`🚫 Filtering out excluded repo: ${repo.name}`);
-      if (!hasDemo)
-        console.log(`🔗 Filtering out repo without demo: ${repo.name}`);
 
       return isPublic && isNotArchived && isNotExcluded && hasDemo;
     });
@@ -165,13 +183,11 @@ export const githubAPI = {
     const showcaseScore = showcaseIndicators.filter(Boolean).length;
 
     if (!repo.fork && (hasPortfolioTopic || showcaseScore >= 3)) {
-      console.log(`⭐ Showcase project: ${repo.name} (score: ${showcaseScore}, portfolio topic: ${hasPortfolioTopic})`);
       return "showcase";
     }
 
     // Personal projects: Original work but maybe not showcase-ready
     if (!repo.fork) {
-      console.log(`👤 Personal project: ${repo.name}`);
       return "personal";
     }
 
@@ -183,12 +199,10 @@ export const githubAPI = {
     ];
 
     if (contributionIndicators.filter(Boolean).length >= 2) {
-      console.log(`🤝 Contribution: ${repo.name}`);
       return "contribution";
     }
 
     // Regular forks
-    console.log(`🍴 Fork: ${repo.name}`);
     return "fork";
   },
 
@@ -215,7 +229,7 @@ export const githubAPI = {
     }
 
     const decoded = new TextDecoder().decode(
-      Uint8Array.from(atob(data.content.replace(/\n/g, "")), c =>
+      Uint8Array.from(decodeBase64(data.content), c =>
         c.charCodeAt(0)),
     );
     return JSON.parse(decoded) as T;

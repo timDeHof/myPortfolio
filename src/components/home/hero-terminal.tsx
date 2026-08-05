@@ -50,21 +50,33 @@ function getTypingDelay(char: string): number {
 
 /* ─── Line rendering helpers ─── */
 
-function buildLineHtml(line: TerminalLine, isLast: boolean): string {
-  const cursorHtml = isLast
-    ? "<span class=\"terminal-cursor\"></span>"
-    : "";
+function createSpan(className: string, text: string): HTMLSpanElement {
+  const span = document.createElement("span");
+  span.className = className;
+  span.textContent = text;
+  return span;
+}
+
+function buildLineElement(line: TerminalLine, isLast: boolean): HTMLDivElement {
+  const div = document.createElement("div");
+  div.className = "terminal-line";
 
   if (line.type === "prompt") {
-    return `<span class="text-emerald-500 dark:text-emerald-400">❯ </span><span class="text-foreground">${line.text}</span>${cursorHtml}`;
+    div.appendChild(createSpan("text-emerald-500 dark:text-emerald-400", "❯ "));
+    div.appendChild(createSpan("text-foreground", line.text));
+    if (isLast) {
+      div.appendChild(createSpan("terminal-cursor", ""));
+    }
+    return div;
   }
 
   if (line.type === "empty") {
-    return `<span>&nbsp;</span>`;
+    div.appendChild(createSpan("", "\u00A0"));
+    return div;
   }
 
-  const colorClass = getLineColorClass(line.type);
-  return `<span class="${colorClass}">${line.text}</span>`;
+  div.appendChild(createSpan(getLineColorClass(line.type), line.text));
+  return div;
 }
 
 function getLineColorClass(type: TerminalLine["type"]): string {
@@ -190,16 +202,15 @@ export function HeroTerminal() {
     }
 
     /* Reset */
-    body.innerHTML = "";
+    body.replaceChildren();
     clearAllTimeouts();
 
     if (shouldReduceMotion) {
       /* Render all lines immediately with no animation */
       const fragment = document.createDocumentFragment();
       TERMINAL_LINES.forEach((line, i) => {
-        const div = document.createElement("div");
-        div.className = "terminal-line opacity-100 translate-y-0";
-        div.innerHTML = buildLineHtml(line, i === TERMINAL_LINES.length - 1);
+        const div = buildLineElement(line, i === TERMINAL_LINES.length - 1);
+        div.classList.add("opacity-100", "translate-y-0");
         fragment.appendChild(div);
       });
       body.appendChild(fragment);
@@ -209,11 +220,11 @@ export function HeroTerminal() {
     /* Phase 1: Typing the first command */
     const firstLine = document.createElement("div");
     firstLine.className = "terminal-line opacity-0 translate-y-2";
+    firstLine.appendChild(createSpan("text-emerald-500 dark:text-emerald-400", "❯ "));
     const cmdTarget = document.createElement("span");
     cmdTarget.className = "text-foreground";
     const cursor = document.createElement("span");
     cursor.className = "terminal-cursor";
-    firstLine.innerHTML = `<span class="text-emerald-500 dark:text-emerald-400">❯ </span>`;
     firstLine.appendChild(cmdTarget);
     firstLine.appendChild(cursor);
     body.appendChild(firstLine);
@@ -253,10 +264,9 @@ export function HeroTerminal() {
       const fragment = document.createDocumentFragment();
 
       remaining.forEach((line, i) => {
-        const div = document.createElement("div");
         const isLast = i === remaining.length - 1;
-        div.className = "terminal-line opacity-0 translate-y-2 transition-all duration-300";
-        div.innerHTML = buildLineHtml(line, isLast);
+        const div = buildLineElement(line, isLast);
+        div.classList.add("opacity-0", "translate-y-2", "transition-all", "duration-300");
         div.style.transitionDelay = `${i * 80}ms`;
         fragment.appendChild(div);
       });
@@ -376,46 +386,46 @@ export function HeroTerminal() {
                 </Link>
               </Button>
             </m.div>
-            </m.div>
+          </m.div>
 
-            <m.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="hidden lg:block"
-            >
-              <div className="relative">
-                {/* Glow backdrop */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -inset-5 rounded-full bg-[radial-gradient(circle,rgba(37,99,235,0.12)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(59,130,246,0.15)_0%,transparent_70%)]"
-                />
+          <m.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="hidden lg:block"
+          >
+            <div className="relative">
+              {/* Glow backdrop */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -inset-5 rounded-full bg-[radial-gradient(circle,rgba(37,99,235,0.12)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(59,130,246,0.15)_0%,transparent_70%)]"
+              />
 
-                {/* Terminal shell */}
-                <div className="relative overflow-hidden rounded-lg border border-border bg-card font-mono text-[13px] shadow-lg [box-shadow:0_0_0_1px_rgba(0,0,0,0.05),inset_0_1px_0_rgba(255,255,255,0.6),0_1px_3px_rgba(0,0,0,0.08)] dark:[box-shadow:var(--shadow-lg)]">
-                  {/* Title bar */}
-                  <div className="flex items-center gap-2 border-b border-border bg-muted/50 px-3.5 py-2.5">
-                    <span className="h-2.5 w-2.5 rounded-full bg-red-500" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-yellow-500" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
-                    <span className="ml-2 text-[11px] text-muted-foreground/70">
-                      ~/portfolio
-                    </span>
-                  </div>
-
-                  {/* Terminal body */}
-                  <div
-                    ref={terminalBodyRef}
-                    className="min-h-[360px] p-4 leading-[1.7]"
-                  />
+              {/* Terminal shell */}
+              <div className="relative overflow-hidden rounded-lg border border-border bg-card font-mono text-[13px] shadow-lg [box-shadow:0_0_0_1px_rgba(0,0,0,0.05),inset_0_1px_0_rgba(255,255,255,0.6),0_1px_3px_rgba(0,0,0,0.08)] dark:[box-shadow:var(--shadow-lg)]">
+                {/* Title bar */}
+                <div className="flex items-center gap-2 border-b border-border bg-muted/50 px-3.5 py-2.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-red-500" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-yellow-500" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
+                  <span className="ml-2 text-[11px] text-muted-foreground/70">
+                    ~/portfolio
+                  </span>
                 </div>
+
+                {/* Terminal body */}
+                <div
+                  ref={terminalBodyRef}
+                  className="min-h-[360px] p-4 leading-[1.7]"
+                />
               </div>
-            </m.div>
+            </div>
+          </m.div>
         </div>
       </MaxWidthWrapper>
 
       {/* Inject terminal animation styles */}
-      <style dangerouslySetInnerHTML={{ __html: TERMINAL_STYLES }} />
+      <style>{TERMINAL_STYLES}</style>
     </section>
   );
 }
