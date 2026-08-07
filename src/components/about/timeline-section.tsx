@@ -1,7 +1,9 @@
 import { m } from "framer-motion";
+
+import { timeline } from "@/data/about-data";
+
 import { Card } from "../ui/card";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
-import { timeline } from "@/data/about-data";
 
 interface TimelineSectionProps {
   shouldReduceMotion: boolean;
@@ -46,7 +48,8 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({ shouldReduceMo
                       {/* Year badge - hidden on mobile, shown from md up */}
                       <div className={`hidden md:inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold mb-4 ${
                         isLeft ? "bg-muted text-secondary" : "bg-muted text-primary"
-                      }`}>
+                      }`}
+                      >
                         <span className={`w-2 h-2 rounded-full bg-current ${shouldReduceMotion ? "" : "animate-pulse"}`} />
                         {item.year}
                       </div>
@@ -80,7 +83,8 @@ export const TimelineSection: React.FC<TimelineSectionProps> = ({ shouldReduceMo
                     </div>
                     <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold ${
                       index % 2 === 0 ? "bg-muted text-secondary" : "bg-muted text-primary"
-                    }`}>
+                    }`}
+                    >
                       <span className={`w-2 h-2 rounded-full bg-current ${shouldReduceMotion ? "" : "animate-pulse"}`} />
                       {item.year}
                     </div>

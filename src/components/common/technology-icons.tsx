@@ -1,5 +1,5 @@
+import { Layout, Printer, Puzzle, Settings, Users } from "lucide-react";
 import React from "react";
-import { Printer, Settings, Puzzle, Layout, Users } from "lucide-react";
 
 /**
  * Common properties for technology icon components.

@@ -6,9 +6,13 @@ import { pageSEO } from "../utils/seo";
 import { generatePersonSchema, generateWebsiteSchema } from "../utils/structured-data";
 
 // Lazy load components for better performances
-const HeroSection = React.lazy(() =>
-  import("../components/home/hero-section").then(module => ({ default: module.HeroSection })),
+// Swap HeroTerminal ↔ HeroSection to toggle between hero styles
+const HeroTerminal = React.lazy(() =>
+  import("../components/home/hero-terminal").then(module => ({ default: module.HeroTerminal })),
 );
+// const HeroSection = React.lazy(() =>
+//   import("../components/home/hero-section").then(module => ({ default: module.HeroSection })),
+// );
 
 const ServicesSection = React.lazy(() =>
   import("../components/home/services-section").then(module => ({ default: module.ServicesSection })),
@@ -20,7 +24,8 @@ const SectionLoader: React.FC<{ name: string }> = ({ name }) => (
     <div className="text-center">
       <LoadingSpinner size="lg" color="blue" />
       <p className="text-muted-foreground mt-4 text-sm">
-        Loading{" "}
+        Loading
+        {" "}
         {name}
         ...
       </p>
@@ -33,20 +38,20 @@ export const HomePage: React.FC = () => {
   const structuredData = {
     "@graph": [
       generatePersonSchema(),
-      generateWebsiteSchema()
-    ]
+      generateWebsiteSchema(),
+    ],
   };
 
   return (
     <>
-      <SEOHead 
-        seo={pageSEO.home} 
+      <SEOHead
+        seo={pageSEO.home}
         structuredData={structuredData}
       />
 
-      {/* Hero Section */}
+      {/* Hero Section — swap HeroTerminal ↔ HeroSection to toggle */}
       <Suspense fallback={<SectionLoader name="Hero Section" />}>
-        <HeroSection />
+        <HeroTerminal />
       </Suspense>
 
       {/* Services Section */}

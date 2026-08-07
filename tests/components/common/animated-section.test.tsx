@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
 import React from "react";
+import { describe, expect, it, vi } from "vitest";
+
 import { AnimatedSection } from "../../../src/components/common/animated-section";
 
 // Mock hooks to avoid implementation details
@@ -17,12 +18,12 @@ vi.mock("../../../src/hooks/use-optimized-animations", () => ({
   }),
 }));
 
-describe("AnimatedSection", () => {
+describe("animatedSection", () => {
   it("renders children correctly", () => {
     render(
       <AnimatedSection>
         <div>Test Content</div>
-      </AnimatedSection>
+      </AnimatedSection>,
     );
 
     expect(screen.getByText("Test Content")).toBeInTheDocument();
@@ -32,11 +33,11 @@ describe("AnimatedSection", () => {
     render(
       <AnimatedSection className="custom-class">
         <div>Test Content</div>
-      </AnimatedSection>
+      </AnimatedSection>,
     );
 
     // motion.section renders as a section element
-    // We can't easily check for class on motion component directly without setup, 
+    // We can't easily check for class on motion component directly without setup,
     // but we can check if it renders without error.
     // Ideally we'd use container query or check the element.
     const content = screen.getByText("Test Content");

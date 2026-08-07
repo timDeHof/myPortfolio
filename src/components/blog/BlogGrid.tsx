@@ -1,6 +1,6 @@
-import { BlogPostCard } from "./BlogPostCard";
-
 import type { BlogPost } from "../../services/api/blog";
+
+import { BlogPostCard } from "./BlogPostCard";
 
 interface BlogGridProps {
   posts: BlogPost[];
@@ -11,7 +11,7 @@ export const BlogGrid: React.FC<BlogGridProps> = ({ posts, isLoading }) => {
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[...Array(6)].map((_, i) => (
+        {[...Array.from({ length: 6 })].map((_, i) => (
           <div
             key={i}
             className="h-80 bg-muted animate-pulse rounded-lg"

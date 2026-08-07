@@ -1,10 +1,9 @@
-import { m } from "framer-motion";
-import { Calendar, Clock, Tag } from "lucide-react";
+import type { BlogPost } from "@services/api/blog";
 
 import { Card, CardContent } from "@components/ui/card";
-
 import { BLOG_URL } from "@services/api/blog";
-import type { BlogPost } from "@services/api/blog";
+import { m } from "framer-motion";
+import { Calendar, Clock, Tag } from "lucide-react";
 
 interface BlogPostCardProps {
   post: BlogPost;
@@ -59,7 +58,11 @@ export const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, index = 0 }) =
               {post.readingTime && (
                 <div className="flex items-center gap-1">
                   <Clock className="h-3 w-3" />
-                  <span>{post.readingTime} min</span>
+                  <span>
+                    {post.readingTime}
+                    {" "}
+                    min
+                  </span>
                 </div>
               )}
             </div>
@@ -72,7 +75,7 @@ export const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, index = 0 }) =
 
             {post.tags && post.tags.length > 0 && (
               <div className="flex flex-wrap gap-1.5">
-                {post.tags.slice(0, 3).map((tag) => (
+                {post.tags.slice(0, 3).map(tag => (
                   <span
                     key={tag}
                     className="inline-flex items-center gap-1 px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded-full"

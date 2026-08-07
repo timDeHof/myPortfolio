@@ -1,38 +1,45 @@
 import { Quote } from "lucide-react";
 import React from "react";
+
+import type { Testimonial } from "../../hooks/useTestimonials";
+
+import { useTestimonials } from "../../hooks/useTestimonials";
 import { AnimatedCard } from "../common/animated-card";
-import { useTestimonials, type Testimonial } from "../../hooks/useTestimonials";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 
-type TestimonialCardProps = {
+interface TestimonialCardProps {
   testimonial: Testimonial;
   index: number;
-};
+}
 
 const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, index }) => {
   return (
     <AnimatedCard index={index}>
       <div className="mb-4 flex justify-start">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-secondary shadow-lg">
-          {testimonial.avatar ? (
-            <img
-              src={testimonial.avatar}
-              alt={testimonial.name}
-              className="h-12 w-12 rounded-full object-cover"
-            />
-          ) : (
-            <Quote className="h-6 w-6 text-white" />
-          )}
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#0072b1] shadow-lg">
+          {testimonial.avatar
+            ? (
+                <img
+                  src={testimonial.avatar}
+                  alt={testimonial.name}
+                  className="h-12 w-12 rounded-full object-cover"
+                />
+              )
+            : (
+                <Quote className="h-6 w-6 text-white" />
+              )}
         </div>
       </div>
 
       <blockquote className="mb-6 flex-1">
         <p className="text-lg text-foreground italic">
-          "{testimonial.quote}"
+          "
+          {testimonial.quote}
+          "
         </p>
       </blockquote>
 
-      <div className="border-t border pt-4">
+      <div className="border-t pt-4">
         <h4 className="font-semibold text-foreground">
           {testimonial.name}
         </h4>
@@ -50,7 +57,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial, index })
             View on LinkedIn
             <svg
               className="ml-1 h-4 w-4"
-              fill="currentColor"
+              fill="#0072b1"
               viewBox="0 0 24 24"
               aria-hidden="true"
             >

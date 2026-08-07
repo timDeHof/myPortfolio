@@ -44,9 +44,9 @@ export const projectsIndex: ProjectIndexEntry[] = [
     owner: "timDeHof",
     repo: "portfolio-metadata",
     path: "scanpic.json",
-  }
+  },
 ];
 
 export function findProjectBySlug(slug: string): ProjectIndexEntry | undefined {
-  return projectsIndex.find((p) => p.slug === slug);
+  return projectsIndex.find(p => p.slug === slug);
 }

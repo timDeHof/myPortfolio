@@ -264,6 +264,6 @@ describe("githubStatsKeys", () => {
   it("should return correct query keys", () => {
     expect(githubStatsKeys.all).toEqual(["githubStats"]);
     expect(githubStatsKeys.stats()).toEqual(["githubStats", "stats"]);
-    expect(githubStatsKeys.contributions()).toEqual(["githubStats", "contributions"]);
+    expect(githubStatsKeys.contributions("timDeHof")).toEqual(["githubStats", "contributions", "timDeHof"]);
   });
 });

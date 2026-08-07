@@ -1,6 +1,8 @@
 import { m } from "framer-motion";
-import { Card, CardContent } from "../ui/card";
+
 import type { Skill } from "@/types/about";
+
+import { Card, CardContent } from "../ui/card";
 
 interface SkillCardProps {
   skill: Skill;

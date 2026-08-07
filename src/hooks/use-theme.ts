@@ -4,8 +4,9 @@ import { useAppStore } from "../store/use-app-store";
 
 /**
  * Custom hook for managing the application theme (light/dark/system).
- * Handles system preference detection, persistence in localStorage, and applying styles to the document.
- * 
+ * Handles system preference detection, DOM application, and media query listening.
+ * Theme persistence is handled by the Zustand store's persist middleware.
+ *
  * @returns An object containing theme state and control functions.
  */
 export function useTheme() {
@@ -20,19 +21,6 @@ export function useTheme() {
     }
     return "light";
   };
-
-  // Initialize theme on mount
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("portfolio-theme") as "light" | "dark" | "system" | null;
-
-    if (savedTheme && (savedTheme === "light" || savedTheme === "dark")) {
-      setTheme(savedTheme);
-    }
-    else {
-      // Default to system preference
-      setTheme(getSystemPreference());
-    }
-  }, [setTheme]);
 
   // Apply theme to document
   useEffect(() => {
@@ -100,11 +88,6 @@ export function useTheme() {
         mediaQuery.removeListener(handleSystemThemeChange);
       }
     };
-  }, [theme]);
-
-  // Save theme preference
-  useEffect(() => {
-    localStorage.setItem("portfolio-theme", theme);
   }, [theme]);
 
   /**

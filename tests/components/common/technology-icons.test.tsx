@@ -1,16 +1,17 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
 import React from "react";
+import { describe, expect, it } from "vitest";
+
 import * as Icons from "../../../src/components/common/technology-icons";
 
-describe("TechnologyIcons", () => {
+describe("technologyIcons", () => {
   it("renders ReactIcon with correct size and className", () => {
     const { container } = render(<Icons.ReactIcon size={48} className="custom-icon" />);
     const svg = container.querySelector("svg");
     expect(svg).toBeInTheDocument();
     expect(svg).toHaveAttribute("width", "48");
     expect(svg).toHaveAttribute("height", "48");
-    // Some icons use className on svg, others on a path. 
+    // Some icons use className on svg, others on a path.
     // Standardizing this will be part of the task.
   });
 

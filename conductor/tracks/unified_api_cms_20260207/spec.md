@@ -1,9 +1,11 @@
 # Specification - Unified Serverless API & Portfolio CMS
 
 ## Overview
+
 This track involves building a comprehensive, unified serverless API for the portfolio. This service consolidates existing proxy logic, replaces external email services, and establishes a "Portfolio CMS" backend using Cloudflare D1 and R2. It will also feature interactive API documentation using OpenAPI and Scalar.
 
 ## Goals
+
 - **Consolidation:** Move toward a single, maintainable backend worker using a modular routing pattern.
 - **Independence:** Replace third-party dependencies (EmailJS) with direct API integrations (Resend).
 - **Portfolio CMS:** Decouple portfolio data and assets from frontend code by serving skills, services, certifications, and media (icons/images) via dynamic API endpoints.
@@ -11,23 +13,25 @@ This track involves building a comprehensive, unified serverless API for the por
 - **Auto-Documentation:** Provide a self-documenting API using OpenAPI and the Scalar interactive UI.
 
 ## Functional Requirements
+
 - **Unified Router:** Implement a modular routing layer (using Hono and Zod) to handle multiple namespaces:
-    - `/api/github/*`: Proxy requests to GitHub.
-    - `/api/contact`: Handle contact form submissions via Resend.
-    - `/api/blog/*`: CRUD operations for blog posts and metadata.
-    - `/api/portfolio/*`: Endpoints for `techstack`, `services`, and `certifications`.
-    - `/api/assets/*`: Proxy requests to retrieve media (icons, images) stored in Cloudflare R2.
+  - `/api/github/*`: Proxy requests to GitHub.
+  - `/api/contact`: Handle contact form submissions via Resend.
+  - `/api/blog/*`: CRUD operations for blog posts and metadata.
+  - `/api/portfolio/*`: Endpoints for `techstack`, `services`, and `certifications`.
+  - `/api/assets/*`: Proxy requests to retrieve media (icons, images) stored in Cloudflare R2.
 - **Contact Form Handler:**
-    - Accept POST requests, validate input, and send notifications via Resend.
+  - Accept POST requests, validate input, and send notifications via Resend.
 - **Data Management (Cloudflare D1):**
-    - Initialize and manage schemas for Blog, Tech Stack, Services, and Certifications.
-    - Store references to R2 asset keys in the database.
+  - Initialize and manage schemas for Blog, Tech Stack, Services, and Certifications.
+  - Store references to R2 asset keys in the database.
 - **Asset Storage (Cloudflare R2):**
-    - Configure an R2 bucket for storing portfolio icons, project images, and other media.
+  - Configure an R2 bucket for storing portfolio icons, project images, and other media.
 - **API Documentation:**
-    - Implement a `/api/docs` endpoint using `@hono/zod-openapi` and `@scalar/hono-api-reference`.
+  - Implement a `/api/docs` endpoint using `@hono/zod-openapi` and `@scalar/hono-api-reference`.
 
 ## Tech Stack
+
 - **Runtime:** Cloudflare Workers
 - **Router:** Hono (with `@hono/zod-openapi`)
 - **Database:** Cloudflare D1 (SQL)
@@ -38,6 +42,7 @@ This track involves building a comprehensive, unified serverless API for the por
 - **Language:** TypeScript
 
 ## Acceptance Criteria
+
 - [ ] A new unified worker is deployed and responding at defined routes.
 - [ ] Contact form submissions successfully send emails via Resend.
 - [ ] Portfolio data is correctly retrieved from D1.
@@ -47,5 +52,6 @@ This track involves building a comprehensive, unified serverless API for the por
 - [ ] The frontend is updated to fetch data and assets from these new unified endpoints.
 
 ## Out of Scope
+
 - Building the frontend UI for the blog or an admin dashboard for asset uploads.
 - Authentication (to be handled in a future "Admin" track).

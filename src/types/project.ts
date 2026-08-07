@@ -80,3 +80,6 @@ export const PROJECT_CARD_FIELDS: (keyof ProjectCardData)[] = [
   "difficulty",
   "timeEstimate",
 ];
+
+/** Slugs of projects that have case study data. Add new slugs here. */
+export const CASE_STUDY_SLUGS = ["shadcn-timeline"];

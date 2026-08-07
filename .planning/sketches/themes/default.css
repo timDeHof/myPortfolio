@@ -1,0 +1,83 @@
+:root {
+  /* Colors — Dark mode (primary) */
+  --color-bg: #0a0a0b;
+  --color-surface: #111113;
+  --color-surface-hover: #1a1a1d;
+  --color-border: #27272a;
+  --color-border-subtle: #1c1c1f;
+  --color-text: #fafafa;
+  --color-text-muted: #71717a;
+  --color-text-dim: #52525b;
+  --color-primary: #3b82f6;
+  --color-primary-hover: #60a5fa;
+  --color-accent: #22d3ee;
+  --color-accent-muted: rgba(34, 211, 238, 0.15);
+  --color-danger: #ef4444;
+  --color-success: #22c55e;
+
+  /* Code accent — for techy touches */
+  --color-code-green: #4ade80;
+  --color-code-purple: #a78bfa;
+  --color-code-orange: #fb923c;
+  --color-code-blue: #60a5fa;
+
+  /* Typography */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Shapes */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --shadow-glow-blue: 0 0 20px rgba(59, 130, 246, 0.15);
+  --shadow-glow-cyan: 0 0 20px rgba(34, 211, 238, 0.15);
+
+  /* Transitions */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+}
+
+/* Light mode overrides */
+[data-theme="light"] {
+  --color-bg: #fafafa;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f4f4f5;
+  --color-border: #e4e4e7;
+  --color-border-subtle: #f0f0f2;
+  --color-text: #09090b;
+  --color-text-muted: #71717a;
+  --color-text-dim: #a1a1aa;
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-accent: #0891b2;
+  --color-accent-muted: rgba(8, 145, 178, 0.1);
+}

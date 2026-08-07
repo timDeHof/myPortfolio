@@ -236,12 +236,14 @@ export const githubStatsAPI = {
 
       // Filter to include current year plus 2 months from previous year
       const contributionsArray = (data.contributions ?? []).filter((day: { date: string }) => {
-        const dateYear = parseInt(day.date.split("-")[0], 10);
-        const dateMonth = parseInt(day.date.split("-")[1], 10);
+        const dateYear = Number.parseInt(day.date.split("-")[0], 10);
+        const dateMonth = Number.parseInt(day.date.split("-")[1], 10);
 
         // Include current year or last 2 months of previous year
-        if (dateYear === currentYear) return true;
-        if (dateYear === previousYear && dateMonth >= 9) return true; // Sep & Oct &Nov & Dec
+        if (dateYear === currentYear)
+          return true;
+        if (dateYear === previousYear && dateMonth >= 9)
+          return true; // Sep & Oct &Nov & Dec
 
         return false;
       });
@@ -272,7 +274,8 @@ export const githubStatsAPI = {
       }
 
       return { contributions: weeks, total };
-    } catch (error) {
+    }
+    catch (error) {
       // Fallback to mock data if API fails
       console.warn("Failed to fetch contributions from API, using mock data:", error);
       const mockData = githubStatsAPI.generateContributionCalendar();

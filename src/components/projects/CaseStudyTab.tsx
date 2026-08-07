@@ -1,6 +1,8 @@
 import { m } from "framer-motion";
 import { ArrowRight, BookOpen, Check, Code, ExternalLink, Github, Lightbulb, Target, Trophy } from "lucide-react";
-import { CaseStudyData } from "@/types/caseStudy";
+
+import type { CaseStudyData } from "@/types/caseStudy";
+
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 

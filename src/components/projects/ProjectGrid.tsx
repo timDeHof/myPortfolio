@@ -1,9 +1,9 @@
-import React from "react";
-
 import { AnimatedSection } from "@components/common/animated-section";
 import { MaxWidthWrapper } from "@components/ui/max-width-wrapper";
+import React from "react";
 
 import type { Project } from "../../types/project";
+
 import { ProjectCard } from "./ProjectCard";
 
 interface ProjectGridProps {
@@ -53,9 +53,9 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({ projects, isLoading, o
       <MaxWidthWrapper>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <ProjectCard 
-              key={project.slug} 
-              project={project} 
+            <ProjectCard
+              key={project.slug}
+              project={project}
               index={index}
               onClick={onProjectClick ? () => onProjectClick(project.slug) : undefined}
             />

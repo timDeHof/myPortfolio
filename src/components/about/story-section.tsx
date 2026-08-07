@@ -1,9 +1,11 @@
 import { m } from "framer-motion";
 import { ExternalLink, Sparkles } from "lucide-react";
+
+import { coreValues } from "@/data/about-data";
+
 import { AnimatedSection } from "../common/animated-section";
 import { Card, CardContent } from "../ui/card";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
-import { coreValues } from "@/data/about-data";
 
 interface StorySectionProps {
   shouldReduceMotion: boolean;

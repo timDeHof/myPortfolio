@@ -1,8 +1,9 @@
-import React from "react";
-import { m, useReducedMotion } from "framer-motion";
-import { Download } from "lucide-react";
 import { Button } from "@components/ui/button";
 import { MaxWidthWrapper } from "@components/ui/max-width-wrapper";
+import { m, useReducedMotion } from "framer-motion";
+import { Download } from "lucide-react";
+import React from "react";
+
 import { env } from "@/lib/env";
 
 export const AboutHero: React.FC = () => {

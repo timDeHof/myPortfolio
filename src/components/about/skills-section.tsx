@@ -1,6 +1,8 @@
 import { m } from "framer-motion";
-import { MaxWidthWrapper } from "../ui/max-width-wrapper";
+
 import { skillCategories } from "@/data/about-data";
+
+import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { SkillCard } from "./skill-card";
 
 interface SkillsSectionProps {
@@ -60,7 +62,6 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ shouldReduceMotion
                 />
               ))}
             </div>
-
 
           </m.div>
         ))}

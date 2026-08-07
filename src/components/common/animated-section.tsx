@@ -3,7 +3,7 @@ import React from "react";
 
 import { useIntersectionObserver } from "../../hooks/use-intersection-observer";
 
-type AnimatedSectionProps = {
+interface AnimatedSectionProps {
   /**
    * Optional ID for the section element.
    */
@@ -24,7 +24,7 @@ type AnimatedSectionProps = {
    * Direction from which the section animates in.
    */
   direction?: "up" | "down" | "left" | "right";
-};
+}
 
 /**
  * A wrapper component that provides scroll-triggered animations for its children.

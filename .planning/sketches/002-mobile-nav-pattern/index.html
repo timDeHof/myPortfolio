@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sketch 002: Mobile Nav Pattern</title>
+    <link rel="stylesheet" href="../themes/default.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        background: var(--color-bg);
+        color: var(--color-text);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* ═══ Variant Tab Bar ═══ */
+      #variant-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 9998;
+        background: var(--color-surface);
+        border-bottom: 1px solid var(--color-border);
+        padding: 8px 16px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-family: var(--font-sans);
+      }
+      .variant-tab {
+        padding: 6px 14px;
+        border-radius: var(--radius-md);
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--color-text-muted);
+        font-size: var(--text-sm);
+        font-family: var(--font-sans);
+        cursor: pointer;
+        transition: all var(--duration-fast) ease;
+      }
+      .variant-tab:hover {
+        color: var(--color-text);
+        background: var(--color-surface-hover);
+      }
+      .variant-tab.active {
+        color: var(--color-text);
+        background: var(--color-surface-hover);
+        border-color: var(--color-border);
+      }
+      .variant-label {
+        font-size: var(--text-xs);
+        color: var(--color-text-dim);
+        margin-left: auto;
+        font-family: var(--font-mono);
+      }
+
+      /* ═══ Variant Containers ═══ */
+      .variant {
+        display: none;
+        padding-top: 48px;
+        min-height: 100vh;
+      }
+      .variant.active {
+        display: flex;
+        justify-content: center;
+        padding-top: 48px;
+      }
+
+      /* ═══ Mobile Frame ═══ */
+      .mobile-frame {
+        width: 375px;
+        height: 700px;
+        border: 2px solid var(--color-border);
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+        background: var(--color-bg);
+        box-shadow: var(--shadow-lg);
+        margin: 40px auto;
+      }
+      .mobile-status-bar {
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--color-text-muted);
+        background: var(--color-surface);
+        border-bottom: 1px solid var(--color-border-subtle);
+      }
+      .mobile-content {
+        padding: 20px;
+        height: calc(100% - 44px - 56px);
+        overflow-y: auto;
+      }
+      .mobile-content h2 {
+        font-size: var(--text-xl);
+        margin-bottom: var(--space-3);
+      }
+      .mobile-content p {
+        color: var(--color-text-muted);
+        font-size: var(--text-sm);
+        line-height: 1.6;
+        margin-bottom: var(--space-4);
+      }
+      .mobile-content .fake-card {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: 16px;
+        margin-bottom: 12px;
+      }
+      .mobile-content .fake-card .bar {
+        height: 8px;
+        border-radius: 4px;
+        background: var(--color-border);
+        margin-bottom: 8px;
+      }
+      .mobile-content .fake-card .bar.w60 {
+        width: 60%;
+      }
+      .mobile-content .fake-card .bar.w80 {
+        width: 80%;
+      }
+      .mobile-content .fake-card .bar.w40 {
+        width: 40%;
+      }
+
+      /* ═══ Mobile Top Bar (shared) ═══ */
+      .mobile-topbar {
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+        background: var(--color-surface);
+        border-bottom: 1px solid var(--color-border-subtle);
+        position: relative;
+        z-index: 10;
+      }
+      .mobile-topbar .brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        color: var(--color-text);
+        font-weight: 600;
+        font-size: var(--text-sm);
+      }
+      .mobile-topbar .brand .icon {
+        width: 26px;
+        height: 26px;
+        border-radius: var(--radius-sm);
+        background: var(--color-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+      }
+      .hamburger {
+        width: 44px;
+        height: 44px;
+        border-radius: var(--radius-md);
+        border: none;
+        background: transparent;
+        color: var(--color-text);
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 10px;
+        transition: background var(--duration-fast) ease;
+      }
+      .hamburger:hover {
+        background: var(--color-surface-hover);
+      }
+      .hamburger .line {
+        width: 20px;
+        height: 2px;
+        background: currentColor;
+        border-radius: 1px;
+        transition: all var(--duration-normal) var(--ease-out-expo);
+      }
+      .hamburger.open .line:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      .hamburger.open .line:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+      .hamburger.open .line:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+
+      /* ═══════════════════════════════════════════
+       VARIANT A: Full-Screen Overlay
+       Staggered reveal, large typography, immersive
+    ═══════════════════════════════════════════ */
+
+      .overlay-a {
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        background: var(--color-bg);
+        display: flex;
+        flex-direction: column;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--duration-normal) ease;
+      }
+      .overlay-a.visible {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .overlay-a .overlay-topbar {
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+        border-bottom: 1px solid var(--color-border-subtle);
+      }
+      .overlay-a .nav-links {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 32px;
+        gap: 0;
+      }
+      .overlay-a .nav-link {
+        display: block;
+        padding: 16px 0;
+        text-decoration: none;
+        color: var(--color-text-muted);
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        border-bottom: 1px solid var(--color-border-subtle);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all var(--duration-slow) var(--ease-out-expo);
+      }
+      .overlay-a.visible .nav-link {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .overlay-a.visible .nav-link:nth-child(1) {
+        transition-delay: 0ms;
+      }
+      .overlay-a.visible .nav-link:nth-child(2) {
+        transition-delay: 50ms;
+      }
+      .overlay-a.visible .nav-link:nth-child(3) {
+        transition-delay: 100ms;
+      }
+      .overlay-a.visible .nav-link:nth-child(4) {
+        transition-delay: 150ms;
+      }
+      .overlay-a.visible .nav-link:nth-child(5) {
+        transition-delay: 200ms;
+      }
+      .overlay-a .nav-link:hover,
+      .overlay-a .nav-link.active {
+        color: var(--color-text);
+        padding-left: 12px;
+      }
+      .overlay-a .nav-link.active {
+        color: var(--color-primary);
+      }
+      .overlay-a .overlay-footer {
+        padding: 20px 32px;
+        border-top: 1px solid var(--color-border-subtle);
+        display: flex;
+        gap: 16px;
+      }
+      .overlay-a .overlay-footer a,
+      .overlay-a .overlay-footer button {
+        color: var(--color-text-muted);
+        text-decoration: none;
+        font-size: var(--text-sm);
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 0;
+      }
+
+      /* ═══════════════════════════════════════════
+       VARIANT B: Bottom Sheet
+       Slides up, drag handle, partial overlay
+    ═══════════════════════════════════════════ */
+
+      .sheet-backdrop {
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--duration-normal) ease;
+      }
+      .sheet-backdrop.visible {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .bottom-sheet {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 21;
+        background: var(--color-surface);
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+        transform: translateY(100%);
+        transition: transform var(--duration-slow) var(--ease-out-expo);
+        max-height: 75%;
+      }
+      .bottom-sheet.visible {
+        transform: translateY(0);
+      }
+      .bottom-sheet .handle {
+        width: 36px;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--color-border);
+        margin: 12px auto 0;
+      }
+      .bottom-sheet .sheet-header {
+        padding: 16px 24px 8px;
+        font-size: var(--text-lg);
+        font-weight: 600;
+      }
+      .bottom-sheet .sheet-nav {
+        padding: 8px 16px;
+      }
+      .bottom-sheet .sheet-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 12px;
+        border-radius: var(--radius-md);
+        text-decoration: none;
+        color: var(--color-text-muted);
+        font-size: var(--text-base);
+        font-weight: 500;
+        transition: all var(--duration-fast) ease;
+      }
+      .bottom-sheet .sheet-link:hover,
+      .bottom-sheet .sheet-link.active {
+        color: var(--color-text);
+        background: var(--color-surface-hover);
+      }
+      .bottom-sheet .sheet-link.active {
+        color: var(--color-primary);
+      }
+      .bottom-sheet .sheet-link .link-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--radius-md);
+        background: var(--color-surface-hover);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        flex-shrink: 0;
+      }
+      .bottom-sheet .sheet-link.active .link-icon {
+        background: var(--color-accent-muted);
+        color: var(--color-accent);
+      }
+      .bottom-sheet .sheet-footer {
+        padding: 12px 24px 20px;
+        border-top: 1px solid var(--color-border-subtle);
+        display: flex;
+        gap: 12px;
+      }
+      .bottom-sheet .sheet-footer button {
+        flex: 1;
+        padding: 10px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--color-border);
+        background: transparent;
+        color: var(--color-text-muted);
+        font-size: var(--text-sm);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        transition: all var(--duration-fast) ease;
+      }
+      .bottom-sheet .sheet-footer button:hover {
+        color: var(--color-text);
+        background: var(--color-surface-hover);
+      }
+
+      /* ═══════════════════════════════════════════
+       VARIANT C: Side Drawer
+       Slides from right, content pushes, depth layers
+    ═══════════════════════════════════════════ */
+
+      .drawer-backdrop {
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        background: rgba(0, 0, 0, 0.4);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--duration-normal) ease;
+        filter: blur(2px);
+      }
+      .drawer-backdrop.visible {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .side-drawer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 21;
+        width: 280px;
+        background: var(--color-surface);
+        border-left: 1px solid var(--color-border);
+        transform: translateX(100%);
+        transition: transform var(--duration-slow) var(--ease-out-expo);
+        display: flex;
+        flex-direction: column;
+      }
+      .side-drawer.visible {
+        transform: translateX(0);
+      }
+      .side-drawer .drawer-header {
+        padding: 60px 24px 20px;
+        border-bottom: 1px solid var(--color-border-subtle);
+      }
+      .side-drawer .drawer-header .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--color-text);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: var(--text-base);
+      }
+      .side-drawer .drawer-header .brand .icon {
+        width: 30px;
+        height: 30px;
+        border-radius: var(--radius-md);
+        background: var(--color-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 14px;
+      }
+      .side-drawer .drawer-header .subtitle {
+        color: var(--color-text-dim);
+        font-size: var(--text-xs);
+        margin-top: 4px;
+        font-family: var(--font-mono);
+      }
+      .side-drawer .drawer-nav {
+        flex: 1;
+        padding: 16px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .side-drawer .drawer-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border-radius: var(--radius-md);
+        text-decoration: none;
+        color: var(--color-text-muted);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        transition: all var(--duration-fast) ease;
+      }
+      .side-drawer .drawer-link:hover {
+        color: var(--color-text);
+        background: var(--color-surface-hover);
+      }
+      .side-drawer .drawer-link.active {
+        color: var(--color-text);
+        background: var(--color-accent-muted);
+      }
+      .side-drawer .drawer-link .link-num {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-text-dim);
+        width: 20px;
+      }
+      .side-drawer .drawer-link.active .link-num {
+        color: var(--color-accent);
+      }
+      .side-drawer .drawer-footer {
+        padding: 16px 20px;
+        border-top: 1px solid var(--color-border-subtle);
+        display: flex;
+        gap: 8px;
+      }
+      .side-drawer .drawer-footer button {
+        flex: 1;
+        padding: 10px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--color-border);
+        background: transparent;
+        color: var(--color-text-muted);
+        font-size: var(--text-sm);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        transition: all var(--duration-fast) ease;
+      }
+      .side-drawer .drawer-footer button:hover {
+        color: var(--color-text);
+        background: var(--color-surface-hover);
+      }
+
+      /* ═══ Push effect for drawer ═══ */
+      .mobile-frame.pushed {
+        transform: scale(0.92) translateX(-20px);
+      }
+      .mobile-frame.pushed {
+        transition: transform var(--duration-slow) var(--ease-out-expo);
+      }
+
+      /* ═══ Instructions ═══ */
+      .instructions {
+        text-align: center;
+        padding: 20px;
+        color: var(--color-text-muted);
+        font-size: var(--text-sm);
+      }
+      .instructions strong {
+        color: var(--color-text);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ═══ Variant Tab Bar ═══ -->
+    <div id="variant-nav">
+      <button class="variant-tab active" onclick="showVariant('a')">A: Full-Screen Overlay</button>
+      <button class="variant-tab" onclick="showVariant('b')">B: Bottom Sheet</button>
+      <button class="variant-tab" onclick="showVariant('c')">C: Side Drawer</button>
+      <span class="variant-label">sketch 002</span>
+    </div>
+
+    <!-- ═══ VARIANT A: Full-Screen Overlay ═══ -->
+    <div id="variant-a" class="variant active">
+      <div>
+        <div class="mobile-frame" id="frame-a">
+          <div class="mobile-status-bar">9:41</div>
+          <div class="mobile-topbar">
+            <a href="#" class="brand">
+              <div class="icon">&lt;/&gt;</div>
+              <span>Tim DeHof</span>
+            </a>
+            <button class="hamburger" id="hamburger-a" onclick="toggleOverlayA()">
+              <span class="line"></span>
+              <span class="line"></span>
+              <span class="line"></span>
+            </button>
+          </div>
+          <div class="mobile-content">
+            <h2>Projects</h2>
+            <p>Scroll through the content behind the overlay to see how it feels with real page content underneath.</p>
+            <div class="fake-card">
+              <div class="bar w80"></div>
+              <div class="bar w60"></div>
+              <div class="bar w40"></div>
+            </div>
+            <div class="fake-card">
+              <div class="bar w80"></div>
+              <div class="bar w60"></div>
+              <div class="bar w40"></div>
+            </div>
+            <div class="fake-card">
+              <div class="bar w80"></div>
+              <div class="bar w60"></div>
+              <div class="bar w40"></div>
+            </div>
+          </div>
+          <!-- Overlay -->
+          <div class="overlay-a" id="overlay-a">
+            <div class="overlay-topbar">
+              <a href="#" class="brand">
+                <div class="icon" style="background: var(--color-primary)">&lt;/&gt;</div>
+                <span style="color: var(--color-text); font-weight: 600; font-size: 14px">Tim DeHof</span>
+              </a>
+              <button class="hamburger open" onclick="toggleOverlayA()">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+              </button>
+            </div>
+            <div class="nav-links">
+              <a href="#" class="nav-link active">About</a>
+              <a href="#" class="nav-link">Services</a>
+              <a href="#" class="nav-link">Projects</a>
+              <a href="#" class="nav-link">Blog</a>
+              <a href="#" class="nav-link">Contact</a>
+            </div>
+            <div class="overlay-footer">
+              <button>☀ Light Mode</button>
+              <a href="#">↓ Resume</a>
+            </div>
+          </div>
+        </div>
+        <div class="instructions">
+          <strong>Tap the hamburger</strong> to open the full-screen overlay. Watch the staggered link reveal.
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ VARIANT B: Bottom Sheet ═══ -->
+    <div id="variant-b" class="variant" style="display: none">
+      <div>
+        <div class="mobile-frame" id="frame-b">
+          <div class="mobile-status-bar">9:41</div>
+          <div class="mobile-topbar">
+            <a href="#" class="brand">
+              <div class="icon">&lt;/&gt;</div>
+              <span>Tim DeHof</span>
+            </a>
+            <button class="hamburger" id="hamburger-b" onclick="toggleSheet()">
+              <span class="line"></span>
+              <span class="line"></span>
+              <span class="line"></span>
+            </button>
+          </div>
+          <div class="mobile-content">
+            <h2>Services</h2>
+            <p>
+              The bottom sheet slides up from the bottom, partially covering the content. Tap the backdrop or drag down
+              to dismiss.
+            </p>
+            <div class="fake-card">
+              <div class="bar w80"></div>
+              <div class="bar w60"></div>
+              <div class="bar w40"></div>
+            </div>
+            <div class="fake-card">
+              <div class="bar w80"></div>
+              <div class="bar w60"></div>
+              <div class="bar w40"></div>
+            </div>
+          </div>
+          <!-- Backdrop -->
+          <div class="sheet-backdrop" id="sheet-backdrop" onclick="toggleSheet()"></div>
+          <!-- Bottom Sheet -->
+          <div class="bottom-sheet" id="bottom-sheet">
+            <div class="handle"></div>
+            <div class="sheet-header">Navigate</div>
+            <div class="sheet-nav">
+              <a href="#" class="sheet-link active">
+                <div class="link-icon">01</div>
+                <span>About</span>
+              </a>
+              <a href="#" class="sheet-link">
+                <div class="link-icon">02</div>
+                <span>Services</span>
+              </a>
+              <a href="#" class="sheet-link">
+                <div class="link-icon">03</div>
+                <span>Projects</span>
+              </a>
+              <a href="#" class="sheet-link">
+                <div class="link-icon">04</div>
+                <span>Blog</span>
+              </a>
+              <a href="#" class="sheet-link">
+                <div class="link-icon">05</div>
+                <span>Contact</span>
+              </a>
+            </div>
+            <div class="sheet-footer">
+              <button>☀ Theme</button>
+              <button>↓ Resume</button>
+            </div>
+          </div>
+        </div>
+        <div class="instructions">
+          <strong>Tap the hamburger</strong> to open the bottom sheet. Tap the dimmed backdrop to dismiss.
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ VARIANT C: Side Drawer ═══ -->
+    <div id="variant-c" class="variant" style="display: none">
+      <div>
+        <div class="mobile-frame" id="frame-c">
+          <div class="mobile-status-bar">9:41</div>
+          <div class="mobile-topbar">
+            <a href="#" class="brand">
+              <div class="icon">&lt;/&gt;</div>
+              <span>Tim DeHof</span>
+            </a>
+            <button class="hamburger" id="hamburger-c" onclick="toggleDrawer()">
+              <span class="line"></span>
+              <span class="line"></span>
+              <span class="line"></span>
+            </button>
+          </div>
+          <div class="mobile-content" id="drawer-content-c">
+            <h2>Blog</h2>
+            <p>
+              The side drawer slides in from the right. The content behind it pushes left and scales down, creating
+              depth. Tap the backdrop to close.
+            </p>
+            <div class="fake-card">
+              <div class="bar w80"></div>
+              <div class="bar w60"></div>
+              <div class="bar w40"></div>
+            </div>
+            <div class="fake-card">
+              <div class="bar w80"></div>
+              <div class="bar w60"></div>
+              <div class="bar w40"></div>
+            </div>
+          </div>
+          <!-- Backdrop -->
+          <div class="drawer-backdrop" id="drawer-backdrop" onclick="toggleDrawer()"></div>
+          <!-- Side Drawer -->
+          <div class="side-drawer" id="side-drawer">
+            <div class="drawer-header">
+              <a href="#" class="brand">
+                <div class="icon">&lt;/&gt;</div>
+                <span>Tim DeHof</span>
+              </a>
+              <div class="subtitle">// navigation</div>
+            </div>
+            <div class="drawer-nav">
+              <a href="#" class="drawer-link active">
+                <span class="link-num">01</span>
+                <span>About</span>
+              </a>
+              <a href="#" class="drawer-link">
+                <span class="link-num">02</span>
+                <span>Services</span>
+              </a>
+              <a href="#" class="drawer-link">
+                <span class="link-num">03</span>
+                <span>Projects</span>
+              </a>
+              <a href="#" class="drawer-link">
+                <span class="link-num">04</span>
+                <span>Blog</span>
+              </a>
+              <a href="#" class="drawer-link">
+                <span class="link-num">05</span>
+                <span>Contact</span>
+              </a>
+            </div>
+            <div class="drawer-footer">
+              <button>☀ Theme</button>
+              <button>↓ Resume</button>
+            </div>
+          </div>
+        </div>
+        <div class="instructions">
+          <strong>Tap the hamburger</strong> to open the side drawer. The content pushes left. Tap backdrop to close.
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ Sketch Toolbar ═══ -->
+    <div
+      id="sketch-tools"
+      style="
+        position: fixed;
+        bottom: 12px;
+        right: 12px;
+        z-index: 9999;
+        font-family: system-ui;
+        font-size: 12px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 10px 14px;
+        border-radius: 10px;
+        opacity: 0.35;
+        transition: opacity 0.2s;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      "
+      onmouseenter="this.style.opacity = '1'"
+      onmouseleave="this.style.opacity = '0.35'"
+    >
+      <select
+        onchange="document.querySelector('link[href*=themes]').href = '../themes/' + this.value + '.css'"
+        style="
+          background: rgba(255, 255, 255, 0.1);
+          color: white;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 4px;
+          padding: 2px 6px;
+          font-size: 11px;
+        "
+      >
+        <option value="default">Default</option>
+      </select>
+      <span style="font-size: 10px; opacity: 0.6">sketch 002</span>
+    </div>
+
+    <script>
+      // ═══ Variant Switching ═══
+      function showVariant(id) {
+        document.querySelectorAll(".variant").forEach((v) => {
+          v.style.display = "none";
+          v.classList.remove("active");
+        });
+        document.querySelectorAll(".variant-tab").forEach((t) => t.classList.remove("active"));
+        const target = document.getElementById("variant-" + id);
+        if (target) {
+          target.style.display = "flex";
+          target.classList.add("active");
+        }
+        event.target.classList.add("active");
+        // Reset all overlays
+        resetAll();
+      }
+
+      function resetAll() {
+        document.getElementById("overlay-a")?.classList.remove("visible");
+        document.getElementById("hamburger-a")?.classList.remove("open");
+        document.getElementById("sheet-backdrop")?.classList.remove("visible");
+        document.getElementById("bottom-sheet")?.classList.remove("visible");
+        document.getElementById("hamburger-b")?.classList.remove("open");
+        document.getElementById("drawer-backdrop")?.classList.remove("visible");
+        document.getElementById("side-drawer")?.classList.remove("visible");
+        document.getElementById("hamburger-c")?.classList.remove("open");
+        document.getElementById("frame-c")?.classList.remove("pushed");
+      }
+
+      // ═══ Variant A: Overlay ═══
+      function toggleOverlayA() {
+        const overlay = document.getElementById("overlay-a");
+        const hamburger = document.getElementById("hamburger-a");
+        overlay.classList.toggle("visible");
+        hamburger.classList.toggle("open");
+      }
+
+      // ═══ Variant B: Bottom Sheet ═══
+      function toggleSheet() {
+        const backdrop = document.getElementById("sheet-backdrop");
+        const sheet = document.getElementById("bottom-sheet");
+        const hamburger = document.getElementById("hamburger-b");
+        const isOpen = sheet.classList.contains("visible");
+
+        if (isOpen) {
+          sheet.classList.remove("visible");
+          backdrop.classList.remove("visible");
+          hamburger.classList.remove("open");
+        } else {
+          backdrop.classList.add("visible");
+          sheet.classList.add("visible");
+          hamburger.classList.add("open");
+        }
+      }
+
+      // ═══ Variant C: Side Drawer ═══
+      function toggleDrawer() {
+        const backdrop = document.getElementById("drawer-backdrop");
+        const drawer = document.getElementById("side-drawer");
+        const hamburger = document.getElementById("hamburger-c");
+        const frame = document.getElementById("frame-c");
+        const isOpen = drawer.classList.contains("visible");
+
+        if (isOpen) {
+          drawer.classList.remove("visible");
+          backdrop.classList.remove("visible");
+          hamburger.classList.remove("open");
+          frame.classList.remove("pushed");
+        } else {
+          backdrop.classList.add("visible");
+          drawer.classList.add("visible");
+          hamburger.classList.add("open");
+          frame.classList.add("pushed");
+        }
+      }
+    </script>
+  </body>
+</html>

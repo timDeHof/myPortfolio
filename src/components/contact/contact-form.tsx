@@ -5,26 +5,26 @@ import React, { useReducer } from "react";
 import type { ContactForm as ContactFormData } from "../../types";
 import type { ValidationErrors } from "../../utils/validation";
 
-import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
 import { sendEmail } from "../../services/email-service";
 import { validateContactForm } from "../../utils/validation";
+import { Button } from "../ui/button";
+import { Card, CardContent } from "../ui/card";
 
-type State = {
+interface State {
   formData: ContactFormData;
   errors: ValidationErrors;
   isSubmitting: boolean;
   submitStatus: "idle" | "success" | "error";
   submitMessage: string;
-};
+}
 
-type Action =
-  | { type: "SET_FIELD"; name: string; value: string }
-  | { type: "SET_ERRORS"; errors: ValidationErrors }
-  | { type: "SUBMIT_START" }
-  | { type: "SUBMIT_SUCCESS"; message: string }
-  | { type: "SUBMIT_ERROR"; message: string }
-  | { type: "RESET" };
+type Action
+  = | { type: "SET_FIELD"; name: string; value: string }
+    | { type: "SET_ERRORS"; errors: ValidationErrors }
+    | { type: "SUBMIT_START" }
+    | { type: "SUBMIT_SUCCESS"; message: string }
+    | { type: "SUBMIT_ERROR"; message: string }
+    | { type: "RESET" };
 
 const initialState: State = {
   formData: { name: "", email: "", message: "" },
@@ -34,7 +34,7 @@ const initialState: State = {
   submitMessage: "",
 };
 
-const reducer = (state: State, action: Action): State => {
+function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "SET_FIELD":
       return {
@@ -69,7 +69,7 @@ const reducer = (state: State, action: Action): State => {
     default:
       return state;
   }
-};
+}
 
 export const ContactForm: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -113,7 +113,8 @@ export const ContactForm: React.FC = () => {
           type: "SUBMIT_ERROR",
           message: "Contact form is not configured yet. Please reach out directly at tim@timdehof.dev",
         });
-      } else {
+      }
+      else {
         dispatch({
           type: "SUBMIT_ERROR",
           message: "Sorry, there was an error sending your message. Please try again or contact me directly at tim@timdehof.dev",

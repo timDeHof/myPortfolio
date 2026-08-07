@@ -1,11 +1,11 @@
-import { m } from "framer-motion";
-import { ArrowRight, Clock, Code, ExternalLink, Github, Star } from "lucide-react";
-import { Link } from "@tanstack/react-router";
-
 import { Button } from "@components/ui/button";
 import { Card, CardContent } from "@components/ui/card";
+import { Link } from "@tanstack/react-router";
+import { m } from "framer-motion";
+import { ArrowRight, Clock, Code, ExternalLink, Github, Star } from "lucide-react";
 
 import type { Project, ProjectTechStackItem } from "../../types/project";
+
 import { getTechBadgeClasses } from "../../lib/utils";
 
 interface ProjectCardProps {
@@ -32,7 +32,7 @@ const ProjectCardHeader: React.FC<ProjectCardHeaderProps> = ({ imageUrl, project
       className="h-48 bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
       style={{
         backgroundImage: `url(${imageUrl})`,
-        backgroundColor: project.accentColor || "#1e293b"
+        backgroundColor: project.accentColor || "#1e293b",
       }}
     />
     <div className="absolute top-3 left-3 bg-white/90 dark:bg-slate-800/90 px-2 py-1 rounded text-sm font-bold" style={{ color: project.accentColor }}>
@@ -50,125 +50,127 @@ const ProjectCardHeader: React.FC<ProjectCardHeaderProps> = ({ imageUrl, project
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index = 0, onClick }) => {
   const imageUrl = project.image || DEFAULT_IMAGE;
 
-  return onClick ? (
-    <m.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
-      className="group cursor-pointer"
-      onClick={onClick}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          onClick?.({} as React.MouseEvent);
-        }
-      }}
-      role="button"
-      tabIndex={0}
-    >
-      <Card className="h-full hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card border">
-        <CardContent className="p-0">
-          <ProjectCardHeader imageUrl={imageUrl} project={project} />
-          <div className="p-6">
-            <h3 className="text-xl font-semibold text-foreground group-hover:text-secondary transition-colors mb-1">
-              {project.name}
-            </h3>
-            <p className="text-sm text-muted-foreground mb-3">
-              {project.tagline}
-            </p>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Clock className="h-4 w-4" />
-              <span>{project.timeEstimate}</span>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </m.div>
-  ) : (
-    <m.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
-      className="group"
-    >
-      <Card className="h-full hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card border">
-        <ProjectCardHeader imageUrl={imageUrl} project={project} />
+  return onClick
+    ? (
+        <m.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
+          viewport={{ once: true }}
+          className="group cursor-pointer"
+          onClick={onClick}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onClick?.({} as React.MouseEvent);
+            }
+          }}
+          role="button"
+          tabIndex={0}
+        >
+          <Card className="h-full hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card border">
+            <CardContent className="p-0">
+              <ProjectCardHeader imageUrl={imageUrl} project={project} />
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-foreground group-hover:text-secondary transition-colors mb-1">
+                  {project.name}
+                </h3>
+                <p className="text-sm text-muted-foreground mb-3">
+                  {project.tagline}
+                </p>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Clock className="h-4 w-4" />
+                  <span>{project.timeEstimate}</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </m.div>
+      )
+    : (
+        <m.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
+          viewport={{ once: true }}
+          className="group"
+        >
+          <Card className="h-full hover:shadow-xl dark:hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden bg-card border">
+            <ProjectCardHeader imageUrl={imageUrl} project={project} />
 
-        <CardContent className="p-6">
-          <h3 className="text-xl font-semibold text-foreground group-hover:text-secondary transition-colors mb-1">
-            {project.name}
-          </h3>
+            <CardContent className="p-6">
+              <h3 className="text-xl font-semibold text-foreground group-hover:text-secondary transition-colors mb-1">
+                {project.name}
+              </h3>
 
-          <p className="text-sm text-muted-foreground mb-3">
-            {project.tagline}
-          </p>
+              <p className="text-sm text-muted-foreground mb-3">
+                {project.tagline}
+              </p>
 
-          <p className="text-foreground mb-4 line-clamp-2 min-h-[3rem]">
-            {project.description}
-          </p>
+              <p className="text-foreground mb-4 line-clamp-2 min-h-[3rem]">
+                {project.description}
+              </p>
 
-          <div className="mb-4">
-            <div className="flex flex-wrap gap-2">
-              {Array.isArray(project.techStack) && project.techStack.length > 0 && project.techStack.slice(0, 5).map((item) => {
-                const techKey = typeof item === "string" ? item : (item as ProjectTechStackItem).tech.split("·")[0].trim();
-                const colors = getTechBadgeClasses(techKey);
-                return (
-                  <span
-                    key={techKey}
-                    className={`px-2 py-1 text-xs rounded-full font-medium flex items-center border ${colors.bg} ${colors.text} ${colors.border}`}
-                  >
-                    <Code className="h-3 w-3 mr-1" />
-                    {techKey}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
+              <div className="mb-4">
+                <div className="flex flex-wrap gap-2">
+                  {Array.isArray(project.techStack) && project.techStack.length > 0 && project.techStack.slice(0, 5).map((item) => {
+                    const techKey = typeof item === "string" ? item : (item as ProjectTechStackItem).tech.split("·")[0].trim();
+                    const colors = getTechBadgeClasses(techKey);
+                    return (
+                      <span
+                        key={techKey}
+                        className={`px-2 py-1 text-xs rounded-full font-medium flex items-center border ${colors.bg} ${colors.text} ${colors.border}`}
+                      >
+                        <Code className="h-3 w-3 mr-1" />
+                        {techKey}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
 
-          {project.tags && project.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 mb-4">
-              {project.tags.slice(0, 4).map((tag: string) => (
-                <span
-                  key={tag}
-                  className="px-2 py-0.5 bg-muted text-foreground text-xs rounded"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
+              {project.tags && project.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1 mb-4">
+                  {project.tags.slice(0, 4).map((tag: string) => (
+                    <span
+                      key={tag}
+                      className="px-2 py-0.5 bg-muted text-foreground text-xs rounded"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
 
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-            <Clock className="h-4 w-4" />
-            <span>{project.timeEstimate}</span>
-          </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+                <Clock className="h-4 w-4" />
+                <span>{project.timeEstimate}</span>
+              </div>
 
-          <div className="flex gap-2">
-            <Button size="sm" asChild className="bg-primary text-primary-foreground">
-              <Link to={`/projects/$slug`} params={{ slug: project.slug }} preload="intent">
-                View Details
-                <ArrowRight className="h-4 w-4 ml-1" />
-              </Link>
-            </Button>
-            {project.links?.github && (
-              <Button variant="outline" size="sm" asChild>
-                <a href={project.links.github} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.name} source code on GitHub`}>
-                  <Github className="h-4 w-4" />
-                </a>
-              </Button>
-            )}
-            {project.links?.demo && (
-              <Button variant="outline" size="sm" asChild>
-                <a href={project.links.demo} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.name} live demo`}>
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              </Button>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    </m.div>
-  );
+              <div className="flex gap-2">
+                <Button size="sm" asChild className="bg-primary text-primary-foreground">
+                  <Link to="/projects/$slug" params={{ slug: project.slug }} preload="intent">
+                    View Details
+                    <ArrowRight className="h-4 w-4 ml-1" />
+                  </Link>
+                </Button>
+                {project.links?.github && (
+                  <Button variant="outline" size="sm" asChild>
+                    <a href={project.links.github} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.name} source code on GitHub`}>
+                      <Github className="h-4 w-4" />
+                    </a>
+                  </Button>
+                )}
+                {project.links?.demo && (
+                  <Button variant="outline" size="sm" asChild>
+                    <a href={project.links.demo} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.name} live demo`}>
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </m.div>
+      );
 };

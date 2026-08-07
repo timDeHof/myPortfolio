@@ -3,9 +3,9 @@ import React from "react";
 import { AnimatedSection } from "../common/animated-section";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { TooltipProvider } from "../ui/tooltip";
+import { ContributionCalendar } from "./contribution-calendar";
 import { GitHubStatsCard } from "./github-stats-card";
 import { LanguageChart } from "./language-chart";
-import { ContributionCalendar } from "./contribution-calendar";
 
 // Section styling constants to avoid magic values and repeated classes
 const SECTION_STYLES = {

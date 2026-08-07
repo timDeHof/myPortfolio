@@ -11,31 +11,31 @@
 
 ### Brand Colors (HSL)
 
-| Role | Light Mode | Dark Mode | Personality |
-|------|-----------|-----------|-------------|
-| **Primary** | `262.1 83.3% 57.8%` (Purple) | `258 86% 79%` (Light Purple) | The visionary — leads with creative authority |
-| **Secondary** | `210 40% 98%` (Near White) | `170 47% 65%` (Teal) | The reliable one — calm, trustworthy backbone |
-| **Accent** | `210 40% 98%` (Near White) | `35 65% 64%` (Amber) | The warm touch — energy at key moments |
-| **Destructive** | `0 84.2% 60.2%` (Red) | `0 62.8% 30.6%` (Dark Red) | Errors and warnings |
+| Role            | Light Mode                   | Dark Mode                    | Personality                                   |
+| --------------- | ---------------------------- | ---------------------------- | --------------------------------------------- |
+| **Primary**     | `262.1 83.3% 57.8%` (Purple) | `258 86% 79%` (Light Purple) | The visionary — leads with creative authority |
+| **Secondary**   | `210 40% 98%` (Near White)   | `170 47% 65%` (Teal)         | The reliable one — calm, trustworthy backbone |
+| **Accent**      | `210 40% 98%` (Near White)   | `35 65% 64%` (Amber)         | The warm touch — energy at key moments        |
+| **Destructive** | `0 84.2% 60.2%` (Red)        | `0 62.8% 30.6%` (Dark Red)   | Errors and warnings                           |
 
 ### Surface Colors
 
-| Token | Light Mode | Dark Mode |
-|-------|-----------|-----------|
-| Background | `0 0% 100%` (White) | `229 25% 34%` (Dark Blue-Gray) |
-| Foreground | `222.2 84% 4.9%` (Near Black) | `227 34% 75%` (Light Blue-Gray) |
-| Card | `0 0% 100%` (White) | `229 25% 34%` (Dark Blue-Gray) |
-| Muted | `210 40% 98%` (Off White) | `227 23% 44%` (Medium Gray) |
-| Border | `214.3 31.8% 91.4%` (Light Gray) | `227 23% 44%` (Medium Gray) |
+| Token      | Light Mode                       | Dark Mode                       |
+| ---------- | -------------------------------- | ------------------------------- |
+| Background | `0 0% 100%` (White)              | `229 25% 34%` (Dark Blue-Gray)  |
+| Foreground | `222.2 84% 4.9%` (Near Black)    | `227 34% 75%` (Light Blue-Gray) |
+| Card       | `0 0% 100%` (White)              | `229 25% 34%` (Dark Blue-Gray)  |
+| Muted      | `210 40% 98%` (Off White)        | `227 23% 44%` (Medium Gray)     |
+| Border     | `214.3 31.8% 91.4%` (Light Gray) | `227 23% 44%` (Medium Gray)     |
 
 ### Semantic Colors (Tailwind Utilities)
 
-| Context | Light | Dark | Usage |
-|---------|-------|------|-------|
-| Teal | `teal-800` | `teal-300` | Navbar links, active states, footer links |
-| Blue | `blue-600` | `blue-400` | Focus rings, text selection |
-| Gray | `gray-900` / `slate-900` | — | Footer gradient |
-| Emerald | `emerald-500` | — | Availability badge |
+| Context | Light                    | Dark       | Usage                                     |
+| ------- | ------------------------ | ---------- | ----------------------------------------- |
+| Teal    | `teal-800`               | `teal-300` | Navbar links, active states, footer links |
+| Blue    | `blue-600`               | `blue-400` | Focus rings, text selection               |
+| Gray    | `gray-900` / `slate-900` | —          | Footer gradient                           |
+| Emerald | `emerald-500`            | —          | Availability badge                        |
 
 ### Color Usage Rules
 
@@ -51,26 +51,33 @@
 ### Font Stack
 
 ```css
-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+font-family:
+  "Inter",
+  -apple-system,
+  BlinkMacSystemFont,
+  "Segoe UI",
+  sans-serif;
 ```
 
 ### Font Features
 
 ```css
-font-feature-settings: "rlig" 1, "calt" 1;
+font-feature-settings:
+  "rlig" 1,
+  "calt" 1;
 ```
 
 ### Type Scale
 
-| Element | Tailwind Classes | Usage |
-|---------|-----------------|-------|
-| Display | `text-4xl md:text-5xl lg:text-6xl font-bold` | Hero headlines |
-| H1 | `text-3xl md:text-4xl font-bold` | Page titles |
-| H2 | `text-2xl md:text-3xl font-bold` | Section headings |
-| H3 | `text-xl md:text-2xl font-semibold` | Card titles, subsections |
-| Body | `text-base` | Paragraphs, general content |
-| Small | `text-sm` | Labels, metadata, captions |
-| Micro | `text-xs` | Badges, timestamps |
+| Element | Tailwind Classes                             | Usage                       |
+| ------- | -------------------------------------------- | --------------------------- |
+| Display | `text-4xl md:text-5xl lg:text-6xl font-bold` | Hero headlines              |
+| H1      | `text-3xl md:text-4xl font-bold`             | Page titles                 |
+| H2      | `text-2xl md:text-3xl font-bold`             | Section headings            |
+| H3      | `text-xl md:text-2xl font-semibold`          | Card titles, subsections    |
+| Body    | `text-base`                                  | Paragraphs, general content |
+| Small   | `text-sm`                                    | Labels, metadata, captions  |
+| Micro   | `text-xs`                                    | Badges, timestamps          |
 
 ### Typography Rules
 
@@ -89,14 +96,14 @@ Responsive container: `mx-auto max-w-7xl px-4 sm:px-6 lg:px-8`
 
 ### Spacing Scale
 
-| Context | Value | Tailwind |
-|---------|-------|----------|
-| Tight | 0.25rem | `p-1` / `gap-1` |
-| Cozy | 0.5rem | `p-2` / `gap-2` |
-| Normal | 1rem | `p-4` / `gap-4` |
-| Relaxed | 1.5rem | `p-6` / `gap-6` |
-| Spacious | 2rem | `p-8` / `gap-8` |
-| Section | 4rem–5rem | `py-16` / `py-20` |
+| Context  | Value     | Tailwind          |
+| -------- | --------- | ----------------- |
+| Tight    | 0.25rem   | `p-1` / `gap-1`   |
+| Cozy     | 0.5rem    | `p-2` / `gap-2`   |
+| Normal   | 1rem      | `p-4` / `gap-4`   |
+| Relaxed  | 1.5rem    | `p-6` / `gap-6`   |
+| Spacious | 2rem      | `p-8` / `gap-8`   |
+| Section  | 4rem–5rem | `py-16` / `py-20` |
 
 ### Grid
 
@@ -112,12 +119,12 @@ Responsive container: `mx-auto max-w-7xl px-4 sm:px-6 lg:px-8`
 
 Elements float slightly above the surface. Depth communicates hierarchy.
 
-| Level | Usage | Light Mode | Dark Mode |
-|-------|-------|-----------|-----------|
-| **Flat** | Inline elements, text | — | — |
-| **Subtle** | Cards, dropdowns | `shadow` | `shadow` |
-| **Raised** | Navbar, modals | `shadow-sm` + `backdrop-blur-md` | `shadow-sm` + `backdrop-blur-md` |
-| **Floating** | Tooltips, popovers | `shadow-lg` | `shadow-lg` |
+| Level        | Usage                 | Light Mode                       | Dark Mode                        |
+| ------------ | --------------------- | -------------------------------- | -------------------------------- |
+| **Flat**     | Inline elements, text | —                                | —                                |
+| **Subtle**   | Cards, dropdowns      | `shadow`                         | `shadow`                         |
+| **Raised**   | Navbar, modals        | `shadow-sm` + `backdrop-blur-md` | `shadow-sm` + `backdrop-blur-md` |
+| **Floating** | Tooltips, popovers    | `shadow-lg`                      | `shadow-lg`                      |
 
 ### Specific Patterns
 
@@ -132,15 +139,15 @@ Elements float slightly above the surface. Depth communicates hierarchy.
 
 ### Scale (Base: 0.5rem)
 
-| Token | Value | Tailwind | Usage |
-|-------|-------|----------|-------|
-| `sm` | 0.25rem | `rounded-sm` | — |
-| `md` | 0.375rem | `rounded-md` | Buttons, inputs |
-| `lg` | 0.5rem | `rounded-lg` | — |
-| `xl` | 0.75rem | `rounded-xl` | Cards, containers |
-| `2xl` | 1rem | `rounded-2xl` | — |
-| `3xl` | 1.25rem | `rounded-3xl` | Modals |
-| `full` | 9999px | `rounded-full` | Badges, avatars |
+| Token  | Value    | Tailwind       | Usage             |
+| ------ | -------- | -------------- | ----------------- |
+| `sm`   | 0.25rem  | `rounded-sm`   | —                 |
+| `md`   | 0.375rem | `rounded-md`   | Buttons, inputs   |
+| `lg`   | 0.5rem   | `rounded-lg`   | —                 |
+| `xl`   | 0.75rem  | `rounded-xl`   | Cards, containers |
+| `2xl`  | 1rem     | `rounded-2xl`  | —                 |
+| `3xl`  | 1.25rem  | `rounded-3xl`  | Modals            |
+| `full` | 9999px   | `rounded-full` | Badges, avatars   |
 
 ### Rules
 
@@ -222,13 +229,13 @@ Motion should feel **intentional and polished** — not flashy. Every animation 
 
 ### Framer Motion Patterns
 
-| Pattern | Usage | Duration |
-|---------|-------|----------|
-| Fade in | Page sections | 0.5s |
-| Slide up | Content reveal | 0.5s |
-| Stagger | Lists, grids | 0.1s delay between items |
-| Scale | Hover interactions | 0.2s |
-| Spring | Interactive elements | stiffness: 300, damping: 20 |
+| Pattern  | Usage                | Duration                    |
+| -------- | -------------------- | --------------------------- |
+| Fade in  | Page sections        | 0.5s                        |
+| Slide up | Content reveal       | 0.5s                        |
+| Stagger  | Lists, grids         | 0.1s delay between items    |
+| Scale    | Hover interactions   | 0.2s                        |
+| Spring   | Interactive elements | stiffness: 300, damping: 20 |
 
 ### Rules
 
@@ -252,17 +259,19 @@ Motion should feel **intentional and polished** — not flashy. Every animation 
 
 ### Color Contrast
 
-| Pair | Ratio (Light) | Ratio (Dark) | Status |
-|------|--------------|--------------|--------|
-| Foreground on Background | ~15:1 | ~5.5:1 | ✅ AA |
-| Primary on White | ~4.6:1 | — | ✅ AA |
-| Muted on White | ~3.5:1 | — | ⚠️ Large text only |
+| Pair                     | Ratio (Light) | Ratio (Dark) | Status             |
+| ------------------------ | ------------- | ------------ | ------------------ |
+| Foreground on Background | ~15:1         | ~5.5:1       | ✅ AA              |
+| Primary on White         | ~4.6:1        | —            | ✅ AA              |
+| Muted on White           | ~3.5:1        | —            | ⚠️ Large text only |
 
 ### Reduced Motion
 
 ```css
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -290,14 +299,14 @@ System preference with manual toggle. Uses `.dark` class on root element.
 
 All tokens are defined in `src/styles/index.css` under `.dark` selector. Key differences:
 
-| Token | Light → Dark |
-|-------|-------------|
-| Background | White → Dark Blue-Gray (`229 25% 34%`) |
+| Token      | Light → Dark                                 |
+| ---------- | -------------------------------------------- |
+| Background | White → Dark Blue-Gray (`229 25% 34%`)       |
 | Foreground | Near Black → Light Blue-Gray (`227 34% 75%`) |
-| Primary | Purple → Lighter Purple (`258 86% 79%`) |
-| Secondary | Near White → Teal (`170 47% 65%`) |
-| Accent | Near White → Amber (`35 65% 64%`) |
-| Border | Light Gray → Medium Gray (`227 23% 44%`) |
+| Primary    | Purple → Lighter Purple (`258 86% 79%`)      |
+| Secondary  | Near White → Teal (`170 47% 65%`)            |
+| Accent     | Near White → Amber (`35 65% 64%`)            |
+| Border     | Light Gray → Medium Gray (`227 23% 44%`)     |
 
 ### Dark Mode Rules
 
@@ -331,5 +340,5 @@ All tokens are defined in `src/styles/index.css` under `.dark` selector. Key dif
 
 ---
 
-*Generated by Impeccable from codebase scan + brand interview.*
-*Last updated: 2025-01-27*
+_Generated by Impeccable from codebase scan + brand interview._
+_Last updated: 2025-01-27_

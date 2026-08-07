@@ -1,10 +1,12 @@
-import { ArrowUpIcon, ExternalLink, GithubIcon, LinkedinIcon, TwitterIcon, Mail, ArrowRight } from "lucide-react";
+import { usePortfolioData } from "@hooks/usePortfolioData";
+import { Link } from "@tanstack/react-router";
+import { ArrowRight, ArrowUpIcon, ExternalLink, GithubIcon, LinkedinIcon, Mail, TwitterIcon } from "lucide-react";
+
+import { DEFAULT_NAV_ITEMS } from "@/lib/constants";
+
 import { Button } from "../ui/button";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 import { Separator } from "../ui/separator";
-import { usePortfolioData } from "@hooks/usePortfolioData";
-import { Link } from "@tanstack/react-router";
-import { DEFAULT_NAV_ITEMS } from "@/lib/constants";
 
 const socialIconMap = {
   GitHub: <GithubIcon className="h-6 w-6" />,
@@ -20,7 +22,7 @@ export function Footer() {
       { name: "GitHub", href: "https://github.com/tim-dehof" },
       { name: "LinkedIn", href: "https://www.linkedin.com/in/tim-dehof/" },
       { name: "Twitter", href: "https://twitter.com/timdehof" },
-    ]
+    ],
   };
   const navItems = portfolioData?.navigation?.navItems || DEFAULT_NAV_ITEMS;
 
@@ -37,7 +39,8 @@ export function Footer() {
           <div className="footer-grid">
             <div className="left">
               <h3>Tim DeHof</h3>
-              <p>Full-stack developer passionate about creating innovative web solutions with modern technologies and best practices.
+              <p>
+                Full-stack developer passionate about creating innovative web solutions with modern technologies and best practices.
               </p>
               <div className="actions">
                 <a
@@ -59,23 +62,26 @@ export function Footer() {
                     <ArrowRight className="h-4 w-4 mr-1" />
                     <span>
                       {link.name}
-                      </span>
-                    </Link>
+                    </span>
+                  </Link>
                 ))}
               </div>
             </div>
 
             <div className="right">
               <h3>Get In Touch</h3>
-              <p>Ready to work together?<br />
-              Let's discuss your next project.</p>
+              <p>
+                Ready to work together?
+                <br />
+                Let's discuss your next project.
+              </p>
               <div className="contacts">
-              <Button variant="default" size="lg" asChild className="cta">
-                <Link to="/contact" preload="intent">
-                  <Mail className="h-5 w-5" />
-                  Get In Touch
-                </Link>
-              </Button>
+                <Button variant="default" size="lg" asChild className="cta">
+                  <Link to="/contact" preload="intent">
+                    <Mail className="h-5 w-5" />
+                    Get In Touch
+                  </Link>
+                </Button>
                 <div className="socials">
                   {footerLinks.social.map(link => (
                     <a
