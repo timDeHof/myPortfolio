@@ -196,11 +196,15 @@ export const githubStatsAPI = {
 
   // Calculate activity statistics (simplified version)
   calculateActivityStats: (repositories: GitHubRepository[]) => {
-    // Get unique years from repository creation/update dates
+    // Get unique years from repository creation/update dates.
+    // GitHub timestamps are UTC, and date-only strings ("2020-01-01") parse as
+    // UTC midnight, so read them back with getUTCFullYear. getFullYear would
+    // reinterpret that instant in the viewer's zone and report the previous
+    // year for anyone west of UTC.
     const years = new Set<string>();
     repositories.forEach((repo) => {
-      years.add(new Date(repo.created_at).getFullYear().toString());
-      years.add(new Date(repo.updated_at).getFullYear().toString());
+      years.add(new Date(repo.created_at).getUTCFullYear().toString());
+      years.add(new Date(repo.updated_at).getUTCFullYear().toString());
     });
 
     // Simplified activity calculation based on repository updates

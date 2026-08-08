@@ -40,8 +40,10 @@ describe("githubStatsAPI.fetchGitHubStats", () => {
     expect(stats.repositories.total).toBe(mockRepos.length);
     expect(stats.repositories.stars).toBe(8); // 5+2+1
     expect(stats.repositories.languages.length).toBeGreaterThan(0);
-    // Expect contributionYears to be sorted descending
-    expect(stats.activity.contributionYears).toEqual(["2023", "2022", "2021", "2020", "2019"]);
+    // Expect contributionYears to be sorted descending.
+    // Years come from the UTC instants of the fixture dates; the previous
+    // expectation included a phantom "2019" that only appeared west of UTC.
+    expect(stats.activity.contributionYears).toEqual(["2023", "2022", "2021", "2020"]);
   });
 
   it("should propagate errors from fetchUser", async () => {
@@ -169,8 +171,10 @@ describe("githubStatsAPI.calculateActivityStats", () => {
 
     const stats = githubStatsAPI.calculateActivityStats(mockRepos);
 
-    // Expect contributionYears to be sorted descending
-    expect(stats.contributionYears).toEqual(["2023", "2022", "2021", "2020"]);
+    // Expect contributionYears to be sorted descending.
+    // Fixture years in UTC are {2023, 2022, 2021}; the previous "2020" was an
+    // artifact of reading UTC-midnight dates back in a negative-offset zone.
+    expect(stats.contributionYears).toEqual(["2023", "2022", "2021"]);
     expect(stats.totalCommits).toBe(mockRepos.length * 10);
     expect(stats.currentStreak).toBe(3); // 3 recent activities
     expect(stats.longestStreak).toBe(mockRepos.length); // Estimated
@@ -189,8 +193,11 @@ describe("githubStatsAPI.calculateActivityStats", () => {
 describe("githubStatsAPI.generateContributionCalendar", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    // Consistent date for testing for a full year
-    const mockDate = new Date("2024-12-31T12:00:00Z");
+    // Consistent date for testing for a full year.
+    // Constructed in local time on purpose: generateContributionCalendar works
+    // entirely in local time, and a UTC instant of 2024-12-31T12:00Z is already
+    // 2025-01-01 east of UTC+12, which collapses the calendar to a single week.
+    const mockDate = new Date(2024, 11, 31, 12, 0, 0);
     vi.useFakeTimers();
     vi.setSystemTime(mockDate);
   });
