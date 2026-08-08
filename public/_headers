@@ -4,6 +4,13 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Strict-Transport-Security: max-age=31536000; includeSubDomains
 
+# RFC 9727 API catalog. Extensionless, so wrangler uploads it as
+# application/octet-stream — the media type has to be set here.
+/.well-known/api-catalog
+  Content-Type: application/linkset+json
+  Cache-Control: public, max-age=3600
+  Access-Control-Allow-Origin: *
+
 /*.js
   Content-Type: text/javascript
 

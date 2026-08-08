@@ -35,6 +35,9 @@ export default defineConfig(({ mode }) => ({
       registerType: 'autoUpdate',
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        // Well-known URIs (RFC 8615) must reach the network, not the SPA shell.
+        // Without this, navigating to /.well-known/api-catalog returns index.html.
+        navigateFallbackDenylist: [/^\/\.well-known\//],
         runtimeCaching: [{
           urlPattern: /^https:\/\/api\.github\.com\/.*/i,
           handler: 'CacheFirst',
