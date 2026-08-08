@@ -1,6 +1,6 @@
 export * from "./about";
 export * from "./blog";
-export * from "./caseStudy";
+export * from "./case-study";
 // Domain-organized type re-exports
 export * from "./github";
 export * from "./portfolio";

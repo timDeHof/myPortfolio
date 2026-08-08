@@ -7,11 +7,11 @@ import React, { lazy, Suspense, useEffect } from "react";
 
 import { AnimatedSection } from "../components/common/animated-section";
 import { SEOHead } from "../components/common/seo-head";
-import { ProjectGrid } from "../components/projects/ProjectGrid";
-import { ProjectModal } from "../components/projects/ProjectModal";
+import { ProjectGrid } from "../components/projects/project-grid";
+import { ProjectModal } from "../components/projects/project-modal";
 import { Button } from "../components/ui/button";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
-import { useProject } from "../hooks/useProjects";
+import { useProject } from "../hooks/use-projects";
 import { Route } from "../routes/projects";
 import { pageSEO } from "../utils/seo";
 

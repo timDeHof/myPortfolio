@@ -36,14 +36,12 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      # Advisory, not gating: the repo currently has ~866 pre-existing eslint
-      # errors (mostly unused exports, filename-case and formatting; ~785 are
-      # auto-fixable with `pnpm lint:fix`). Making this required today would
-      # mean a permanently red CI, which teaches people to ignore it. Flip
-      # continue-on-error off once the backlog is cleared.
-      - name: Lint (advisory)
+      # Gating. The backlog this was made advisory for is cleared: 0 errors.
+      # 19 warnings remain (react/no-array-index-key, react-refresh and one
+      # exhaustive-deps) and do not fail the run, since eslint only exits
+      # non-zero on errors.
+      - name: Lint
         run: pnpm lint
-        continue-on-error: true
 
       - name: Type-check
         run: pnpm type-check

@@ -4,7 +4,7 @@ import { githubAPI } from "@/services/api/github";
 
 import type { Project } from "../types/project";
 
-import { findProjectBySlug, projectsIndex } from "../data/projectsIndex";
+import { findProjectBySlug, projectsIndex } from "../data/projects-index";
 
 export interface ProjectWithSource extends Project {
   source: "project-json" | "fallback";

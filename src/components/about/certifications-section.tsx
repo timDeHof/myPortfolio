@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@components/ui/card";
 import { MaxWidthWrapper } from "@components/ui/max-width-wrapper";
-import { usePortfolioData } from "@hooks/usePortfolioData";
+import { usePortfolioData } from "@hooks/use-portfolio-data";
 import { m } from "framer-motion";
 import { Award, ExternalLink } from "lucide-react";
 import React from "react";

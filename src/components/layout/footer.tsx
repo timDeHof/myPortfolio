@@ -1,4 +1,4 @@
-import { usePortfolioData } from "@hooks/usePortfolioData";
+import { usePortfolioData } from "@hooks/use-portfolio-data";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpIcon, ExternalLink, GithubIcon, LinkedinIcon, Mail, TwitterIcon } from "lucide-react";
 

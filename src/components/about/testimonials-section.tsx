@@ -1,9 +1,9 @@
 import { Quote } from "lucide-react";
 import React from "react";
 
-import type { Testimonial } from "../../hooks/useTestimonials";
+import type { Testimonial } from "../../hooks/use-testimonials";
 
-import { useTestimonials } from "../../hooks/useTestimonials";
+import { useTestimonials } from "../../hooks/use-testimonials";
 import { AnimatedCard } from "../common/animated-card";
 import { MaxWidthWrapper } from "../ui/max-width-wrapper";
 

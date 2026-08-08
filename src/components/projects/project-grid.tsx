@@ -4,7 +4,7 @@ import React from "react";
 
 import type { Project } from "../../types/project";
 
-import { ProjectCard } from "./ProjectCard";
+import { ProjectCard } from "./project-card";
 
 interface ProjectGridProps {
   projects: Project[];
