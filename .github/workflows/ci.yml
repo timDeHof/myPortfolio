@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Lint, type-check, test, build
+    runs-on: ubuntu-latest
+
+    steps:
+      # The blog content is a submodule and the `prepare` script initialises it
+      # on install, so check it out up front rather than letting install do it.
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # Advisory, not gating: the repo currently has ~866 pre-existing eslint
+      # errors (mostly unused exports, filename-case and formatting; ~785 are
+      # auto-fixable with `pnpm lint:fix`). Making this required today would
+      # mean a permanently red CI, which teaches people to ignore it. Flip
+      # continue-on-error off once the backlog is cleared.
+      - name: Lint (advisory)
+        run: pnpm lint
+        continue-on-error: true
+
+      - name: Type-check
+        run: pnpm type-check
+
+      - name: Test
+        run: pnpm exec vitest run
+
+      # Also proves public/.well-known/api-catalog and the generated sitemap
+      # survive the Vite + Cloudflare plugin pipeline into build/.
+      - name: Build
+        run: pnpm build
+
+      - name: Verify discovery files are in the build output
+        run: |
+          for f in .well-known/api-catalog sitemap.xml robots.txt _headers; do
+            if [ ! -f "build/$f" ]; then
+              echo "::error::build/$f is missing from the build output"
+              exit 1
+            fi
+            echo "ok: build/$f"
+          done
+
+      # The sitemap is generated at build time; a stale committed copy means
+      # someone changed routes or projectsIndex without rebuilding.
+      - name: Check the committed sitemap is current
+        run: git diff --exit-code -- public/sitemap.xml

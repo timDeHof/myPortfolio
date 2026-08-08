@@ -8,10 +8,21 @@ import tailwindcss from '@tailwindcss/vite';
 import {visualizer} from "rollup-plugin-visualizer";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
+import { writeSitemap } from './scripts/sitemap';
+
+// Regenerates public/sitemap.xml from the route list and projectsIndex before
+// each build, so adding a project cannot leave the sitemap behind again.
+const sitemap = () => ({
+  name: 'generate-sitemap',
+  buildStart() {
+    writeSitemap(resolve(__dirname, 'public'));
+  },
+});
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
   plugins: [
+    sitemap(),
     visualizer({
       emitFile: true,
       filename: 'stats.html',
