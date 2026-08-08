@@ -109,20 +109,20 @@ export const HeroSection: React.FC = () => {
               Full-Stack Developer
             </m.p>
 
-              {/* Location & Experience - Quick credibility signals */}
-              <m.div
-                variants={activeItemVariants}
-                className="mb-5 flex flex-col gap-1.5 text-sm text-muted-foreground xl:flex-row xl:flex-wrap xl:items-center xl:gap-x-2 xl:gap-y-1 xl:text-base"
-              >
-                <span className="flex items-center gap-1.5">
-                  <MapPin className="h-4 w-4" />
-                  <span>Remote · Jacksonville, FL</span>
-                </span>
-                <span aria-hidden="true" className="hidden xl:inline text-muted-foreground/40">·</span>
-                <span>3+ Years Experience</span>
-                <span aria-hidden="true" className="hidden xl:inline text-muted-foreground/40">·</span>
-                <span>20+ Projects Delivered</span>
-              </m.div>
+            {/* Location & Experience - Quick credibility signals */}
+            <m.div
+              variants={activeItemVariants}
+              className="mb-5 flex flex-col gap-1.5 text-sm text-muted-foreground xl:flex-row xl:flex-wrap xl:items-center xl:gap-x-2 xl:gap-y-1 xl:text-base"
+            >
+              <span className="flex items-center gap-1.5">
+                <MapPin className="h-4 w-4" />
+                <span>Remote · Jacksonville, FL</span>
+              </span>
+              <span aria-hidden="true" className="hidden xl:inline text-muted-foreground/40">·</span>
+              <span>3+ Years Experience</span>
+              <span aria-hidden="true" className="hidden xl:inline text-muted-foreground/40">·</span>
+              <span>20+ Projects Delivered</span>
+            </m.div>
 
             {/* Tagline - Short, punchy, no marketing speak */}
             <m.p

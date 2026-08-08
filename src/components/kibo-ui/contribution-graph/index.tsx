@@ -181,16 +181,15 @@ function groupByWeeks(activities: Activity[], weekStart: WeekDay = 0): Week[] {
       : subWeeks(nextDay(firstDate, weekStart), 1);
 
   const paddedActivities = [
-    ...(new Array(differenceInCalendarDays(firstDate, firstCalendarDate)).fill(
-      undefined,
-    ) as Activity[]),
+    ...(Array.from({
+      length: differenceInCalendarDays(firstDate, firstCalendarDate),
+    }) as Activity[]),
     ...normalizedActivities,
   ];
 
   const numberOfWeeks = Math.ceil(paddedActivities.length / 7);
 
-  return new Array(numberOfWeeks)
-    .fill(undefined)
+  return Array.from({ length: numberOfWeeks })
     .map((_, weekIndex) =>
       paddedActivities.slice(weekIndex * 7, weekIndex * 7 + 7),
     );
@@ -362,7 +361,7 @@ export function ContributionGraphBlock({
   className,
   ...props
 }: ContributionGraphBlockProps) {
-  const { blockSize, blockMargin, blockRadius, labelHeight, maxLevel, isCurrentDate, getBlockColor }
+  const { blockSize, blockMargin, blockRadius, labelHeight, isCurrentDate, getBlockColor }
     = useContributionGraph();
 
   const isToday = isCurrentDate(activity.date);
@@ -549,7 +548,7 @@ export function ContributionGraphLegend({
       <span className="mr-1 text-muted-foreground">
         {labels.legend?.less || "Less"}
       </span>
-      {new Array(maxLevel + 1).fill(undefined).map((_, level) =>
+      {Array.from({ length: maxLevel + 1 }).map((_, level) =>
         children
           ? (
               <Fragment key={level}>{children({ level })}</Fragment>

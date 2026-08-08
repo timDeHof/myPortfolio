@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import type { CaseStudyData } from "@/types/caseStudy";
+import type { CaseStudyData } from "@/types/case-study";
 
 import { githubAPI } from "@/services/api/github";
 

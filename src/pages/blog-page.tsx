@@ -1,7 +1,7 @@
 import { PenLine } from "lucide-react";
 import React from "react";
 
-import { BlogGrid } from "../components/blog/BlogGrid";
+import { BlogGrid } from "../components/blog/blog-grid";
 import { AnimatedSection } from "../components/common/animated-section";
 import { SEOHead } from "../components/common/seo-head";
 import { Button } from "../components/ui/button";

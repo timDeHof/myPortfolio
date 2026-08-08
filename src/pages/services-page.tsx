@@ -9,7 +9,7 @@ import { ProcessStep, processSteps } from "../components/services/process-step";
 import { ServiceCard } from "../components/services/service-card";
 import { Button } from "../components/ui/button";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
-import { usePortfolioData } from "../hooks/usePortfolioData";
+import { usePortfolioData } from "../hooks/use-portfolio-data";
 import { pageSEO } from "../utils/seo";
 
 export const ServicesPage: React.FC = () => {

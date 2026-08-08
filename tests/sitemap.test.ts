@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { buildEntries, renderSitemap, SITE_URL } from "../scripts/sitemap";
-import { projectsIndex } from "../src/data/projectsIndex";
+import { projectsIndex } from "../src/data/projects-index";
 
 const SITEMAP_PATH = resolve(__dirname, "../public/sitemap.xml");
 const ROUTES_DIR = resolve(__dirname, "../src/routes");

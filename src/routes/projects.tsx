@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 
-import type { ProjectWithSource } from "../hooks/useProjects";
+import type { ProjectWithSource } from "../hooks/use-projects";
 
 import { PageLoader } from "../components/common/page-loader";
-import { fetchAllProjects } from "../hooks/useProjects";
+import { fetchAllProjects } from "../hooks/use-projects";
 import { ProjectsPage } from "../pages/projects-page";
 
 // Search params schema

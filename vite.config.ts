@@ -10,7 +10,7 @@ import { cloudflare } from "@cloudflare/vite-plugin";
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import { writeSitemap } from './scripts/sitemap';
 
-// Regenerates public/sitemap.xml from the route list and projectsIndex before
+// Regenerates public/sitemap.xml from the route list and projects-index before
 // each build, so adding a project cannot leave the sitemap behind again.
 const sitemap = () => ({
   name: 'generate-sitemap',

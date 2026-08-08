@@ -1,6 +1,6 @@
 import type { BlogPost } from "../../services/api/blog";
 
-import { BlogPostCard } from "./BlogPostCard";
+import { BlogPostCard } from "./blog-post-card";
 
 interface BlogGridProps {
   posts: BlogPost[];

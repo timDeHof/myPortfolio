@@ -26,7 +26,7 @@ export const ContributionCalendar: React.FC<{ username?: string }> = ({ username
   const { data, error } = useGitHubContributions(username);
   const contributionData = data?.contributions;
 
-  const { activities, total } = useMemo(() => {
+  const { activities } = useMemo(() => {
     if (!contributionData)
       return { activities: [], total: 0 };
 

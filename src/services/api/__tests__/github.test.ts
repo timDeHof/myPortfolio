@@ -25,7 +25,7 @@ vi.mock("../../../lib/query-client", () => ({
 }));
 
 // Mock console for asserting logs
-const consoleSpy = {
+const _consoleSpy = {
   log: vi.spyOn(console, "log").mockImplementation(() => {}),
   error: vi.spyOn(console, "error").mockImplementation(() => {}),
   warn: vi.spyOn(console, "warn").mockImplementation(() => {}),
@@ -51,20 +51,20 @@ describe("gitHubAPIError", () => {
 describe("githubAPI.fetchUser", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    global.fetch = vi.fn();
+    globalThis.fetch = vi.fn();
   });
 
   it("should fetch user information correctly", async () => {
     const mockUser = { login: "timDeHof", id: 1, name: "Tim DeHof", public_repos: 10, followers: 5 };
-    global.fetch = mockFetch(200, mockUser);
+    globalThis.fetch = mockFetch(200, mockUser);
 
     const user = await githubAPI.fetchUser();
-    expect(global.fetch).toHaveBeenCalledWith(`${env.VITE_API_BASE_URL}/github/users/timDeHof`);
+    expect(globalThis.fetch).toHaveBeenCalledWith(`${env.VITE_API_BASE_URL}/github/users/timDeHof`);
     expect(user).toEqual(mockUser);
   });
 
   it("should propagate error from githubFetch", async () => {
-    global.fetch = mockFetch(404, { message: "User not found" });
+    globalThis.fetch = mockFetch(404, { message: "User not found" });
     await expect(githubAPI.fetchUser()).rejects.toThrow(GitHubAPIError);
     await expect(githubAPI.fetchUser()).rejects.toHaveProperty("status", 404);
   });
@@ -73,17 +73,17 @@ describe("githubAPI.fetchUser", () => {
 describe("githubAPI.fetchContents", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    global.fetch = vi.fn();
+    globalThis.fetch = vi.fn();
   });
 
   it("should fetch and decode base64-encoded JSON content", async () => {
     const payload = { title: "Test Project", description: "A test" };
     const encoded = btoa(JSON.stringify(payload));
-    global.fetch = mockFetch(200, { content: encoded });
+    globalThis.fetch = mockFetch(200, { content: encoded });
 
     const result = await githubAPI.fetchContents<typeof payload>("timDeHof", "portfolio-metadata", "project.json");
 
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(globalThis.fetch).toHaveBeenCalledWith(
       `${env.VITE_API_BASE_URL}/github/repos/timDeHof/portfolio-metadata/contents/project.json`,
     );
     expect(result).toEqual(payload);
@@ -94,14 +94,14 @@ describe("githubAPI.fetchContents", () => {
     const encoded = btoa(JSON.stringify(payload));
     // Insert newlines every 40 chars to simulate GitHub's response format
     const withNewlines = encoded.match(/.{1,40}/g)?.join("\n") || encoded;
-    global.fetch = mockFetch(200, { content: withNewlines });
+    globalThis.fetch = mockFetch(200, { content: withNewlines });
 
     const result = await githubAPI.fetchContents<typeof payload>("timDeHof", "repo", "data.json");
     expect(result).toEqual(payload);
   });
 
   it("should throw GitHubAPIError when content field is missing", async () => {
-    global.fetch = mockFetch(200, {});
+    globalThis.fetch = mockFetch(200, {});
 
     await expect(
       githubAPI.fetchContents("timDeHof", "repo", "missing.json"),
@@ -109,7 +109,7 @@ describe("githubAPI.fetchContents", () => {
   });
 
   it("should throw GitHubAPIError on network error", async () => {
-    global.fetch = mockFetch(500, { message: "Server error" });
+    globalThis.fetch = mockFetch(500, { message: "Server error" });
 
     await expect(
       githubAPI.fetchContents("timDeHof", "repo", "data.json"),
@@ -132,7 +132,7 @@ describe("githubAPI.fetchRepositories", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    global.fetch = vi.fn();
+    globalThis.fetch = vi.fn();
     // Dynamically mock the EXCLUDED_REPOS to control test cases
     vi.doMock("../github", () => ({
       ...vi.importActual("../github"),
@@ -141,11 +141,11 @@ describe("githubAPI.fetchRepositories", () => {
   });
 
   it("should fetch and filter repositories correctly", async () => {
-    global.fetch = mockFetch(200, mockRepos);
+    globalThis.fetch = mockFetch(200, mockRepos);
 
     const repositories = await githubAPI.fetchRepositories();
 
-    expect(global.fetch).toHaveBeenCalledWith(`${env.VITE_API_BASE_URL}/github/users/timDeHof/repos?sort=updated&per_page=100&type=all`);
+    expect(globalThis.fetch).toHaveBeenCalledWith(`${env.VITE_API_BASE_URL}/github/users/timDeHof/repos?sort=updated&per_page=100&type=all`);
     expect(repositories.length).toBe(5); // 1 (showcase) + 1 (personal) + 1 (contribution) + 1 (fork) + 1 (another-showcase)
     expect(repositories.some(repo => repo.name === "private-repo")).toBeFalsy();
     expect(repositories.some(repo => repo.name === "archived-repo")).toBeFalsy();
@@ -154,7 +154,7 @@ describe("githubAPI.fetchRepositories", () => {
   });
 
   it("should categorize repositories correctly", async () => {
-    global.fetch = mockFetch(200, mockRepos);
+    globalThis.fetch = mockFetch(200, mockRepos);
 
     const repositories = await githubAPI.fetchRepositories();
 
@@ -181,7 +181,7 @@ describe("githubAPI.fetchRepositories", () => {
       { id: 3, name: "b-personal", full_name: "", description: "Personal", html_url: "", homepage: "https://demo.link", language: "TypeScript", languages_url: "", stargazers_count: 15, forks_count: 2, created_at: "2023-01-01T00:00:00Z", updated_at: "2023-01-02T00:00:00Z", pushed_at: "2023-01-01T00:00:00Z", topics: [], archived: false, fork: false, private: false },
       { id: 4, name: "c-showcase-low-engagement", full_name: "", description: "Showcase", html_url: "", homepage: "https://demo.link", language: "TypeScript", languages_url: "", stargazers_count: 5, forks_count: 1, created_at: "2023-01-01T00:00:00Z", updated_at: "2023-01-01T00:00:00Z", pushed_at: "2023-01-01T00:00:00Z", topics: ["showcase"], archived: false, fork: false, private: false },
     ];
-    global.fetch = mockFetch(200, customRepos);
+    globalThis.fetch = mockFetch(200, customRepos);
 
     const repositories = await githubAPI.fetchRepositories();
 
@@ -196,7 +196,7 @@ describe("githubAPI.fetchRepositories", () => {
   });
 
   it("should propagate error from githubFetch", async () => {
-    global.fetch = mockFetch(500, { message: "Server error" });
+    globalThis.fetch = mockFetch(500, { message: "Server error" });
     await expect(githubAPI.fetchRepositories()).rejects.toThrow(GitHubAPIError);
     await expect(githubAPI.fetchRepositories()).rejects.toHaveProperty("status", 500);
   });
@@ -315,7 +315,7 @@ describe("githubAPI.fetchRepositoryLanguages", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    global.fetch = vi.fn();
+    globalThis.fetch = vi.fn();
 
     // Capture original console.warn and replace with mock
     originalConsoleWarn = console.warn;
@@ -331,17 +331,17 @@ describe("githubAPI.fetchRepositoryLanguages", () => {
 
   it("should fetch repository languages correctly", async () => {
     const mockLanguages = { TypeScript: 1000, JavaScript: 500 };
-    global.fetch = mockFetch(200, mockLanguages);
+    globalThis.fetch = mockFetch(200, mockLanguages);
     const languagesUrl = "https://api.github.com/repos/timDeHof/my-showcase/languages";
 
     const languages = await githubAPI.fetchRepositoryLanguages(languagesUrl);
 
-    expect(global.fetch).toHaveBeenCalledWith(`${env.VITE_API_BASE_URL}/github/repos/timDeHof/my-showcase/languages`);
+    expect(globalThis.fetch).toHaveBeenCalledWith(`${env.VITE_API_BASE_URL}/github/repos/timDeHof/my-showcase/languages`);
     expect(languages).toEqual(mockLanguages);
   });
 
   it("should return empty object and log warn on error", async () => {
-    global.fetch = mockFetch(500, { message: "Error fetching languages" });
+    globalThis.fetch = mockFetch(500, { message: "Error fetching languages" });
     const languagesUrl = "https://api.github.com/repos/timDeHof/my-showcase/languages";
 
     const languages = await githubAPI.fetchRepositoryLanguages(languagesUrl);
@@ -354,21 +354,21 @@ describe("githubAPI.fetchRepositoryLanguages", () => {
 describe("githubAPI.fetchRateLimit", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    global.fetch = vi.fn();
+    globalThis.fetch = vi.fn();
   });
 
   it("should fetch rate limit information correctly", async () => {
     const mockRateLimit = { rate: { limit: 5000, remaining: 4999 } };
-    global.fetch = mockFetch(200, mockRateLimit);
+    globalThis.fetch = mockFetch(200, mockRateLimit);
 
     const rateLimit = await githubAPI.fetchRateLimit();
 
-    expect(global.fetch).toHaveBeenCalledWith(`${env.VITE_API_BASE_URL}/github/rate_limit`);
+    expect(globalThis.fetch).toHaveBeenCalledWith(`${env.VITE_API_BASE_URL}/github/rate_limit`);
     expect(rateLimit).toEqual(mockRateLimit);
   });
 
   it("should propagate error from githubFetch", async () => {
-    global.fetch = mockFetch(403, { message: "Rate limit exceeded" });
+    globalThis.fetch = mockFetch(403, { message: "Rate limit exceeded" });
     await expect(githubAPI.fetchRateLimit()).rejects.toThrow(GitHubAPIError);
     await expect(githubAPI.fetchRateLimit()).rejects.toHaveProperty("status", 403);
   });

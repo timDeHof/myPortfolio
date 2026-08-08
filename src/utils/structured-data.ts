@@ -38,22 +38,6 @@ interface WebsiteSchema {
   };
 }
 
-interface ProjectSchema {
-  "@context": "https://schema.org";
-  "@type": "CreativeWork";
-  "name": string;
-  "description": string;
-  "url": string;
-  "image": string;
-  "author": {
-    "@type": "Person";
-    "name": string;
-  };
-  "dateCreated": string;
-  "programmingLanguage": string[];
-  "keywords": string[];
-}
-
 // Generate Person structured data
 export function generatePersonSchema(): PersonSchema {
   return {
@@ -110,33 +94,6 @@ export function generateWebsiteSchema(): WebsiteSchema {
   };
 }
 
-// Generate Project structured data
-function generateProjectSchema(project: {
-  name: string;
-  description: string;
-  url: string;
-  image: string;
-  dateCreated: string;
-  technologies: string[];
-  keywords: string[];
-}): ProjectSchema {
-  return {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    "name": project.name,
-    "description": project.description,
-    "url": project.url,
-    "image": project.image,
-    "author": {
-      "@type": "Person",
-      "name": "Tim DeHof",
-    },
-    "dateCreated": project.dateCreated,
-    "programmingLanguage": project.technologies,
-    "keywords": project.keywords,
-  };
-}
-
 // Generate breadcrumb structured data
 export function generateBreadcrumbSchema(breadcrumbs: Array<{ name: string; url: string }>) {
   return {
@@ -147,22 +104,6 @@ export function generateBreadcrumbSchema(breadcrumbs: Array<{ name: string; url:
       "position": index + 1,
       "name": crumb.name,
       "item": crumb.url,
-    })),
-  };
-}
-
-// Generate FAQ structured data
-function generateFAQSchema(faqs: Array<{ question: string; answer: string }>) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqs.map(faq => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer,
-      },
     })),
   };
 }
