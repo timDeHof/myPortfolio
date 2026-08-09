@@ -6,6 +6,13 @@ on:
   pull_request:
   workflow_dispatch:
 
+# This workflow runs fork-authored code on pull_request, and the repo now holds
+# a deployment secret for deploy.yml. pull_request never exposes secrets to
+# forks, but state the token scope explicitly rather than relying on the
+# account default staying read-only.
+permissions:
+  contents: read
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
