@@ -91,11 +91,9 @@ export default defineConfig(({ mode }) => ({
     fs: {
       allow: [".."],
     },
-    proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:8788',
-        changeOrigin: true,
-      },
-    }
+    // No /api proxy: every request goes through the absolute
+    // env.VITE_API_BASE_URL, so a relative /api path is never requested. The
+    // proxy that used to sit here pointed at port 8788, which nothing has ever
+    // listened on — dead config that read like working configuration.
   },
 }))

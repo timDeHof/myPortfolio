@@ -39,3 +39,6 @@ GEMINI.md
 .fallow
 .impeccable
 .playwright-mcp
+
+# Test coverage output
+coverage/
