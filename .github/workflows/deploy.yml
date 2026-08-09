@@ -80,16 +80,29 @@ jobs:
       - name: Check the committed sitemap is current
         run: git diff --exit-code -- public/sitemap.xml
 
-      - name: Require API token
+      - name: Require deployment credentials
         env:
           TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          if [ -z "$TOKEN" ]; then
-            echo "::error::CLOUDFLARE_API_TOKEN is not set. Add it under Settings > Secrets and variables > Actions."
+          missing=""
+          [ -z "$TOKEN" ] && missing="CLOUDFLARE_API_TOKEN"
+          [ -z "$ACCOUNT" ] && missing="$missing CLOUDFLARE_ACCOUNT_ID"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing secret(s):$missing. Add under Settings > Secrets and variables > Actions."
             exit 1
           fi
 
+      # accountId is supplied here rather than in wrangler.toml because this
+      # repository is public. wrangler.toml declares no account_id, so wrangler
+      # otherwise calls /memberships to discover the account — which an "Edit
+      # Cloudflare Workers" token cannot read, and the deploy fails with
+      # "Authentication failed [code: 9106]" after every gate has passed.
+      #
+      # An account ID is an identifier rather than a credential, but it costs
+      # nothing to keep it out of a public repo.
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
