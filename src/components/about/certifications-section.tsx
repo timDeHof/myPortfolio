@@ -24,7 +24,7 @@ const CertificationCard: React.FC<CertificationCardProps> = ({ certification, in
               <img
                 src={certification.badgeUrl}
                 alt={`${certification.name} badge`}
-                className="h-32 w-32 rounded-full object-contain shadow-lg"
+                className="h-32 w-32 rounded-xl object-contain shadow-lg"
               />
             )
           : (
