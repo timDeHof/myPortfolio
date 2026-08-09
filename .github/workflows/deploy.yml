@@ -1,0 +1,95 @@
+name: Deploy
+
+# Deploys the site on every push to main. This exists because main silently
+# drifted from production once already: the generated sitemap and the eslint
+# cleanup were merged and then sat unpublished, because deploying was a manual
+# `pnpm deploy:worker` that nobody remembered to run.
+#
+# Requires a CLOUDFLARE_API_TOKEN repository secret ("Edit Cloudflare Workers"
+# template). The account ID comes from wrangler.toml.
+#
+# NOTE: this repository is public. Never add a pull_request or
+# pull_request_target trigger here — pull_request_target would run fork-authored
+# code with access to that secret. Untrusted code belongs in ci.yml, which has
+# no secrets and only a read-scoped token.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Explicit rather than inherited: the repo default is read-only today, but this
+# workflow now sits next to a deployment credential, so the intent should be in
+# the file rather than in a dashboard setting someone can flip.
+permissions:
+  contents: read
+
+# Never let two deploys race; queue rather than cancel, so the last push wins
+# and no build is dropped halfway.
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Verify and deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # The blog content is a submodule and the build reads it.
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # The same gates as CI. Duplicated deliberately: a deploy should stand on
+      # its own rather than trust that some earlier run was green.
+      - name: Lint
+        run: pnpm lint
+
+      - name: Type-check
+        run: pnpm type-check
+
+      - name: Test
+        run: pnpm exec vitest run
+
+      - name: Build
+        run: pnpm build
+
+      # A missing discovery file is invisible until an agent or crawler looks,
+      # which is exactly the failure mode this repo keeps hitting.
+      - name: Verify discovery files are in the build output
+        run: |
+          for f in .well-known/api-catalog sitemap.xml robots.txt _headers; do
+            if [ ! -f "build/$f" ]; then
+              echo "::error::build/$f is missing from the build output"
+              exit 1
+            fi
+            echo "ok: build/$f"
+          done
+
+      - name: Check the committed sitemap is current
+        run: git diff --exit-code -- public/sitemap.xml
+
+      - name: Require API token
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN is not set. Add it under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
