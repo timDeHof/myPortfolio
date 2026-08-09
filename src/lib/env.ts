@@ -4,7 +4,6 @@ import tryParseEnv from "./try-parse-env";
 
 const EnvSchema = z.object({
   VITE_NODE_ENV: z.string().default("development"),
-  VITE_WEB3FORMS_ACCESS_KEY: z.string().optional(),
   VITE_API_BASE_URL: z.string().url().default("https://api.timdehof.dev/api"),
   VITE_RESUME_URL: z.string().url().optional(),
 });
@@ -26,7 +25,6 @@ type EnvSchema = z.infer<typeof EnvSchema>;
  */
 const rawEnv: Record<string, string | undefined> = {
   VITE_NODE_ENV: import.meta.env.VITE_NODE_ENV || import.meta.env.MODE || "development",
-  VITE_WEB3FORMS_ACCESS_KEY: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
   VITE_API_BASE_URL: import.meta.env.VITE_API_BASE_URL,
   VITE_RESUME_URL: import.meta.env.VITE_RESUME_URL,
 };
