@@ -147,6 +147,24 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(section).not.toMatch(/class="(eyebrow|section-head|principles|principle)"/);
   });
 
+  it("renders Selected work with two project cards and their links", async () => {
+    const { html } = await renderPage("/");
+    const section = html.match(/<section[^>]*aria-labelledby="selected-work-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
+    const cards = section.match(/<article[\s\S]*?<\/article>/g) ?? [];
+
+    expect(section).toMatch(/<section id="work"/);
+    expect(section).toMatch(/<h2 id="selected-work-heading"[^>]*>Two projects, in depth<\/h2>/);
+    expect(cards).toHaveLength(2);
+    expect(cards[0]).toMatch(/<h3[^>]*>shadcn-timeline<\/h3>/);
+    expect(cards[0]).toContain("href=\"https://timdehof.github.io/shadcn-timeline/\"");
+    expect(cards[0]).toContain("href=\"https://github.com/timDeHof/shadcn-timeline\"");
+    expect(cards[0]).toContain("href=\"/projects/shadcn-timeline\"");
+    expect(cards[1]).toMatch(/<h3[^>]*>TeamForward<\/h3>/);
+    expect(cards[1]).toContain("web-push-neo");
+    expect(cards[1]).toContain("href=\"/projects/teamforward\"");
+    expect(section).toMatch(/<a[^>]*href="\/projects"[^>]*>All projects/);
+  });
+
   it("has no Services section or /services link on the home page", async () => {
     const { html } = await renderPage("/");
 
