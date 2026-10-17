@@ -57,6 +57,17 @@ export default defineConfig(({ mode }) => ({
         // Well-known URIs (RFC 8615) must reach the network, not the SPA shell.
         // Without this, navigating to /.well-known/api-catalog returns index.html.
         navigateFallbackDenylist: [/^\/\.well-known\//],
+        // Prerendered pages live at about/index.html, but Workbox only maps
+        // URLs ending in "/" to index.html, so /about fell through to
+        // navigateFallback and got the home page. Precache each page under
+        // its slash-less URL, which is how Cloudflare serves it.
+        manifestTransforms: [async entries => ({
+          manifest: entries.map(entry => ({
+            ...entry,
+            url: entry.url.replace(/^(.+)\/index\.html$/, '$1'),
+          })),
+          warnings: [],
+        })],
         runtimeCaching: [{
           urlPattern: /^https:\/\/api\.github\.com\/.*/i,
           handler: 'CacheFirst',
