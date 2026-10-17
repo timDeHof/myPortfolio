@@ -22,6 +22,11 @@ jobs:
     name: Lint, type-check, test, build
     runs-on: ubuntu-latest
 
+    # Public URL (VITE_ values are inlined into the bundle). Without it the
+    # hero and navbar drop the Résumé button, and the prerender test fails.
+    env:
+      VITE_RESUME_URL: https://assets.timdehof.dev/tim-dehof-resume.pdf
+
     steps:
       # The blog content is a submodule and the `prepare` script initialises it
       # on install, so check it out up front rather than letting install do it.

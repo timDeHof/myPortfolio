@@ -203,6 +203,7 @@ describe("prerendered routes contain their content, not the loading state", () =
     const footer = html.match(/<footer[\s\S]*?<\/footer>/)?.[0] ?? "";
 
     expect(html).toMatch(/<a href="\/projects" class="[^"]*btn--accent[^"]*">See my work<\/a>/);
+    expect(html).toMatch(/<a[^>]*href="[^"]*resume[^"]*"[^>]*class="[^"]*btn--line[^"]*">Résumé \(PDF\)<\/a>/);
     expect(contact).toMatch(/<a href="mailto:tim@timdehof.dev" class="[^"]*btn--accent[^"]*">/);
     expect(contact).toMatch(/<a href="https:\/\/www.linkedin.com\/in\/tim-dehof\/"[^>]*class="[^"]*btn--line[^"]*">/);
     expect(contact).toMatch(/<a href="https:\/\/github.com\/timDeHof"[^>]*class="[^"]*btn--line[^"]*">/);
