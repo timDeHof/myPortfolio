@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Suspense } from "react";
 
 import type { ProjectWithSource } from "../hooks/use-projects";
@@ -28,6 +28,13 @@ export const Route = createFileRoute("/projects")({
     }
 
     return { project };
+  },
+  // ?project=<slug> used to open a modal. Project pages now live at
+  // /projects/<slug>, so old shared links go there instead.
+  beforeLoad: ({ search }) => {
+    if (search.project) {
+      throw redirect({ to: "/projects/$slug", params: { slug: search.project }, replace: true });
+    }
   },
   loader: async (): Promise<{ projects: ProjectWithSource[] }> => {
     const projects = await fetchAllProjects();
