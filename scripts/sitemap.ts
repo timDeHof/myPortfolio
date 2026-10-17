@@ -2,8 +2,9 @@ import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 import { projectsIndex } from "../src/data/projects-index";
+import { SITE_URL } from "../src/utils/seo";
 
-export const SITE_URL = "https://timdehof.dev";
+export { SITE_URL };
 
 interface SitemapEntry {
   path: string;

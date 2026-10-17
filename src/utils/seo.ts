@@ -1,3 +1,5 @@
+export const SITE_URL = "https://timdehof.dev";
+
 export interface SEOData {
   title: string;
   description: string;
