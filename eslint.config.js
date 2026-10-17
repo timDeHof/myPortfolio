@@ -62,6 +62,9 @@ export default antfu(
 						"CLAUDE\\.md",
 						"App\\.tsx",
 						".*\\.test\\.tsx$",
+						// TanStack Router file routes: a trailing "_" on a segment
+						// (projects_.$slug.tsx) opts the route out of nesting
+						".*_\\.\\$.*\\.tsx$",
 					],
 				},
 			],

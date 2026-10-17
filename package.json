@@ -90,6 +90,7 @@
     "vite": "^7.3.0",
     "vite-plugin-imagemin": "^0.6.1",
     "vite-plugin-pwa": "^1.2.0",
+    "vite-prerender-plugin": "0.5.14",
     "vitest": "^4.0.16",
     "workbox-window": "^7.4.0",
     "wrangler": "^4.63.0"

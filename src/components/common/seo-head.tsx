@@ -1,9 +1,10 @@
+import { useLocation } from "@tanstack/react-router";
 import React from "react";
 import { Helmet } from "react-helmet-async";
 
 import type { SEOData } from "../../utils/seo";
 
-import { defaultSEO } from "../../utils/seo";
+import { defaultSEO, SITE_URL } from "../../utils/seo";
 
 interface SEOHeadProps {
   seo?: Partial<SEOData>;
@@ -13,12 +14,13 @@ interface SEOHeadProps {
 const defaultSEOProp: Partial<SEOData> = {};
 
 export const SEOHead: React.FC<SEOHeadProps> = ({ seo = defaultSEOProp, structuredData }) => {
+  const location = useLocation();
   const {
     title = defaultSEO.title,
     description = defaultSEO.description,
     keywords = defaultSEO.keywords,
     image = defaultSEO.image,
-    url = window.location.href,
+    url = `${SITE_URL}${location.pathname}${location.searchStr}`,
     type = defaultSEO.type,
     author = defaultSEO.author,
     publishedTime,
@@ -34,7 +36,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ seo = defaultSEOProp, structur
   } = { ...defaultSEO, ...seo };
 
   const robotsContent = `${noIndex ? "noindex" : "index"}, ${noFollow ? "nofollow" : "follow"}`;
-  const fullImageUrl = image?.startsWith("http") ? image : `${window.location.origin}${image}`;
+  const fullImageUrl = image?.startsWith("http") ? image : `${SITE_URL}${image}`;
 
   return (
     <Helmet>

@@ -11,6 +11,7 @@ vi.mock("@tanstack/react-router", () => ({
 
 // Mock SEO utils
 vi.mock("../../src/utils/seo", () => ({
+  SITE_URL: "https://timdehof.dev",
   defaultSEO: {
     title: "Default Title",
     description: "Default Description",
@@ -26,10 +27,10 @@ describe("useSEO", () => {
     vi.clearAllMocks();
     (useLocation as any).mockReturnValue({
       pathname: "/",
-      search: "",
+      searchStr: "",
     });
 
-    // Mock window.location.origin
+    // A dev-server origin must not leak into canonical URLs
     Object.defineProperty(window, "location", {
       value: { origin: "http://localhost" },
       writable: true,
@@ -39,13 +40,24 @@ describe("useSEO", () => {
   it("returns home SEO for root path", () => {
     const { result } = renderHook(() => useSEO());
     expect(result.current.title).toBe("Home Title");
-    expect(result.current.url).toBe("http://localhost/");
+    expect(result.current.url).toBe("https://timdehof.dev/");
+  });
+
+  it("includes the search string in the url", () => {
+    (useLocation as any).mockReturnValue({
+      pathname: "/projects",
+      searchStr: "?project=cognidocs",
+      search: { project: "cognidocs" },
+    });
+
+    const { result } = renderHook(() => useSEO());
+    expect(result.current.url).toBe("https://timdehof.dev/projects?project=cognidocs");
   });
 
   it("returns page-specific SEO for other paths", () => {
     (useLocation as any).mockReturnValue({
       pathname: "/about",
-      search: "",
+      searchStr: "",
     });
 
     const { result } = renderHook(() => useSEO());
@@ -68,7 +80,7 @@ describe("useSectionSEO", () => {
   beforeEach(() => {
     (useLocation as any).mockReturnValue({
       pathname: "/",
-      search: "",
+      searchStr: "",
     });
   });
 

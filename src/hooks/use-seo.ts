@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import type { SEOData } from "../utils/seo";
 
-import { defaultSEO, pageSEO } from "../utils/seo";
+import { defaultSEO, pageSEO, SITE_URL } from "../utils/seo";
 
 /**
  * Custom hook for dynamic SEO management across the application.
@@ -28,7 +28,7 @@ export function useSEO(customSEO?: Partial<SEOData>) {
     ...defaultSEO,
     ...getPageSEO(),
     ...customSEO,
-    url: `${window.location.origin}${location.pathname}${location.search}`,
+    url: `${SITE_URL}${location.pathname}${location.searchStr}`,
   };
 
   // Update document title when SEO changes

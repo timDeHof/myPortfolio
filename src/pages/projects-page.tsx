@@ -1,51 +1,21 @@
-import { useNavigate } from "@tanstack/react-router";
 // fallow-ignore-file
 // TanStack Router's file routes require importing Route from generated route file
 // This is a false positive - runtime works correctly with this pattern
 import { Github } from "lucide-react";
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { lazy, Suspense } from "react";
 
 import { AnimatedSection } from "../components/common/animated-section";
 import { SEOHead } from "../components/common/seo-head";
 import { ProjectGrid } from "../components/projects/project-grid";
-import { ProjectModal } from "../components/projects/project-modal";
 import { Button } from "../components/ui/button";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
-import { useProject } from "../hooks/use-projects";
 import { Route } from "../routes/projects";
 import { pageSEO } from "../utils/seo";
 
-// Lazy load heavy modal components
-const ProjectDetailContent = lazy(() => import("./project-detail-page").then(m => ({ default: m.ProjectDetailContent })));
 const GitHubStatsSection = lazy(() => import("../components/github/github-stats-section").then(m => ({ default: m.GitHubStatsSection })));
 
 export const ProjectsPage: React.FC = () => {
   const { projects } = Route.useLoaderData();
-  const navigate = useNavigate();
-  const search = Route.useSearch();
-  const selectedSlug = search.project;
-
-  const { data: selectedProject, isLoading: isProjectLoading } = useProject(selectedSlug || "");
-
-  useEffect(() => {
-    if (selectedSlug) {
-      document.body.style.overflow = "hidden";
-    }
-    else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [selectedSlug]);
-
-  const handleCloseModal = () => {
-    navigate({ search: {} });
-  };
-
-  const handleProjectClick = (slug: string) => {
-    navigate({ search: { project: slug } });
-  };
 
   if (!projects || projects.length === 0) {
     return (
@@ -93,7 +63,7 @@ export const ProjectsPage: React.FC = () => {
         </MaxWidthWrapper>
       </AnimatedSection>
 
-      <ProjectGrid projects={projects} onProjectClick={handleProjectClick} />
+      <ProjectGrid projects={projects} />
 
       <Suspense fallback={<div className="py-16" />}>
         <GitHubStatsSection />
@@ -115,22 +85,6 @@ export const ProjectsPage: React.FC = () => {
           </Button>
         </MaxWidthWrapper>
       </AnimatedSection>
-
-      {/* Project Modal */}
-      <ProjectModal
-        isOpen={!!selectedSlug}
-        project={selectedProject ?? null}
-        isLoading={isProjectLoading}
-        onClose={handleCloseModal}
-      >
-        {project => (
-          <ProjectDetailContent
-            project={project}
-            onClose={handleCloseModal}
-            isModal
-          />
-        )}
-      </ProjectModal>
     </>
   );
 };

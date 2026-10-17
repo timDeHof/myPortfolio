@@ -9,10 +9,9 @@ import { ProjectCard } from "./project-card";
 interface ProjectGridProps {
   projects: Project[];
   isLoading?: boolean;
-  onProjectClick?: (slug: string) => void;
 }
 
-export const ProjectGrid: React.FC<ProjectGridProps> = ({ projects, isLoading, onProjectClick }) => {
+export const ProjectGrid: React.FC<ProjectGridProps> = ({ projects, isLoading }) => {
   const SKELETON_COUNT = 3;
 
   if (isLoading) {
@@ -57,7 +56,6 @@ export const ProjectGrid: React.FC<ProjectGridProps> = ({ projects, isLoading, o
               key={project.slug}
               project={project}
               index={index}
-              onClick={onProjectClick ? () => onProjectClick(project.slug) : undefined}
             />
           ))}
         </div>
