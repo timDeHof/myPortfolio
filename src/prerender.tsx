@@ -62,8 +62,8 @@ export async function renderPage(url: string) {
   const html = await new Response(prelude).text();
   // Loaders swallow fetch errors so client navigation still renders, so a
   // failed download (outage, rate limit) is caught here instead of being
-  // published as a "not found" page
-  const failed = queryClient.getQueryCache().getAll().filter(query => query.state.status === "error");
+  // published as a "not found" page. Queries marked optional have a fallback.
+  const failed = queryClient.getQueryCache().getAll().filter(query => query.state.status === "error" && !query.meta?.optional);
   // Drop cached queries so their gcTime timers do not keep the build process alive
   queryClient.clear();
   if (failed.length > 0) {

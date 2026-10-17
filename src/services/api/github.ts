@@ -206,6 +206,18 @@ export const githubAPI = {
     return "fork";
   },
 
+  // Fetch one repository, for its star count. The proxy does not expose
+  // /repos/:owner/:repo, so this reads the same list fetchRepositories uses.
+  fetchRepository: async (owner: string, repo: string): Promise<GitHubRepository> => {
+    const url = `${GITHUB_API_BASE}/users/${owner}/repos?sort=updated&per_page=100&type=all`;
+    const repositories = await githubFetch<GitHubRepository[]>(url);
+    const match = repositories.find(repository => repository.name === repo);
+    if (!match) {
+      throw new GitHubAPIError(404, "Not Found", url, `No repository named ${repo}`);
+    }
+    return match;
+  },
+
   // Fetch repository languages
   fetchRepositoryLanguages: async (languagesUrl: string): Promise<GitHubLanguages> => {
     try {

@@ -44,6 +44,12 @@ vi.mock("../../src/services/api/github", () => ({
       }
       return fixtures[file];
     }),
+    fetchRepository: vi.fn(async (_owner: string, repo: string) => {
+      if (repo !== "shadcn-timeline") {
+        throw new Error(`404: ${repo}`);
+      }
+      return { name: repo, stargazers_count: 297 };
+    }),
   },
 }));
 
@@ -188,6 +194,34 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(section).toContain("href=\"https://github.com/timDeHof\"");
     // The Jokma referral line is commented out for now
     expect(section).not.toContain("jokma.com");
+  });
+
+  it("prints shadcn-timeline's star count in the hero and its Selected work card", async () => {
+    const { html } = await renderPage("/");
+    const card = html.match(/<article[\s\S]*?<\/article>/)?.[0] ?? "";
+
+    expect(html).toMatch(/Author of shadcn-timeline(<!-- -->)? · <strong[^>]*>297(<!-- -->)?★<\/strong>/);
+    expect(card).toMatch(/>297(<!-- -->)?★</);
+    expect(card).toContain("GitHub stars");
+  });
+
+  it("falls back to \"Open source\" when the star count can't be fetched", async () => {
+    const fetchRepository = vi.mocked(githubAPI.fetchRepository);
+    const fixtureFetch = fetchRepository.getMockImplementation()!;
+    // "404" skips the query client's retries, so the test stays fast
+    fetchRepository.mockRejectedValue(new Error("404: rate limited"));
+
+    try {
+      const { html } = await renderPage("/");
+      const card = html.match(/<article[\s\S]*?<\/article>/)?.[0] ?? "";
+
+      expect(html).not.toContain("★");
+      expect(card).toContain(">Open source<");
+      expect(card).not.toContain("GitHub stars");
+    }
+    finally {
+      fetchRepository.mockImplementation(fixtureFetch);
+    }
   });
 
   it("has no Services section or /services link on the home page", async () => {

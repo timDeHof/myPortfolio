@@ -2,10 +2,13 @@ import React from "react";
 
 import { SEOHead } from "../components/common/seo-head";
 import { Background, Contact, Hero, HowIWork, SelectedWork } from "../components/home/sections";
+import { useShadcnTimelineStars } from "../hooks/use-repo-stars";
 import { pageSEO } from "../utils/seo";
 import { generatePersonSchema, generateWebsiteSchema } from "../utils/structured-data";
 
 export const HomePage: React.FC = () => {
+  const stars = useShadcnTimelineStars();
+
   // Generate structured data for the home page
   const structuredData = {
     "@graph": [
@@ -21,9 +24,9 @@ export const HomePage: React.FC = () => {
         structuredData={structuredData}
       />
 
-      <Hero />
+      <Hero stars={stars} />
       <HowIWork />
-      <SelectedWork />
+      <SelectedWork stars={stars} />
       <Background />
       <Contact />
     </>
