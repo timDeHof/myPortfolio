@@ -182,7 +182,7 @@ describe("prerendered routes contain their content, not the loading state", () =
     const section = html.match(/<section[^>]*aria-labelledby="contact-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
 
     expect(section).toMatch(/<section id="contact"/);
-    expect(section).toMatch(/<h2 id="contact-heading"[^>]*>Hiring or building something together\?<\/h2>/);
+    expect(section).toMatch(/<h2 id="contact-heading"[^>]*>Hiring a frontend or full-stack engineer\?<\/h2>/);
     expect(section).toMatch(/<a[^>]*href="mailto:tim@timdehof.dev"[^>]*>Email me<\/a>/);
     expect(section).toContain("href=\"https://www.linkedin.com/in/tim-dehof/\"");
     expect(section).toContain("href=\"https://github.com/timDeHof\"");
