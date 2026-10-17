@@ -31,27 +31,17 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://timdehof.dev/projects/teamforward</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://timdehof.dev/projects/cognidocs</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://timdehof.dev/projects/roomify</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://timdehof.dev/projects/3d-product-configurator</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://timdehof.dev/projects/habitgate-mobile</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://timdehof.dev/projects/scanpic</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
