@@ -49,7 +49,7 @@ function Hero({ stars }: HeroProps) {
               the same way.
             </h1>
 
-            <p className="max-w-[58ch] text-lg text-muted-foreground">
+            <p className="max-w-[51ch] text-lg text-muted-foreground">
               Full-stack engineer working in React, TypeScript, and Node. Manufacturing taught me to find the root
               cause, test against real constraints, and build things that hold up after handoff.
             </p>

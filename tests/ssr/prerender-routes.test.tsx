@@ -267,6 +267,53 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(html).toContain("Fixture Cloud Certificate");
   });
 
+  // Each cap was measured at 1920px to keep the longest line at 79 characters or under
+  it("caps the hero intro at 51ch", async () => {
+    const { html } = await renderPage("/");
+
+    expect(html).toMatch(/<p class="[^"]*\bmax-w-\[51ch\][^"]*\btext-lg\b[^"]*">\s*Full-stack engineer/);
+  });
+
+  it("caps both Background paragraphs at 57ch", async () => {
+    const { html } = await renderPage("/");
+    const section = html.match(/<section[^>]*aria-labelledby="background-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
+
+    expect(section).toMatch(/<p class="[^"]*\bmax-w-\[57ch\][^"]*">\s*From 2015 to 2022/);
+    expect(section).toMatch(/<p class="[^"]*\bmax-w-\[57ch\][^"]*">\s*Since 2024/);
+  });
+
+  it("caps the home Contact paragraph at 55ch", async () => {
+    const { html } = await renderPage("/");
+    const section = html.match(/<section[^>]*aria-labelledby="contact-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
+
+    expect(section).toMatch(/<p class="[^"]*\bmax-w-\[55ch\][^"]*">\s*I(?:'|&#x27;)m looking for a team/);
+  });
+
+  it("caps case study paragraphs and lists at 52ch", async () => {
+    const { html } = await renderPage("/projects/shadcn-timeline");
+    const article = html.match(/<article[\s\S]*?<\/article>/)?.[0] ?? "";
+    const blocks = article.match(/<(?:p|ul)\b[^>]*>/g) ?? [];
+
+    expect(blocks.length).toBeGreaterThan(0);
+    for (const block of blocks) {
+      expect(block).toMatch(/\bmax-w-\[52ch\]/);
+    }
+  });
+
+  it("caps the /about story at 51ch", async () => {
+    const { html } = await renderPage("/about");
+
+    expect(html).toMatch(/<div class="[^"]*\bmax-w-\[51ch\][^"]*">\s*<p[^>]*>\s*With a background in mechanical engineering/);
+  });
+
+  it("caps the /contact panel paragraphs at 55ch", async () => {
+    const { html } = await renderPage("/contact");
+
+    expect(html).toMatch(/<p class="[^"]*\bmax-w-\[55ch\][^"]*">\s*I(?:'|&#x27;)m always excited/);
+    expect(html).toMatch(/<p class="[^"]*\bmax-w-\[55ch\][^"]*">\s*You can also check out my/);
+    expect(html).toMatch(/<p class="[^"]*\bmax-w-\[55ch\][^"]*">\s*I typically respond/);
+  });
+
   // About 7s: the project fetch rethrows without "404", so the query client
   // retries it 3 times with backoff before the query errors
   it("fails the build when a page's data download fails", { timeout: 30000 }, async () => {

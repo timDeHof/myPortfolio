@@ -22,11 +22,11 @@ function Background() {
           <div className="grid max-w-[62ch] gap-[18px]">
             <p className="font-mono text-xs uppercase tracking-[0.06em] text-teal-700 dark:text-teal-400">Background</p>
             <h2 id="background-heading" className="text-[clamp(1.6rem,3.2vw,2.1rem)] font-bold text-foreground">From the shop floor to the stack</h2>
-            <p className="text-muted-foreground">
+            <p className="max-w-[57ch] text-muted-foreground">
               From 2015 to 2022 I worked as a mechanical engineer in manufacturing and 3D printing. In 2022 I moved into
               software through Fullstack Academy.
             </p>
-            <p className="text-muted-foreground">
+            <p className="max-w-[57ch] text-muted-foreground">
               Since 2024 I've been building production frontends at TeamForward, and in June 2026 I graduated from the AWS
               Cloud Institute's Cloud Application Developer program.
             </p>

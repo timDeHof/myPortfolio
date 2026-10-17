@@ -18,7 +18,7 @@ export const StorySection: React.FC<StorySectionProps> = ({ shouldReduceMotion }
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6">My Journey</h2>
-            <div className="space-y-4 text-foreground">
+            <div className="max-w-[51ch] space-y-4 text-foreground">
               <p className="leading-relaxed">
                 With a background in mechanical engineering and 3D printing, I discovered my passion
                 for web development through the intersection of technology and problem-solving.

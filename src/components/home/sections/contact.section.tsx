@@ -19,7 +19,7 @@ function Contact() {
         <div className="grid gap-5">
           <p className="font-mono text-xs uppercase tracking-[0.06em] text-teal-700 dark:text-teal-400">Contact</p>
           <h2 id="contact-heading" className="text-[clamp(1.8rem,3.6vw,2.4rem)] font-bold text-foreground">Hiring a frontend or full-stack engineer?</h2>
-          <p className="max-w-[56ch] text-muted-foreground">
+          <p className="max-w-[55ch] text-muted-foreground">
             I'm looking for a team where engineering judgment matters as much as output. The fastest way to reach me is email.
           </p>
 
