@@ -1,10 +1,3 @@
-export interface ServiceCard {
-  id: number;
-  title: string;
-  paragraphs: string[];
-  icon?: string;
-}
-
 export interface Certification {
   name: string;
   issuer: string;
@@ -63,7 +56,6 @@ export interface SEOConfig {
 }
 
 export interface PortfolioData {
-  services: ServiceCard[];
   certifications: Certification[];
   navigation: Navigation;
   seo: SEOConfig;
