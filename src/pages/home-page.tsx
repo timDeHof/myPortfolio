@@ -14,10 +14,6 @@ const HeroTerminal = React.lazy(() =>
 //   import("../components/home/hero-section").then(module => ({ default: module.HeroSection })),
 // );
 
-const ServicesSection = React.lazy(() =>
-  import("../components/home/services-section").then(module => ({ default: module.ServicesSection })),
-);
-
 // Loading fallback component
 const SectionLoader: React.FC<{ name: string }> = ({ name }) => (
   <div className="min-h-[400px] flex items-center justify-center bg-muted">
@@ -52,11 +48,6 @@ export const HomePage: React.FC = () => {
       {/* Hero Section — swap HeroTerminal ↔ HeroSection to toggle */}
       <Suspense fallback={<SectionLoader name="Hero Section" />}>
         <HeroTerminal />
-      </Suspense>
-
-      {/* Services Section */}
-      <Suspense fallback={<SectionLoader name="Services" />}>
-        <ServicesSection />
       </Suspense>
     </>
   );

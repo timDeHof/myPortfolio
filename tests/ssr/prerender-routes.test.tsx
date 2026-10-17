@@ -8,7 +8,6 @@ import { githubAPI } from "../../src/services/api/github";
 // Data the prerender build would fetch from timDeHof/portfolio-metadata
 const fixtures: Record<string, unknown> = {
   "portfolio.json": {
-    services: [{ id: 1, title: "Frontend builds", paragraphs: ["React and TypeScript applications."] }],
     certifications: [{ name: "Fixture Cloud Certificate", issuer: "Fixture Issuer", date: "2024-01-01" }],
   },
   "shadcn-timeline.json": {
@@ -85,6 +84,13 @@ describe("prerendered routes contain their content, not the loading state", () =
 
     expect(meta.length).toBeGreaterThan(0);
     expect(meta.every(props => props["data-rh"] === "true")).toBe(true);
+  });
+
+  it("has no Services section or /services link on the home page", async () => {
+    const { html } = await renderPage("/");
+
+    expect(html).not.toContain("href=\"/services\"");
+    expect(html).not.toContain("services-section");
   });
 
   it("keeps the home page's JSON-LD script in the head", async () => {
