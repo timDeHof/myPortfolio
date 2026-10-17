@@ -1,33 +1,9 @@
-import React, { Suspense } from "react";
+import React from "react";
 
-import { LoadingSpinner } from "../components/common/loading-spinner";
 import { SEOHead } from "../components/common/seo-head";
+import { Hero } from "../components/home/hero.section";
 import { pageSEO } from "../utils/seo";
 import { generatePersonSchema, generateWebsiteSchema } from "../utils/structured-data";
-
-// Lazy load components for better performances
-// Swap HeroTerminal ↔ HeroSection to toggle between hero styles
-const HeroTerminal = React.lazy(() =>
-  import("../components/home/hero-terminal").then(module => ({ default: module.HeroTerminal })),
-);
-// const HeroSection = React.lazy(() =>
-//   import("../components/home/hero-section").then(module => ({ default: module.HeroSection })),
-// );
-
-// Loading fallback component
-const SectionLoader: React.FC<{ name: string }> = ({ name }) => (
-  <div className="min-h-[400px] flex items-center justify-center bg-muted">
-    <div className="text-center">
-      <LoadingSpinner size="lg" color="blue" />
-      <p className="text-muted-foreground mt-4 text-sm">
-        Loading
-        {" "}
-        {name}
-        ...
-      </p>
-    </div>
-  </div>
-);
 
 export const HomePage: React.FC = () => {
   // Generate structured data for the home page
@@ -45,10 +21,7 @@ export const HomePage: React.FC = () => {
         structuredData={structuredData}
       />
 
-      {/* Hero Section — swap HeroTerminal ↔ HeroSection to toggle */}
-      <Suspense fallback={<SectionLoader name="Hero Section" />}>
-        <HeroTerminal />
-      </Suspense>
+      <Hero />
     </>
   );
 };
