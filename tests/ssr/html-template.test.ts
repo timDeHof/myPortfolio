@@ -12,4 +12,10 @@ describe("index.html template", () => {
     expect(template).not.toMatch(/name="description"/);
     expect(template).not.toMatch(/name="keywords"/);
   });
+
+  // The v1 hero these rules styled is gone, and no component uses the classes
+  it("has no critical CSS for the v1 hero", () => {
+    expect(template).not.toMatch(/\.hero-section\b/);
+    expect(template).not.toMatch(/\.hero-title\b/);
+  });
 });

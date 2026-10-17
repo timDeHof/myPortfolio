@@ -1,7 +1,7 @@
 import React from "react";
 
 import { SEOHead } from "../components/common/seo-head";
-import { Hero } from "../components/home/hero.section";
+import { Hero, HowIWork } from "../components/home/sections";
 import { pageSEO } from "../utils/seo";
 import { generatePersonSchema, generateWebsiteSchema } from "../utils/structured-data";
 
@@ -22,6 +22,7 @@ export const HomePage: React.FC = () => {
       />
 
       <Hero />
+      <HowIWork />
     </>
   );
 };

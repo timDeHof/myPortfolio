@@ -3,8 +3,8 @@ import { Link } from "@tanstack/react-router";
 import { env } from "@/lib/env";
 import { cn } from "@/lib/utils";
 
-import { Button } from "../ui/button";
-import { MaxWidthWrapper } from "../ui/max-width-wrapper";
+import { Button } from "../../ui/button";
+import { MaxWidthWrapper } from "../../ui/max-width-wrapper";
 
 interface HeroProps {
   /** shadcn-timeline's star count, read at build time (D3). Left out of the chip when unknown. */
@@ -30,7 +30,7 @@ const TITLE_BLOCK: TitleBlockCell[] = [
   { label: "Rev", value: <span className="text-xl font-medium text-teal-700 dark:text-teal-400">B</span> },
 ];
 
-export function Hero({ stars }: HeroProps) {
+function Hero({ stars }: HeroProps) {
   return (
     <section aria-labelledby="hero-heading" className="border-b border-border py-16 md:py-20">
       <MaxWidthWrapper>
@@ -128,3 +128,5 @@ export function Hero({ stars }: HeroProps) {
     </section>
   );
 }
+
+export default Hero;

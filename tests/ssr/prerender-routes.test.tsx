@@ -134,6 +134,19 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(html).not.toContain("Loading Hero Section");
   });
 
+  it("renders the How I work section under the hero", async () => {
+    const { html } = await renderPage("/");
+    const section = html.match(/<section aria-labelledby="how-i-work-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
+
+    expect(section).toMatch(/<h2 id="how-i-work-heading"[^>]*>What the engineering background changed<\/h2>/);
+    expect(section.match(/<h3[\s>]/g)).toHaveLength(3);
+    expect(section).toContain("Root cause first.");
+    expect(section).toContain("Design for the constraint.");
+    expect(section).toContain("Built to be handed off.");
+    // Prototype class names have no styles in the app
+    expect(section).not.toMatch(/class="(eyebrow|section-head|principles|principle)"/);
+  });
+
   it("has no Services section or /services link on the home page", async () => {
     const { html } = await renderPage("/");
 
