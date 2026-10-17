@@ -23,9 +23,9 @@ export interface SEOData {
 }
 
 export const defaultSEO: SEOData = {
-  title: "Tim DeHof - Full Stack Developer",
-  description: "Experienced full-stack developer specializing in React, Node.js, and modern web technologies. Building innovative solutions with cutting-edge technologies.",
-  keywords: "web developer, full stack developer, React, Node.js, JavaScript, TypeScript, portfolio",
+  title: "Tim DeHof — Full-Stack Engineer",
+  description: "Full-stack engineer in Jacksonville, FL, working in React, TypeScript, Node, and AWS. Seven years as a mechanical engineer before software.",
+  keywords: "full stack developer, React, Node.js, JavaScript, TypeScript",
   image: "/og-image.jpg",
   type: "website",
   author: "Tim DeHof",
@@ -36,36 +36,36 @@ export const defaultSEO: SEOData = {
 
 export const pageSEO = {
   home: {
-    title: "Tim DeHof - Full Stack Developer & Engineer",
-    description: "Welcome to my portfolio. I'm a full-stack developer with a background in mechanical engineering, creating efficient and innovative web solutions.",
+    title: "Tim DeHof — Full-Stack Engineer, formerly Mechanical Engineer",
+    description: "Full-stack engineer in Jacksonville, FL. Seven years in manufacturing engineering, now building React, TypeScript, and AWS applications. Author of shadcn-timeline.",
     keywords: "Tim DeHof, full stack developer, React developer, Node.js, mechanical engineer, web development portfolio",
     section: "Home",
     tags: ["portfolio", "developer", "react", "nodejs"],
   },
   about: {
-    title: "About Tim DeHof - Developer & Engineer",
-    description: "Learn about my journey from mechanical engineering to web development, and how I bring unique perspectives to every project.",
+    title: "About — Tim DeHof",
+    description: "Mechanical engineer from 2015 to 2022, full-stack engineer since. Frontend Engineer at TeamForward and AWS Cloud Institute graduate.",
     keywords: "Tim DeHof about, mechanical engineering, web development journey, developer background",
     section: "About",
     tags: ["about", "biography", "experience"],
   },
   projects: {
-    title: "Projects - Tim DeHof Portfolio",
-    description: "Explore my latest projects including e-commerce applications, machine learning integrations, and full-stack web applications.",
+    title: "Projects — Tim DeHof",
+    description: "Selected projects by Tim DeHof, with the problem, his role, the stack, and what he would change. Includes shadcn-timeline, an accessible timeline component for shadcn/ui.",
     keywords: "Tim DeHof projects, web development projects, React projects, full stack applications",
     section: "Projects",
     tags: ["projects", "portfolio", "web-apps"],
   },
   contact: {
-    title: "Contact Tim DeHof - Let's Work Together",
-    description: "Get in touch to discuss your next project. I'm always excited to work on new challenges and innovative solutions.",
+    title: "Contact — Tim DeHof",
+    description: "Contact Tim DeHof about frontend and full-stack roles. Remote, based in Jacksonville, FL.",
     keywords: "contact Tim DeHof, hire developer, web development contact, project inquiry",
     section: "Contact",
     tags: ["contact", "hire", "collaboration"],
   },
   blog: {
-    title: "Blog - Tim DeHof",
-    description: "Thoughts on web development, React, TypeScript, and building modern applications.",
+    title: "Blog — Tim DeHof",
+    description: "Write-ups on AWS and frontend engineering by Tim DeHof: what was built, what broke, and what it cost.",
     keywords: "Tim DeHof blog, web development articles, React tutorials, programming blog",
     section: "Blog",
     tags: ["blog", "articles", "tutorials", "web development"],

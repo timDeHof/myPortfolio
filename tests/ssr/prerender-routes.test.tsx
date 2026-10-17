@@ -78,6 +78,43 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(content("og:url")).toBe("https://timdehof.dev/projects/shadcn-timeline");
   });
 
+  it.each([
+    [
+      "/",
+      "Tim DeHof — Full-Stack Engineer, formerly Mechanical Engineer",
+      "Full-stack engineer in Jacksonville, FL. Seven years in manufacturing engineering, now building React, TypeScript, and AWS applications. Author of shadcn-timeline.",
+    ],
+    [
+      "/about",
+      "About — Tim DeHof",
+      "Mechanical engineer from 2015 to 2022, full-stack engineer since. Frontend Engineer at TeamForward and AWS Cloud Institute graduate.",
+    ],
+    [
+      "/projects",
+      "Projects — Tim DeHof",
+      "Selected projects by Tim DeHof, with the problem, his role, the stack, and what he would change. Includes shadcn-timeline, an accessible timeline component for shadcn/ui.",
+    ],
+    [
+      "/blog",
+      "Blog — Tim DeHof",
+      "Write-ups on AWS and frontend engineering by Tim DeHof: what was built, what broke, and what it cost.",
+    ],
+    [
+      "/contact",
+      "Contact — Tim DeHof",
+      "Contact Tim DeHof about frontend and full-stack roles. Remote, based in Jacksonville, FL.",
+    ],
+  ])("gives %s the v2 title and description", async (url, title, description) => {
+    const { head } = await renderPage(url);
+    const meta = metaProps(head);
+    const content = (key: string) => meta.find(props => props.property === key || props.name === key)?.content;
+
+    expect(head.title).toBe(title);
+    expect(content("og:title")).toBe(title);
+    expect(content("description")).toBe(description);
+    expect(content("og:description")).toBe(description);
+  });
+
   it("keeps Helmet's data-rh marker so the client replaces the static tags", async () => {
     const { head } = await renderPage("/projects/shadcn-timeline");
     const meta = metaProps(head);
