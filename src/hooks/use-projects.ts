@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 
 import { githubAPI } from "@/services/api/github";
 
@@ -63,10 +63,11 @@ export function useProjects() {
 // Re-export for use in route loaders
 export { fetchAllProjects };
 
-export function useProject(slug: string) {
+// Shared with the /projects/$slug route loader, which fills the cache before render
+export function projectQuery(slug: string) {
   const entry = findProjectBySlug(slug);
 
-  return useQuery({
+  return queryOptions({
     queryKey: ["project", slug],
     queryFn: async () => {
       if (!entry) {
@@ -78,4 +79,8 @@ export function useProject(slug: string) {
     enabled: !!entry,
     staleTime: 1000 * 60 * 5,
   });
+}
+
+export function useProject(slug: string) {
+  return useQuery(projectQuery(slug));
 }

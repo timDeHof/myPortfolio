@@ -8,7 +8,8 @@ import tailwindcss from '@tailwindcss/vite';
 import {visualizer} from "rollup-plugin-visualizer";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
-import { writeSitemap } from './scripts/sitemap';
+import { vitePrerenderPlugin } from 'vite-prerender-plugin';
+import { buildEntries, writeSitemap } from './scripts/sitemap';
 
 // Regenerates public/sitemap.xml from the route list and projects-index before
 // each build, so adding a project cannot leave the sitemap behind again.
@@ -34,6 +35,13 @@ export default defineConfig(({ mode }) => ({
       autoCodeSplitting: true,
     }),
     react(),
+    vitePrerenderPlugin({
+      renderTarget: '#app',
+      prerenderScript: resolve(__dirname, 'src/index.tsx'),
+      // Same route list as the sitemap, so a new page or project cannot be
+      // listed in one and missing from the other
+      additionalPrerenderRoutes: buildEntries().map(entry => entry.path),
+    }),
     tailwindcss(),
     viteTsconfigPaths(),
     ...(mode === 'production' ? [cloudflare({
@@ -49,6 +57,17 @@ export default defineConfig(({ mode }) => ({
         // Well-known URIs (RFC 8615) must reach the network, not the SPA shell.
         // Without this, navigating to /.well-known/api-catalog returns index.html.
         navigateFallbackDenylist: [/^\/\.well-known\//],
+        // Prerendered pages live at about/index.html, but Workbox only maps
+        // URLs ending in "/" to index.html, so /about fell through to
+        // navigateFallback and got the home page. Precache each page under
+        // its slash-less URL, which is how Cloudflare serves it.
+        manifestTransforms: [async entries => ({
+          manifest: entries.map(entry => ({
+            ...entry,
+            url: entry.url.replace(/^(.+)\/index\.html$/, '$1'),
+          })),
+          warnings: [],
+        })],
         runtimeCaching: [{
           urlPattern: /^https:\/\/api\.github\.com\/.*/i,
           handler: 'CacheFirst',
