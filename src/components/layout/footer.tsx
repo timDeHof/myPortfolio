@@ -19,7 +19,7 @@ export function Footer() {
   const { data: portfolioData } = usePortfolioData();
   const footerLinks = portfolioData?.navigation?.footerLinks || {
     social: [
-      { name: "GitHub", href: "https://github.com/tim-dehof" },
+      { name: "GitHub", href: "https://github.com/timDeHof" },
       { name: "LinkedIn", href: "https://www.linkedin.com/in/tim-dehof/" },
       { name: "Twitter", href: "https://twitter.com/timdehof" },
     ],

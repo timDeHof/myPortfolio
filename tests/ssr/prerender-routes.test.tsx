@@ -93,6 +93,13 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(html).not.toContain("services-section");
   });
 
+  it("links the footer to the real GitHub profile on pages that don't load portfolio data", async () => {
+    const { html } = await renderPage("/contact");
+
+    expect(html).not.toContain("href=\"https://github.com/tim-dehof\"");
+    expect(html).toContain("href=\"https://github.com/timDeHof\"");
+  });
+
   it("keeps the home page's JSON-LD script in the head", async () => {
     const { head } = await renderPage("/");
     const scripts = [...("elements" in head ? head.elements : [])].filter(element => element.type === "script");
