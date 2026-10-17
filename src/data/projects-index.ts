@@ -5,7 +5,7 @@ export interface ProjectIndexEntry {
   owner: string;
   repo: string;
   path: string;
-  fallbackData?: Partial<Project>;
+  fallbackData?: Project;
 }
 
 export const projectsIndex: ProjectIndexEntry[] = [

@@ -31,7 +31,7 @@ async function fetchProjectWithFallback(
         ...entry.fallbackData,
         slug: entry.slug,
         source: "fallback" as const,
-      } as ProjectWithSource;
+      };
     }
     throw new Error(`No data found for project: ${entry.slug}`);
   }
