@@ -20,16 +20,24 @@ function elementsOf(datum: { toComponent: () => unknown }): ReactElement[] {
 }
 
 function toHeadElements(helmet: HelmetServerState): Set<HeadElement> {
-  const elements = [...elementsOf(helmet.meta), ...elementsOf(helmet.link)];
-  // The plugin writes every prop as an attribute string, so drop Helmet's
-  // non-string bookkeeping props (e.g. the boolean `data-rh`)
-  return new Set(elements.map(element => ({
-    type: String(element.type),
-    props: Object.fromEntries(
-      Object.entries(element.props as Record<string, unknown>)
-        .filter(([, value]) => typeof value === "string"),
-    ),
-  })));
+  const elements = [...elementsOf(helmet.meta), ...elementsOf(helmet.link), ...elementsOf(helmet.script)];
+  return new Set(elements.map((element) => {
+    const { dangerouslySetInnerHTML, ...rest } = element.props as Record<string, unknown> & { dangerouslySetInnerHTML?: { __html?: string } };
+    // The plugin writes every prop as an attribute string. Helmet's boolean
+    // `data-rh` marker becomes "true" so the client recognizes and replaces
+    // these tags, and script contents (JSON-LD) become `children`.
+    const props: Record<string, unknown> = Object.fromEntries(
+      Object.entries(rest).flatMap(([key, value]) => {
+        if (typeof value === "string")
+          return [[key, value]];
+        return value === true ? [[key, "true"]] : [];
+      }),
+    );
+    if (dangerouslySetInnerHTML?.__html) {
+      props.children = dangerouslySetInnerHTML.__html;
+    }
+    return { type: String(element.type), props };
+  }));
 }
 
 function toTitle(helmet: HelmetServerState): string | undefined {
@@ -52,8 +60,15 @@ export async function renderPage(url: string) {
     </StrictMode>,
   );
   const html = await new Response(prelude).text();
+  // Loaders swallow fetch errors so client navigation still renders, so a
+  // failed download (outage, rate limit) is caught here instead of being
+  // published as a "not found" page
+  const failed = queryClient.getQueryCache().getAll().filter(query => query.state.status === "error");
   // Drop cached queries so their gcTime timers do not keep the build process alive
   queryClient.clear();
+  if (failed.length > 0) {
+    throw new Error(`Prerender of ${url} failed to load ${failed.map(query => JSON.stringify(query.queryKey)).join(", ")}`);
+  }
   const helmet = helmetContext.helmet;
 
   return {
