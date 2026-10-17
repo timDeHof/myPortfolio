@@ -165,6 +165,18 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(section).toMatch(/<a[^>]*href="\/projects"[^>]*>All projects/);
   });
 
+  it("renders Background with a 4-row timeline and an About link", async () => {
+    const { html } = await renderPage("/");
+    const section = html.match(/<section[^>]*aria-labelledby="background-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
+    const rows = section.match(/<ol[^>]*aria-label="Short timeline"[\s\S]*?<\/ol>/)?.[0].match(/<li[\s>]/g) ?? [];
+
+    expect(section).toMatch(/<h2 id="background-heading"[^>]*>From the shop floor to the stack<\/h2>/);
+    expect(section).toContain("From 2015 to 2022 I worked as a mechanical engineer");
+    expect(section).toContain("in June 2026 I graduated from the AWS Cloud Institute");
+    expect(rows).toHaveLength(4);
+    expect(section).toMatch(/<a[^>]*href="\/about"[^>]*>More about me/);
+  });
+
   it("has no Services section or /services link on the home page", async () => {
     const { html } = await renderPage("/");
 
