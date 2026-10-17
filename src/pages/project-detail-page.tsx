@@ -257,7 +257,7 @@ const ProjectDetailContent: React.FC<ProjectDetailContentProps> = ({ project, on
 
 export const ProjectDetailPage: React.FC = () => {
   // Use route-specific hook for type-safe params
-  const { slug } = useParams({ from: "/projects/$slug" });
+  const { slug } = useParams({ from: "/projects_/$slug" });
   const { data: project, isLoading, error } = useProject(slug);
 
   if (isLoading) {
