@@ -1,3 +1,5 @@
+import type { Project } from "../types/project";
+
 export const SITE_URL = "https://timdehof.dev";
 
 export interface SEOData {
@@ -76,3 +78,30 @@ export const pageSEO = {
     tags: ["blog", "articles", "tutorials", "web development"],
   },
 };
+
+/**
+ * Head tags for a /projects/$slug page, per the meta template in
+ * docs/v2/pages-v2-copy.md: "<name> — Tim DeHof", and the tagline plus the
+ * first three stack names. The template's role sentence is left out, since
+ * the only role text (resumePitch) is far longer than a meta description.
+ */
+export function projectSEO(project: Project): Partial<SEOData> {
+  const stack = (project.techStack ?? [])
+    .flatMap(item => (typeof item === "string" ? item : item.tech).split("·"))
+    .map(name => name.trim())
+    .filter(Boolean)
+    .slice(0, 3);
+  const builtWith = stack.length > 1
+    ? `${stack.slice(0, -1).join(", ")}, and ${stack[stack.length - 1]}`
+    : stack[0];
+  const summary = project.tagline.replace(/\.$/, "");
+
+  return {
+    title: `${project.name} — Tim DeHof`,
+    description: builtWith ? `${summary}. Built with ${builtWith}.` : `${summary}.`,
+    image: project.image || undefined,
+    type: "article",
+    section: "Projects",
+    tags: project.tags,
+  };
+}

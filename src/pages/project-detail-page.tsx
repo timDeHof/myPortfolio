@@ -1,3 +1,4 @@
+import { SEOHead } from "@components/common/seo-head";
 import { ProjectCaseStudyView } from "@components/projects/project-case-study-view";
 import { Button } from "@components/ui/button";
 import { Card, CardContent } from "@components/ui/card";
@@ -6,6 +7,8 @@ import { useCaseStudy } from "@hooks/use-case-study";
 import { useProject } from "@hooks/use-projects";
 import { Link, useParams } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
+
+import { projectSEO } from "../utils/seo";
 
 export const ProjectDetailPage: React.FC = () => {
   // Use route-specific hook for type-safe params
@@ -51,7 +54,12 @@ export const ProjectDetailPage: React.FC = () => {
     );
   }
 
-  return <ProjectCaseStudyView project={project} caseStudy={caseStudy} />;
+  return (
+    <>
+      <SEOHead seo={projectSEO(project)} />
+      <ProjectCaseStudyView project={project} caseStudy={caseStudy} />
+    </>
+  );
 };
 
 export default ProjectDetailPage;

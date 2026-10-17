@@ -18,7 +18,10 @@ const fixtures: Record<string, unknown> = {
     useCase: "Developers need a timeline that fits shadcn/ui.",
     image: "",
     accentColor: "#3568e8",
-    techStack: [{ category: "Frontend", tech: "React 18", purpose: "Component built with forwardRef" }],
+    techStack: [
+      { category: "Frontend", tech: "React 18 · TypeScript", purpose: "Component built with forwardRef" },
+      { category: "Styling", tech: "Tailwind CSS · CSS Variables", purpose: "Theming" },
+    ],
     advancedFeatures: [{ title: "Multi-state items", description: "Completed, in-progress, and pending states" }],
     resumePitch: "Built and open-sourced the component.",
     tags: [],
@@ -63,5 +66,18 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(html).toContain("Bill of materials");
     expect(html).toContain("Accessibility from the start beats retrofitting");
     expect(html).not.toContain("animate-pulse");
+  });
+
+  it("gives each project page its own title and og tags", async () => {
+    const { head } = await renderPage("/projects/shadcn-timeline");
+    const meta = [...("elements" in head ? head.elements : [])]
+      .filter(element => element.type === "meta")
+      .map(element => element.props);
+    const content = (key: string) => meta.find(props => props.property === key || props.name === key)?.content;
+
+    expect(head.title).toBe("shadcn-timeline — Tim DeHof");
+    expect(content("og:title")).toBe("shadcn-timeline — Tim DeHof");
+    expect(content("description")).toBe("Accessible timeline component for shadcn/ui. Built with React 18, TypeScript, and Tailwind CSS.");
+    expect(content("og:url")).toBe("https://timdehof.dev/projects/shadcn-timeline");
   });
 });
