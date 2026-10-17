@@ -24,7 +24,8 @@ describe("seo rendering without a browser (prerender)", () => {
       pathname: "/projects",
       searchStr: "?project=cognidocs",
       search: { project: "cognidocs" },
-      href: "/projects?project=cognidocs",
+      hash: "gallery",
+      href: "/projects?project=cognidocs#gallery",
     } as unknown as ReturnType<typeof useLocation>);
   });
 
@@ -46,6 +47,19 @@ describe("seo rendering without a browser (prerender)", () => {
     expect(link).toContain("href=\"https://timdehof.dev/projects?project=cognidocs\"");
     expect(meta).toContain("content=\"https://timdehof.dev/projects?project=cognidocs\"");
     expect(meta).toContain("content=\"https://timdehof.dev/og-image.jpg\"");
+  });
+
+  it("leaves the hash fragment out of canonical and og:url", () => {
+    const context: { helmet?: HelmetServerState } = {};
+
+    renderToString(
+      <HelmetProvider context={context}>
+        <SEOHead seo={{ title: "Projects" }} />
+      </HelmetProvider>,
+    );
+
+    expect(context.helmet?.link.toString()).not.toContain("#gallery");
+    expect(context.helmet?.meta.toString()).not.toContain("#gallery");
   });
 
   it("builds the useSEO url from the site origin and the search string", () => {

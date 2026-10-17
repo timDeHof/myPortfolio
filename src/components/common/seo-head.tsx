@@ -20,7 +20,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ seo = defaultSEOProp, structur
     description = defaultSEO.description,
     keywords = defaultSEO.keywords,
     image = defaultSEO.image,
-    url = `${SITE_URL}${location.href}`,
+    url = `${SITE_URL}${location.pathname}${location.searchStr}`,
     type = defaultSEO.type,
     author = defaultSEO.author,
     publishedTime,
