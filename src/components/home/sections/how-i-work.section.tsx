@@ -33,16 +33,16 @@ function HowIWork() {
           <h2 id="how-i-work-heading" className="text-[clamp(1.6rem,3.2vw,2.1rem)] font-bold text-foreground">What manufacturing taught me about software</h2>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-5 xl:grid-cols-3">
           {PRINCIPLES.map(principle => (
             <div key={principle.title} className="grid content-start gap-2.5 border-t-2 border-teal-700 pt-[18px] dark:border-teal-400">
-              <p className="font-mono text-[11.5px] tracking-[0.04em] text-muted-foreground">
+              <p className="font-mono text-[13px] tracking-[0.04em] text-muted-foreground">
                 <b className="font-medium text-foreground">Shop floor:</b>
                 {" "}
                 {principle.from}
               </p>
               <h3 className="text-lg font-semibold text-foreground">{principle.title}</h3>
-              <p className="text-muted-foreground">{principle.body}</p>
+              <p className="max-w-[52ch] text-muted-foreground">{principle.body}</p>
             </div>
           ))}
         </div>

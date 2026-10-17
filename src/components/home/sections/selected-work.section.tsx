@@ -75,7 +75,7 @@ function SelectedWork({ stars }: SelectedWorkProps) {
 
               <div>
                 <h3 className="mb-1.5 text-xl font-semibold text-foreground">{project.name}</h3>
-                <p className="text-muted-foreground">{project.description}</p>
+                <p className="max-w-[55ch] text-muted-foreground text-pretty">{project.description}</p>
                 <ul aria-label="Stack" className="mt-3 flex flex-wrap gap-1.5">
                   {project.tags.map(tag => (
                     <li key={tag} className="rounded-[5px] bg-background px-2 py-[3px] font-mono text-[11.5px] text-muted-foreground">{tag}</li>

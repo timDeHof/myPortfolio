@@ -4,6 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", ui-monospace, monospace;
+
   /* Blueprint Palette - Light */
   --color-background: 220 14% 96%; /* Snow */
   --color-foreground: 222 47% 11%; /* Ink */

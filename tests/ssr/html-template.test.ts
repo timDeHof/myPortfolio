@@ -18,4 +18,15 @@ describe("index.html template", () => {
     expect(template).not.toMatch(/\.hero-section\b/);
     expect(template).not.toMatch(/\.hero-title\b/);
   });
+
+  // The CSS names JetBrains Mono first in every mono stack, so without this
+  // load the title block and other mono text fall back to a smaller font.
+  it("loads JetBrains Mono from Google Fonts, with and without JavaScript", () => {
+    const fontUrls = template.match(/https:\/\/fonts\.googleapis\.com\/css2\?[^"]+/g) ?? [];
+
+    expect(fontUrls).toHaveLength(2);
+    for (const url of fontUrls) {
+      expect(url).toContain("family=JetBrains+Mono:wght@400;500;700");
+    }
+  });
 });

@@ -150,6 +150,22 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(section).toContain("Root cause first.");
     expect(section).toContain("Design for the constraint.");
     expect(section).toContain("Built to be handed off.");
+    // 13px, not the prototype's 11.5px, which read smaller than the eyebrow (D23)
+    const shopFloorLines = section.match(/<p class="[^"]*"><b[^>]*>Shop floor:<\/b>/g) ?? [];
+    expect(shopFloorLines).toHaveLength(3);
+    for (const line of shopFloorLines) {
+      expect(line).toMatch(/class="[^"]*\btext-\[13px\][^"]*"/);
+    }
+    // At 13px the longest line wraps in a 272px column at 1024px, so three
+    // columns wait for xl
+    expect(section).toMatch(/<div class="grid gap-5 xl:grid-cols-3">/);
+    expect(section).not.toContain("md:grid-cols-3");
+    // Single column runs up to 1279px. 52ch keeps lines under 80 characters there
+    const bodies = section.match(/<\/h3><p class="[^"]*">/g) ?? [];
+    expect(bodies).toHaveLength(3);
+    for (const body of bodies) {
+      expect(body).toMatch(/\bmax-w-\[52ch\]/);
+    }
     // Prototype class names have no styles in the app
     expect(section).not.toMatch(/class="(eyebrow|section-head|principles|principle)"/);
   });
@@ -169,6 +185,10 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(cards[1]).toMatch(/<h3[^>]*>TeamForward<\/h3>/);
     expect(cards[1]).toContain("web-push-neo");
     expect(cards[1]).toContain("href=\"/projects/teamforward\"");
+    // 55ch with text-pretty: the longest line is 79 characters at 1440px and wider
+    for (const card of cards) {
+      expect(card).toMatch(/<\/h3><p class="[^"]*\bmax-w-\[55ch\][^"]*">/);
+    }
     expect(section).toMatch(/<a[^>]*href="\/projects"[^>]*>All projects/);
   });
 
