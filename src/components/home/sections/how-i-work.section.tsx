@@ -28,9 +28,9 @@ function HowIWork() {
   return (
     <section aria-labelledby="how-i-work-heading" className="border-b border-border py-14 md:py-18">
       <MaxWidthWrapper>
-        <div className="mb-9 grid max-w-[640px] gap-2.5">
+        <div className="mb-9 grid max-w-[800px] gap-2.5">
           <p className="font-mono text-xs uppercase tracking-[0.06em] text-teal-700 dark:text-teal-400">How I work</p>
-          <h2 id="how-i-work-heading" className="text-[clamp(1.6rem,3.2vw,2.1rem)] font-bold text-foreground">What the engineering background changed</h2>
+          <h2 id="how-i-work-heading" className="text-[clamp(1.6rem,3.2vw,2.1rem)] font-bold text-foreground">What manufacturing taught me about software</h2>
         </div>
 
         <div className="grid gap-5 md:grid-cols-3">

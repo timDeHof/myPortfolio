@@ -138,7 +138,7 @@ describe("prerendered routes contain their content, not the loading state", () =
     const { html } = await renderPage("/");
     const section = html.match(/<section aria-labelledby="how-i-work-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
 
-    expect(section).toMatch(/<h2 id="how-i-work-heading"[^>]*>What the engineering background changed<\/h2>/);
+    expect(section).toMatch(/<h2 id="how-i-work-heading"[^>]*>What manufacturing taught me about software<\/h2>/);
     expect(section.match(/<h3[\s>]/g)).toHaveLength(3);
     expect(section).toContain("Root cause first.");
     expect(section).toContain("Design for the constraint.");
