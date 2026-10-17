@@ -134,6 +134,7 @@ describe("prerendered routes contain their content, not the loading state", () =
     const h1s = html.match(/<h1[\s>]/g) ?? [];
 
     expect(h1s).toHaveLength(1);
+    expect(html).toMatch(/<section aria-labelledby="hero-heading" class="[^"]*\bhero-grid\b[^"]*">/);
     expect(html).toContain("I spent seven years engineering physical products.");
     expect(html).toContain("aria-label=\"Engineering drawing title block\"");
     expect(html).toMatch(/<a[^>]*href="\/projects"[^>]*>See my work<\/a>/);

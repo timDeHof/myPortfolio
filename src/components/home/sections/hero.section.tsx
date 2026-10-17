@@ -32,7 +32,7 @@ const TITLE_BLOCK: TitleBlockCell[] = [
 
 function Hero({ stars }: HeroProps) {
   return (
-    <section aria-labelledby="hero-heading" className="border-b border-border py-16 md:py-20">
+    <section aria-labelledby="hero-heading" className="hero-grid border-b border-border py-16 md:py-20">
       <MaxWidthWrapper>
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-14">
           <div className="grid min-w-0 gap-6">
