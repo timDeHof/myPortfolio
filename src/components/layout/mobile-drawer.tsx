@@ -1,3 +1,5 @@
+import type { Variants } from "framer-motion";
+
 import { Link } from "@tanstack/react-router";
 import { m, useReducedMotion } from "framer-motion";
 import { CodeXml, Download, Moon, Sun } from "lucide-react";
@@ -19,12 +21,12 @@ interface MobileDrawerProps {
   resumeUrl?: string;
 }
 
-const backdropVariants = {
+const backdropVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
 };
 
-const drawerVariants = {
+const drawerVariants: Variants = {
   hidden: { x: "100%" },
   visible: {
     x: 0,
@@ -36,7 +38,7 @@ const drawerVariants = {
   },
 };
 
-const contentPushVariants = {
+const contentPushVariants: Variants = {
   hidden: { x: 0, scale: 1 },
   visible: {
     x: -20,
@@ -50,14 +52,14 @@ const contentPushVariants = {
   },
 };
 
-const listVariants = {
+const listVariants: Variants = {
   hidden: {},
   visible: {
     transition: { staggerChildren: 0.05 },
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, x: 20 },
   visible: {
     opacity: 1,

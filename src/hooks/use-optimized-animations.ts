@@ -7,7 +7,7 @@ import { useCallback, useRef } from "react";
  * @returns An object containing animation control functions.
  */
 export function useOptimizedAnimations() {
-  const rafId = useRef<number>();
+  const rafId = useRef<number | undefined>(undefined);
 
   /**
    * Schedules a callback to be executed on the next animation frame.

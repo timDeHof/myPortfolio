@@ -1,3 +1,4 @@
+import type { TargetAndTransition, Transition } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 
 import { m, useReducedMotion } from "framer-motion";
@@ -19,9 +20,9 @@ interface AnimatedIconProps {
    * Framer Motion animation properties.
    */
   animationProps: {
-    initial?: Record<string, unknown>;
-    animate?: Record<string, unknown>;
-    transition?: Record<string, unknown>;
+    initial?: TargetAndTransition;
+    animate?: TargetAndTransition;
+    transition?: Transition;
   };
   /**
    * CSS class name for the motion container.

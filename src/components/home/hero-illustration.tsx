@@ -1,3 +1,5 @@
+import type { TargetAndTransition } from "framer-motion";
+
 import { m, useReducedMotion } from "framer-motion";
 
 /**
@@ -8,14 +10,14 @@ import { m, useReducedMotion } from "framer-motion";
 export const HeroIllustration: React.FC = () => {
   const shouldReduceMotion = useReducedMotion() ?? false;
 
-  const floatAnimation = shouldReduceMotion
+  const floatAnimation: TargetAndTransition = shouldReduceMotion
     ? {}
     : {
         y: [0, -8, 0],
         transition: { duration: 4, repeat: Infinity, ease: "easeInOut" },
       };
 
-  const pulseAnimation = shouldReduceMotion
+  const pulseAnimation: TargetAndTransition = shouldReduceMotion
     ? {}
     : {
         scale: [1, 1.05, 1],

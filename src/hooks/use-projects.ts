@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { githubAPI } from "@/services/api/github";
 
+import type { ProjectIndexEntry } from "../data/projects-index";
 import type { Project } from "../types/project";
 
 import { findProjectBySlug, projectsIndex } from "../data/projects-index";
@@ -14,7 +15,7 @@ export interface ProjectWithSource extends Project {
  * Shared helper that fetches project data from GitHub with fallback to static data.
  */
 async function fetchProjectWithFallback(
-  entry: { owner: string; repo: string; path: string; slug: string; fallbackData?: Project },
+  entry: ProjectIndexEntry,
 ): Promise<ProjectWithSource> {
   try {
     const projectJson = await githubAPI.fetchContents<Project>(entry.owner, entry.repo, entry.path);

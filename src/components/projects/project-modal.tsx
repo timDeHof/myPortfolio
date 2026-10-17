@@ -1,14 +1,14 @@
 import { AnimatePresence, m } from "framer-motion";
 import React, { Suspense } from "react";
 
-import type { Project } from "../../types/project";
+import type { ProjectWithSource } from "../../hooks/use-projects";
 
 interface ProjectModalProps {
   isOpen: boolean;
-  project: Project | null;
+  project: ProjectWithSource | null;
   isLoading: boolean;
   onClose: () => void;
-  children: (project: Project) => React.ReactNode;
+  children: (project: ProjectWithSource) => React.ReactNode;
 }
 
 function ModalLoadingSkeleton({ variant }: { variant: "mobile" | "desktop" }) {

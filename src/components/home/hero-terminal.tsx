@@ -200,6 +200,8 @@ export function HeroTerminal() {
     if (!body) {
       return;
     }
+    // Hoisted function declarations below don't keep the null check above
+    const terminalBody: HTMLDivElement = body;
 
     /* Reset */
     body.replaceChildren();
@@ -271,12 +273,12 @@ export function HeroTerminal() {
         fragment.appendChild(div);
       });
 
-      body.appendChild(fragment);
+      terminalBody.appendChild(fragment);
 
       /* Trigger reflow then animate in */
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          body.querySelectorAll(".terminal-line.opacity-0").forEach((el) => {
+          terminalBody.querySelectorAll(".terminal-line.opacity-0").forEach((el) => {
             el.classList.remove("opacity-0", "translate-y-2");
             el.classList.add("opacity-100", "translate-y-0");
           });

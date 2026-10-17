@@ -20,7 +20,7 @@
     "preview": "vite preview",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc -p tsconfig.app.json --noEmit",
     "test": "vitest",
     "test:browser": "vitest --config vitest.browser.config.ts",
     "coverage": "vitest run --coverage",

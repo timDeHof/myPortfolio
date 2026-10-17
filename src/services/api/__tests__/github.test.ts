@@ -1,4 +1,8 @@
+import type { Mock } from "vitest";
+
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import type { GitHubRepository } from "../../../types/github";
 
 import { env } from "../../../lib/env";
 import { queryClient } from "../../../lib/query-client";
@@ -24,12 +28,10 @@ vi.mock("../../../lib/query-client", () => ({
   },
 }));
 
-// Mock console for asserting logs
-const _consoleSpy = {
-  log: vi.spyOn(console, "log").mockImplementation(() => {}),
-  error: vi.spyOn(console, "error").mockImplementation(() => {}),
-  warn: vi.spyOn(console, "warn").mockImplementation(() => {}),
-};
+// Silence console output from the code under test
+vi.spyOn(console, "log").mockImplementation(() => {});
+vi.spyOn(console, "error").mockImplementation(() => {});
+vi.spyOn(console, "warn").mockImplementation(() => {});
 
 describe("gitHubAPIError", () => {
   it("should correctly initialize with message", () => {
@@ -204,8 +206,10 @@ describe("githubAPI.fetchRepositories", () => {
 
 describe("githubAPI.categorizeRepository", () => {
   it("should categorize a non-fork with portfolio topic as showcase", () => {
-    const repo = {
+    const repo: GitHubRepository = {
+      id: 1,
       name: "portfolio-app",
+      full_name: "timDeHof/portfolio-app",
       fork: false,
       topics: ["portfolio"],
       stargazers_count: 1,
@@ -225,8 +229,10 @@ describe("githubAPI.categorizeRepository", () => {
   });
 
   it("should categorize a non-fork with high showcase score as showcase", () => {
-    const repo = {
+    const repo: GitHubRepository = {
+      id: 1,
       name: "high-score-app",
+      full_name: "timDeHof/high-score-app",
       fork: false,
       topics: ["react", "nextjs", "tailwind"],
       stargazers_count: 10,
@@ -246,8 +252,10 @@ describe("githubAPI.categorizeRepository", () => {
   });
 
   it("should categorize a non-fork with low score as personal", () => {
-    const repo = {
+    const repo: GitHubRepository = {
+      id: 1,
       name: "small-tool",
+      full_name: "timDeHof/small-tool",
       fork: false,
       topics: [],
       stargazers_count: 0,
@@ -267,8 +275,10 @@ describe("githubAPI.categorizeRepository", () => {
   });
 
   it("should categorize a fork with meaningful contributions as contribution", () => {
-    const repo = {
+    const repo: GitHubRepository = {
+      id: 1,
       name: "contributed-lib",
+      full_name: "timDeHof/contributed-lib",
       fork: true,
       topics: [],
       stargazers_count: 2,
@@ -288,8 +298,10 @@ describe("githubAPI.categorizeRepository", () => {
   });
 
   it("should categorize a simple fork as fork", () => {
-    const repo = {
+    const repo: GitHubRepository = {
+      id: 1,
       name: "cloned-repo",
+      full_name: "timDeHof/cloned-repo",
       fork: true,
       topics: [],
       stargazers_count: 0,
@@ -311,7 +323,7 @@ describe("githubAPI.categorizeRepository", () => {
 
 describe("githubAPI.fetchRepositoryLanguages", () => {
   let originalConsoleWarn: (message?: any, ...optionalParams: any[]) => void;
-  let mockConsoleWarn: ReturnType<typeof vi.fn>;
+  let mockConsoleWarn: Mock<typeof console.warn>;
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -319,7 +331,7 @@ describe("githubAPI.fetchRepositoryLanguages", () => {
 
     // Capture original console.warn and replace with mock
     originalConsoleWarn = console.warn;
-    mockConsoleWarn = vi.fn();
+    mockConsoleWarn = vi.fn<typeof console.warn>();
     console.warn = mockConsoleWarn;
   });
 
@@ -410,7 +422,7 @@ describe("githubCache", () => {
 
   it("should get cached repositories", () => {
     const mockCachedRepos = [{ id: 1, name: "cached-repo" }];
-    (queryClient.getQueryData as vi.Mock).mockReturnValue(mockCachedRepos);
+    (queryClient.getQueryData as Mock).mockReturnValue(mockCachedRepos);
     const cachedRepos = githubCache.getCachedRepositories();
     expect(queryClient.getQueryData).toHaveBeenCalledWith(["github", "repositories", "timDeHof"]);
     expect(cachedRepos).toEqual(mockCachedRepos);

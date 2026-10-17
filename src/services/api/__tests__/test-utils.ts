@@ -9,7 +9,7 @@ export function createMockFetch(
   body: unknown,
   headers: HeadersInit = { "Content-Type": "application/json" },
 ) {
-  return vi.fn(() =>
+  return vi.fn<typeof fetch>(() =>
     Promise.resolve({
       ok: status >= 200 && status < 300,
       status,
@@ -17,6 +17,6 @@ export function createMockFetch(
       json: () => Promise.resolve(body),
       text: () => Promise.resolve(typeof body === "string" ? body : JSON.stringify(body)),
       headers: new Headers(headers),
-    }),
+    } as Response),
   );
 }

@@ -21,7 +21,7 @@ const GitHubStatsSection = lazy(() => import("../components/github/github-stats-
 
 export const ProjectsPage: React.FC = () => {
   const { projects } = Route.useLoaderData();
-  const navigate = useNavigate();
+  const navigate = useNavigate({ from: Route.fullPath });
   const search = Route.useSearch();
   const selectedSlug = search.project;
 
