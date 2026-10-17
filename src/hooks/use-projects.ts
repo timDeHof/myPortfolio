@@ -1,6 +1,6 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
-import { githubAPI } from "@/services/api/github";
+import { githubAPI, GitHubAPIError } from "@/services/api/github";
 
 import type { ProjectIndexEntry } from "../data/projects-index";
 import type { Project } from "../types/project";
@@ -25,7 +25,7 @@ async function fetchProjectWithFallback(
       source: "project-json" as const,
     };
   }
-  catch {
+  catch (error) {
     if (entry.fallbackData) {
       return {
         ...entry.fallbackData,
@@ -33,7 +33,13 @@ async function fetchProjectWithFallback(
         source: "fallback" as const,
       };
     }
-    throw new Error(`No data found for project: ${entry.slug}`);
+    const message = `No data found for project: ${entry.slug}`;
+    // Keep the status, so the query client can tell a missing file (no retry)
+    // from a network or server error (retry)
+    if (error instanceof GitHubAPIError) {
+      throw new GitHubAPIError(error.status, error.statusText, error.url, message);
+    }
+    throw new Error(message);
   }
 }
 
