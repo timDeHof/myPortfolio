@@ -8,6 +8,7 @@ import tailwindcss from '@tailwindcss/vite';
 import {visualizer} from "rollup-plugin-visualizer";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
+import { vitePrerenderPlugin } from 'vite-prerender-plugin';
 import { writeSitemap } from './scripts/sitemap';
 
 // Regenerates public/sitemap.xml from the route list and projects-index before
@@ -34,6 +35,11 @@ export default defineConfig(({ mode }) => ({
       autoCodeSplitting: true,
     }),
     react(),
+    vitePrerenderPlugin({
+      renderTarget: '#app',
+      prerenderScript: resolve(__dirname, 'src/index.tsx'),
+      additionalPrerenderRoutes: ['/about'],
+    }),
     tailwindcss(),
     viteTsconfigPaths(),
     ...(mode === 'production' ? [cloudflare({

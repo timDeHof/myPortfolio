@@ -1,3 +1,6 @@
+import type { RouterHistory } from "@tanstack/react-router";
+import type { HelmetServerState } from "react-helmet-async";
+
 import { QueryClientProvider } from "@tanstack/react-query";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { domAnimation, LazyMotion } from "framer-motion";
@@ -10,20 +13,24 @@ import { env } from "./lib/env";
 import { queryClient } from "./lib/query-client";
 import { routeTree } from "./routeTree.gen";
 
-// Create router instance
-const router = createRouter({ routeTree });
+// Prerendering passes a memory history and the site origin, since Node has no window
+export function createAppRouter(options: { history?: RouterHistory; origin?: string } = {}) {
+  return createRouter({ routeTree, ...options });
+}
+
+type AppRouter = ReturnType<typeof createAppRouter>;
 
 // Register router types for TypeScript
 declare module "@tanstack/react-router" {
   interface Register {
-    router: typeof router;
+    router: AppRouter;
   }
 }
 
 // Move lazy() call outside the component
 const ReactQueryDevtoolsProduction = env.VITE_NODE_ENV === "development" ? lazy(() => import("@tanstack/react-query-devtools").then(module => ({ default: module.ReactQueryDevtools }))) : null;
 
-function AppContent() {
+function AppContent({ router }: { router: AppRouter }) {
   // Initialize theme
   useTheme();
 
@@ -36,13 +43,18 @@ function AppContent() {
   );
 }
 
-function App() {
+interface AppProps {
+  router: AppRouter;
+  helmetContext?: { helmet?: HelmetServerState };
+}
+
+function App({ router, helmetContext }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <HelmetProvider>
+      <HelmetProvider context={helmetContext}>
         <ErrorBoundary>
           <LazyMotion features={domAnimation} strict>
-            <AppContent />
+            <AppContent router={router} />
           </LazyMotion>
         </ErrorBoundary>
       </HelmetProvider>
