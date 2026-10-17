@@ -16,34 +16,22 @@ export const projectsIndex: ProjectIndexEntry[] = [
     path: "shadcn-timeline.json",
   },
   {
+    slug: "teamforward",
+    owner: "timDeHof",
+    repo: "portfolio-metadata",
+    path: "teamforward.json",
+  },
+  {
     slug: "cognidocs",
     owner: "timDeHof",
     repo: "portfolio-metadata",
     path: "cognidocs.json",
   },
   {
-    slug: "roomify",
-    owner: "timDeHof",
-    repo: "portfolio-metadata",
-    path: "roomify.json",
-  },
-  {
-    slug: "3d-product-configurator",
-    owner: "timDeHof",
-    repo: "portfolio-metadata",
-    path: "3d-product-configurator.json",
-  },
-  {
     slug: "habitgate-mobile",
     owner: "timDeHof",
     repo: "portfolio-metadata",
     path: "habitgate-mobile.json",
-  },
-  {
-    slug: "scanpic",
-    owner: "timDeHof",
-    repo: "portfolio-metadata",
-    path: "scanpic.json",
   },
 ];
 
