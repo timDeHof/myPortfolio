@@ -66,4 +66,13 @@ describe("project case study view", () => {
     const headings = screen.getAllByRole("heading", { level: 2 }).map(h => h.textContent);
     expect(headings).toEqual(["Problem", "Decisions", "Bill of materials"]);
   });
+
+  it("renders Result when the case study's impact has no metrics", () => {
+    const partial = { impact: { title: "Results & Impact", achievements: ["Listed in awesome-shadcn-ui"] } } as unknown as CaseStudyData;
+
+    render(<ProjectCaseStudyView project={project} caseStudy={partial} />);
+
+    expect(screen.getByRole("heading", { level: 2, name: "Result" })).toBeInTheDocument();
+    expect(screen.getByText("Listed in awesome-shadcn-ui")).toBeInTheDocument();
+  });
 });

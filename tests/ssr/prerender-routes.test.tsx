@@ -3,12 +3,13 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { queryClient } from "../../src/lib/query-client";
 import { renderPage } from "../../src/prerender";
+import { githubAPI } from "../../src/services/api/github";
 
 // Data the prerender build would fetch from timDeHof/portfolio-metadata
 const fixtures: Record<string, unknown> = {
   "portfolio.json": {
     services: [{ id: 1, title: "Frontend builds", paragraphs: ["React and TypeScript applications."] }],
-    certifications: [],
+    certifications: [{ name: "Fixture Cloud Certificate", issuer: "Fixture Issuer", date: "2024-01-01" }],
   },
   "shadcn-timeline.json": {
     number: "01",
@@ -51,6 +52,10 @@ afterEach(() => {
   queryClient.clear();
 });
 
+function metaProps(head: Awaited<ReturnType<typeof renderPage>>["head"]) {
+  return [...("elements" in head ? head.elements : [])].filter(element => element.type === "meta").map(element => element.props);
+}
+
 describe("prerendered routes contain their content, not the loading state", () => {
   it("renders the project case study on /projects/$slug", async () => {
     const { html } = await renderPage("/projects/shadcn-timeline");
@@ -72,5 +77,48 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(content("og:title")).toBe("shadcn-timeline — Tim DeHof");
     expect(content("description")).toBe("Accessible timeline component for shadcn/ui. Built with React 18, TypeScript, and Tailwind CSS.");
     expect(content("og:url")).toBe("https://timdehof.dev/projects/shadcn-timeline");
+  });
+
+  it("keeps Helmet's data-rh marker so the client replaces the static tags", async () => {
+    const { head } = await renderPage("/projects/shadcn-timeline");
+    const meta = metaProps(head);
+
+    expect(meta.length).toBeGreaterThan(0);
+    expect(meta.every(props => props["data-rh"] === "true")).toBe(true);
+  });
+
+  it("keeps the home page's JSON-LD script in the head", async () => {
+    const { head } = await renderPage("/");
+    const scripts = [...("elements" in head ? head.elements : [])].filter(element => element.type === "script");
+
+    expect(scripts).toHaveLength(1);
+    expect(scripts[0].props.type).toBe("application/ld+json");
+    expect(String(scripts[0].props.children)).toContain("\"@type\":\"Person\"");
+  });
+
+  it("renders the certifications on /about instead of the spinner", async () => {
+    const { html } = await renderPage("/about");
+
+    expect(html).toContain("Fixture Cloud Certificate");
+  });
+
+  // About 7s: the project fetch rethrows without "404", so the query client
+  // retries it 3 times with backoff before the query errors
+  it("fails the build when a page's data download fails", { timeout: 30000 }, async () => {
+    const fetchContents = vi.mocked(githubAPI.fetchContents);
+    const fixtureFetch = fetchContents.getMockImplementation()!;
+    fetchContents.mockImplementation(async (owner, repo, path) => {
+      if (path.endsWith("shadcn-timeline.json")) {
+        throw new Error("404: rate limited");
+      }
+      return fixtureFetch(owner, repo, path);
+    });
+
+    try {
+      await expect(renderPage("/projects/shadcn-timeline")).rejects.toThrow(/project/);
+    }
+    finally {
+      fetchContents.mockImplementation(fixtureFetch);
+    }
   });
 });

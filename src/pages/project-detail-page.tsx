@@ -8,13 +8,16 @@ import { useProject } from "@hooks/use-projects";
 import { Link, useParams } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 
+import { CASE_STUDY_SLUGS } from "../types/project";
 import { projectSEO } from "../utils/seo";
 
 export const ProjectDetailPage: React.FC = () => {
   // Use route-specific hook for type-safe params
   const { slug } = useParams({ from: "/projects_/$slug" });
   const { data: project, isLoading, error } = useProject(slug);
-  const { data: caseStudy } = useCaseStudy(slug);
+  // An empty slug disables the query, so projects without a case study
+  // don't request a file that comes back "Not Found" and gets retried
+  const { data: caseStudy } = useCaseStudy(CASE_STUDY_SLUGS.includes(slug) ? slug : "");
 
   if (isLoading) {
     return (

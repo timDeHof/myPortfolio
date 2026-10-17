@@ -47,7 +47,8 @@ export function ProjectCaseStudyView({ project, caseStudy }: ProjectCaseStudyVie
   const steps = toSteps(project.workflow);
   const techItems = toTechItems(project.techStack);
   const challenges = caseStudy?.challenges?.items ?? [];
-  const impact = caseStudy?.impact;
+  const impactMetrics = caseStudy?.impact?.metrics ?? [];
+  const impactAchievements = caseStudy?.impact?.achievements ?? [];
   const learnings = caseStudy?.learnings?.items ?? [];
   const hasLinks = Boolean(project.links?.demo || project.links?.github);
 
@@ -149,11 +150,11 @@ export function ProjectCaseStudyView({ project, caseStudy }: ProjectCaseStudyVie
             </section>
           )}
 
-          {impact && (
+          {(impactMetrics.length > 0 || impactAchievements.length > 0) && (
             <section className="mt-10 space-y-4">
               <h2 className={HEADING}>Result</h2>
               <dl className="grid grid-cols-3 gap-4">
-                {impact.metrics.map(metric => (
+                {impactMetrics.map(metric => (
                   <div key={metric.label}>
                     <dt className="text-xs uppercase tracking-wider text-muted-foreground">{metric.label}</dt>
                     <dd className="text-2xl font-bold text-foreground">{metric.value}</dd>
@@ -161,7 +162,7 @@ export function ProjectCaseStudyView({ project, caseStudy }: ProjectCaseStudyVie
                 ))}
               </dl>
               <ul className="list-disc space-y-1 pl-5 text-foreground">
-                {impact.achievements.map(achievement => <li key={achievement}>{achievement}</li>)}
+                {impactAchievements.map(achievement => <li key={achievement}>{achievement}</li>)}
               </ul>
             </section>
           )}
