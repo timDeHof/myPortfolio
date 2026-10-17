@@ -109,7 +109,7 @@ function Hero({ stars }: HeroProps) {
                       !isLastRow && "border-b",
                     )}
                   >
-                    <dt className="mb-1 text-[10px] uppercase tracking-[0.08em] text-muted-foreground">{cell.label}</dt>
+                    <dt className="mb-1 text-[11px] uppercase tracking-[0.08em] text-muted-foreground">{cell.label}</dt>
                     <dd className="text-foreground [overflow-wrap:anywhere]">
                       {Array.isArray(cell.value)
                         ? cell.value.map(line => <span key={line} className="block">{line}</span>)

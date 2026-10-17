@@ -137,6 +137,13 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(html).toMatch(/<section aria-labelledby="hero-heading" class="[^"]*\bhero-grid\b[^"]*">/);
     expect(html).toContain("I spent seven years engineering physical products.");
     expect(html).toContain("aria-label=\"Engineering drawing title block\"");
+    // 11px, not the prototype's 10px, which read too small next to the 12.5px values
+    const titleBlock = html.match(/<dl aria-label="Engineering drawing title block"[\s\S]*?<\/dl>/)?.[0] ?? "";
+    const labels = titleBlock.match(/<dt class="[^"]*">/g) ?? [];
+    expect(labels).toHaveLength(8);
+    for (const label of labels) {
+      expect(label).toMatch(/\btext-\[11px\]/);
+    }
     expect(html).toMatch(/<a[^>]*href="\/projects"[^>]*>See my work<\/a>/);
     expect(html).not.toContain("Loading Hero Section");
   });
