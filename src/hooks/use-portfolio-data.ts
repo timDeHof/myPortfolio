@@ -8,7 +8,6 @@ async function fetchPortfolioData(): Promise<PortfolioData> {
   return githubAPI.fetchContents<PortfolioData>("timDeHof", "portfolio-metadata", "portfolio.json");
 }
 
-// Shared with the /services route loader, which fills the cache before render
 export const portfolioDataQuery = queryOptions({
   queryKey: ["portfolio"],
   queryFn: fetchPortfolioData,

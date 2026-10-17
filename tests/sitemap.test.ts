@@ -26,6 +26,8 @@ describe("sitemap", () => {
       .map(f => f.replace(/\.(lazy\.)?tsx$/, ""))
       // projects.$slug is covered by the per-project URLs below
       .filter(f => !f.includes("$"))
+      // services.tsx only redirects to /contact (P1)
+      .filter(f => f !== "services")
       .map(f => (f === "index" ? "/" : `/${f.replace(/\./g, "/")}`));
 
     for (const path of routePaths) {

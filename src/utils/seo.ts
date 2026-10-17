@@ -56,13 +56,6 @@ export const pageSEO = {
     section: "Projects",
     tags: ["projects", "portfolio", "web-apps"],
   },
-  services: {
-    title: "Services - Web Development Solutions",
-    description: "Discover the web development services I offer, from full-stack applications to cutting-edge technology implementations.",
-    keywords: "web development services, React development, Node.js development, full stack services",
-    section: "Services",
-    tags: ["services", "web-development", "consulting"],
-  },
   contact: {
     title: "Contact Tim DeHof - Let's Work Together",
     description: "Get in touch to discuss your next project. I'm always excited to work on new challenges and innovative solutions.",

@@ -52,13 +52,6 @@ afterEach(() => {
 });
 
 describe("prerendered routes contain their content, not the loading state", () => {
-  it("renders the services list on /services", async () => {
-    const { html } = await renderPage("/services");
-
-    expect(html).toContain("Frontend builds");
-    expect(html).not.toContain("Loading services");
-  });
-
   it("renders the project case study on /projects/$slug", async () => {
     const { html } = await renderPage("/projects/shadcn-timeline");
 

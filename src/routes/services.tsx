@@ -1,13 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-import { portfolioDataQuery } from "../hooks/use-portfolio-data";
-import { queryClient } from "../lib/query-client";
-
+// The Services page moved to Jokma's site (P1). public/_redirects sends full
+// page loads of /services to /contact with a 301. This covers what reaches the
+// client router instead: in-app links and the service worker's index.html
+// fallback for repeat visitors.
 export const Route = createFileRoute("/services")({
-  // Fill the query cache before render, so the prerendered HTML has the
-  // services instead of the loading state. A failed fetch still renders the
-  // page, which shows its own error state.
-  loader: async () => {
-    await queryClient.ensureQueryData(portfolioDataQuery).catch(() => undefined);
+  beforeLoad: () => {
+    throw redirect({ to: "/contact", replace: true });
   },
 });
