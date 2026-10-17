@@ -197,6 +197,18 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(html).not.toContain("services-section");
   });
 
+  it("uses the v2 accent and line buttons in the hero, Contact and footer", async () => {
+    const { html } = await renderPage("/");
+    const contact = html.match(/<section[^>]*aria-labelledby="contact-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
+    const footer = html.match(/<footer[\s\S]*?<\/footer>/)?.[0] ?? "";
+
+    expect(html).toMatch(/<a href="\/projects" class="[^"]*btn--accent[^"]*">See my work<\/a>/);
+    expect(contact).toMatch(/<a href="mailto:tim@timdehof.dev" class="[^"]*btn--accent[^"]*">/);
+    expect(contact).toMatch(/<a href="https:\/\/www.linkedin.com\/in\/tim-dehof\/"[^>]*class="[^"]*btn--line[^"]*">/);
+    expect(contact).toMatch(/<a href="https:\/\/github.com\/timDeHof"[^>]*class="[^"]*btn--line[^"]*">/);
+    expect(footer).toMatch(/<a href="\/contact" class="[^"]*btn--accent[^"]*">/);
+  });
+
   it("links the footer to the real GitHub profile on pages that don't load portfolio data", async () => {
     const { html } = await renderPage("/contact");
 

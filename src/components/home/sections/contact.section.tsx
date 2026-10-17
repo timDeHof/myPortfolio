@@ -24,11 +24,11 @@ function Contact() {
           </p>
 
           <div className="flex flex-wrap gap-3">
-            <Button asChild>
+            <Button asChild variant="accent">
               <a href="mailto:tim@timdehof.dev">Email me</a>
             </Button>
             {PROFILES.map(profile => (
-              <Button key={profile.href} asChild variant="outline">
+              <Button key={profile.href} asChild variant="line">
                 <a href={profile.href} target="_blank" rel="noopener noreferrer">{profile.label}</a>
               </Button>
             ))}

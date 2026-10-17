@@ -76,11 +76,11 @@ function Hero({ stars }: HeroProps) {
             </ul>
 
             <div className="flex flex-wrap gap-3">
-              <Button asChild>
+              <Button asChild variant="accent">
                 <Link to="/projects">See my work</Link>
               </Button>
               {env.VITE_RESUME_URL && (
-                <Button asChild variant="outline">
+                <Button asChild variant="line">
                   <a href={env.VITE_RESUME_URL} target="_blank" rel="noopener noreferrer">
                     Résumé (PDF)
                   </a>
