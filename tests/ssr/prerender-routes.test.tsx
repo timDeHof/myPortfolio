@@ -437,6 +437,9 @@ describe("prerendered routes contain their content, not the loading state", () =
 
         expect(html).not.toContain("TeamForward title block");
         expect(index).toMatch(/<h2[^>]*>TeamForward<\/h2>/);
+        // With no lead, "the first" would point at an index row
+        expect(html).not.toContain("walk through in an interview");
+        expect(html).toContain("Each project lists the problem, my role, and the stack.");
       }
       finally {
         restore();
