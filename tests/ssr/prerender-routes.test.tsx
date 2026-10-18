@@ -407,10 +407,12 @@ describe("prerendered routes contain their content, not the loading state", () =
     const timeline = section.match(/<ol aria-label="Career timeline"[\s\S]*?<\/ol>/)?.[0] ?? "";
     const years = [...timeline.matchAll(/<span class="[^"]*">([^<]+)<\/span><div><h3/g)].map(match => match[1]);
 
-    expect(section).toMatch(/<h2 id="story-heading"[^>]*>How I got here<\/h2>/);
+    expect(section).toMatch(/<p class="[^"]*\buppercase\b[^"]*">How I got here<\/p><h2 id="story-heading"[^>]*>The habits carried over<\/h2>/);
     expect(section).toContain("What pulled me toward software was the 3D-printing software itself.");
     expect(section).toContain("with a focus on accessible interfaces");
-    expect(section).toContain("The habits carried over. I still measure before I optimize");
+    // The prototype's last paragraph starts after the heading's words
+    expect(section).toMatch(/<p>I still measure before I optimize/);
+    expect(section).not.toContain("The habits carried over. I still measure");
     expect(years).toEqual(["2026 – present", "2024 – present", "2024 – 2026", "2023", "2022", "2015 – 2022"]);
     expect(timeline).toMatch(/<h3[^>]*>Contract developer, Jokma Web Solutions<\/h3><p[^>]*>Client web and mobile apps.<\/p>/);
     expect(timeline).toMatch(/<h3[^>]*>Mechanical engineer, Polyhistor International<\/h3>/);
@@ -425,7 +427,7 @@ describe("prerendered routes contain their content, not the loading state", () =
     const titles = [...section.matchAll(/<h3[^>]*>([^<]+)<\/h3>/g)].map(match => match[1]);
     const bodies = section.match(/<\/h3><p class="[^"]*">/g) ?? [];
 
-    expect(section).toMatch(/<h2 id="practices-heading"[^>]*>How I work<\/h2>/);
+    expect(section).toMatch(/<p class="[^"]*\buppercase\b[^"]*">How I work<\/p><h2 id="practices-heading"[^>]*>Four practices<\/h2>/);
     expect(titles).toEqual([
       "Measure, then change.",
       "Understand existing code before touching it.",
@@ -486,7 +488,7 @@ describe("prerendered routes contain their content, not the loading state", () =
       [...match[2].matchAll(/<li[^>]*>([^<]+)<\/li>/g)].map(item => item[1]),
     ]);
 
-    expect(section).toMatch(/<h2 id="tools-heading"[^>]*>Tools<\/h2>/);
+    expect(section).toMatch(/<p class="[^"]*\buppercase\b[^"]*">Tools<\/p><h2 id="tools-heading"[^>]*>Grouped by how well I know them<\/h2>/);
     expect(groups).toEqual([
       ["Use daily", ["React", "TypeScript", "Tailwind CSS", "Postgres", "Docker", "Git"]],
       ["Have shipped with", ["Next.js", "Node.js", "Express", "REST APIs", "Vercel", "Figma", "Framer Motion"]],
@@ -544,7 +546,7 @@ describe("prerendered routes contain their content, not the loading state", () =
   it("caps the /about story at 51ch", async () => {
     const { html } = await renderPage("/about");
 
-    expect(html).toMatch(/<div class="[^"]*\bmax-w-\[51ch\][^"]*">\s*<h2[^>]*>How I got here<\/h2>\s*<p[^>]*>\s*In manufacturing, a problem on the line/);
+    expect(html).toMatch(/<div class="[^"]*\bmax-w-\[51ch\][^"]*">\s*<div[^>]*><p[^>]*>How I got here<\/p><h2[^>]*>The habits carried over<\/h2><\/div>\s*<p[^>]*>\s*In manufacturing, a problem on the line/);
   });
 
   it("caps the /contact panel paragraphs at 55ch", async () => {

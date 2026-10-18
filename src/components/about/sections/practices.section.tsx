@@ -28,7 +28,10 @@ function Practices() {
   return (
     <section aria-labelledby="practices-heading" className="border-b border-border py-14 md:py-18">
       <MaxWidthWrapper>
-        <h2 id="practices-heading" className="mb-9 text-[clamp(1.6rem,3.2vw,2.1rem)] font-bold text-foreground">How I work</h2>
+        <div className="mb-9 grid gap-2">
+          <p className="font-mono text-xs uppercase tracking-[0.06em] text-teal-700 dark:text-teal-400">How I work</p>
+          <h2 id="practices-heading" className="text-[clamp(1.6rem,3.2vw,2.1rem)] font-bold text-foreground">Four practices</h2>
+        </div>
 
         <div className="grid gap-5 md:grid-cols-2">
           {PRACTICES.map(practice => (

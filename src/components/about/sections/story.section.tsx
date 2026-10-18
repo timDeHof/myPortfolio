@@ -22,7 +22,10 @@ function Story() {
       <MaxWidthWrapper>
         <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="grid max-w-[51ch] gap-[18px] text-muted-foreground">
-            <h2 id="story-heading" className="text-[clamp(1.6rem,3.2vw,2.1rem)] font-bold text-foreground">How I got here</h2>
+            <div className="grid gap-2">
+              <p className="font-mono text-xs uppercase tracking-[0.06em] text-teal-700 dark:text-teal-400">How I got here</p>
+              <h2 id="story-heading" className="text-[clamp(1.6rem,3.2vw,2.1rem)] font-bold text-foreground">The habits carried over</h2>
+            </div>
             <p>
               In manufacturing, a problem on the line had a cost you could count:
               {" "}
@@ -42,8 +45,7 @@ function Story() {
               contract work through Jokma Web Solutions.
             </p>
             <p>
-              The habits carried over. I still measure before I optimize, trace bugs to their source, and write code for
-              whoever maintains it next.
+              I still measure before I optimize, trace bugs to their source, and write code for whoever maintains it next.
             </p>
           </div>
 

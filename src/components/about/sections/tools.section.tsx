@@ -16,7 +16,10 @@ function Tools() {
   return (
     <section aria-labelledby="tools-heading" className="border-b border-border py-14 md:py-18">
       <MaxWidthWrapper>
-        <h2 id="tools-heading" className="mb-9 text-[clamp(1.6rem,3.2vw,2.1rem)] font-bold text-foreground">Tools</h2>
+        <div className="mb-9 grid gap-2">
+          <p className="font-mono text-xs uppercase tracking-[0.06em] text-teal-700 dark:text-teal-400">Tools</p>
+          <h2 id="tools-heading" className="text-[clamp(1.6rem,3.2vw,2.1rem)] font-bold text-foreground">Grouped by how well I know them</h2>
+        </div>
 
         <div className="grid gap-5 lg:grid-cols-3">
           {TOOL_GROUPS.map(group => (
