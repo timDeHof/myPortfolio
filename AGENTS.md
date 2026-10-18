@@ -25,7 +25,7 @@ pnpm preview:worker   # Preview Cloudflare Worker
 
 ```bash
 pnpm test             # Run all tests
-pnpm test:browser     # Run browser tests with Playwright
+pnpm test:e2e         # Run Playwright e2e tests against the production build
 pnpm coverage         # Run tests with coverage report
 
 # Run a single test file
