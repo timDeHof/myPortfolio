@@ -401,6 +401,49 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(button).not.toMatch(/\bbg-secondary\b/);
   });
 
+  describe("when some project downloads fail", () => {
+    const failing = (files: string[]) => {
+      const fetchContents = vi.mocked(githubAPI.fetchContents);
+      const fixtureFetch = fetchContents.getMockImplementation()!;
+      fetchContents.mockImplementation(async (owner, repo, path) => {
+        if (files.some(file => path.endsWith(file))) {
+          throw new Error(`404: ${path}`);
+        }
+        return fixtureFetch(owner, repo, path);
+      });
+      return () => fetchContents.mockImplementation(fixtureFetch);
+    };
+
+    it("counts one project in the singular", async () => {
+      const restore = failing(["teamforward.json"]);
+      try {
+        const { html } = await renderPage("/projects");
+
+        expect(html).not.toContain(">1 projects<");
+        expect(html).toContain(">1 project<");
+      }
+      finally {
+        restore();
+      }
+    });
+
+    // The intro says the first is the one to walk through, so another project
+    // must not take shadcn-timeline's place
+    it("doesn't promote another project to the lead when the lead fails", async () => {
+      const restore = failing(["shadcn-timeline.json"]);
+      try {
+        const { html } = await renderPage("/projects");
+        const index = html.match(/<ol aria-label="More projects"[\s\S]*?<\/ol>/)?.[0] ?? "";
+
+        expect(html).not.toContain("TeamForward title block");
+        expect(index).toMatch(/<h2[^>]*>TeamForward<\/h2>/);
+      }
+      finally {
+        restore();
+      }
+    });
+  });
+
   it("says the projects didn't load, not that there are none, when every download fails", async () => {
     const fetchContents = vi.mocked(githubAPI.fetchContents);
     const fixtureFetch = fetchContents.getMockImplementation()!;
