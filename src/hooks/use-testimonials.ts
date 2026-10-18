@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 
 import { githubAPI } from "@/services/api/github";
 
@@ -17,10 +17,12 @@ async function fetchTestimonials(): Promise<Testimonial[]> {
   return githubAPI.fetchContents<Testimonial[]>("timDeHof", "portfolio-metadata", "testimonials.json");
 }
 
+export const testimonialsQuery = queryOptions({
+  queryKey: ["testimonials"],
+  queryFn: fetchTestimonials,
+  staleTime: 1000 * 60 * 5,
+});
+
 export function useTestimonials() {
-  return useQuery({
-    queryKey: ["testimonials"],
-    queryFn: fetchTestimonials,
-    staleTime: 1000 * 60 * 5,
-  });
+  return useQuery(testimonialsQuery);
 }

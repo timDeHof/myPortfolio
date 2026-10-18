@@ -47,6 +47,9 @@ const fixtures: Record<string, unknown> = {
     difficulty: "Advanced",
     timeEstimate: "Ongoing",
   },
+  "testimonials.json": [
+    { id: "fixture-1", name: "Fixture Colleague", role: "Engineering Manager", company: "Fixture Co", quote: "Fixture testimonial quote.", date: "2026-01-01" },
+  ],
   "shadcn-timeline-case-study.json": {
     challenges: { title: "Challenges Solved", items: [{ challenge: "SSR Compatibility", solution: "Works with Next.js SSR" }] },
     impact: { title: "Results & Impact", metrics: [{ value: "297", label: "GitHub Stars" }], achievements: ["Listed in awesome-shadcn-ui"] },
@@ -432,6 +435,17 @@ describe("prerendered routes contain their content, not the loading state", () =
     for (const body of bodies) {
       expect(body).toMatch(/\bmax-w-\[52ch\]/);
     }
+  });
+
+  it("renders the testimonials on /about between How I work and AWS Cloud Institute", async () => {
+    const { html } = await renderPage("/about");
+    const practices = html.indexOf("id=\"practices-heading\"");
+    const testimonials = html.indexOf(">What People Say<");
+    const cloud = html.indexOf("id=\"cloud-heading\"");
+    expect(testimonials).toBeGreaterThan(-1);
+    expect(html).toContain("Fixture testimonial quote.");
+    expect(practices).toBeLessThan(testimonials);
+    expect(testimonials).toBeLessThan(cloud);
   });
 
   it("renders the AWS Cloud Institute section with the AWS certs linked to Credly", async () => {
