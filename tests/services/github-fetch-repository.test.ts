@@ -33,4 +33,20 @@ describe("githubAPI.fetchRepository", () => {
     await expect(githubAPI.fetchRepository("timDeHof", "shadcn-timeline")).rejects.toMatchObject({ status: 404 });
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
+
+  it("stops after a bounded number of pages when every page is full", async () => {
+    // A proxy that ignores `page` returns the same full page forever. Stop the
+    // mock well past any sane bound, so an unbounded loop fails instead of hanging.
+    const fullPage = repos(Array.from({ length: 100 }, (_, i) => `repo-${i}`));
+    const fetchMock = vi.fn(async () => {
+      if (fetchMock.mock.calls.length > 50) {
+        throw new Error("fetchRepository requested more than 50 pages");
+      }
+      return jsonResponse(fullPage);
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(githubAPI.fetchRepository("timDeHof", "shadcn-timeline")).rejects.toMatchObject({ status: 404 });
+    expect(fetchMock.mock.calls.length).toBeLessThanOrEqual(10);
+  });
 });
