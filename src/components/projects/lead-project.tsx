@@ -10,7 +10,7 @@ interface LeadProjectProps {
 // The first project, written up in the same title block as the home hero
 function LeadProject({ project }: LeadProjectProps) {
   const cells = [
-    { label: "Part", value: <span className="font-sans text-xl font-bold">{project.name}</span> },
+    { label: "Part", value: <h2 className="font-sans text-xl font-bold">{project.name}</h2> },
     { label: "Function", value: project.tagline },
     { label: "What I built", value: <span className="font-sans text-[15px]">{projectBuilt(project)}</span> },
     { label: "Material", value: projectStack(project).join(" · ") },

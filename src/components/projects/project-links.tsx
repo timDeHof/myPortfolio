@@ -17,14 +17,14 @@ function ProjectLinks({ project }: ProjectLinksProps) {
         <span aria-hidden="true">→</span>
       </Link>
       {project.links?.demo && (
-        <a href={project.links.demo} target="_blank" rel="noopener noreferrer" className={LINK}>
+        <a href={project.links.demo} aria-label={`Live demo of ${project.name}`} target="_blank" rel="noopener noreferrer" className={LINK}>
           Live demo
           {" "}
           <span aria-hidden="true">↗</span>
         </a>
       )}
       {project.links?.github && (
-        <a href={project.links.github} target="_blank" rel="noopener noreferrer" className={LINK}>
+        <a href={project.links.github} aria-label={`Source for ${project.name}`} target="_blank" rel="noopener noreferrer" className={LINK}>
           Source
           {" "}
           <span aria-hidden="true">↗</span>

@@ -335,6 +335,22 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(html).not.toContain("projects featured");
   });
 
+  it("gives the lead project an h2 and project links names that say which project they open", async () => {
+    const lead = fixtures["shadcn-timeline.json"] as Record<string, unknown>;
+    lead.links = { demo: "https://timeline.example.com", github: "https://github.com/timDeHof/shadcn-timeline" };
+    try {
+      const { html } = await renderPage("/projects");
+      const titleBlock = html.match(/<dl aria-label="shadcn-timeline title block"[\s\S]*?<\/dl>/)?.[0] ?? "";
+
+      expect(titleBlock).toMatch(/<h2[^>]*>shadcn-timeline<\/h2>/);
+      expect(html).toMatch(/<a[^>]*href="https:\/\/timeline\.example\.com"[^>]*aria-label="Live demo of shadcn-timeline"/);
+      expect(html).toMatch(/<a[^>]*href="https:\/\/github\.com\/timDeHof\/shadcn-timeline"[^>]*aria-label="Source for shadcn-timeline"/);
+    }
+    finally {
+      delete lead.links;
+    }
+  });
+
   it("uses the v2 copy for the GitHub activity and closing sections on /projects", async () => {
     const { html } = await renderPage("/projects");
 

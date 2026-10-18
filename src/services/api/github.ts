@@ -56,10 +56,10 @@ function decodeBase64(input: string): string {
 }
 
 // Simplified fetch wrapper for the proxy
-async function githubFetch<T>(url: string): Promise<T> {
+async function githubFetch<T>(url: string, signal?: AbortSignal): Promise<T> {
   try {
     // Fetch directly from GitHub API (proxy handles the routing)
-    const response = await fetch(url);
+    const response = signal ? await fetch(url, { signal }) : await fetch(url);
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -208,14 +208,19 @@ export const githubAPI = {
 
   // Fetch one repository, for its star count. The proxy does not expose
   // /repos/:owner/:repo, so this reads the same list fetchRepositories uses.
-  fetchRepository: async (owner: string, repo: string): Promise<GitHubRepository> => {
+  fetchRepository: async (owner: string, repo: string, signal?: AbortSignal): Promise<GitHubRepository> => {
     const url = `${GITHUB_API_BASE}/users/${owner}/repos?sort=updated&per_page=100&type=all`;
-    const repositories = await githubFetch<GitHubRepository[]>(url);
-    const match = repositories.find(repository => repository.name === repo);
-    if (!match) {
-      throw new GitHubAPIError(404, "Not Found", url, `No repository named ${repo}`);
+    // A full page of 100 may have more after it, so keep going until a short page
+    for (let page = 1; ; page++) {
+      const repositories = await githubFetch<GitHubRepository[]>(`${url}&page=${page}`, signal);
+      const match = repositories.find(repository => repository.name === repo);
+      if (match) {
+        return match;
+      }
+      if (repositories.length < 100) {
+        throw new GitHubAPIError(404, "Not Found", url, `No repository named ${repo}`);
+      }
     }
-    return match;
   },
 
   // Fetch repository languages
