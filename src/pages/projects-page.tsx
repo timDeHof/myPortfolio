@@ -28,7 +28,7 @@ export const ProjectsPage: React.FC = () => {
               <p className="text-lg text-muted-foreground mb-6">
                 Projects didn&apos;t load. They&apos;re also on GitHub.
               </p>
-              <Button asChild>
+              <Button asChild variant="accent">
                 <a href="https://github.com/timDeHof" target="_blank" rel="noopener noreferrer">
                   <Github className="h-4 w-4 mr-2" />
                   GitHub profile

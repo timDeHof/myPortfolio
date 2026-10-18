@@ -359,7 +359,10 @@ describe("prerendered routes contain their content, not the loading state", () =
       const { html } = await renderPage("/projects");
 
       expect(html).toContain("Projects didn&#x27;t load. They&#x27;re also on GitHub.");
-      expect(html).toMatch(/<a href="https:\/\/github.com\/timDeHof"[^>]*>(?:<svg[\s\S]*?<\/svg>)?GitHub profile<\/a>/);
+      const button = html.match(/<a href="https:\/\/github.com\/timDeHof"[^>]*>(?:<svg[\s\S]*?<\/svg>)?GitHub profile<\/a>/)?.[0] ?? "";
+      expect(button).not.toBe("");
+      // Same accent colors as the More on GitHub and footer Get In Touch buttons
+      expect(button).toMatch(/class="[^"]*\bbtn--accent\b[^"]*"/);
       expect(html).not.toContain("No projects found");
     }
     finally {
