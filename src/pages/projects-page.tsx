@@ -52,8 +52,8 @@ export const ProjectsPage: React.FC = () => {
           <div className="mb-10 grid max-w-[640px] gap-3">
             <h1 id="projects-heading" className="text-[clamp(2rem,4.6vw,3.25rem)] font-bold text-foreground">Projects</h1>
             <p className="max-w-[55ch] text-muted-foreground text-pretty">
-              Each project lists the problem, my role, the stack, and what I&apos;d do differently. The first is the one
-              I&apos;d walk through in an interview.
+              Each project lists the problem, my role, and the stack. The first is the one I&apos;d walk
+              through in an interview.
             </p>
             <p className="text-sm text-muted-foreground">{`${projects.length} projects`}</p>
           </div>
