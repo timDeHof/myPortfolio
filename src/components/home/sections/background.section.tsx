@@ -1,18 +1,9 @@
 import { Link } from "@tanstack/react-router";
 
+import { careerTimeline } from "../../../data/career-timeline";
 import { MaxWidthWrapper } from "../../ui/max-width-wrapper";
 
-interface TimelineRow {
-  years: string;
-  title: string;
-}
-
-const TIMELINE: TimelineRow[] = [
-  { years: "2024 – now", title: "Frontend Engineer, TeamForward" },
-  { years: "2024 – 2026", title: "AWS Cloud Institute graduate" },
-  { years: "2022", title: "Fullstack Academy, career change" },
-  { years: "2015 – 2022", title: "Mechanical engineer" },
-];
+const TIMELINE = careerTimeline.flatMap(entry => entry.homeTitle ? [{ years: entry.years, title: entry.homeTitle }] : []);
 
 function Background() {
   return (

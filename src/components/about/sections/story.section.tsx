@@ -1,20 +1,5 @@
+import { careerTimeline } from "../../../data/career-timeline";
 import { MaxWidthWrapper } from "../../ui/max-width-wrapper";
-
-interface TimelineRow {
-  years: string;
-  title: string;
-  body: string;
-}
-
-const TIMELINE: TimelineRow[] = [
-  // The sivs-platform line waits for Joe's OK (I8, P3)
-  { years: "2026 – present", title: "Contract developer, Jokma Web Solutions", body: "Client web and mobile apps." },
-  { years: "2024 – present", title: "Frontend Engineer, TeamForward", body: "Event-planning and networking platform. React, TypeScript, Tailwind CSS." },
-  { years: "2024 – 2026", title: "AWS Cloud Institute", body: "Graduated from the Cloud Application Developer program, June 2026. AWS Certified Cloud Practitioner and AI Practitioner." },
-  { years: "2023", title: "Full-stack developer", body: "Built CI/CD pipelines. IBM DevOps Essentials (Coursera, July 2023)." },
-  { years: "2022", title: "Career change", body: "Finished Fullstack Academy's full-stack web development bootcamp." },
-  { years: "2015 – 2022", title: "Mechanical engineer, Polyhistor International", body: "Manufacturing and 3D printing. Owned the engraving design for a line producing 250 parts a day." },
-];
 
 function Story() {
   return (
@@ -50,7 +35,7 @@ function Story() {
           </div>
 
           <ol aria-label="Career timeline" className="grid">
-            {TIMELINE.map(row => (
+            {careerTimeline.map(row => (
               <li
                 key={row.title}
                 className="grid gap-1 border-b border-border py-3.5 first:pt-0 sm:grid-cols-[118px_minmax(0,1fr)] sm:gap-4"
