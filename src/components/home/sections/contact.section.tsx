@@ -8,6 +8,8 @@ interface ContactProps {
   lead?: string;
   /** Adds the Résumé button after the profiles */
   showResume?: boolean;
+  /** Shows the "Contact" label above the heading. About hides it */
+  showKicker?: boolean;
 }
 
 interface ProfileLink {
@@ -23,12 +25,12 @@ const PROFILES: ProfileLink[] = [
 const HOME_LEAD = "I'm looking for a team where engineering judgment matters as much as output. The fastest way to reach me is email.";
 
 // Shared with the About page (A6)
-function Contact({ lead = HOME_LEAD, showResume = false }: ContactProps) {
+function Contact({ lead = HOME_LEAD, showResume = false, showKicker = true }: ContactProps) {
   return (
     <section id="contact" aria-labelledby="contact-heading" className="py-14 md:py-18">
       <MaxWidthWrapper>
         <div className="grid gap-5">
-          <p className="font-mono text-xs uppercase tracking-[0.06em] text-teal-700 dark:text-teal-400">Contact</p>
+          {showKicker && <p className="font-mono text-xs uppercase tracking-[0.06em] text-teal-700 dark:text-teal-400">Contact</p>}
           <h2 id="contact-heading" className="text-[clamp(1.8rem,3.6vw,2.4rem)] font-bold text-foreground">Hiring a frontend or full-stack engineer?</h2>
           <p className="max-w-[55ch] text-muted-foreground">{lead}</p>
 

@@ -15,7 +15,7 @@ export const AboutPage: React.FC = () => {
       <Testimonials />
       <Cloud />
       <Tools />
-      <Contact lead="The fastest way to reach me is email." showResume />
+      <Contact lead="The fastest way to reach me is email." showResume showKicker={false} />
     </>
   );
 };

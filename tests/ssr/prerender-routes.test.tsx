@@ -238,6 +238,7 @@ describe("prerendered routes contain their content, not the loading state", () =
     const section = html.match(/<section[^>]*aria-labelledby="contact-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
 
     expect(section).toMatch(/<section id="contact"/);
+    expect(section).toMatch(/<p class="[^"]*\buppercase\b[^"]*">Contact<\/p>/);
     expect(section).toMatch(/<h2 id="contact-heading"[^>]*>Hiring a frontend or full-stack engineer\?<\/h2>/);
     expect(section).toMatch(/<a[^>]*href="mailto:tim@timdehof.dev"[^>]*>Email me<\/a>/);
     expect(section).toContain("href=\"https://www.linkedin.com/in/tim-dehof/\"");
@@ -497,6 +498,8 @@ describe("prerendered routes contain their content, not the loading state", () =
     const section = html.match(/<section[^>]*aria-labelledby="contact-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
 
     expect(section).toMatch(/<h2 id="contact-heading"[^>]*>Hiring a frontend or full-stack engineer\?<\/h2>/);
+    // impeccable flags the "Contact" kicker. Home keeps it, About hides it
+    expect(section).not.toContain(">Contact</p>");
     expect(section).toMatch(/<p class="[^"]*\bmax-w-\[55ch\][^"]*">The fastest way to reach me is email.<\/p>/);
     expect(section).toMatch(/<a href="mailto:tim@timdehof.dev" class="[^"]*btn--accent[^"]*">Email me<\/a>/);
     expect(section).toMatch(/<a href="https:\/\/www.linkedin.com\/in\/tim-dehof\/"[^>]*class="[^"]*btn--line[^"]*">LinkedIn<\/a>/);
