@@ -12,8 +12,10 @@ export const portfolioDataQuery = queryOptions({
   queryKey: ["portfolio"],
   queryFn: fetchPortfolioData,
   staleTime: 1000 * 60 * 5,
-  // One attempt, so a failed fetch shows the page without waiting on retries
-  retry: false,
+  // One attempt in the browser, so a failed fetch shows the page without
+  // waiting on retries. The prerender keeps retrying, because a failure there
+  // fails the build.
+  retry: typeof window === "undefined" ? 3 : false,
 });
 
 export function usePortfolioData() {
