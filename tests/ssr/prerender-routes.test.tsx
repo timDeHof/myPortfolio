@@ -448,6 +448,16 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(testimonials).toBeLessThan(cloud);
   });
 
+  it("styles the /about testimonials like the v2 sections", async () => {
+    const { html } = await renderPage("/about");
+    expect(html).toMatch(/<section[^>]*aria-labelledby="testimonials-heading"/);
+    expect(html).toMatch(/<h2 id="testimonials-heading"[^>]*>What People Say<\/h2>/);
+    const start = html.indexOf("aria-labelledby=\"testimonials-heading\"");
+    const section = html.slice(start, html.indexOf("</section>", start));
+    expect(section).toContain("Fixture testimonial quote.");
+    expect(section).not.toMatch(/bg-muted|bg-card/);
+  });
+
   it("renders the AWS Cloud Institute section with the AWS certs linked to Credly", async () => {
     const { html } = await renderPage("/about");
     const section = html.match(/<section aria-labelledby="cloud-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
