@@ -16,15 +16,15 @@ Fix each item test-first: commit a test that fails, then the fix, as separate co
 
 ## In review
 
-| #   | Item                                                                                                                           | Fix                                                                             | Status   |
-| --- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- | -------- |
-| T4  | `pnpm test:browser` failed with `Cannot merge config in form of callback`.                                                     | 247a37c removes the browser suite. The Playwright e2e suite covers the browser. | #43      |
-| T5  | Deploy didn't run the e2e suite.                                                                                               | 1b88905 adds the Playwright install and `pnpm test:e2e` to `deploy.yml`.        | #43      |
-| T7  | The About loader waited on the testimonials fetch, which has no timeout.                                                       | 9ebda1f stops waiting after 1.5s in the browser.                                | #46      |
-| T9  | Local `pnpm lint` failed on the uncommitted `docs/` and `.claude/` folders.                                                    | 3eadc8f ignores them. ecd078e lints `docs/` again once it is committed.         | #43, #44 |
-| T12 | AGENTS.md named files in PascalCase and camelCase. The repo uses kebab-case.                                                   | a13bb38                                                                         | #43      |
-| T15 | The bundle visualizer opened a browser on every build.                                                                         | affefa7 sets `open: false`.                                                     | #43      |
-| T16 | The build printed 6 `imagemin error` lines. pnpm doesn't run the install scripts that download pngquant, mozjpeg and gifsicle. | 4f07bcf optimizes only SVGs.                                                    | #46      |
+| #   | Item                                                                                                                           | Fix                                                                                                 | Status   |
+| --- | ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------- | -------- |
+| T4  | `pnpm test:browser` failed with `Cannot merge config in form of callback`.                                                     | 247a37c removes the browser suite. The Playwright e2e suite covers the browser.                     | #43      |
+| T5  | Deploy didn't run the e2e suite.                                                                                               | 1b88905 adds the Playwright install and `pnpm test:e2e` to `deploy.yml`.                            | #43      |
+| T7  | The About loader waited on the testimonials fetch, which has no timeout.                                                       | 9ebda1f stops waiting in the browser, after 1s since ba2f2d9. 106dc26 times its e2e test per frame. | #46      |
+| T9  | Local `pnpm lint` failed on the uncommitted `docs/` and `.claude/` folders.                                                    | 3eadc8f ignores them. ecd078e lints `docs/` again once it is committed.                             | #43, #44 |
+| T12 | AGENTS.md named files in PascalCase and camelCase. The repo uses kebab-case.                                                   | a13bb38                                                                                             | #43      |
+| T15 | The bundle visualizer opened a browser on every build.                                                                         | affefa7 sets `open: false`.                                                                         | #43      |
+| T16 | The build printed 6 `imagemin error` lines. pnpm doesn't run the install scripts that download pngquant, mozjpeg and gifsicle. | 4f07bcf optimizes only SVGs.                                                                        | #46      |
 
 ## Fixed in #42
 
