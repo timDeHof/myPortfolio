@@ -318,7 +318,9 @@ describe("prerendered routes contain their content, not the loading state", () =
     const index = html.match(/<ol aria-label="More projects"[\s\S]*?<\/ol>/)?.[0] ?? "";
 
     expect(html).toMatch(/<h1[^>]*>Projects<\/h1>/);
-    expect(html).toContain("The first three are the ones I&#x27;d walk through in an interview.");
+    // Only the lead project is featured, so the lead names one project, not three
+    expect(html).toContain("The first is the one I&#x27;d walk through in an interview.");
+    expect(html).not.toContain("The first three");
     expect(html).toContain(">2 projects<");
     // The lead project's title block uses the hero's drawing labels
     expect([...titleBlock.matchAll(/<dt[^>]*>([^<]+)<\/dt>/g)].map(match => match[1])).toEqual(["Part", "Function", "What I built", "Material"]);
