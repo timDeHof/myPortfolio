@@ -4,9 +4,14 @@ import { shadcnTimelineStarsQuery } from "../hooks/use-repo-stars";
 import { queryClient } from "../lib/query-client";
 
 export const Route = createFileRoute("/")({
-  // Fill the star count before render, so the prerendered page has the number.
-  // A failed fetch is ignored: the page falls back to "Open source" (D17).
+  // The prerender (no window) waits for the star count, so the HTML has the
+  // number. The browser starts the fetch without waiting, so home never blocks
+  // on GitHub. A failed or timed-out fetch falls back to "Open source" (D17).
   loader: async () => {
-    await queryClient.ensureQueryData(shadcnTimelineStarsQuery).catch(() => undefined);
+    if (typeof window === "undefined") {
+      await queryClient.ensureQueryData(shadcnTimelineStarsQuery).catch(() => undefined);
+      return;
+    }
+    void queryClient.prefetchQuery(shadcnTimelineStarsQuery);
   },
 });
