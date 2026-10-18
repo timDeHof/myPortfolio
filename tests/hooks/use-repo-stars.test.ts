@@ -13,6 +13,7 @@ function stalledFetch() {
 describe("shadcnTimelineStarsQuery", () => {
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.unstubAllGlobals();
     vi.useRealTimers();
   });
 
@@ -28,6 +29,35 @@ describe("shadcnTimelineStarsQuery", () => {
 
     const signal = fetchRepository.mock.calls[0][2];
     expect(signal?.aborted).toBe(true);
+  });
+
+  it("doesn't log the timeout as a network error", async () => {
+    vi.useFakeTimers();
+    // A network request that never answers, but stops when its signal aborts
+    vi.stubGlobal("fetch", vi.fn((_url: string, init?: RequestInit) => new Promise<never>((_resolve, reject) => {
+      init?.signal?.addEventListener("abort", () => reject(init.signal?.reason));
+    })));
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+    const queryFn = shadcnTimelineStarsQuery.queryFn as (context: { signal: AbortSignal }) => Promise<number>;
+
+    const result = queryFn({ signal: new AbortController().signal });
+    const settled = expect(result).rejects.toThrow(`Star count timed out after ${STAR_COUNT_TIMEOUT_MS}ms`);
+    await vi.advanceTimersByTimeAsync(STAR_COUNT_TIMEOUT_MS);
+    await settled;
+
+    expect(consoleError).not.toHaveBeenCalled();
+  });
+
+  it("stops following the query's signal once the count has loaded", async () => {
+    const fetchRepository = vi.spyOn(githubAPI, "fetchRepository").mockResolvedValue({ stargazers_count: 317 } as Awaited<ReturnType<typeof githubAPI.fetchRepository>>);
+    const queryFn = shadcnTimelineStarsQuery.queryFn as (context: { signal: AbortSignal }) => Promise<number>;
+    const query = new AbortController();
+
+    await expect(queryFn({ signal: query.signal })).resolves.toBe(317);
+    query.abort();
+
+    const signal = fetchRepository.mock.calls[0][2];
+    expect(signal?.aborted).toBe(false);
   });
 
   it("doesn't retry, so the Open source fallback shows after one attempt", () => {
