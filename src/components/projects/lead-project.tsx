@@ -1,6 +1,6 @@
 import type { Project } from "../../types/project";
 
-import { projectBuilt, projectStack } from "../../utils/project-summary";
+import { projectStack } from "../../utils/project-summary";
 import { TitleBlock } from "../common/title-block";
 import ProjectLinks from "./project-links";
 
@@ -13,7 +13,8 @@ function LeadProject({ project }: LeadProjectProps) {
   const cells = [
     { label: "Part", value: <h2 className="font-sans text-xl font-bold">{project.name}</h2> },
     { label: "Function", value: project.tagline },
-    { label: "What I built", value: <span className="font-sans text-[15px]">{projectBuilt(project)}</span> },
+    // Without a résumé pitch this cell would repeat the tagline above it
+    ...(project.resumePitch ? [{ label: "What I built", value: <span className="font-sans text-[15px]">{project.resumePitch}</span> }] : []),
     { label: "Material", value: projectStack(project).join(" · ") },
   ];
 
