@@ -357,6 +357,22 @@ describe("prerendered routes contain their content, not the loading state", () =
     }
   });
 
+  it("shows the lead project's tagline once when it has no résumé pitch", async () => {
+    const lead = fixtures["shadcn-timeline.json"] as Record<string, unknown>;
+    const resumePitch = lead.resumePitch;
+    delete lead.resumePitch;
+    try {
+      const { html } = await renderPage("/projects");
+      const titleBlock = html.match(/<dl aria-label="shadcn-timeline title block"[\s\S]*?<\/dl>/)?.[0] ?? "";
+
+      expect(titleBlock.split("Accessible timeline component for shadcn/ui")).toHaveLength(2);
+      expect([...titleBlock.matchAll(/<dt[^>]*>([^<]+)<\/dt>/g)].map(match => match[1])).toEqual(["Part", "Function", "Material"]);
+    }
+    finally {
+      lead.resumePitch = resumePitch;
+    }
+  });
+
   it("uses the v2 copy for the GitHub activity and closing sections on /projects", async () => {
     const { html } = await renderPage("/projects");
 
