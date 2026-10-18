@@ -390,7 +390,8 @@ describe("prerendered routes contain their content, not the loading state", () =
     const h1s = html.match(/<h1[\s>]/g) ?? [];
 
     expect(h1s).toHaveLength(1);
-    expect(html).toMatch(/<h1 id="about-heading"[^>]*>About<\/h1>/);
+    // The prototype's About label sits directly above the h1
+    expect(html).toMatch(/<p class="[^"]*\buppercase\b[^"]*">About<\/p><h1 id="about-heading"[^>]*>Seven years in manufacturing. Now full-stack.<\/h1>/);
     expect(html).toContain("I&#x27;m a full-stack engineer in Jacksonville, FL. Before software, I spent seven years as a mechanical engineer in manufacturing and 3D printing.");
     // The v1 sections are gone
     expect(html).not.toContain("About Me");
