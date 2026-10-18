@@ -16,6 +16,15 @@ interface TitleBlockProps {
 
 // An engineering drawing's title block, used by the home hero and the lead project
 export function TitleBlock({ label, cells, columns = 2 }: TitleBlockProps) {
+  // Wide cells take a row of their own, and a half cell after an odd run starts a new row
+  const rows = cells.reduce<number[]>((acc, cell, index) => {
+    if (index === 0)
+      return [0];
+    const prev = acc[index - 1];
+    const startsRow = columns === 1 || cell.wide || cells[index - 1].wide || acc.filter(row => row === prev).length === 2;
+    return [...acc, startsRow ? prev + 1 : prev];
+  }, []);
+  const lastRow = rows[rows.length - 1];
   return (
     <dl
       aria-label={label}
@@ -25,7 +34,7 @@ export function TitleBlock({ label, cells, columns = 2 }: TitleBlockProps) {
         // Wide cells span both columns, so a half cell's column depends on the cells before it
         const halfCellsBefore = cells.slice(0, index).reduce((count, prev) => (prev.wide ? 0 : count + 1), 0);
         const isLeftColumn = columns === 2 && !cell.wide && halfCellsBefore % 2 === 0;
-        const isLastRow = index >= cells.length - columns;
+        const isLastRow = rows[index] === lastRow;
         return (
           <div
             key={cell.label}
