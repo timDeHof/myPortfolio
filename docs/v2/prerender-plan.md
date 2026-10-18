@@ -8,18 +8,18 @@ Repo state read on 2026-10-17, branch `docs/v2-drafts`. Doc links and versions w
 
 ## Current state
 
-| Item | Where | Effect on prerendering |
-|---|---|---|
-| Client-only mount with `createRoot(#app)` | `src/index.tsx:8` | Needs a server-render path |
-| Router built once at module load, browser history | `src/App.tsx:14` | Needs a per-path router with memory history at build time |
-| Routes: `/`, `/about`, `/projects`, `/projects/$slug`, `/blog`, `/services`, `/contact` | `src/routes/` | `$slug` values must be listed. `projectsIndex` already has them, see `scripts/sitemap.ts:34`. |
-| `.lazy` routes, `autoCodeSplitting`, `Suspense` fallbacks | `src/routes/*.lazy.tsx`, `vite.config.ts:33` | The renderer must wait for lazy chunks and loaders, or the HTML will contain `PageLoader` spinners |
-| `/projects` loader calls `fetchAllProjects()` | `src/routes/projects.tsx:30`, `src/hooks/use-projects.ts:39` | Runs at build time, so network failures fall back silently |
-| `window.location` read during render | `src/components/common/seo-head.tsx:21,37`, `src/hooks/use-seo.ts:31` | Throws under Node. Build URLs from `SITE_URL` and the router location instead. |
-| `react-helmet-async` for head tags | `src/App.tsx:4`, `seo-head.tsx` | Head tags must be extracted per page into the HTML |
-| PWA with `vite-plugin-pwa` and Workbox `generateSW` | `vite.config.ts:47` | See R1 |
-| Cloudflare Workers static assets, `not_found_handling = "single-page-application"` | `wrangler.toml:4-6` | Already serves `/about` from `about/index.html` ([HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/)) |
-| Blog app is a separate git submodule (`vite-blog`) | `.gitmodules` | Out of scope here, see R4 |
+| Item                                                                                    | Where                                                                 | Effect on prerendering                                                                                                                                     |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Client-only mount with `createRoot(#app)`                                               | `src/index.tsx:8`                                                     | Needs a server-render path                                                                                                                                 |
+| Router built once at module load, browser history                                       | `src/App.tsx:14`                                                      | Needs a per-path router with memory history at build time                                                                                                  |
+| Routes: `/`, `/about`, `/projects`, `/projects/$slug`, `/blog`, `/services`, `/contact` | `src/routes/`                                                         | `$slug` values must be listed. `projectsIndex` already has them, see `scripts/sitemap.ts:34`.                                                              |
+| `.lazy` routes, `autoCodeSplitting`, `Suspense` fallbacks                               | `src/routes/*.lazy.tsx`, `vite.config.ts:33`                          | The renderer must wait for lazy chunks and loaders, or the HTML will contain `PageLoader` spinners                                                         |
+| `/projects` loader calls `fetchAllProjects()`                                           | `src/routes/projects.tsx:30`, `src/hooks/use-projects.ts:39`          | Runs at build time, so network failures fall back silently                                                                                                 |
+| `window.location` read during render                                                    | `src/components/common/seo-head.tsx:21,37`, `src/hooks/use-seo.ts:31` | Throws under Node. Build URLs from `SITE_URL` and the router location instead.                                                                             |
+| `react-helmet-async` for head tags                                                      | `src/App.tsx:4`, `seo-head.tsx`                                       | Head tags must be extracted per page into the HTML                                                                                                         |
+| PWA with `vite-plugin-pwa` and Workbox `generateSW`                                     | `vite.config.ts:47`                                                   | See R1                                                                                                                                                     |
+| Cloudflare Workers static assets, `not_found_handling = "single-page-application"`      | `wrangler.toml:4-6`                                                   | Already serves `/about` from `about/index.html` ([HTML handling](https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/)) |
+| Blog app is a separate git submodule (`vite-blog`)                                      | `.gitmodules`                                                         | Out of scope here, see R4                                                                                                                                  |
 
 ---
 
@@ -65,16 +65,16 @@ Use TanStack Router's own SSR helpers, `RouterServer` / `renderRouterToString` /
 
 ### Comparison
 
-| | O1 vite-prerender-plugin | O2 TanStack Start |
-|---|---|---|
-| Files touched (estimate from the table above) | about 5 | about 10, plus every route's head |
-| Hydration | No, `createRoot` replaces | Yes |
-| Per-route head tags | From the Helmet context, returned by `prerender()` | Route `head()` |
-| Dynamic `$slug` routes | `additionalPrerenderRoutes` from `projectsIndex` | Crawled, or `pages` |
-| PWA plugin | Unchanged, except R1 | Unverified (R2) |
-| Cloudflare deploy | Unchanged static assets | Worker with server entry |
-| Revert cost | Remove one plugin and one export | Revert the migration |
-| Maintainer | Preact team, 67 stars | TanStack, first-party |
+|                                               | O1 vite-prerender-plugin                           | O2 TanStack Start                 |
+| --------------------------------------------- | -------------------------------------------------- | --------------------------------- |
+| Files touched (estimate from the table above) | about 5                                            | about 10, plus every route's head |
+| Hydration                                     | No, `createRoot` replaces                          | Yes                               |
+| Per-route head tags                           | From the Helmet context, returned by `prerender()` | Route `head()`                    |
+| Dynamic `$slug` routes                        | `additionalPrerenderRoutes` from `projectsIndex`   | Crawled, or `pages`               |
+| PWA plugin                                    | Unchanged, except R1                               | Unverified (R2)                   |
+| Cloudflare deploy                             | Unchanged static assets                            | Worker with server entry          |
+| Revert cost                                   | Remove one plugin and one export                   | Revert the migration              |
+| Maintainer                                    | Preact team, 67 stars                              | TanStack, first-party             |
 
 ---
 

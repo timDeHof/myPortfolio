@@ -71,14 +71,14 @@ Group by how well you know each tool, not by category. An interviewer can ask ab
 
 ## Timeline
 
-| Years | Role |
-|---|---|
-| 2026 – present | **Contract developer, Jokma Web Solutions.** Client web and mobile apps. (The project line waits for Joe's OK, I8 and P3.) |
-| 2024 – present | **Frontend Engineer, TeamForward.** Event-planning and networking platform. React, TypeScript, Tailwind CSS. |
-| 2024 – 2026 | **AWS Cloud Institute.** Graduated from the Cloud Application Developer program, June 2026. AWS Certified Cloud Practitioner and AI Practitioner. |
-| 2023 | **Full-stack developer.** Built CI/CD pipelines. IBM DevOps Essentials (Coursera, July 2023). |
-| 2022 | **Career change.** Finished Fullstack Academy's full-stack web development bootcamp. |
-| 2015 – 2022 | **Mechanical engineer, Polyhistor International.** Manufacturing and 3D printing. Owned the engraving design for a line producing 250 parts a day. |
+| Years          | Role                                                                                                                                               |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026 – present | **Contract developer, Jokma Web Solutions.** Client web and mobile apps. (The project line waits for Joe's OK, I8 and P3.)                         |
+| 2024 – present | **Frontend Engineer, TeamForward.** Event-planning and networking platform. React, TypeScript, Tailwind CSS.                                       |
+| 2024 – 2026    | **AWS Cloud Institute.** Graduated from the Cloud Application Developer program, June 2026. AWS Certified Cloud Practitioner and AI Practitioner.  |
+| 2023           | **Full-stack developer.** Built CI/CD pipelines. IBM DevOps Essentials (Coursera, July 2023).                                                      |
+| 2022           | **Career change.** Finished Fullstack Academy's full-stack web development bootcamp.                                                               |
+| 2015 – 2022    | **Mechanical engineer, Polyhistor International.** Manufacturing and 3D printing. Owned the engraving design for a line producing 250 parts a day. |
 
 ---
 
@@ -102,18 +102,18 @@ Small text: Need a website or app for your business? I take contract work throug
 
 ## Removed from v1
 
-| v1 phrase | Why |
-|---|---|
-| "efficient and innovative digital solutions" | Generic. Says nothing specific. |
-| "a unique perspective" / "a distinctive perspective" | Claims a difference without showing it. The new version shows it through the manufacturing examples. |
-| "discovered my passion for web development" | Cliché. Replaced with a placeholder for the actual story. |
-| "every line of code I write" | Overstated. |
-| "look great but also perform exceptionally well" | Unmeasured. |
-| "staying up-to-date with the latest technologies" | Generic. Replaced with the specific AWS curriculum. |
-| "cutting-edge solutions that meet modern web standards" | Generic. |
-| "A comprehensive toolkit combining engineering precision… exceptional digital experiences" | Generic. Replaced with tools grouped by proficiency. |
+| v1 phrase                                                                                         | Why                                                                                                    |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| "efficient and innovative digital solutions"                                                      | Generic. Says nothing specific.                                                                        |
+| "a unique perspective" / "a distinctive perspective"                                              | Claims a difference without showing it. The new version shows it through the manufacturing examples.   |
+| "discovered my passion for web development"                                                       | Cliché. Replaced with a placeholder for the actual story.                                              |
+| "every line of code I write"                                                                      | Overstated.                                                                                            |
+| "look great but also perform exceptionally well"                                                  | Unmeasured.                                                                                            |
+| "staying up-to-date with the latest technologies"                                                 | Generic. Replaced with the specific AWS curriculum.                                                    |
+| "cutting-edge solutions that meet modern web standards"                                           | Generic.                                                                                               |
+| "A comprehensive toolkit combining engineering precision… exceptional digital experiences"        | Generic. Replaced with tools grouped by proficiency.                                                   |
 | Core Values: "Quality over Quantity", "Continuous Learning", "User-Centered Design", "Clean Code" | Every developer would list these. Replaced with "How I work", where each habit is a concrete practice. |
-| Skills: "Team Leadership", "System Design" | Nothing on the site supports either (I16). |
-| Skill: "MongoDB" | No shipped project to point to (I15c). |
-| Cert: "AWS Certified Developer – Associate" | Still studying for it (I2b). Add it when earned. |
-| Skills: "3D Printing", "Mechanical Engineering", "Problem Solving" | Moved into the story, where they explain something instead of padding a list. |
+| Skills: "Team Leadership", "System Design"                                                        | Nothing on the site supports either (I16).                                                             |
+| Skill: "MongoDB"                                                                                  | No shipped project to point to (I15c).                                                                 |
+| Cert: "AWS Certified Developer – Associate"                                                       | Still studying for it (I2b). Add it when earned.                                                       |
+| Skills: "3D Printing", "Mechanical Engineering", "Problem Solving"                                | Moved into the story, where they explain something instead of padding a list.                          |

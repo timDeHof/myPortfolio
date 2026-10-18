@@ -66,18 +66,18 @@ That's 16 if you delete the Render post and 15 if you keep it.
 
 Each merged post must describe something you actually deployed, with numbers you measured. If you haven't built one yet, build it first, or drop that post. The redirects in the last column send old URLs to the new post.
 
-| Old post | Goes into |
-|---|---|
-| S3 + CloudFront: Static Site Hosting at the Edge | M1 |
-| Introduction to AWS CloudFormation | M1 |
-| Building a CI/CD Pipeline with AWS CodePipeline | M1 |
-| Cloud Security Best Practices | M1, as the OAC and headers section |
-| Building a REST API with AWS DynamoDB | M2 |
-| Deploying Serverless APIs with AWS Lambda | M2 |
-| Microservices Architecture in the Cloud | M2, as the "why one service" section |
-| Serverless Image Processing with AWS Lambda | M3 |
-| Getting Started with AWS SAM | M3 |
-| Introduction to AWS IAM for Developers | M3, as the execution-role section. M1 also uses it for the deploy role. |
+| Old post                                         | Goes into                                                               |
+| ------------------------------------------------ | ----------------------------------------------------------------------- |
+| S3 + CloudFront: Static Site Hosting at the Edge | M1                                                                      |
+| Introduction to AWS CloudFormation               | M1                                                                      |
+| Building a CI/CD Pipeline with AWS CodePipeline  | M1                                                                      |
+| Cloud Security Best Practices                    | M1, as the OAC and headers section                                      |
+| Building a REST API with AWS DynamoDB            | M2                                                                      |
+| Deploying Serverless APIs with AWS Lambda        | M2                                                                      |
+| Microservices Architecture in the Cloud          | M2, as the "why one service" section                                    |
+| Serverless Image Processing with AWS Lambda      | M3                                                                      |
+| Getting Started with AWS SAM                     | M3                                                                      |
+| Introduction to AWS IAM for Developers           | M3, as the execution-role section. M1 also uses it for the deploy role. |
 
 ### M1. How I host timdehof.dev v2 on S3 + CloudFront
 
@@ -131,10 +131,10 @@ Write it in plain voice (fixes F14). It is the long-form version of D3, so link 
 
 ## Keep: 2 posts
 
-| Slug | Action |
-|---|---|
+| Slug                                                         | Action                                                                                                                                                                  |
+| ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `unraveling-the-mystery-of-an-empty-api-response-in-axios-…` | Keep. It's a real bug with real code. Retitle it to name the actual cause: filtering a paginated response on the client empties later pages. Cut the generic checklist. |
-| `reelwatch-movie-watchlist` | Keep only if the app is still live. Unread. |
+| `reelwatch-movie-watchlist`                                  | Keep only if the app is still live. Unread.                                                                                                                             |
 
 ---
 

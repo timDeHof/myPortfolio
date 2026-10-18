@@ -8,19 +8,19 @@ Covers: Projects, project detail pages, Blog, Contact, Services (removed), 404, 
 
 ## G1. Generic phrases removed
 
-| Current phrase | Where | Replaced by |
-|---|---|---|
-| "Building innovative solutions with cutting-edge technologies." | `src/utils/seo.ts:25` (defaultSEO), `index.html:9` | G3 default description |
-| "Full-stack developer passionate about creating innovative web solutions with modern technologies and best practices." | `src/components/layout/footer.tsx:43` | G2 footer blurb |
-| "A collection of projects showcasing my expertise in building modern web applications with cutting-edge technologies." | `src/pages/projects-page.tsx:84` | Projects lead |
-| "Explore my latest projects including e-commerce applications, machine learning integrations, and full-stack web applications." | `src/utils/seo.ts` (pageSEO.projects) | Projects meta |
-| "Real-time insights into my coding activity, language preferences, and contribution patterns." | `src/components/github/github-stats-section.tsx:33` | GitHub section lead |
-| "Ready to bring your ideas to life? … create something amazing together." | `src/components/contact/contact-hero.tsx` | Contact lead |
-| "I'm always excited to work on new projects and collaborate with passionate people." | `src/components/contact/contact-info-panel.tsx` | Contact panel body |
-| "I'm always excited to work on new challenges and innovative solutions." | `src/utils/seo.ts` (pageSEO.contact) | Contact meta |
-| "Ready to work together? Let's discuss your next project." | `footer.tsx:74-76` | G2 footer contact line |
-| "Discover the web development services I offer, from full-stack applications to cutting-edge technology implementations." | `src/utils/seo.ts` (pageSEO.services) | Removed with the page (P1) |
-| "Tell me about your project..." | `contact-form.tsx:235` | Form placeholder |
+| Current phrase                                                                                                                  | Where                                               | Replaced by                |
+| ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | -------------------------- |
+| "Building innovative solutions with cutting-edge technologies."                                                                 | `src/utils/seo.ts:25` (defaultSEO), `index.html:9`  | G3 default description     |
+| "Full-stack developer passionate about creating innovative web solutions with modern technologies and best practices."          | `src/components/layout/footer.tsx:43`               | G2 footer blurb            |
+| "A collection of projects showcasing my expertise in building modern web applications with cutting-edge technologies."          | `src/pages/projects-page.tsx:84`                    | Projects lead              |
+| "Explore my latest projects including e-commerce applications, machine learning integrations, and full-stack web applications." | `src/utils/seo.ts` (pageSEO.projects)               | Projects meta              |
+| "Real-time insights into my coding activity, language preferences, and contribution patterns."                                  | `src/components/github/github-stats-section.tsx:33` | GitHub section lead        |
+| "Ready to bring your ideas to life? … create something amazing together."                                                       | `src/components/contact/contact-hero.tsx`           | Contact lead               |
+| "I'm always excited to work on new projects and collaborate with passionate people."                                            | `src/components/contact/contact-info-panel.tsx`     | Contact panel body         |
+| "I'm always excited to work on new challenges and innovative solutions."                                                        | `src/utils/seo.ts` (pageSEO.contact)                | Contact meta               |
+| "Ready to work together? Let's discuss your next project."                                                                      | `footer.tsx:74-76`                                  | G2 footer contact line     |
+| "Discover the web development services I offer, from full-stack applications to cutting-edge technology implementations."       | `src/utils/seo.ts` (pageSEO.services)               | Removed with the page (P1) |
+| "Tell me about your project..."                                                                                                 | `contact-form.tsx:235`                              | Form placeholder           |
 
 ---
 
@@ -32,14 +32,17 @@ Services is removed (P1). The list is `DEFAULT_NAV_ITEMS` in `src/lib/constants.
 **Nav button:** Résumé (currently "Resume", `navbar.tsx:90`)
 
 **Footer, left column**
+
 - Heading: Tim DeHof
 - Blurb: Full-stack engineer in Jacksonville, FL. Seven years in manufacturing engineering before software.
 - Link: Read the blog →
 
 **Footer, center column**
+
 - Heading: Pages (was "Quick Links")
 
 **Footer, right column**
+
 - Heading: Contact (was "Get In Touch")
 - Line: Hiring for a frontend or full-stack role? Email is fastest.
 - Button: Email me (links to `mailto:tim@timdehof.dev`, was "Get In Touch" linking to /contact)
@@ -119,11 +122,11 @@ These pages have no `SEOHead` today (`src/pages/project-detail-page.tsx`), so af
 
 ### Labels
 
-| Current | New |
-|---|---|
-| Back to Projects | All projects |
-| View Source | Source |
-| Live Demo | Live demo |
+| Current                                                        | New                                                                                         |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Back to Projects                                               | All projects                                                                                |
+| View Source                                                    | Source                                                                                      |
+| Live Demo                                                      | Live demo                                                                                   |
 | Tabs: Overview · Features · Tech Stack · Workflow · Case Study | Case study · Overview · Features · Stack · Workflow (case study first when present, as now) |
 
 ### Suggested case-study structure
@@ -188,6 +191,7 @@ Depends on blog-cleanup-plan.md (D4). After the cleanup the blog has 6 posts (7 
 - **Links:** LinkedIn · GitHub · Résumé (PDF)
 
 Response-time card:
+
 - **Heading:** Response time
 - **Body:** I reply within one business day. (Replaces "24 hours". Drop the urgent-inquiry sentence, it suggests client support.)
 
