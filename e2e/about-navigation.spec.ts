@@ -33,3 +33,18 @@ for (const failing of Object.keys(FIXTURES)) {
     expect(Date.now() - start).toBeLessThan(MAX_NAVIGATION_MS);
   });
 }
+
+// A request that never answers has no error to fail on, so only a time limit
+// in the loader lets the page open
+test(`opens About within ${MAX_NAVIGATION_MS}ms when testimonials.json never answers`, async ({ page }) => {
+  await page.route("**/testimonials.json**", () => {});
+  await page.route("**/portfolio.json**", route => route.fulfill({ json: contentsResponse(FIXTURES["portfolio.json"]) }));
+
+  await page.goto("/");
+  await page.waitForLoadState("load");
+  const start = Date.now();
+  await page.getByRole("link", { name: "More about me" }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Seven years in manufacturing", { timeout: 15000 });
+
+  expect(Date.now() - start).toBeLessThan(MAX_NAVIGATION_MS);
+});
