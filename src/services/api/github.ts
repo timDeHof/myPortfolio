@@ -11,6 +11,8 @@ export { GitHubAPIError } from "../../types/github";
 const GITHUB_USERNAME = "timDeHof";
 // Update the API base to point to the standalone worker proxy
 const GITHUB_API_BASE = `${env.VITE_API_BASE_URL}/github`;
+// fetchRepository reads at most this many pages of 100 repositories
+const MAX_REPOSITORY_PAGES = 10;
 
 // Repositories to exclude from portfolio (add repo names here)
 const EXCLUDED_REPOS = [
@@ -210,17 +212,19 @@ export const githubAPI = {
   // /repos/:owner/:repo, so this reads the same list fetchRepositories uses.
   fetchRepository: async (owner: string, repo: string, signal?: AbortSignal): Promise<GitHubRepository> => {
     const url = `${GITHUB_API_BASE}/users/${owner}/repos?sort=updated&per_page=100&type=all`;
-    // A full page of 100 may have more after it, so keep going until a short page
-    for (let page = 1; ; page++) {
+    // A full page of 100 may have more after it, so keep going until a short
+    // page. The bound stops a proxy that ignores `page` from looping forever.
+    for (let page = 1; page <= MAX_REPOSITORY_PAGES; page++) {
       const repositories = await githubFetch<GitHubRepository[]>(`${url}&page=${page}`, signal);
       const match = repositories.find(repository => repository.name === repo);
       if (match) {
         return match;
       }
       if (repositories.length < 100) {
-        throw new GitHubAPIError(404, "Not Found", url, `No repository named ${repo}`);
+        break;
       }
     }
+    throw new GitHubAPIError(404, "Not Found", url, `No repository named ${repo}`);
   },
 
   // Fetch repository languages
