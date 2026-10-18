@@ -1,5 +1,6 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
+import { retryDuringPrerender } from "@/lib/query-client";
 import { githubAPI } from "@/services/api/github";
 
 /** How long the star count may take before the page shows its "Open source" fallback */
@@ -24,8 +25,10 @@ export const shadcnTimelineStarsQuery = queryOptions({
     }
   },
   staleTime: 1000 * 60 * 60,
-  // One attempt, so a slow or failed GitHub shows the fallback without waiting on retries
-  retry: false,
+  // One attempt in the browser, so a slow or failed GitHub shows the fallback
+  // without waiting on retries. The prerender retries, so one slow request
+  // during the build doesn't publish the fallback.
+  retry: retryDuringPrerender,
   // The page has a fallback (D17), so a failed fetch must not fail the prerender
   meta: { optional: true },
 });
