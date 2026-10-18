@@ -1,5 +1,6 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
 
+import { retryDuringPrerender } from "@/lib/query-client";
 import { githubAPI } from "@/services/api/github";
 
 export interface Testimonial {
@@ -21,8 +22,7 @@ export const testimonialsQuery = queryOptions({
   queryKey: ["testimonials"],
   queryFn: fetchTestimonials,
   staleTime: 1000 * 60 * 5,
-  // One attempt, so a failed fetch shows the page without waiting on retries
-  retry: false,
+  retry: retryDuringPrerender,
   // The section hides itself when this fails, so a failed fetch must not fail the prerender
   meta: { optional: true },
 });
