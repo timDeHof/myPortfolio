@@ -29,6 +29,9 @@ export default antfu(
 			"src/routeTree.gen.ts",
 			// Tooling state, not source.
 			"conductor/**",
+			".claude/**",
+			// Local planning notes, not committed.
+			"docs/**",
 			// Prose docs. The fenced snippets in these are illustrative fragments,
 			// not compilable modules, so parsing them as TypeScript only produces
 			// noise.
