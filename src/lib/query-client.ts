@@ -1,4 +1,4 @@
-import { QueryClient } from "@tanstack/react-query";
+import { hydrate, QueryClient } from "@tanstack/react-query";
 
 import { GitHubAPIError } from "../types/github";
 
@@ -26,3 +26,14 @@ export const queryClient = new QueryClient({
     },
   },
 });
+
+/** The id of the script tag the prerender writes the dehydrated query state into */
+export const QUERY_STATE_ELEMENT_ID = "query-state";
+
+/** Load the query state the prerender wrote into the page, so the first render matches the HTML */
+export function hydrateFromPrerender(): void {
+  const json = document.getElementById(QUERY_STATE_ELEMENT_ID)?.textContent;
+  if (json) {
+    hydrate(queryClient, JSON.parse(json));
+  }
+}
