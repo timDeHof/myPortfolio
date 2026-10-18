@@ -111,6 +111,10 @@ async function githubFetch<T>(url: string, signal?: AbortSignal): Promise<T> {
     if (error instanceof GitHubAPIError) {
       throw error;
     }
+    // The caller cancelled the request (a timeout or a cancelled query), so it isn't a network failure
+    if (signal?.aborted) {
+      throw signal.reason;
+    }
 
     console.error(`💥 GitHub API Network Error:`, error);
     throw new GitHubAPIError(0, "Network Error", url, error instanceof Error ? error.message : "Unknown network error",

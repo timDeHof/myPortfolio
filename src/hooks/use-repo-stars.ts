@@ -13,12 +13,14 @@ export const shadcnTimelineStarsQuery = queryOptions({
     // Abort the request if the query is cancelled or GitHub stalls
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(new Error(`Star count timed out after ${STAR_COUNT_TIMEOUT_MS}ms`)), STAR_COUNT_TIMEOUT_MS);
-    signal.addEventListener("abort", () => controller.abort(signal.reason), { once: true });
+    const abortWithQuery = (): void => controller.abort(signal.reason);
+    signal.addEventListener("abort", abortWithQuery, { once: true });
     try {
       return (await githubAPI.fetchRepository("timDeHof", "shadcn-timeline", controller.signal)).stargazers_count;
     }
     finally {
       clearTimeout(timer);
+      signal.removeEventListener("abort", abortWithQuery);
     }
   },
   staleTime: 1000 * 60 * 60,
