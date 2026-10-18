@@ -1,5 +1,4 @@
-import { Cloud, Intro, Practices, Story, Tools } from "@/components/about/sections";
-import { TestimonialsSection } from "@/components/about/testimonials-section";
+import { Cloud, Intro, Practices, Story, Testimonials, Tools } from "@/components/about/sections";
 
 import { SEOHead } from "../components/common/seo-head";
 import { Contact } from "../components/home/sections";
@@ -13,7 +12,7 @@ export const AboutPage: React.FC = () => {
       <Story />
       <Practices />
       {/* Kept below How I work (D1) */}
-      <TestimonialsSection />
+      <Testimonials />
       <Cloud />
       <Tools />
       <Contact lead="The fastest way to reach me is email." showResume />

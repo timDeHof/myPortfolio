@@ -1,9 +1,8 @@
-import React from "react";
+import type { Testimonial } from "@hooks/use-testimonials";
 
-import type { Testimonial } from "../../hooks/use-testimonials";
+import { useTestimonials } from "@hooks/use-testimonials";
 
-import { useTestimonials } from "../../hooks/use-testimonials";
-import { MaxWidthWrapper } from "../ui/max-width-wrapper";
+import { MaxWidthWrapper } from "../../ui/max-width-wrapper";
 
 const LINK_CLASS = "font-semibold text-teal-700 hover:underline dark:text-teal-400";
 
@@ -11,7 +10,7 @@ interface TestimonialCardProps {
   testimonial: Testimonial;
 }
 
-const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
+function TestimonialCard({ testimonial }: TestimonialCardProps) {
   return (
     <figure className="grid content-start gap-4 border-t-2 border-teal-700 pt-[18px] dark:border-teal-400">
       <blockquote>
@@ -47,9 +46,9 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial }) => {
       </figcaption>
     </figure>
   );
-};
+}
 
-export const TestimonialsSection: React.FC = () => {
+function Testimonials() {
   const { data: testimonials, isLoading, isError } = useTestimonials();
 
   if (isError) {
@@ -74,4 +73,6 @@ export const TestimonialsSection: React.FC = () => {
       </MaxWidthWrapper>
     </section>
   );
-};
+}
+
+export default Testimonials;
