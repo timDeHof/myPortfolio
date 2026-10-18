@@ -43,10 +43,10 @@ function renderAt(path: string) {
 }
 
 describe("projects list links", () => {
-  it("links each project card to its /projects/$slug page", async () => {
+  it("links each project to its /projects/$slug page", async () => {
     renderAt("/projects");
 
-    const link = await screen.findByRole("link", { name: /view details/i });
+    const link = await screen.findByRole("link", { name: /read more/i });
     expect(link).toHaveAttribute("href", "/projects/cognidocs");
   });
 

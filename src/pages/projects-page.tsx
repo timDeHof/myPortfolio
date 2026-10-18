@@ -6,7 +6,8 @@ import React, { lazy, Suspense } from "react";
 
 import { AnimatedSection } from "../components/common/animated-section";
 import { SEOHead } from "../components/common/seo-head";
-import { ProjectGrid } from "../components/projects/project-grid";
+import LeadProject from "../components/projects/lead-project";
+import ProjectIndex from "../components/projects/project-index";
 import { Button } from "../components/ui/button";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
 import { Route } from "../routes/projects";
@@ -40,30 +41,27 @@ export const ProjectsPage: React.FC = () => {
     );
   }
 
+  const [leadProject, ...moreProjects] = projects;
+
   return (
     <>
       <SEOHead seo={pageSEO.projects} />
 
-      <AnimatedSection className="py-20 bg-muted">
+      <section aria-labelledby="projects-heading" className="border-b border-border py-14 md:py-18">
         <MaxWidthWrapper>
-          <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4">
-              Projects
-            </h1>
-            <p className="text-xl text-foreground max-w-2xl mx-auto">
-              A collection of projects showcasing my expertise in building
-              modern web applications with cutting-edge technologies.
+          <div className="mb-10 grid max-w-[640px] gap-3">
+            <h1 id="projects-heading" className="text-[clamp(2rem,4.6vw,3.25rem)] font-bold text-foreground">Projects</h1>
+            <p className="max-w-[55ch] text-muted-foreground text-pretty">
+              Each project lists the problem, my role, the stack, and what I&apos;d do differently. The first three are the
+              ones I&apos;d walk through in an interview.
             </p>
-            <p className="mt-4 text-muted-foreground">
-              {projects.length}
-              {" "}
-              projects featured
-            </p>
+            <p className="text-sm text-muted-foreground">{`${projects.length} projects`}</p>
           </div>
-        </MaxWidthWrapper>
-      </AnimatedSection>
 
-      <ProjectGrid projects={projects} />
+          <LeadProject project={leadProject} />
+          <ProjectIndex projects={moreProjects} />
+        </MaxWidthWrapper>
+      </section>
 
       <Suspense fallback={<div className="py-16" />}>
         <GitHubStatsSection />

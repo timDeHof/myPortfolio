@@ -28,6 +28,21 @@ const fixtures: Record<string, unknown> = {
     difficulty: "Intermediate",
     timeEstimate: "2-4 weeks",
   },
+  "teamforward.json": {
+    number: "03",
+    name: "TeamForward",
+    tagline: "Event-planning and networking platform",
+    description: "TeamForward description",
+    useCase: "Attendees find events, RSVP, and connect with other attendees.",
+    image: "",
+    accentColor: "#0f766e",
+    techStack: [{ category: "Frontend", tech: "React · TypeScript", purpose: "UI" }],
+    advancedFeatures: [],
+    resumePitch: "Frontend Engineer at TeamForward since 2024.",
+    tags: [],
+    difficulty: "Advanced",
+    timeEstimate: "Ongoing",
+  },
   "shadcn-timeline-case-study.json": {
     challenges: { title: "Challenges Solved", items: [{ challenge: "SSR Compatibility", solution: "Works with Next.js SSR" }] },
     impact: { title: "Results & Impact", metrics: [{ value: "297", label: "GitHub Stars" }], achievements: ["Listed in awesome-shadcn-ui"] },
@@ -286,6 +301,30 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(scripts).toHaveLength(1);
     expect(scripts[0].props.type).toBe("application/ld+json");
     expect(String(scripts[0].props.children)).toContain("\"@type\":\"Person\"");
+  });
+
+  it("renders /projects as a lead project with a title block, then an index", async () => {
+    const { html } = await renderPage("/projects");
+    const titleBlock = html.match(/<dl aria-label="shadcn-timeline title block"[\s\S]*?<\/dl>/)?.[0] ?? "";
+    const index = html.match(/<ol aria-label="More projects"[\s\S]*?<\/ol>/)?.[0] ?? "";
+
+    expect(html).toMatch(/<h1[^>]*>Projects<\/h1>/);
+    expect(html).toContain("The first three are the ones I&#x27;d walk through in an interview.");
+    expect(html).toContain(">2 projects<");
+    // The lead project's title block uses the hero's drawing labels
+    expect([...titleBlock.matchAll(/<dt[^>]*>([^<]+)<\/dt>/g)].map(match => match[1])).toEqual(["Part", "Function", "What I built", "Material"]);
+    expect(titleBlock).toContain("Built and open-sourced the component.");
+    expect(titleBlock).toContain("React 18 · TypeScript · Tailwind CSS · CSS Variables");
+    expect(html).toMatch(/<a[^>]*href="\/projects\/shadcn-timeline"[^>]*>Read more/);
+    // The rest are rows, not cards, and carry no project numbers
+    expect(index.match(/<li[\s>]/g)).toHaveLength(1);
+    expect(index).toMatch(/<h2[^>]*>TeamForward<\/h2>/);
+    expect(index).toContain("Frontend Engineer at TeamForward since 2024.");
+    expect(index).toMatch(/<a[^>]*href="\/projects\/teamforward"[^>]*>Read more/);
+    expect(index).not.toContain(">03<");
+    // The old card grid is gone
+    expect(html).not.toContain("View Details");
+    expect(html).not.toContain("projects featured");
   });
 
   it("renders the certifications on /about instead of the spinner", async () => {
