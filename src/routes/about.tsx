@@ -5,7 +5,7 @@ import { testimonialsQuery } from "../hooks/use-testimonials";
 import { queryClient } from "../lib/query-client";
 
 /** How long a click through to About waits for its data before showing the page */
-export const ABOUT_LOADER_TIMEOUT_MS = 1500;
+export const ABOUT_LOADER_TIMEOUT_MS = 1000;
 
 export const Route = createFileRoute("/about")({
   // Fill the query cache before render, so the prerendered page lists the
