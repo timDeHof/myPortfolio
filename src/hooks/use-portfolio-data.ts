@@ -12,6 +12,8 @@ export const portfolioDataQuery = queryOptions({
   queryKey: ["portfolio"],
   queryFn: fetchPortfolioData,
   staleTime: 1000 * 60 * 5,
+  // One attempt, so a failed fetch shows the page without waiting on retries
+  retry: false,
 });
 
 export function usePortfolioData() {
