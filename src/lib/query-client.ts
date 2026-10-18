@@ -2,23 +2,32 @@ import { hydrate, QueryClient } from "@tanstack/react-query";
 
 import { GitHubAPIError } from "../types/github";
 
+function shouldRetry(failureCount: number, error: Error): boolean {
+  // Don't retry a missing file. GitHub's 404 message is "Not Found", so
+  // check the status rather than only the message.
+  if (error instanceof GitHubAPIError && error.status === 404) {
+    return false;
+  }
+  if (error.message.includes("404")) {
+    return false;
+  }
+  // Retry up to 3 times for other errors
+  return failureCount < 3;
+}
+
+/**
+ * For queries the page can render without: retry during the prerender, where a
+ * failure fails the build or publishes the page without its data, and make one
+ * attempt in the browser, where a retry holds the page back.
+ */
+export const retryDuringPrerender = typeof window === "undefined" ? shouldRetry : false;
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 5 * 60 * 1000, // 5 minutes
       gcTime: 10 * 60 * 1000, // 10 minutes (renamed from cacheTime)
-      retry: (failureCount, error) => {
-        // Don't retry a missing file. GitHub's 404 message is "Not Found", so
-        // check the status rather than only the message.
-        if (error instanceof GitHubAPIError && error.status === 404) {
-          return false;
-        }
-        if (error instanceof Error && error.message.includes("404")) {
-          return false;
-        }
-        // Retry up to 3 times for other errors
-        return failureCount < 3;
-      },
+      retry: shouldRetry,
       retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
     },
     mutations: {

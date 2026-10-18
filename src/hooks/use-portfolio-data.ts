@@ -2,6 +2,7 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 
 import type { PortfolioData } from "@/types/portfolio";
 
+import { retryDuringPrerender } from "@/lib/query-client";
 import { githubAPI } from "@/services/api/github";
 
 async function fetchPortfolioData(): Promise<PortfolioData> {
@@ -12,10 +13,7 @@ export const portfolioDataQuery = queryOptions({
   queryKey: ["portfolio"],
   queryFn: fetchPortfolioData,
   staleTime: 1000 * 60 * 5,
-  // One attempt in the browser, so a failed fetch shows the page without
-  // waiting on retries. The prerender keeps retrying, because a failure there
-  // fails the build.
-  retry: typeof window === "undefined" ? 3 : false,
+  retry: retryDuringPrerender,
 });
 
 export function usePortfolioData() {
