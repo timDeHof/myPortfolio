@@ -23,12 +23,12 @@ export const GitHubStatsSection: React.FC = () => {
   return (
     <AnimatedSection
       className={SECTION_STYLES.container}
-      aria-label="GitHub Analytics Section"
+      aria-labelledby="github-activity-heading"
     >
       <MaxWidthWrapper>
         {/* Section Header */}
         <header className={SECTION_STYLES.header.wrapper}>
-          <h2 className={SECTION_STYLES.header.title}>GitHub activity</h2>
+          <h2 id="github-activity-heading" className={SECTION_STYLES.header.title}>GitHub activity</h2>
           <p className={SECTION_STYLES.header.description}>
             Pulled from the GitHub API: repositories, languages, and recent contributions.
           </p>

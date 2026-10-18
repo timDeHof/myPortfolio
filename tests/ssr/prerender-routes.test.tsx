@@ -340,6 +340,13 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(html).not.toContain("View GitHub Profile");
   });
 
+  it("labels the GitHub activity section with its heading", async () => {
+    const { html } = await renderPage("/projects");
+
+    expect(html).toMatch(/<section[^>]*aria-labelledby="github-activity-heading"/);
+    expect(html).toMatch(/<h2 id="github-activity-heading"[^>]*>GitHub activity<\/h2>/);
+  });
+
   it("gives the More on GitHub button the footer Get In Touch button's accent colors", async () => {
     const { html } = await renderPage("/projects");
     const button = html.match(/<a href="https:\/\/github.com\/timDeHof"[^>]*>(?:<svg[\s\S]*?<\/svg>)?GitHub profile<\/a>/)?.[0] ?? "";
