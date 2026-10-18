@@ -36,6 +36,20 @@ describe("title block", () => {
     expect(within(cells[3]).getByText("2015–2022")).toHaveClass("block");
   });
 
+  // The last row is the last cells to render, not the last two
+  it("puts a bottom border on every row but the last when wide cells break up the pairs", () => {
+    const bottomBorders = (cells: { label: string; wide?: boolean }[]): boolean[] => {
+      const { unmount } = render(<TitleBlock label="Drawing" cells={cells.map(cell => ({ ...cell, value: "x" }))} />);
+      const result = [...screen.getByLabelText("Drawing").children].map(cell => cell.classList.contains("border-b"));
+      unmount();
+      return result;
+    };
+
+    expect(bottomBorders([{ label: "A" }, { label: "B" }, { label: "C", wide: true }])).toEqual([true, true, false]);
+    expect(bottomBorders([{ label: "A", wide: true }, { label: "B" }])).toEqual([true, false]);
+    expect(bottomBorders([{ label: "A" }, { label: "B" }, { label: "C" }])).toEqual([true, true, false]);
+  });
+
   it("stacks cells in one column with a border under all but the last", () => {
     render(<TitleBlock label="Project" columns={1} cells={[{ label: "Part", value: "A" }, { label: "Function", value: "B" }, { label: "Material", value: "C" }]} />);
     const dl = screen.getByLabelText("Project");
