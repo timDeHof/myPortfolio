@@ -18,6 +18,11 @@ const { plugins: _vitePlugins, ...sharedViteConfig } = resolvedViteConfig
 const vitestConfig = defineConfig({
   test: {
     setupFiles: ['./tests/setup.ts'],
+    // The same public URL CI and deploy set, so the Résumé button renders in
+    // tests without a local .env
+    env: {
+      VITE_RESUME_URL: 'https://assets.timdehof.dev/tim-dehof-resume.pdf',
+    },
     environment: 'jsdom',
     globals: true,
   },
