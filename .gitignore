@@ -42,3 +42,7 @@ GEMINI.md
 
 # Test coverage output
 coverage/
+
+# Playwright
+test-results
+playwright-report

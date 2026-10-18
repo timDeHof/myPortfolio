@@ -1,5 +1,5 @@
 /// <reference types="vitest/config" />
-import { defineConfig, mergeConfig } from 'vitest/config'
+import { configDefaults, defineConfig, mergeConfig } from 'vitest/config'
 import viteConfigFactory from './vite.config'
 
 // vite.config.ts exports a mode-dependent callback; resolve it for the test
@@ -24,6 +24,8 @@ const vitestConfig = defineConfig({
       VITE_RESUME_URL: 'https://assets.timdehof.dev/tim-dehof-resume.pdf',
     },
     environment: 'jsdom',
+    // Playwright specs run against the build with `pnpm test:e2e`
+    exclude: [...configDefaults.exclude, 'e2e/**'],
     globals: true,
   },
 })

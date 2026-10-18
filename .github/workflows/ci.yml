@@ -66,6 +66,13 @@ jobs:
       - name: Build
         run: pnpm build
 
+      # The e2e tests load the build in a real browser, so they need Chromium
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: End-to-end tests
+        run: pnpm test:e2e
+
       - name: Verify discovery files are in the build output
         run: |
           for f in .well-known/api-catalog sitemap.xml robots.txt _headers; do
