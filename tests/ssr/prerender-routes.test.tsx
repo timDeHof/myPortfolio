@@ -340,6 +340,14 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(html).not.toContain("View GitHub Profile");
   });
 
+  it("gives the More on GitHub button the footer Get In Touch button's accent colors", async () => {
+    const { html } = await renderPage("/projects");
+    const button = html.match(/<a href="https:\/\/github.com\/timDeHof"[^>]*>(?:<svg[\s\S]*?<\/svg>)?GitHub profile<\/a>/)?.[0] ?? "";
+
+    expect(button).toMatch(/class="[^"]*\bbtn--accent\b[^"]*"/);
+    expect(button).not.toMatch(/\bbg-secondary\b/);
+  });
+
   it("says the projects didn't load, not that there are none, when every download fails", async () => {
     const fetchContents = vi.mocked(githubAPI.fetchContents);
     const fixtureFetch = fetchContents.getMockImplementation()!;

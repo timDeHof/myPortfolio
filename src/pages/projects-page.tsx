@@ -75,7 +75,7 @@ export const ProjectsPage: React.FC = () => {
           <p className="text-muted-foreground mb-6">
             Smaller experiments and older bootcamp work are on my GitHub profile.
           </p>
-          <Button asChild className="bg-secondary text-secondary-foreground hover:opacity-90 py-4 px-6">
+          <Button asChild variant="accent" className="py-4 px-6">
             <a href="https://github.com/timDeHof" target="_blank" rel="noopener noreferrer">
               <Github className="h-4 w-4 mr-2" />
               GitHub profile
