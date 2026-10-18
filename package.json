@@ -13,7 +13,7 @@
   "scripts": {
     "generate-routes": "tsr generate",
     "watch-routes": "tsr watch",
-    "prepare": "git submodule update --init --recursive",
+    "prepare": "git submodule update --init --recursive && husky",
     "dev": "vite",
     "dev:pages": "pnpm run build && pnpm exec wrangler pages dev build --port 4173",
     "build": "tsc --noEmit && vite build",
@@ -77,6 +77,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.26",
     "globals": "16.5.0",
+    "husky": "9.1.7",
     "imagemin-webp": "^8.0.0",
     "jsdom": "^27.3.0",
     "postcss": "^8.5.6",
