@@ -1,21 +1,16 @@
 import { Link } from "@tanstack/react-router";
 
 import { env } from "@/lib/env";
-import { cn } from "@/lib/utils";
 
+import type { TitleBlockCell } from "../../common/title-block";
+
+import { TitleBlock } from "../../common/title-block";
 import { Button } from "../../ui/button";
 import { MaxWidthWrapper } from "../../ui/max-width-wrapper";
 
 interface HeroProps {
   /** shadcn-timeline's star count, read at build time (D3). Left out of the chip when unknown. */
   stars?: number;
-}
-
-interface TitleBlockCell {
-  label: string;
-  /** An array renders one line per item */
-  value: React.ReactNode | string[];
-  wide?: boolean;
 }
 
 // An engineering drawing's title block, with the career as its revisions
@@ -90,35 +85,7 @@ function Hero({ stars }: HeroProps) {
           </div>
 
           <figure className="min-w-0">
-            <dl
-              aria-label="Engineering drawing title block"
-              className="grid grid-cols-2 rounded-sm border-[1.5px] border-foreground bg-card font-mono text-[12.5px]"
-            >
-              {TITLE_BLOCK.map((cell, index) => {
-                // Wide cells span both columns, so a half cell's column depends on the cells before it
-                const halfCellsBefore = TITLE_BLOCK.slice(0, index).reduce((count, prev) => (prev.wide ? 0 : count + 1), 0);
-                const isLeftColumn = !cell.wide && halfCellsBefore % 2 === 0;
-                const isLastRow = index >= TITLE_BLOCK.length - 2;
-                return (
-                  <div
-                    key={cell.label}
-                    className={cn(
-                      "min-w-0 border-border px-3 py-2.5",
-                      cell.wide && "col-span-2",
-                      isLeftColumn && "border-r",
-                      !isLastRow && "border-b",
-                    )}
-                  >
-                    <dt className="mb-1 text-[11px] uppercase tracking-[0.08em] text-muted-foreground">{cell.label}</dt>
-                    <dd className="text-foreground [overflow-wrap:anywhere]">
-                      {Array.isArray(cell.value)
-                        ? cell.value.map(line => <span key={line} className="block">{line}</span>)
-                        : cell.value}
-                    </dd>
-                  </div>
-                );
-              })}
-            </dl>
+            <TitleBlock label="Engineering drawing title block" cells={TITLE_BLOCK} />
             <figcaption className="mt-2.5 font-mono text-[11.5px] text-muted-foreground">
               Every drawing I signed had one of these. This is v2 of the site, so: Rev B.
             </figcaption>

@@ -2,9 +2,9 @@ import type { Testimonial } from "@hooks/use-testimonials";
 
 import { useTestimonials } from "@hooks/use-testimonials";
 
-import { MaxWidthWrapper } from "../../ui/max-width-wrapper";
+import { LINK_CLASS } from "@/lib/link-class";
 
-const LINK_CLASS = "font-semibold text-teal-700 hover:underline dark:text-teal-400";
+import { MaxWidthWrapper } from "../../ui/max-width-wrapper";
 
 interface TestimonialCardProps {
   testimonial: Testimonial;

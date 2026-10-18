@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
+import { LINK_CLASS } from "@/lib/link-class";
+
 import { careerTimeline } from "../../../data/career-timeline";
 import { MaxWidthWrapper } from "../../ui/max-width-wrapper";
 
@@ -22,7 +24,7 @@ function Background() {
               Cloud Institute's Cloud Application Developer program.
             </p>
             <p>
-              <Link to="/about" className="font-semibold text-teal-700 hover:underline dark:text-teal-400">
+              <Link to="/about" className={LINK_CLASS}>
                 More about me
                 {" "}
                 <span aria-hidden="true">→</span>

@@ -1,6 +1,7 @@
 import type { Project } from "../../types/project";
 
 import { projectBuilt, projectStack } from "../../utils/project-summary";
+import { TitleBlock } from "../common/title-block";
 import ProjectLinks from "./project-links";
 
 interface LeadProjectProps {
@@ -25,14 +26,7 @@ function LeadProject({ project }: LeadProjectProps) {
         <p className="line-clamp-4 max-w-[55ch] text-muted-foreground text-pretty">{project.useCase || project.description}</p>
       </div>
       <div className="grid gap-4">
-        <dl aria-label={`${project.name} title block`} className="grid rounded-sm border-[1.5px] border-foreground bg-card font-mono text-[12.5px]">
-          {cells.map((cell, index) => (
-            <div key={cell.label} className={`min-w-0 border-border px-3 py-2.5 ${index < cells.length - 1 ? "border-b" : ""}`}>
-              <dt className="mb-1 text-[11px] uppercase tracking-[0.08em] text-muted-foreground">{cell.label}</dt>
-              <dd className="text-foreground">{cell.value}</dd>
-            </div>
-          ))}
-        </dl>
+        <TitleBlock label={`${project.name} title block`} columns={1} cells={cells} />
         <ProjectLinks project={project} />
       </div>
     </article>

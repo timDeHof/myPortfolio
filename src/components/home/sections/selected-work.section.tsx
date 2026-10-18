@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
+import { LINK_CLASS } from "@/lib/link-class";
+
 import { CASE_STUDY_SLUGS } from "../../../types/project";
 import { MaxWidthWrapper } from "../../ui/max-width-wrapper";
 
@@ -23,8 +25,6 @@ interface Project {
   statLines: string[];
   links: ExternalLink[];
 }
-
-const LINK_CLASS = "font-semibold text-teal-700 hover:underline dark:text-teal-400";
 
 function getProjects(stars?: number): Project[] {
   return [

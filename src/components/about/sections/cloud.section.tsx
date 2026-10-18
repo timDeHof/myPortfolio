@@ -1,8 +1,8 @@
 import { usePortfolioData } from "@hooks/use-portfolio-data";
 
-import { MaxWidthWrapper } from "../../ui/max-width-wrapper";
+import { LINK_CLASS } from "@/lib/link-class";
 
-const LINK_CLASS = "font-semibold text-teal-700 hover:underline dark:text-teal-400";
+import { MaxWidthWrapper } from "../../ui/max-width-wrapper";
 
 function Cloud() {
   const { data: portfolioData } = usePortfolioData();
