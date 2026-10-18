@@ -7,6 +7,8 @@ const PORT = 4174;
 export default defineConfig({
   testDir: "./e2e",
   forbidOnly: !!process.env.CI,
+  // Specs read this instead of process.env, which lint forbids outside config files
+  metadata: { isCI: !!process.env.CI },
   reporter: process.env.CI ? "github" : "list",
   use: {
     baseURL: `http://localhost:${PORT}`,

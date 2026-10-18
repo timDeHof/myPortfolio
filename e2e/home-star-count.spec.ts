@@ -33,8 +33,15 @@ test.describe("home star count", () => {
   test.beforeEach(async ({ page, request }) => {
     // The build fetches the count from GitHub. If that failed, the HTML already
     // says "Open source" and there is no number for the browser to keep.
-    const html = await (await request.get("/")).text();
-    test.skip(!/\d+★/.test(html), "The prerendered home page has no star count (GitHub was unreachable at build time)");
+    // Locally that skips. In CI it fails, so the check can't pass without running.
+    const hasStarCount = /\d+★/.test(await (await request.get("/")).text());
+    const reason = "The prerendered home page has no star count (GitHub was unreachable at build time)";
+    if (test.info().config.metadata.isCI) {
+      expect(hasStarCount, reason).toBe(true);
+    }
+    else {
+      test.skip(!hasStarCount, reason);
+    }
     await recordStarStat(page);
   });
 
