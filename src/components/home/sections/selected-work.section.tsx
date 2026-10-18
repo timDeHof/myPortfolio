@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
+import { CASE_STUDY_SLUGS } from "../../../types/project";
 import { MaxWidthWrapper } from "../../ui/max-width-wrapper";
 
 interface SelectedWorkProps {
@@ -59,7 +60,7 @@ function SelectedWork({ stars }: SelectedWorkProps) {
         <div className="mb-9 grid max-w-[640px] gap-2.5">
           <p className="font-mono text-xs uppercase tracking-[0.06em] text-teal-700 dark:text-teal-400">Selected work</p>
           <h2 id="selected-work-heading" className="text-[clamp(1.6rem,3.2vw,2.1rem)] font-bold text-foreground">Two projects, in depth</h2>
-          <p className="text-muted-foreground">Each one covers the problem, my role, and what I'd do differently.</p>
+          <p className="text-muted-foreground">Each one covers the problem and my role.</p>
         </div>
 
         <div className="grid gap-4">
@@ -92,7 +93,7 @@ function SelectedWork({ stars }: SelectedWorkProps) {
                   </a>
                 ))}
                 <Link to="/projects/$slug" params={{ slug: project.slug }} preload="intent" className={LINK_CLASS}>
-                  Case study
+                  {CASE_STUDY_SLUGS.includes(project.slug) ? "Case study" : "Details"}
                   {" "}
                   <span aria-hidden="true">→</span>
                 </Link>
