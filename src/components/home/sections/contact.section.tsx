@@ -1,5 +1,14 @@
+import { env } from "@/lib/env";
+
 import { Button } from "../../ui/button";
 import { MaxWidthWrapper } from "../../ui/max-width-wrapper";
+
+interface ContactProps {
+  /** The paragraph under the heading. Defaults to the home page's */
+  lead?: string;
+  /** Adds the Résumé button after the profiles */
+  showResume?: boolean;
+}
 
 interface ProfileLink {
   label: string;
@@ -11,17 +20,17 @@ const PROFILES: ProfileLink[] = [
   { label: "GitHub", href: "https://github.com/timDeHof" },
 ];
 
+const HOME_LEAD = "I'm looking for a team where engineering judgment matters as much as output. The fastest way to reach me is email.";
+
 // Shared with the About page (A6)
-function Contact() {
+function Contact({ lead = HOME_LEAD, showResume = false }: ContactProps) {
   return (
     <section id="contact" aria-labelledby="contact-heading" className="py-14 md:py-18">
       <MaxWidthWrapper>
         <div className="grid gap-5">
           <p className="font-mono text-xs uppercase tracking-[0.06em] text-teal-700 dark:text-teal-400">Contact</p>
           <h2 id="contact-heading" className="text-[clamp(1.8rem,3.6vw,2.4rem)] font-bold text-foreground">Hiring a frontend or full-stack engineer?</h2>
-          <p className="max-w-[55ch] text-muted-foreground">
-            I'm looking for a team where engineering judgment matters as much as output. The fastest way to reach me is email.
-          </p>
+          <p className="max-w-[55ch] text-muted-foreground">{lead}</p>
 
           <div className="flex flex-wrap gap-3">
             <Button asChild variant="accent">
@@ -32,6 +41,11 @@ function Contact() {
                 <a href={profile.href} target="_blank" rel="noopener noreferrer">{profile.label}</a>
               </Button>
             ))}
+            {showResume && env.VITE_RESUME_URL && (
+              <Button asChild variant="line">
+                <a href={env.VITE_RESUME_URL} target="_blank" rel="noopener noreferrer">Résumé (PDF)</a>
+              </Button>
+            )}
           </div>
 
           {/* Jokma referral line (P2), hidden for now

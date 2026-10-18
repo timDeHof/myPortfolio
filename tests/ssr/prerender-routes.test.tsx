@@ -8,7 +8,11 @@ import { githubAPI } from "../../src/services/api/github";
 // Data the prerender build would fetch from timDeHof/portfolio-metadata
 const fixtures: Record<string, unknown> = {
   "portfolio.json": {
-    certifications: [{ name: "Fixture Cloud Certificate", issuer: "Fixture Issuer", date: "2024-01-01" }],
+    certifications: [
+      { name: "Fixture Cloud Certificate", issuer: "Fixture Issuer", date: "2024-01-01" },
+      { name: "AWS Certified Fixture Practitioner", issuer: "Amazon Web Services", date: "September 2025", verificationUrl: "https://www.credly.com/badges/fixture-practitioner" },
+      { name: "AWS Certified Fixture Specialist", issuer: "Amazon Web Services", date: "September 2026", verificationUrl: "https://www.credly.com/badges/fixture-specialist" },
+    ],
   },
   "shadcn-timeline.json": {
     number: "01",
@@ -377,10 +381,103 @@ describe("prerendered routes contain their content, not the loading state", () =
     }
   });
 
-  it("renders the certifications on /about instead of the spinner", async () => {
+  it("renders the /about intro with one h1 and the v2 lead", async () => {
     const { html } = await renderPage("/about");
+    const h1s = html.match(/<h1[\s>]/g) ?? [];
 
-    expect(html).toContain("Fixture Cloud Certificate");
+    expect(h1s).toHaveLength(1);
+    expect(html).toMatch(/<h1 id="about-heading"[^>]*>About<\/h1>/);
+    expect(html).toContain("I&#x27;m a full-stack engineer in Jacksonville, FL. Before software, I spent seven years as a mechanical engineer in manufacturing and 3D printing.");
+    // The v1 sections are gone
+    expect(html).not.toContain("About Me");
+    expect(html).not.toContain("unique perspective");
+    expect(html).not.toContain("Core Values");
+    expect(html).not.toContain("Skills &amp; Technologies");
+    expect(html).not.toContain("Career Timeline");
+  });
+
+  it("renders How I got here with the story and a 6-row career timeline", async () => {
+    const { html } = await renderPage("/about");
+    const section = html.match(/<section aria-labelledby="story-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
+    const timeline = section.match(/<ol aria-label="Career timeline"[\s\S]*?<\/ol>/)?.[0] ?? "";
+    const years = [...timeline.matchAll(/<span class="[^"]*">([^<]+)<\/span><div><h3/g)].map(match => match[1]);
+
+    expect(section).toMatch(/<h2 id="story-heading"[^>]*>How I got here<\/h2>/);
+    expect(section).toContain("What pulled me toward software was the 3D-printing software itself.");
+    expect(section).toContain("with a focus on accessible interfaces");
+    expect(section).toContain("The habits carried over. I still measure before I optimize");
+    expect(years).toEqual(["2026 – present", "2024 – present", "2024 – 2026", "2023", "2022", "2015 – 2022"]);
+    expect(timeline).toMatch(/<h3[^>]*>Contract developer, Jokma Web Solutions<\/h3><p[^>]*>Client web and mobile apps.<\/p>/);
+    expect(timeline).toMatch(/<h3[^>]*>Mechanical engineer, Polyhistor International<\/h3>/);
+    expect(timeline).toContain("Owned the engraving design for a line producing 250 parts a day.");
+    // The sivs-platform line waits for Joe's OK (I8, P3)
+    expect(html).not.toContain("sivs-platform");
+  });
+
+  it("renders the four How I work practices on /about", async () => {
+    const { html } = await renderPage("/about");
+    const section = html.match(/<section aria-labelledby="practices-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
+    const titles = [...section.matchAll(/<h3[^>]*>([^<]+)<\/h3>/g)].map(match => match[1]);
+    const bodies = section.match(/<\/h3><p class="[^"]*">/g) ?? [];
+
+    expect(section).toMatch(/<h2 id="practices-heading"[^>]*>How I work<\/h2>/);
+    expect(titles).toEqual([
+      "Measure, then change.",
+      "Understand existing code before touching it.",
+      "Accessibility is part of done.",
+      "Write for the handoff.",
+    ]);
+    expect(section).toContain("I took W3Cx WAI0.1x: Introduction to Web Accessibility.");
+    expect(bodies).toHaveLength(4);
+    for (const body of bodies) {
+      expect(body).toMatch(/\bmax-w-\[52ch\]/);
+    }
+  });
+
+  it("renders the AWS Cloud Institute section with the AWS certs linked to Credly", async () => {
+    const { html } = await renderPage("/about");
+    const section = html.match(/<section aria-labelledby="cloud-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
+    const certs = section.match(/<ul aria-label="Certifications"[\s\S]*?<\/ul>/)?.[0] ?? "";
+
+    expect(section).toMatch(/<h2 id="cloud-heading"[^>]*>AWS Cloud Institute<\/h2>/);
+    expect(section).toContain("In June 2026 I graduated from the AWS Cloud Institute&#x27;s Cloud Application Developer program, a nine-course curriculum covering Python");
+    expect(section).toMatch(/<a[^>]*href="https:\/\/blog.timdehof.dev\/"[^>]*>blog<\/a>/);
+    // Only the AWS certifications, each linked to its Credly verification
+    expect(certs.match(/<li[\s>]/g)).toHaveLength(2);
+    expect(certs).toMatch(/<a href="https:\/\/www.credly.com\/badges\/fixture-practitioner"[^>]*>AWS Certified Fixture Practitioner/);
+    expect(certs).toMatch(/<a href="https:\/\/www.credly.com\/badges\/fixture-specialist"[^>]*>AWS Certified Fixture Specialist/);
+    expect(certs).toContain("Earned September 2025");
+    expect(certs).toContain("Earned September 2026");
+    expect(html).not.toContain("Fixture Cloud Certificate");
+    expect(html).not.toContain("animate-spin");
+  });
+
+  it("renders the Tools in three proficiency groups", async () => {
+    const { html } = await renderPage("/about");
+    const section = html.match(/<section aria-labelledby="tools-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
+    const groups = [...section.matchAll(/<h3[^>]*>([^<]+)<\/h3><ul[^>]*>([\s\S]*?)<\/ul>/g)].map(match => [
+      match[1],
+      [...match[2].matchAll(/<li[^>]*>([^<]+)<\/li>/g)].map(item => item[1]),
+    ]);
+
+    expect(section).toMatch(/<h2 id="tools-heading"[^>]*>Tools<\/h2>/);
+    expect(groups).toEqual([
+      ["Use daily", ["React", "TypeScript", "Tailwind CSS", "Postgres", "Docker", "Git"]],
+      ["Have shipped with", ["Next.js", "Node.js", "Express", "REST APIs", "Vercel", "Figma", "Framer Motion"]],
+      ["Cloud (AWS Cloud Institute)", ["AWS (Lambda, DynamoDB, S3, CloudFront, CloudFormation, SAM)", "Python"]],
+    ]);
+  });
+
+  it("closes /about with the Contact block and a Résumé button", async () => {
+    const { html } = await renderPage("/about");
+    const section = html.match(/<section[^>]*aria-labelledby="contact-heading"[\s\S]*?<\/section>/)?.[0] ?? "";
+
+    expect(section).toMatch(/<h2 id="contact-heading"[^>]*>Hiring a frontend or full-stack engineer\?<\/h2>/);
+    expect(section).toMatch(/<p class="[^"]*\bmax-w-\[55ch\][^"]*">The fastest way to reach me is email.<\/p>/);
+    expect(section).toMatch(/<a href="mailto:tim@timdehof.dev" class="[^"]*btn--accent[^"]*">Email me<\/a>/);
+    expect(section).toMatch(/<a href="https:\/\/www.linkedin.com\/in\/tim-dehof\/"[^>]*class="[^"]*btn--line[^"]*">LinkedIn<\/a>/);
+    expect(section).toMatch(/<a href="https:\/\/github.com\/timDeHof"[^>]*class="[^"]*btn--line[^"]*">GitHub<\/a>/);
+    expect(section).toMatch(/<a[^>]*href="[^"]*resume[^"]*"[^>]*class="[^"]*btn--line[^"]*">Résumé \(PDF\)<\/a>/);
   });
 
   // Each cap was measured at 1920px to keep the longest line at 79 characters or under
@@ -419,7 +516,7 @@ describe("prerendered routes contain their content, not the loading state", () =
   it("caps the /about story at 51ch", async () => {
     const { html } = await renderPage("/about");
 
-    expect(html).toMatch(/<div class="[^"]*\bmax-w-\[51ch\][^"]*">\s*<p[^>]*>\s*With a background in mechanical engineering/);
+    expect(html).toMatch(/<div class="[^"]*\bmax-w-\[51ch\][^"]*">\s*<h2[^>]*>How I got here<\/h2>\s*<p[^>]*>\s*In manufacturing, a problem on the line/);
   });
 
   it("caps the /contact panel paragraphs at 55ch", async () => {
