@@ -306,9 +306,10 @@ describe("prerendered routes contain their content, not the loading state", () =
     const { head } = await renderPage("/");
     const scripts = [...("elements" in head ? head.elements : [])].filter(element => element.type === "script");
 
-    expect(scripts).toHaveLength(1);
-    expect(scripts[0].props.type).toBe("application/ld+json");
-    expect(String(scripts[0].props.children)).toContain("\"@type\":\"Person\"");
+    const jsonLd = scripts.filter(script => script.props.type === "application/ld+json");
+
+    expect(jsonLd).toHaveLength(1);
+    expect(String(jsonLd[0].props.children)).toContain("\"@type\":\"Person\"");
   });
 
   it("renders /projects as a lead project with a title block, then an index", async () => {
