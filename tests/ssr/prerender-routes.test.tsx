@@ -452,6 +452,28 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(testimonials).toBeLessThan(cloud);
   });
 
+  it("builds /about without the testimonials when testimonials.json can't be downloaded", async () => {
+    const fetchContents = vi.mocked(githubAPI.fetchContents);
+    const fixtureFetch = fetchContents.getMockImplementation()!;
+    fetchContents.mockImplementation(async (owner, repo, path) => {
+      if (path.endsWith("testimonials.json")) {
+        throw new Error(`404: ${path}`);
+      }
+      return fixtureFetch(owner, repo, path);
+    });
+
+    try {
+      const { html } = await renderPage("/about");
+
+      // The section hides itself, and the rest of the page still renders
+      expect(html).not.toContain("testimonials-heading");
+      expect(html).toMatch(/<h2 id="cloud-heading"/);
+    }
+    finally {
+      fetchContents.mockImplementation(fixtureFetch);
+    }
+  });
+
   it("styles the /about testimonials like the v2 sections", async () => {
     const { html } = await renderPage("/about");
     expect(html).toMatch(/<section[^>]*aria-labelledby="testimonials-heading"/);

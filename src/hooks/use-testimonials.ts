@@ -21,6 +21,8 @@ export const testimonialsQuery = queryOptions({
   queryKey: ["testimonials"],
   queryFn: fetchTestimonials,
   staleTime: 1000 * 60 * 5,
+  // The section hides itself when this fails, so a failed fetch must not fail the prerender
+  meta: { optional: true },
 });
 
 export function useTestimonials() {
