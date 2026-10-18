@@ -327,6 +327,38 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(html).not.toContain("projects featured");
   });
 
+  it("uses the v2 copy for the GitHub activity and closing sections on /projects", async () => {
+    const { html } = await renderPage("/projects");
+
+    expect(html).toMatch(/<h2[^>]*>GitHub activity<\/h2>/);
+    expect(html).toContain("Pulled from the GitHub API: repositories, languages, and recent contributions.");
+    expect(html).toMatch(/<h2[^>]*>More on GitHub<\/h2>/);
+    expect(html).toContain("Smaller experiments and older bootcamp work are on my GitHub profile.");
+    expect(html).toMatch(/<a href="https:\/\/github.com\/timDeHof"[^>]*>(?:<svg[\s\S]*?<\/svg>)?GitHub profile<\/a>/);
+    expect(html).not.toContain("GitHub Analytics");
+    expect(html).not.toContain("Want to see more?");
+    expect(html).not.toContain("View GitHub Profile");
+  });
+
+  it("says the projects didn't load, not that there are none, when every download fails", async () => {
+    const fetchContents = vi.mocked(githubAPI.fetchContents);
+    const fixtureFetch = fetchContents.getMockImplementation()!;
+    fetchContents.mockImplementation(async (_owner, _repo, path) => {
+      throw new Error(`404: ${path}`);
+    });
+
+    try {
+      const { html } = await renderPage("/projects");
+
+      expect(html).toContain("Projects didn&#x27;t load. They&#x27;re also on GitHub.");
+      expect(html).toMatch(/<a href="https:\/\/github.com\/timDeHof"[^>]*>(?:<svg[\s\S]*?<\/svg>)?GitHub profile<\/a>/);
+      expect(html).not.toContain("No projects found");
+    }
+    finally {
+      fetchContents.mockImplementation(fixtureFetch);
+    }
+  });
+
   it("renders the certifications on /about instead of the spinner", async () => {
     const { html } = await renderPage("/about");
 

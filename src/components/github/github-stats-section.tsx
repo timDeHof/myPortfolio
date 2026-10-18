@@ -28,10 +28,9 @@ export const GitHubStatsSection: React.FC = () => {
       <MaxWidthWrapper>
         {/* Section Header */}
         <header className={SECTION_STYLES.header.wrapper}>
-          <h2 className={SECTION_STYLES.header.title}>GitHub Analytics</h2>
+          <h2 className={SECTION_STYLES.header.title}>GitHub activity</h2>
           <p className={SECTION_STYLES.header.description}>
-            Real-time insights into my coding activity, language preferences,
-            and contribution patterns.
+            Pulled from the GitHub API: repositories, languages, and recent contributions.
           </p>
         </header>
 

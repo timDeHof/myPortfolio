@@ -26,12 +26,12 @@ export const ProjectsPage: React.FC = () => {
           <MaxWidthWrapper>
             <div className="text-center">
               <p className="text-lg text-muted-foreground mb-6">
-                No projects found
+                Projects didn&apos;t load. They&apos;re also on GitHub.
               </p>
               <Button asChild>
                 <a href="https://github.com/timDeHof" target="_blank" rel="noopener noreferrer">
                   <Github className="h-4 w-4 mr-2" />
-                  View GitHub Profile
+                  GitHub profile
                 </a>
               </Button>
             </div>
@@ -70,15 +70,15 @@ export const ProjectsPage: React.FC = () => {
       <AnimatedSection className="py-16 bg-muted">
         <MaxWidthWrapper className="text-center">
           <h2 className="text-2xl font-bold text-foreground mb-4">
-            Want to see more?
+            More on GitHub
           </h2>
           <p className="text-muted-foreground mb-6">
-            Check out my complete GitHub profile for more projects and contributions.
+            Smaller experiments and older bootcamp work are on my GitHub profile.
           </p>
           <Button asChild className="bg-secondary text-secondary-foreground hover:opacity-90 py-4 px-6">
             <a href="https://github.com/timDeHof" target="_blank" rel="noopener noreferrer">
               <Github className="h-4 w-4 mr-2" />
-              View GitHub Profile
+              GitHub profile
             </a>
           </Button>
         </MaxWidthWrapper>
