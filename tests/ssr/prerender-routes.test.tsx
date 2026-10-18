@@ -321,6 +321,9 @@ describe("prerendered routes contain their content, not the loading state", () =
     // Only the lead project is featured, so the lead names one project, not three
     expect(html).toContain("The first is the one I&#x27;d walk through in an interview.");
     expect(html).not.toContain("The first three");
+    // Only shadcn-timeline has a case study, so the lead doesn't promise "what I'd do differently"
+    expect(html).toContain("Each project lists the problem, my role, and the stack.");
+    expect(html).not.toContain("do differently");
     expect(html).toContain(">2 projects<");
     // The lead project's title block uses the hero's drawing labels
     expect([...titleBlock.matchAll(/<dt[^>]*>([^<]+)<\/dt>/g)].map(match => match[1])).toEqual(["Part", "Function", "What I built", "Material"]);
