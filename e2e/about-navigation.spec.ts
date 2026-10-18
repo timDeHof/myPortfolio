@@ -44,7 +44,9 @@ test(`opens About within ${MAX_NAVIGATION_MS}ms when testimonials.json never ans
   await page.waitForLoadState("load");
   const start = Date.now();
   await page.getByRole("link", { name: "More about me" }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Seven years in manufacturing", { timeout: 15000 });
+  // Checks every frame, since expect's retries (100, 250, 500, 1000ms apart)
+  // would only see a page rendered at 1s on its 1.85s check
+  await page.waitForFunction(() => document.querySelector("h1")?.textContent?.includes("Seven years in manufacturing"), null, { polling: "raf", timeout: 15000 });
 
   expect(Date.now() - start).toBeLessThan(MAX_NAVIGATION_MS);
 });
