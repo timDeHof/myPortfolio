@@ -11,7 +11,7 @@ interface ProjectLinksProps {
 function ProjectLinks({ project }: ProjectLinksProps) {
   return (
     <div className="flex flex-wrap gap-x-[18px] gap-y-2 whitespace-nowrap text-sm">
-      <Link to="/projects/$slug" params={{ slug: project.slug }} className={LINK}>
+      <Link to="/projects/$slug" params={{ slug: project.slug }} preload="intent" className={LINK}>
         Read more
         {" "}
         <span aria-hidden="true">→</span>
