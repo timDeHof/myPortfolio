@@ -10,6 +10,7 @@ import LeadProject from "../components/projects/lead-project";
 import ProjectIndex from "../components/projects/project-index";
 import { Button } from "../components/ui/button";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
+import { projectsIndex } from "../data/projects-index";
 import { Route } from "../routes/projects";
 import { pageSEO } from "../utils/seo";
 
@@ -41,7 +42,10 @@ export const ProjectsPage: React.FC = () => {
     );
   }
 
-  const [leadProject, ...moreProjects] = projects;
+  // Only the first project in the index is featured. If it failed to load,
+  // the rest stay in the index rather than one of them taking its place.
+  const leadProject = projects[0].slug === projectsIndex[0].slug ? projects[0] : undefined;
+  const moreProjects = leadProject ? projects.slice(1) : projects;
 
   return (
     <>
@@ -55,10 +59,10 @@ export const ProjectsPage: React.FC = () => {
               Each project lists the problem, my role, and the stack. The first is the one I&apos;d walk
               through in an interview.
             </p>
-            <p className="text-sm text-muted-foreground">{`${projects.length} projects`}</p>
+            <p className="text-sm text-muted-foreground">{`${projects.length} ${projects.length === 1 ? "project" : "projects"}`}</p>
           </div>
 
-          <LeadProject project={leadProject} />
+          {leadProject && <LeadProject project={leadProject} />}
           <ProjectIndex projects={moreProjects} />
         </MaxWidthWrapper>
       </section>
