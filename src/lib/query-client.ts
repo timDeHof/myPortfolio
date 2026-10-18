@@ -42,7 +42,14 @@ export const QUERY_STATE_ELEMENT_ID = "query-state";
 /** Load the query state the prerender wrote into the page, so the first render matches the HTML */
 export function hydrateFromPrerender(): void {
   const json = document.getElementById(QUERY_STATE_ELEMENT_ID)?.textContent;
-  if (json) {
+  if (!json) {
+    return;
+  }
+  try {
     hydrate(queryClient, JSON.parse(json));
+  }
+  catch (error) {
+    // The queries refetch in the browser, so a bad script only costs the head start
+    console.warn("Ignoring malformed prerendered query state", error);
   }
 }
