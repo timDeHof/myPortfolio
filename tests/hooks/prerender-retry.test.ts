@@ -2,6 +2,7 @@
 import { describe, expect, it } from "vitest";
 
 import { portfolioDataQuery } from "../../src/hooks/use-portfolio-data";
+import { shadcnTimelineStarsQuery } from "../../src/hooks/use-repo-stars";
 import { testimonialsQuery } from "../../src/hooks/use-testimonials";
 import { GitHubAPIError } from "../../src/types/github";
 
@@ -34,5 +35,13 @@ describe("prerender retries", () => {
   // Testimonials are optional, so a failed fetch publishes /about without them
   it("retries testimonials after a server error", () => {
     expect(retries(testimonialsQuery.retry as Retry, serverError)).toBe(true);
+  });
+
+  // A slow proxy during the build would otherwise publish "Open source" and
+  // fail the CI e2e check that requires a prerendered count
+  it("retries the star count after a timeout", () => {
+    const timeout = new Error("Star count timed out after 3000ms");
+
+    expect(retries(shadcnTimelineStarsQuery.retry as Retry, timeout)).toBe(true);
   });
 });
