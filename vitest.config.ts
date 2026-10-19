@@ -6,7 +6,7 @@ import viteConfigFactory from './vite.config'
 // environment so shared settings (aliases, esbuild target, base, server) are
 // merged into Vitest instead of being duplicated or dropped.
 const resolvedViteConfig = typeof viteConfigFactory === 'function'
-  ? viteConfigFactory({ mode: 'test' })
+  ? viteConfigFactory({ mode: 'test', command: 'serve' })
   : viteConfigFactory
 
 // Build-only plugins (visualizer, PWA, imagemin, TanStack Router codegen,
