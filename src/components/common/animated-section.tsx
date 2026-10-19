@@ -3,7 +3,8 @@ import React from "react";
 
 import { useIntersectionObserver } from "../../hooks/use-intersection-observer";
 
-interface AnimatedSectionProps {
+// aria-labelledby names the section after its heading
+interface AnimatedSectionProps extends Pick<React.HTMLAttributes<HTMLElement>, "aria-labelledby"> {
   /**
    * Optional ID for the section element.
    */
@@ -36,6 +37,7 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   delay = 0,
   direction = "up",
   id,
+  "aria-labelledby": ariaLabelledBy,
 }) => {
   const { ref, isIntersecting } = useIntersectionObserver({
     threshold: 0.2,
@@ -61,6 +63,7 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
       }}
       className={className}
       id={id}
+      aria-labelledby={ariaLabelledBy}
     >
       {children}
     </m.section>

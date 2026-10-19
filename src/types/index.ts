@@ -1,4 +1,3 @@
-export * from "./about";
 export * from "./blog";
 export * from "./case-study";
 // Domain-organized type re-exports

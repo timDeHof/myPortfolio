@@ -35,6 +35,11 @@ jobs:
     name: Verify and deploy
     runs-on: ubuntu-latest
 
+    # Public URL (VITE_ values are inlined into the bundle). Without it the
+    # hero and navbar drop the Résumé button, and the prerender test fails.
+    env:
+      VITE_RESUME_URL: https://assets.timdehof.dev/tim-dehof-resume.pdf
+
     steps:
       # The blog content is a submodule and the build reads it.
       - uses: actions/checkout@v4
@@ -60,10 +65,17 @@ jobs:
         run: pnpm type-check
 
       - name: Test
-        run: pnpm exec vitest run
+        run: pnpm coverage
 
       - name: Build
         run: pnpm build
+
+      # The e2e tests load the build in a real browser, so they need Chromium
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: End-to-end tests
+        run: pnpm test:e2e
 
       # A missing discovery file is invisible until an agent or crawler looks,
       # which is exactly the failure mode this repo keeps hitting.

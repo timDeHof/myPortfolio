@@ -16,10 +16,10 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
     <link rel="stylesheet" href="src/styles/index.css" />
 
-    <!-- Google Fonts - DM Sans (Non-blocking) -->
+    <!-- Google Fonts - DM Sans and JetBrains Mono (Non-blocking) -->
     <link
       rel="preload"
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
       as="style"
       onload="
         this.onload = null;
@@ -28,36 +28,12 @@
     />
     <noscript
       ><link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
         rel="stylesheet"
     /></noscript>
 
     <!-- Theme color - Cobalt -->
     <meta name="theme-color" content="#3568e8" />
-
-    <!-- Critical CSS for LCP optimization -->
-    <style>
-      .hero-section {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 50%, #dce3ed 100%);
-      }
-      .hero-title {
-        font-size: 3rem;
-        font-weight: 700;
-        line-height: 1.1;
-        color: #1a2332;
-      }
-      @media (prefers-color-scheme: dark) {
-        .hero-section {
-          background: linear-gradient(135deg, #1a2332 0%, #1e3a5f 50%, #0f2035 100%);
-        }
-        .hero-title {
-          color: #f5f7fa;
-        }
-      }
-    </style>
 
     <!-- Manifest for PWA -->
     <link rel="manifest" href="/manifest.json" />

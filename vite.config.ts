@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => ({
     visualizer({
       emitFile: true,
       filename: 'stats.html',
-      open: true
+      open: false
     }),
     // TanStack Router plugin must be before React plugin
     tanstackRouter({
@@ -79,12 +79,10 @@ export default defineConfig(({ mode }) => ({
       }
     }),
     viteImagemin({
-      gifsicle: { optimizationLevel: 7 },
-      mozjpeg: { quality: 80 },
-      pngquant: { quality: [0.65, 0.8] },
-      webp: { quality: 75 },
-      // Filter to include assets from the public directory and other image files
-      filter: /\.(jpg|jpeg|png|gif|svg)$/i,
+      // SVGs only. svgo runs in JS, but pngquant, mozjpeg and gifsicle need
+      // binaries their install scripts download, and pnpm doesn't run those
+      // scripts, so every PNG logged "imagemin error" and shipped unchanged.
+      filter: /\.svg$/i,
     })
   ],
   base: "/",

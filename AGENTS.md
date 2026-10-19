@@ -25,7 +25,7 @@ pnpm preview:worker   # Preview Cloudflare Worker
 
 ```bash
 pnpm test             # Run all tests
-pnpm test:browser     # Run browser tests with Playwright
+pnpm test:e2e         # Run Playwright e2e tests against the production build
 pnpm coverage         # Run tests with coverage report
 
 # Run a single test file
@@ -158,10 +158,10 @@ function useQuery<T>({
 
 ### Files
 
-- **Components**: PascalCase (`BlogPostCard.tsx`, `ProjectGrid.tsx`)
-- **Hooks**: camelCase with `use` prefix (`useBlogPosts.ts`, `useTheme.ts`)
-- **Utils**: camelCase (`cn.ts`, `validation.ts`)
-- **Types**: PascalCase (`project.ts`, `index.ts`)
+- **Components**: kebab-case (`blog-post-card.tsx`, `lead-project.tsx`)
+- **Hooks**: kebab-case with a `use-` prefix (`use-projects.ts`, `use-theme.ts`)
+- **Utils**: kebab-case (`project-summary.ts`, `validation.ts`)
+- **Types**: kebab-case (`case-study.ts`, `project.ts`)
 - **Tests**: Same as file + `.test.tsx` suffix
 
 ### Variables and Functions
@@ -174,7 +174,7 @@ function useQuery<T>({
 ### React Components
 
 ```typescript
-// Component file: BlogPostCard.tsx
+// Component file: blog-post-card.tsx
 export const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, index = 0 }) => { ... }
 
 // Or using newer React 19 style (no explicit type needed)

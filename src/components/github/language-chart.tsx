@@ -82,52 +82,9 @@ export const LanguageChart: React.FC = () => {
             ))}
           </div>
 
-          {/* Language Circles Visualization */}
-          <div className="mt-8">
-            <h4 className="text-sm font-medium text-foreground mb-4">
-              Language Distribution
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {topLanguages.map((language, index) => {
-                const size = Math.max(language.percentage * 2, 20); // Minimum size of 20px
-                return (
-                  <m.div
-                    key={`circle-${language.name}`}
-                    initial={{ scale: 0.95 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="relative group"
-                  >
-                    <div
-                      className="rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-                      style={{
-                        backgroundColor: language.color,
-                        width: `${size}px`,
-                        height: `${size}px`,
-                        minWidth: "20px",
-                        minHeight: "20px",
-                      }}
-                      title={`${language.name} - ${language.percentage.toFixed(1)}%`}
-                    >
-                      {language.name.charAt(0)}
-                    </div>
-
-                    {/* Tooltip */}
-                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-foreground text-background text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
-                      {language.name}
-                      :
-                      {language.percentage.toFixed(1)}
-                      %
-                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-foreground"></div>
-                    </div>
-                  </m.div>
-                );
-              })}
-            </div>
-          </div>
-
           {/* Summary */}
-          <div className="mt-6 pt-6 border-t border">
+          <hr className="my-6 border-border" />
+          <div>
             <div className="text-center">
               <p className="text-sm text-muted-foreground">
                 Analyzed across

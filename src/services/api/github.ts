@@ -11,6 +11,8 @@ export { GitHubAPIError } from "../../types/github";
 const GITHUB_USERNAME = "timDeHof";
 // Update the API base to point to the standalone worker proxy
 const GITHUB_API_BASE = `${env.VITE_API_BASE_URL}/github`;
+// fetchRepository reads at most this many pages of 100 repositories
+const MAX_REPOSITORY_PAGES = 10;
 
 // Repositories to exclude from portfolio (add repo names here)
 const EXCLUDED_REPOS = [
@@ -56,10 +58,10 @@ function decodeBase64(input: string): string {
 }
 
 // Simplified fetch wrapper for the proxy
-async function githubFetch<T>(url: string): Promise<T> {
+async function githubFetch<T>(url: string, signal?: AbortSignal): Promise<T> {
   try {
     // Fetch directly from GitHub API (proxy handles the routing)
-    const response = await fetch(url);
+    const response = signal ? await fetch(url, { signal }) : await fetch(url);
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -108,6 +110,10 @@ async function githubFetch<T>(url: string): Promise<T> {
   catch (error) {
     if (error instanceof GitHubAPIError) {
       throw error;
+    }
+    // The caller cancelled the request (a timeout or a cancelled query), so it isn't a network failure
+    if (signal?.aborted) {
+      throw signal.reason;
     }
 
     console.error(`💥 GitHub API Network Error:`, error);
@@ -204,6 +210,25 @@ export const githubAPI = {
 
     // Regular forks
     return "fork";
+  },
+
+  // Fetch one repository, for its star count. The proxy does not expose
+  // /repos/:owner/:repo, so this reads the same list fetchRepositories uses.
+  fetchRepository: async (owner: string, repo: string, signal?: AbortSignal): Promise<GitHubRepository> => {
+    const url = `${GITHUB_API_BASE}/users/${owner}/repos?sort=updated&per_page=100&type=all`;
+    // A full page of 100 may have more after it, so keep going until a short
+    // page. The bound stops a proxy that ignores `page` from looping forever.
+    for (let page = 1; page <= MAX_REPOSITORY_PAGES; page++) {
+      const repositories = await githubFetch<GitHubRepository[]>(`${url}&page=${page}`, signal);
+      const match = repositories.find(repository => repository.name === repo);
+      if (match) {
+        return match;
+      }
+      if (repositories.length < 100) {
+        break;
+      }
+    }
+    throw new GitHubAPIError(404, "Not Found", url, `No repository named ${repo}`);
   },
 
   // Fetch repository languages
