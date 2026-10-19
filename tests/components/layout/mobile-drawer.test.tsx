@@ -1,5 +1,6 @@
 import { createMemoryHistory, createRootRoute, createRoute, createRouter, Outlet, RouterProvider } from "@tanstack/react-router";
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { domAnimation, LazyMotion } from "framer-motion";
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -27,7 +28,12 @@ function renderNavbar() {
     routeTree: rootRoute.addChildren(pages),
     history: createMemoryHistory({ initialEntries: ["/"] }),
   });
-  render(<RouterProvider router={router} />);
+  // The app renders inside LazyMotion (App.tsx), which gives `m` components their animations
+  render(
+    <LazyMotion features={domAnimation} strict>
+      <RouterProvider router={router} />
+    </LazyMotion>,
+  );
 }
 
 async function openDrawer(): Promise<HTMLElement> {
@@ -81,6 +87,18 @@ describe("mobile drawer", () => {
 
     fireEvent.keyDown(document, { key: "Escape" });
 
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+  });
+
+  // AnimatePresence keeps an exiting element mounted until its exit animation
+  // ends, so a drawer that vanishes at once never played it
+  it("stays mounted while its exit animation plays", async () => {
+    renderNavbar();
+    await openDrawer();
+
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    expect(screen.getByRole("dialog", { name: "Mobile navigation" })).toBeInTheDocument();
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
   });
 
