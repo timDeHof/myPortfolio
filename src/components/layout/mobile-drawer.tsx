@@ -148,6 +148,7 @@ export function MobileDrawer({
   const nav = (
     <m.div
       ref={drawerRef}
+      id="mobile-drawer"
       className="drawer"
       variants={shouldReduceMotion ? undefined : drawerVariants}
       initial={shouldReduceMotion ? undefined : "hidden"}
