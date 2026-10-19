@@ -83,4 +83,16 @@ describe("mobile drawer", () => {
 
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
   });
+
+  // Otherwise keyboard focus falls back to the page body
+  it("returns focus to the menu button when it closes", async () => {
+    renderNavbar();
+    await openDrawer();
+    expect(screen.getByRole("dialog")).toContainElement(document.activeElement as HTMLElement);
+
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+    expect(screen.getByRole("button", { name: "Open menu" })).toHaveFocus();
+  });
 });
