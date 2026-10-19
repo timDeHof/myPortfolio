@@ -12,7 +12,7 @@ const PUBLIC_DIR = resolve(__dirname, "../../public");
 
 function imageminPlugin(): Plugin {
   const config = typeof viteConfig === "function" ? viteConfig({ mode: "production", command: "build" }) : viteConfig;
-  const plugins = ([config.plugins] as unknown[]).flat(Infinity) as PluginOption[];
+  const plugins = [config.plugins].flat(Infinity) as PluginOption[];
   return plugins.find((plugin): plugin is Plugin => !!plugin && typeof plugin === "object" && "name" in plugin && plugin.name === "vite:imagemin")!;
 }
 
