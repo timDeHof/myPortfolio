@@ -11,6 +11,14 @@ function commands(workflow: string): string[] {
   return [...workflow.matchAll(/^\s+run: (?!\|)(.+)$/gm)].map(match => match[1].trim());
 }
 
+describe("ci workflow", () => {
+  // The coverage thresholds in vitest.config.ts apply only when coverage runs
+  it("runs the unit tests with coverage", () => {
+    expect(commands(ci)).toContain("pnpm coverage");
+    expect(commands(ci)).not.toContain("pnpm exec vitest run");
+  });
+});
+
 // deploy.yml says it repeats CI's gates rather than trusting an earlier run
 describe("deploy workflow", () => {
   it.each(commands(ci))("runs CI's `%s` before deploying", (command) => {
