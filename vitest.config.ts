@@ -29,8 +29,8 @@ const vitestConfig = defineConfig({
     globals: true,
     coverage: {
       // Without include, files no test imports are left out instead of counting as 0%
-      include: ['src/**'],
-      exclude: ['src/content/**', 'src/types/**', 'src/routeTree.gen.ts'],
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: ['src/content/**', 'src/types/**', 'src/routeTree.gen.ts', '**/__tests__/**'],
       // The measured floor, rounded down. Raise it as coverage grows.
       thresholds: {
         statements: 61,
