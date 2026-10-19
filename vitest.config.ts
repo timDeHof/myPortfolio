@@ -22,6 +22,8 @@ const vitestConfig = defineConfig({
     // tests without a local .env
     env: {
       VITE_RESUME_URL: 'https://assets.timdehof.dev/tim-dehof-resume.pdf',
+      // Overrides a local .env, so coverage measures the same code as on CI
+      VITE_NODE_ENV: 'test',
     },
     environment: 'jsdom',
     // Playwright specs run against the build with `pnpm test:e2e`
@@ -34,8 +36,8 @@ const vitestConfig = defineConfig({
       // The measured floor, rounded down. Raise it as coverage grows.
       thresholds: {
         statements: 61,
-        branches: 53,
-        functions: 64,
+        branches: 52,
+        functions: 63,
         lines: 61,
       },
     },
