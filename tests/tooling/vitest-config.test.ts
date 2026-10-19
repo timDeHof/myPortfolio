@@ -9,8 +9,14 @@ describe("vitest coverage config", () => {
   // By default coverage counts only the files some test imports, so a file
   // with no tests at all is left out instead of counting as 0%
   it("measures every source file, not only the ones tests import", () => {
-    expect(coverage?.include).toEqual(["src/**"]);
+    expect(coverage?.include).toEqual(["src/**/*.{ts,tsx}"]);
     expect(coverage?.exclude).toEqual(expect.arrayContaining(["src/content/**", "src/types/**", "src/routeTree.gen.ts"]));
+  });
+
+  // src/** also matched .DS_Store files, which coverage failed to parse, and
+  // counted test helpers in __tests__ as source
+  it("measures only source code", () => {
+    expect(coverage?.exclude).toContain("**/__tests__/**");
   });
 
   it("fails when coverage drops below a floor", () => {
