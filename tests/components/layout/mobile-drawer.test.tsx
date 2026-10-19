@@ -1,7 +1,6 @@
 import { createMemoryHistory, createRootRoute, createRoute, createRouter, Outlet, RouterProvider } from "@tanstack/react-router";
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { domAnimation, LazyMotion } from "framer-motion";
-import React from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import { Navbar } from "../../../src/components/layout/navbar";
