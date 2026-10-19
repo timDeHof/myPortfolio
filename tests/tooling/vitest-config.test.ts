@@ -27,3 +27,12 @@ describe("vitest coverage config", () => {
     }
   });
 });
+
+describe("vitest env", () => {
+  // A local .env could otherwise set it, and App.tsx builds the React Query
+  // devtools only in development, so local coverage differed from CI's
+  it("runs tests with VITE_NODE_ENV set to test, whatever .env says", () => {
+    // Compared as a boolean, so a failure doesn't print the local .env value
+    expect(import.meta.env.VITE_NODE_ENV === "test").toBe(true);
+  });
+});
