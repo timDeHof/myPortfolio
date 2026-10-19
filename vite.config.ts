@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => ({
     visualizer({
       emitFile: true,
       filename: 'stats.html',
-      open: true
+      open: false
     }),
     // TanStack Router plugin must be before React plugin
     tanstackRouter({

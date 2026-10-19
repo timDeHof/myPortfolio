@@ -1,6 +1,5 @@
 import { createMemoryHistory, createRootRoute, createRouter, RouterProvider } from "@tanstack/react-router";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 import { describe, expect, it } from "vitest";
 
 import SelectedWork from "../../../src/components/home/sections/selected-work.section";
