@@ -102,6 +102,20 @@ describe("mobile drawer", () => {
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
   });
 
+  // Without an exit variant the backdrop is removed at once instead of fading
+  it("fades the backdrop out when it closes", async () => {
+    renderNavbar();
+    await openDrawer();
+    const backdrop = document.querySelector<HTMLElement>(".drawer-backdrop");
+    await waitFor(() => expect(backdrop?.style.opacity).toBe("1"));
+
+    fireEvent.keyDown(document, { key: "Escape" });
+
+    expect(backdrop).toBeInTheDocument();
+    await waitFor(() => expect(Number(backdrop?.style.opacity)).toBeLessThan(1));
+    await waitFor(() => expect(backdrop).not.toBeInTheDocument());
+  });
+
   // Otherwise keyboard focus falls back to the page body
   it("returns focus to the menu button when it closes", async () => {
     renderNavbar();
