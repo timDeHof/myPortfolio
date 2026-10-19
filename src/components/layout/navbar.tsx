@@ -21,7 +21,11 @@ export function Navbar() {
   const navItems = portfolioData?.navigation?.navItems || DEFAULT_NAV_ITEMS;
 
   const openDrawer = useCallback(() => setIsDrawerOpen(true), []);
-  const closeDrawer = useCallback(() => setIsDrawerOpen(false), []);
+  const closeDrawer = useCallback(() => {
+    setIsDrawerOpen(false);
+    // The drawer held focus, so hand it back to the button that opened it
+    toggleButtonRef.current?.focus();
+  }, []);
 
   // Helper to check if a path is active (prefix match)
   const isPathActive = (path: string) => {
