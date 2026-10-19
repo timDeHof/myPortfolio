@@ -4,7 +4,6 @@ import { usePortfolioData } from "@hooks/use-portfolio-data";
 import { useScrollPosition } from "@hooks/use-scroll-position";
 import { useTheme } from "@hooks/use-theme";
 import { Link, useLocation } from "@tanstack/react-router";
-import { AnimatePresence } from "framer-motion";
 import { CodeXml, Download, Menu, Moon, Sun } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
 
@@ -21,7 +20,11 @@ export function Navbar() {
   const navItems = portfolioData?.navigation?.navItems || DEFAULT_NAV_ITEMS;
 
   const openDrawer = useCallback(() => setIsDrawerOpen(true), []);
-  const closeDrawer = useCallback(() => setIsDrawerOpen(false), []);
+  const closeDrawer = useCallback(() => {
+    setIsDrawerOpen(false);
+    // The drawer held focus, so hand it back to the button that opened it
+    toggleButtonRef.current?.focus();
+  }, []);
 
   // Helper to check if a path is active (prefix match)
   const isPathActive = (path: string) => {
@@ -110,18 +113,16 @@ export function Navbar() {
       </MaxWidthWrapper>
 
       {/* Mobile side drawer */}
-      <AnimatePresence>
-        <MobileDrawer
-          isOpen={isDrawerOpen}
-          onClose={closeDrawer}
-          navItems={navItems}
-          isPathActive={isPathActive}
-          isExactPath={isExactPath}
-          effectiveTheme={effectiveTheme}
-          toggleTheme={toggleTheme}
-          resumeUrl={env.VITE_RESUME_URL}
-        />
-      </AnimatePresence>
+      <MobileDrawer
+        isOpen={isDrawerOpen}
+        onClose={closeDrawer}
+        navItems={navItems}
+        isPathActive={isPathActive}
+        isExactPath={isExactPath}
+        effectiveTheme={effectiveTheme}
+        toggleTheme={toggleTheme}
+        resumeUrl={env.VITE_RESUME_URL}
+      />
     </header>
   );
 }

@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    // Tests and e2e specs run in Node 20 and Playwright, not the ES2020 browser target
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vitest/globals", "node"]
+  },
+  "include": [
+    "src",
+    "tests",
+    "e2e"
+  ],
+  "exclude": [
+    "src/content"
+  ]
+}

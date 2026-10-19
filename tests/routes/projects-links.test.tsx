@@ -1,6 +1,5 @@
 import { createMemoryHistory, createRouter, RouterProvider } from "@tanstack/react-router";
 import { render, screen, waitFor } from "@testing-library/react";
-import React from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { describe, expect, it, vi } from "vitest";
 
