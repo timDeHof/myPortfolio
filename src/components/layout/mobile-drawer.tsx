@@ -1,7 +1,7 @@
 import type { Variants } from "framer-motion";
 
 import { Link } from "@tanstack/react-router";
-import { m, useReducedMotion } from "framer-motion";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { CodeXml, Download, Moon, Sun } from "lucide-react";
 import { useEffect, useRef } from "react";
 
@@ -147,6 +147,7 @@ export function MobileDrawer({
 
   const nav = (
     <m.div
+      key="drawer"
       ref={drawerRef}
       id="mobile-drawer"
       className="drawer"
@@ -226,11 +227,13 @@ export function MobileDrawer({
     </m.div>
   );
 
+  // AnimatePresence must wrap the elements that mount and unmount, so it can
+  // keep them mounted while their exit animations play
   return (
-    <>
-      {/* Content push wrapper — rendered always but only active when open */}
+    <AnimatePresence>
       {isOpen && (
         <m.div
+          key="content-push"
           className="drawer-content-push"
           variants={shouldReduceMotion ? undefined : contentPushVariants}
           initial={shouldReduceMotion ? undefined : "hidden"}
@@ -238,22 +241,19 @@ export function MobileDrawer({
           exit={shouldReduceMotion ? undefined : "exit"}
         />
       )}
-
-      {/* Backdrop + Drawer */}
       {isOpen && (
-        <>
-          <m.div
-            className="drawer-backdrop"
-            variants={shouldReduceMotion ? undefined : backdropVariants}
-            initial={shouldReduceMotion ? undefined : "hidden"}
-            animate={shouldReduceMotion ? undefined : "visible"}
-            exit={shouldReduceMotion ? undefined : "exit"}
-            onClick={onClose}
-            aria-hidden="true"
-          />
-          {nav}
-        </>
+        <m.div
+          key="backdrop"
+          className="drawer-backdrop"
+          variants={shouldReduceMotion ? undefined : backdropVariants}
+          initial={shouldReduceMotion ? undefined : "hidden"}
+          animate={shouldReduceMotion ? undefined : "visible"}
+          exit={shouldReduceMotion ? undefined : "exit"}
+          onClick={onClose}
+          aria-hidden="true"
+        />
       )}
-    </>
+      {isOpen && nav}
+    </AnimatePresence>
   );
 }
