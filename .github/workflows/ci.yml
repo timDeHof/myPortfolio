@@ -59,7 +59,7 @@ jobs:
         run: pnpm type-check
 
       - name: Test
-        run: pnpm exec vitest run
+        run: pnpm coverage
 
       # Also proves public/.well-known/api-catalog and the generated sitemap
       # survive the Vite + Cloudflare plugin pipeline into build/.
