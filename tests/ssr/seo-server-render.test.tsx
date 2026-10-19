@@ -2,7 +2,6 @@
 import type { HelmetServerState } from "react-helmet-async";
 
 import { useLocation } from "@tanstack/react-router";
-import React from "react";
 import { renderToString } from "react-dom/server";
 import { HelmetProvider } from "react-helmet-async";
 import { beforeEach, describe, expect, it, vi } from "vitest";

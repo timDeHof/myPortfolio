@@ -1,6 +1,5 @@
 import { createMemoryHistory, createRootRoute, createRouter, RouterProvider } from "@tanstack/react-router";
 import { render, screen, within } from "@testing-library/react";
-import React from "react";
 import { describe, expect, it } from "vitest";
 
 import Story from "../../src/components/about/sections/story.section";
