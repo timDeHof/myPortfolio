@@ -35,10 +35,10 @@ const vitestConfig = defineConfig({
       exclude: ['src/content/**', 'src/types/**', 'src/routeTree.gen.ts', '**/__tests__/**'],
       // The measured floor, rounded down. Raise it as coverage grows.
       thresholds: {
-        statements: 61,
-        branches: 52,
-        functions: 63,
-        lines: 61,
+        statements: 66,
+        branches: 59,
+        functions: 68,
+        lines: 66,
       },
     },
   },
