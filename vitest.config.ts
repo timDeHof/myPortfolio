@@ -27,6 +27,18 @@ const vitestConfig = defineConfig({
     // Playwright specs run against the build with `pnpm test:e2e`
     exclude: [...configDefaults.exclude, 'e2e/**'],
     globals: true,
+    coverage: {
+      // Without include, files no test imports are left out instead of counting as 0%
+      include: ['src/**'],
+      exclude: ['src/content/**', 'src/types/**', 'src/routeTree.gen.ts'],
+      // The measured floor, rounded down. Raise it as coverage grows.
+      thresholds: {
+        statements: 61,
+        branches: 53,
+        functions: 64,
+        lines: 61,
+      },
+    },
   },
 })
 
