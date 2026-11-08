@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery } from "@tanstack/react-query";
 
+import { retryDuringPrerender } from "@/lib/query-client";
 import { githubAPI } from "@/services/api/github";
 
 export interface Testimonial {
@@ -17,10 +18,15 @@ async function fetchTestimonials(): Promise<Testimonial[]> {
   return githubAPI.fetchContents<Testimonial[]>("timDeHof", "portfolio-metadata", "testimonials.json");
 }
 
+export const testimonialsQuery = queryOptions({
+  queryKey: ["testimonials"],
+  queryFn: fetchTestimonials,
+  staleTime: 1000 * 60 * 5,
+  retry: retryDuringPrerender,
+  // The section hides itself when this fails, so a failed fetch must not fail the prerender
+  meta: { optional: true },
+});
+
 export function useTestimonials() {
-  return useQuery({
-    queryKey: ["testimonials"],
-    queryFn: fetchTestimonials,
-    staleTime: 1000 * 60 * 5,
-  });
+  return useQuery(testimonialsQuery);
 }

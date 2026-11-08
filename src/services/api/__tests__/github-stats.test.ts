@@ -164,106 +164,30 @@ describe("githubStatsAPI.calculateActivityStats", () => {
       { created_at: "2021-01-01", updated_at: "2023-05-20" }, // Recent
     ] as any[];
 
-    // Mock Date.now() to ensure consistent "6 months ago"
-    const mockDate = new Date("2023-06-01T00:00:00Z");
-    vi.useFakeTimers();
-    vi.setSystemTime(mockDate);
-
     const stats = githubStatsAPI.calculateActivityStats(mockRepos);
 
     // Expect contributionYears to be sorted descending.
     // Fixture years in UTC are {2023, 2022, 2021}; the previous "2020" was an
     // artifact of reading UTC-midnight dates back in a negative-offset zone.
-    expect(stats.contributionYears).toEqual(["2023", "2022", "2021"]);
-    expect(stats.totalCommits).toBe(mockRepos.length * 10);
-    expect(stats.currentStreak).toBe(3); // 3 recent activities
-    expect(stats.longestStreak).toBe(mockRepos.length); // Estimated
-    vi.useRealTimers();
+    expect(stats).toEqual({ contributionYears: ["2023", "2022", "2021"] });
   });
 
   it("should handle empty repositories array", () => {
     const stats = githubStatsAPI.calculateActivityStats([]);
-    expect(stats.contributionYears).toEqual([]);
-    expect(stats.totalCommits).toBe(0);
-    expect(stats.currentStreak).toBe(0);
-    expect(stats.longestStreak).toBe(0);
+    expect(stats).toEqual({ contributionYears: [] });
   });
 });
 
-describe("githubStatsAPI.generateContributionCalendar", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    // Consistent date for testing for a full year.
-    // Constructed in local time on purpose: generateContributionCalendar works
-    // entirely in local time, and a UTC instant of 2024-12-31T12:00Z is already
-    // 2025-01-01 east of UTC+12, which collapses the calendar to a single week.
-    const mockDate = new Date(2024, 11, 31, 12, 0, 0);
-    vi.useFakeTimers();
-    vi.setSystemTime(mockDate);
-  });
-
+describe("githubStatsAPI.fetchContributions", () => {
   afterEach(() => {
-    vi.useRealTimers();
+    vi.unstubAllGlobals();
   });
 
-  it("should generate a contribution calendar with approximately 52 weeks", () => {
-    const calendar = githubStatsAPI.generateContributionCalendar();
-    expect(calendar.length).toBeGreaterThanOrEqual(52); // Some years might have 53 weeks
-    expect(calendar.length).toBeLessThanOrEqual(53);
-  });
+  // A failure must reach the calendar's error state, not become a made-up history
+  it("rethrows when the contributions API fails instead of returning random data", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => ({ ok: false, status: 503, statusText: "Service Unavailable" })));
 
-  it("each week should contain days with correct properties", () => {
-    const calendar = githubStatsAPI.generateContributionCalendar();
-    const firstWeek = calendar[0];
-    expect(firstWeek.days.length).toBeGreaterThan(0); // Can be less than 7 for first week of year
-    const firstDay = firstWeek.days[0];
-
-    expect(firstDay).toHaveProperty("date");
-    expect(typeof firstDay.date).toBe("string");
-    expect(firstDay.date).toMatch(/^\d{4}-\d{2}-\d{2}$/); // YYYY-MM-DD format
-
-    expect(firstDay).toHaveProperty("count");
-    expect(typeof firstDay.count).toBe("number");
-    expect(firstDay.count).toBeGreaterThanOrEqual(0);
-
-    expect(firstDay).toHaveProperty("level");
-    expect(typeof firstDay.level).toBe("number");
-    expect(firstDay.level).toBeGreaterThanOrEqual(0);
-    expect(firstDay.level).toBeLessThanOrEqual(4);
-  });
-
-  it("should have less activity on weekends", () => {
-    const calendar = githubStatsAPI.generateContributionCalendar();
-    let weekdayActivity = 0;
-    let weekendActivity = 0;
-    let weekdayCount = 0;
-    let weekendCount = 0;
-
-    // Iterate through a few weeks to get a good sample
-    for (let i = 0; i < Math.min(calendar.length, 10); i++) {
-      calendar[i].days.forEach((day) => {
-        const date = new Date(day.date);
-        const dayOfWeek = date.getDay(); // 0 = Sunday, 6 = Saturday
-
-        if (dayOfWeek === 0 || dayOfWeek === 6) {
-          weekendActivity += day.count;
-          weekendCount++;
-        }
-        else {
-          weekdayActivity += day.count;
-          weekdayCount++;
-        }
-      });
-    }
-    const avgWeekday = weekdayCount > 0 ? weekdayActivity / weekdayCount : 0;
-    const avgWeekend = weekendCount > 0 ? weekendActivity / weekendCount : 0;
-
-    // This is probabilistic, so we expect average weekday activity to be higher,
-    // but can't guarantee for every single run due to Math.random().
-    // A significant difference should be observed on average.
-    if (avgWeekday > 0) {
-      expect(avgWeekday).toBeGreaterThan(avgWeekend * 0.5); // Expect weekdays to be at least 50% more active
-    }
+    await expect(githubStatsAPI.fetchContributions("timDeHof")).rejects.toThrow("Failed to fetch contributions: 503 Service Unavailable");
   });
 });
 

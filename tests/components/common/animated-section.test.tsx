@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import React from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import { AnimatedSection } from "../../../src/components/common/animated-section";
@@ -9,12 +8,6 @@ vi.mock("../../../src/hooks/use-intersection-observer", () => ({
   useIntersectionObserver: () => ({
     ref: { current: null },
     isIntersecting: true, // Force intersection for testing visibility
-  }),
-}));
-
-vi.mock("../../../src/hooks/use-optimized-animations", () => ({
-  useOptimizedAnimations: () => ({
-    scheduleAnimation: vi.fn(),
   }),
 }));
 

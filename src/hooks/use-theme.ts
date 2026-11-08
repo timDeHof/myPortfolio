@@ -91,13 +91,6 @@ export function useTheme() {
   }, [theme]);
 
   /**
-   * Toggles the theme between light and dark.
-   */
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-
-  /**
    * Gets the currently active theme (resolving 'system' to its actual value).
    */
   const getEffectiveTheme = (): "light" | "dark" => {
@@ -105,6 +98,13 @@ export function useTheme() {
       return getSystemPreference();
     }
     return theme;
+  };
+
+  /**
+   * Toggles the theme away from the one on screen, so "system" on a dark OS goes to light.
+   */
+  const toggleTheme = () => {
+    setTheme(getEffectiveTheme() === "dark" ? "light" : "dark");
   };
 
   return {

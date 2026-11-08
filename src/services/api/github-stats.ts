@@ -28,9 +28,6 @@ interface GitHubStats {
     contributions: number;
   };
   activity: {
-    totalCommits: number;
-    currentStreak: number;
-    longestStreak: number;
     contributionYears: string[];
   };
 }
@@ -102,7 +99,6 @@ export const githubStatsAPI = {
     // Calculate repository statistics
     const repoStats = await githubStatsAPI.calculateRepositoryStats(repositories);
 
-    // Calculate activity stats (simplified - in real app you'd need commits API)
     const activityStats = githubStatsAPI.calculateActivityStats(repositories);
 
     const stats: GitHubStats = {
@@ -194,7 +190,7 @@ export const githubStatsAPI = {
     };
   },
 
-  // Calculate activity statistics (simplified version)
+  // Only what the repository list can tell. It has no commit or streak data.
   calculateActivityStats: (repositories: GitHubRepository[]) => {
     // Get unique years from repository creation/update dates.
     // GitHub timestamps are UTC, and date-only strings ("2020-01-01") parse as
@@ -207,23 +203,12 @@ export const githubStatsAPI = {
       years.add(new Date(repo.updated_at).getUTCFullYear().toString());
     });
 
-    // Simplified activity calculation based on repository updates
-    const recentActivity = repositories.filter((repo) => {
-      const lastUpdate = new Date(repo.updated_at);
-      const sixMonthsAgo = new Date();
-      sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-      return lastUpdate > sixMonthsAgo;
-    });
-
     return {
-      totalCommits: repositories.length * 10, // Estimated
-      currentStreak: Math.min(recentActivity.length, 30), // Simplified streak
-      longestStreak: Math.min(repositories.length, 100), // Estimated
       contributionYears: Array.from(years).sort().reverse(),
     };
   },
 
-  // Fetch real contribution data from GitHub Contributions API with fallback to mock data
+  // Fetch real contribution data from the GitHub Contributions API
   fetchContributions: async (username: string): Promise<{ contributions: ContributionWeek[]; total: number }> => {
     try {
       const url = new URL(`/v4/${username}`, "https://github-contributions-api.jogruber.de");
@@ -280,59 +265,10 @@ export const githubStatsAPI = {
       return { contributions: weeks, total };
     }
     catch (error) {
-      // Fallback to mock data if API fails
-      console.warn("Failed to fetch contributions from API, using mock data:", error);
-      const mockData = githubStatsAPI.generateContributionCalendar();
-      const total = mockData.reduce((sum, week) => sum + week.days.reduce((s, day) => s + day.count, 0), 0);
-      return { contributions: mockData, total };
+      // The calendar shows its error state, rather than a made-up history
+      console.warn("Failed to fetch contributions from API:", error);
+      throw error;
     }
-  },
-
-  // Generate mock contribution calendar data (fallback)
-  generateContributionCalendar: (): ContributionWeek[] => {
-    const weeks: ContributionWeek[] = [];
-    const today = new Date();
-    const startDate = new Date(today.getFullYear(), 0, 1); // Start of year
-
-    // Generate 52 weeks of data
-    for (let week = 0; week < 52; week++) {
-      const days: ContributionDay[] = [];
-
-      for (let day = 0; day < 7; day++) {
-        const date = new Date(startDate);
-        date.setDate(startDate.getDate() + (week * 7) + day);
-
-        if (date <= today) {
-          // Generate realistic contribution pattern
-          const dayOfWeek = date.getDay();
-          const baseActivity = dayOfWeek === 0 || dayOfWeek === 6 ? 0.3 : 0.7; // Less activity on weekends
-          const randomFactor = Math.random();
-          const count = Math.floor(baseActivity * randomFactor * 15);
-
-          let level: 0 | 1 | 2 | 3 | 4 = 0;
-          if (count > 10)
-            level = 4;
-          else if (count > 7)
-            level = 3;
-          else if (count > 4)
-            level = 2;
-          else if (count > 1)
-            level = 1;
-
-          days.push({
-            date: date.toISOString().split("T")[0],
-            count,
-            level,
-          });
-        }
-      }
-
-      if (days.length > 0) {
-        weeks.push({ days });
-      }
-    }
-
-    return weeks;
   },
 };
 

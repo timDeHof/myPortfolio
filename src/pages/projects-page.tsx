@@ -6,9 +6,11 @@ import React, { lazy, Suspense } from "react";
 
 import { AnimatedSection } from "../components/common/animated-section";
 import { SEOHead } from "../components/common/seo-head";
-import { ProjectGrid } from "../components/projects/project-grid";
+import LeadProject from "../components/projects/lead-project";
+import ProjectIndex from "../components/projects/project-index";
 import { Button } from "../components/ui/button";
 import { MaxWidthWrapper } from "../components/ui/max-width-wrapper";
+import { projectsIndex } from "../data/projects-index";
 import { Route } from "../routes/projects";
 import { pageSEO } from "../utils/seo";
 
@@ -25,12 +27,12 @@ export const ProjectsPage: React.FC = () => {
           <MaxWidthWrapper>
             <div className="text-center">
               <p className="text-lg text-muted-foreground mb-6">
-                No projects found
+                Projects didn&apos;t load. They&apos;re also on GitHub.
               </p>
-              <Button asChild>
+              <Button asChild variant="accent">
                 <a href="https://github.com/timDeHof" target="_blank" rel="noopener noreferrer">
                   <Github className="h-4 w-4 mr-2" />
-                  View GitHub Profile
+                  GitHub profile
                 </a>
               </Button>
             </div>
@@ -40,30 +42,30 @@ export const ProjectsPage: React.FC = () => {
     );
   }
 
+  // Only the first project in the index is featured. If it failed to load,
+  // the rest stay in the index rather than one of them taking its place.
+  const leadProject = projects[0].slug === projectsIndex[0].slug ? projects[0] : undefined;
+  const moreProjects = leadProject ? projects.slice(1) : projects;
+
   return (
     <>
       <SEOHead seo={pageSEO.projects} />
 
-      <AnimatedSection className="py-20 bg-muted">
+      <section aria-labelledby="projects-heading" className="border-b border-border py-14 md:py-18">
         <MaxWidthWrapper>
-          <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-4">
-              Projects
-            </h1>
-            <p className="text-xl text-foreground max-w-2xl mx-auto">
-              A collection of projects showcasing my expertise in building
-              modern web applications with cutting-edge technologies.
+          <div className="mb-10 grid max-w-[640px] gap-3">
+            <h1 id="projects-heading" className="text-[clamp(2rem,4.6vw,3.25rem)] font-bold text-foreground">Projects</h1>
+            <p className="max-w-[55ch] text-muted-foreground text-pretty">
+              Each project lists the problem, my role, and the stack.
+              {leadProject && " The first is the one I'd walk through in an interview."}
             </p>
-            <p className="mt-4 text-muted-foreground">
-              {projects.length}
-              {" "}
-              projects featured
-            </p>
+            <p className="text-sm text-muted-foreground">{`${projects.length} ${projects.length === 1 ? "project" : "projects"}`}</p>
           </div>
-        </MaxWidthWrapper>
-      </AnimatedSection>
 
-      <ProjectGrid projects={projects} />
+          {leadProject && <LeadProject project={leadProject} />}
+          <ProjectIndex projects={moreProjects} />
+        </MaxWidthWrapper>
+      </section>
 
       <Suspense fallback={<div className="py-16" />}>
         <GitHubStatsSection />
@@ -72,15 +74,15 @@ export const ProjectsPage: React.FC = () => {
       <AnimatedSection className="py-16 bg-muted">
         <MaxWidthWrapper className="text-center">
           <h2 className="text-2xl font-bold text-foreground mb-4">
-            Want to see more?
+            More on GitHub
           </h2>
           <p className="text-muted-foreground mb-6">
-            Check out my complete GitHub profile for more projects and contributions.
+            Smaller experiments and older bootcamp work are on my GitHub profile.
           </p>
-          <Button asChild className="bg-secondary text-secondary-foreground hover:opacity-90 py-4 px-6">
+          <Button asChild variant="accent" className="py-4 px-6">
             <a href="https://github.com/timDeHof" target="_blank" rel="noopener noreferrer">
               <Github className="h-4 w-4 mr-2" />
-              View GitHub Profile
+              GitHub profile
             </a>
           </Button>
         </MaxWidthWrapper>

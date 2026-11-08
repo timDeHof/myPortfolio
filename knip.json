@@ -1,9 +1,4 @@
 {
-  "entry": [
-    "src/main.tsx",
-    "portfolio-api/src/index.ts",
-    "github-proxy-worker/src/index.ts"
-  ],
   "ignore": [
     "build/**",
     "coverage/**"

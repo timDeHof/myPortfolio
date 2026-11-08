@@ -109,7 +109,7 @@ export function ProjectCaseStudyView({ project, caseStudy }: ProjectCaseStudyVie
 
           <section className="mt-10 space-y-3">
             <h2 className={HEADING}>Problem</h2>
-            <p className="leading-relaxed text-foreground whitespace-pre-wrap">{project.useCase || project.description}</p>
+            <p className="max-w-[52ch] leading-relaxed text-foreground whitespace-pre-wrap">{project.useCase || project.description}</p>
           </section>
 
           {features.length > 0 && (
@@ -118,7 +118,7 @@ export function ProjectCaseStudyView({ project, caseStudy }: ProjectCaseStudyVie
               {features.map(feature => (
                 <div key={feature.title}>
                   <h3 className="font-semibold text-foreground">{feature.title}</h3>
-                  {feature.description && <p className="mt-1 leading-relaxed text-foreground">{feature.description}</p>}
+                  {feature.description && <p className="mt-1 max-w-[52ch] leading-relaxed text-foreground">{feature.description}</p>}
                 </div>
               ))}
             </section>
@@ -130,7 +130,7 @@ export function ProjectCaseStudyView({ project, caseStudy }: ProjectCaseStudyVie
               {challenges.map(item => (
                 <div key={item.challenge}>
                   <h3 className="font-semibold text-foreground">{item.challenge}</h3>
-                  <p className="mt-1 leading-relaxed text-foreground">{item.solution}</p>
+                  <p className="mt-1 max-w-[52ch] leading-relaxed text-foreground">{item.solution}</p>
                 </div>
               ))}
             </section>
@@ -161,7 +161,7 @@ export function ProjectCaseStudyView({ project, caseStudy }: ProjectCaseStudyVie
                   </div>
                 ))}
               </dl>
-              <ul className="list-disc space-y-1 pl-5 text-foreground">
+              <ul className="max-w-[52ch] list-disc space-y-1 pl-5 text-foreground">
                 {impactAchievements.map(achievement => <li key={achievement}>{achievement}</li>)}
               </ul>
             </section>
@@ -170,7 +170,7 @@ export function ProjectCaseStudyView({ project, caseStudy }: ProjectCaseStudyVie
           {learnings.length > 0 && (
             <section className="mt-10 space-y-3">
               <h2 className={HEADING}>What I learned</h2>
-              <ul className="list-disc space-y-1 pl-5 text-foreground">
+              <ul className="max-w-[52ch] list-disc space-y-1 pl-5 text-foreground">
                 {learnings.map(item => <li key={item}>{item}</li>)}
               </ul>
             </section>

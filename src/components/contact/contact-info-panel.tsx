@@ -32,12 +32,12 @@ export const ContactInfoPanel: React.FC = () => {
         <h2 className="text-2xl font-bold text-foreground mb-6">
           Get in touch
         </h2>
-        <p className="text-foreground mb-4">
+        <p className="mb-4 max-w-[55ch] text-foreground">
           I'm always excited to work on new projects and collaborate with
           passionate people. Whether you have a specific project in mind
           or just want to explore possibilities, I'd love to hear from you.
         </p>
-        <p className="text-foreground mb-8">
+        <p className="mb-8 max-w-[55ch] text-foreground">
           You can also check out my
           {" "}
           <a
@@ -93,7 +93,7 @@ export const ContactInfoPanel: React.FC = () => {
           <h3 className="text-lg font-semibold text-foreground mb-2">
             Response Time
           </h3>
-          <p className="text-foreground text-sm">
+          <p className="max-w-[55ch] text-sm text-foreground">
             I typically respond to messages within 24 hours. For urgent
             inquiries, please mention it in your message and I'll prioritize
             getting back to you as soon as possible.

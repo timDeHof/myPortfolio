@@ -5,7 +5,8 @@ import { githubAPI, GitHubAPIError } from "@/services/api/github";
 import type { ProjectIndexEntry } from "../data/projects-index";
 import type { Project } from "../types/project";
 
-import { findProjectBySlug, projectsIndex } from "../data/projects-index";
+import { findProjectBySlug } from "../data/projects-index";
+import { retryDuringPrerender } from "../lib/query-client";
 
 export interface ProjectWithSource extends Project {
   source: "project-json" | "fallback";
@@ -43,33 +44,7 @@ async function fetchProjectWithFallback(
   }
 }
 
-async function fetchAllProjects(): Promise<ProjectWithSource[]> {
-  const results = await Promise.all(
-    projectsIndex.map(async (entry) => {
-      try {
-        return await fetchProjectWithFallback(entry);
-      }
-      catch {
-        return null;
-      }
-    }),
-  );
-
-  return results.filter((p): p is ProjectWithSource => p !== null);
-}
-
-export function useProjects() {
-  return useQuery({
-    queryKey: ["projects"],
-    queryFn: fetchAllProjects,
-    staleTime: 1000 * 60 * 5,
-  });
-}
-
-// Re-export for use in route loaders
-export { fetchAllProjects };
-
-// Shared with the /projects/$slug route loader, which fills the cache before render
+// Shared with the /projects and /projects/$slug route loaders, which fill the cache before render
 export function projectQuery(slug: string) {
   const entry = findProjectBySlug(slug);
 
@@ -84,6 +59,7 @@ export function projectQuery(slug: string) {
     },
     enabled: !!entry,
     staleTime: 1000 * 60 * 5,
+    retry: retryDuringPrerender,
   });
 }
 

@@ -76,7 +76,7 @@ export function Footer() {
                 Let's discuss your next project.
               </p>
               <div className="contacts">
-                <Button variant="default" size="lg" asChild className="cta">
+                <Button variant="accent" asChild className="cta">
                   <Link to="/contact" preload="intent">
                     <Mail className="h-5 w-5" />
                     Get In Touch

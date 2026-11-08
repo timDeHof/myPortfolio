@@ -1,0 +1,2 @@
+pnpm type-check
+pnpm exec vitest run
