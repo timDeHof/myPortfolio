@@ -52,8 +52,13 @@ export default defineConfig(({ mode }) => ({
     })] : []),
     VitePWA({
       registerType: 'autoUpdate',
+      // public/manifest.json is the manifest. Without this the plugin writes
+      // and links a second, generic one.
+      manifest: false,
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        // 138 KB used only when installing the app, so it is fetched then instead
+        globIgnores: ['**/icon-512.png'],
         // Well-known URIs (RFC 8615) must reach the network, not the SPA shell.
         // Without this, navigating to /.well-known/api-catalog returns index.html.
         navigateFallbackDenylist: [/^\/\.well-known\//],
