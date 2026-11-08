@@ -319,16 +319,3 @@ export function formatDate(dateString: string): string {
     day: "numeric",
   });
 }
-
-export function getRepositoryImage(repoName: string): string {
-  const imageMap: { [key: string]: string } = {
-    "galactic-pawn": "/galactic-pawn-project-image.png",
-    "facerecognitionbrain": "/movie-watchlist-project-image.png",
-    "crwn-clothing": "/movie-watchlist-project-image-1.png",
-    "movie-watchlist": "/movie-watchlist-project-image-2.png",
-    "monsters-rolodex": "/monster-rolodex-project-image.png",
-    "passwordGenerator": "/password-generator-project-image.png",
-  };
-
-  return imageMap[repoName] || `https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=200&fit=crop&crop=entropy&auto=format&q=80`;
-}

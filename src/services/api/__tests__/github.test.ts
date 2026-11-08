@@ -8,7 +8,6 @@ import { env } from "../../../lib/env";
 import { queryClient } from "../../../lib/query-client";
 import {
   formatDate,
-  getRepositoryImage,
   getTopLanguages,
   githubAPI,
   GitHubAPIError,
@@ -458,17 +457,4 @@ describe("formatDate", () => {
 
   // Note: JavaScript's Date.toLocaleDateString handles invalid dates by returning 'Invalid Date'
   // depending on locale, or throws. For simplicity, we assume valid date strings are passed.
-});
-
-describe("getRepositoryImage", () => {
-  it("should return correct image URL for known repo names", () => {
-    expect(getRepositoryImage("galactic-pawn")).toBe("/galactic-pawn-project-image.png");
-    expect(getRepositoryImage("monsters-rolodex")).toBe("/monster-rolodex-project-image.png");
-  });
-
-  it("should return default image URL for unknown repo names", () => {
-    const defaultImageUrl = "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=200&fit=crop&crop=entropy&auto=format&q=80";
-    expect(getRepositoryImage("unknown-repo")).toBe(defaultImageUrl);
-    expect(getRepositoryImage("another-unknown")).toBe(defaultImageUrl);
-  });
 });
