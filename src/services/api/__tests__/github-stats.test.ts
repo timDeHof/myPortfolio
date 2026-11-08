@@ -164,29 +164,17 @@ describe("githubStatsAPI.calculateActivityStats", () => {
       { created_at: "2021-01-01", updated_at: "2023-05-20" }, // Recent
     ] as any[];
 
-    // Mock Date.now() to ensure consistent "6 months ago"
-    const mockDate = new Date("2023-06-01T00:00:00Z");
-    vi.useFakeTimers();
-    vi.setSystemTime(mockDate);
-
     const stats = githubStatsAPI.calculateActivityStats(mockRepos);
 
     // Expect contributionYears to be sorted descending.
     // Fixture years in UTC are {2023, 2022, 2021}; the previous "2020" was an
     // artifact of reading UTC-midnight dates back in a negative-offset zone.
-    expect(stats.contributionYears).toEqual(["2023", "2022", "2021"]);
-    expect(stats.totalCommits).toBe(mockRepos.length * 10);
-    expect(stats.currentStreak).toBe(3); // 3 recent activities
-    expect(stats.longestStreak).toBe(mockRepos.length); // Estimated
-    vi.useRealTimers();
+    expect(stats).toEqual({ contributionYears: ["2023", "2022", "2021"] });
   });
 
   it("should handle empty repositories array", () => {
     const stats = githubStatsAPI.calculateActivityStats([]);
-    expect(stats.contributionYears).toEqual([]);
-    expect(stats.totalCommits).toBe(0);
-    expect(stats.currentStreak).toBe(0);
-    expect(stats.longestStreak).toBe(0);
+    expect(stats).toEqual({ contributionYears: [] });
   });
 });
 

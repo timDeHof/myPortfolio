@@ -28,9 +28,6 @@ interface GitHubStats {
     contributions: number;
   };
   activity: {
-    totalCommits: number;
-    currentStreak: number;
-    longestStreak: number;
     contributionYears: string[];
   };
 }
@@ -102,7 +99,6 @@ export const githubStatsAPI = {
     // Calculate repository statistics
     const repoStats = await githubStatsAPI.calculateRepositoryStats(repositories);
 
-    // Calculate activity stats (simplified - in real app you'd need commits API)
     const activityStats = githubStatsAPI.calculateActivityStats(repositories);
 
     const stats: GitHubStats = {
@@ -194,7 +190,7 @@ export const githubStatsAPI = {
     };
   },
 
-  // Calculate activity statistics (simplified version)
+  // Only what the repository list can tell. It has no commit or streak data.
   calculateActivityStats: (repositories: GitHubRepository[]) => {
     // Get unique years from repository creation/update dates.
     // GitHub timestamps are UTC, and date-only strings ("2020-01-01") parse as
@@ -207,18 +203,7 @@ export const githubStatsAPI = {
       years.add(new Date(repo.updated_at).getUTCFullYear().toString());
     });
 
-    // Simplified activity calculation based on repository updates
-    const recentActivity = repositories.filter((repo) => {
-      const lastUpdate = new Date(repo.updated_at);
-      const sixMonthsAgo = new Date();
-      sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-      return lastUpdate > sixMonthsAgo;
-    });
-
     return {
-      totalCommits: repositories.length * 10, // Estimated
-      currentStreak: Math.min(recentActivity.length, 30), // Simplified streak
-      longestStreak: Math.min(repositories.length, 100), // Estimated
       contributionYears: Array.from(years).sort().reverse(),
     };
   },
