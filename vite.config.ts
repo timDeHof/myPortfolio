@@ -73,14 +73,6 @@ export default defineConfig(({ mode }) => ({
           })),
           warnings: [],
         })],
-        runtimeCaching: [{
-          urlPattern: /^https:\/\/api\.github\.com\/.*/i,
-          handler: 'CacheFirst',
-          options: {
-            cacheName: 'github-api-cache',
-            expiration: { maxEntries: 10, maxAgeSeconds: 300 }
-          }
-        }]
       }
     }),
     viteImagemin({
