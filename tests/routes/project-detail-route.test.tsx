@@ -7,7 +7,6 @@ import { routeTree } from "../../src/routeTree.gen";
 vi.mock("../../src/components/layout/navbar", () => ({ Navbar: () => null }));
 vi.mock("../../src/components/layout/footer", () => ({ Footer: () => null }));
 vi.mock("../../src/hooks/use-projects", () => ({
-  fetchAllProjects: async () => [],
   projectQuery: (slug: string) => ({ queryKey: ["project", slug], queryFn: async () => null }),
 }));
 vi.mock("../../src/pages/projects-page", () => ({ ProjectsPage: () => <p>projects list</p> }));
