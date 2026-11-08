@@ -174,93 +174,10 @@
 }
 
 /*
- * Tailwind v4 @theme inline doesn't wire semantic color tokens into utility classes.
- * These use the theme-switched variables (--primary etc.) that flip between light/dark.
+ * Tailwind generates the theme color utilities from the @theme tokens above.
+ * The footer color has no token, so its utility is written here.
  */
 @layer utilities {
-  .bg-background {
-    background-color: hsl(var(--background));
-  }
-  .bg-muted {
-    background-color: hsl(var(--muted));
-  }
-  .bg-card {
-    background-color: hsl(var(--card));
-  }
-  .bg-primary {
-    background-color: hsl(var(--primary));
-  }
-  .bg-secondary {
-    background-color: hsl(var(--secondary));
-  }
-  .bg-accent {
-    background-color: hsl(var(--accent));
-  }
-  .bg-destructive {
-    background-color: hsl(var(--destructive));
-  }
-  .bg-popover {
-    background-color: hsl(var(--popover));
-  }
-  .bg-input {
-    background-color: hsl(var(--input));
-  }
-
-  .text-foreground {
-    color: hsl(var(--foreground));
-  }
-  .text-primary {
-    color: hsl(var(--primary));
-  }
-  .text-primary-foreground {
-    color: hsl(var(--primary-foreground));
-  }
-  .text-secondary-foreground {
-    color: hsl(var(--secondary-foreground));
-  }
-  .text-muted-foreground {
-    color: hsl(var(--muted-foreground));
-  }
-  .text-accent-foreground {
-    color: hsl(var(--accent-foreground));
-  }
-  .text-destructive {
-    color: hsl(var(--destructive));
-  }
-  .text-destructive-foreground {
-    color: hsl(var(--destructive-foreground));
-  }
-  .text-popover-foreground {
-    color: hsl(var(--popover-foreground));
-  }
-  .text-card-foreground {
-    color: hsl(var(--card-foreground));
-  }
-
-  .border-border {
-    border-color: hsl(var(--border));
-  }
-  .border-primary {
-    border-color: hsl(var(--primary));
-  }
-  .border-input {
-    border-color: hsl(var(--input));
-  }
-  .border-ring {
-    border-color: hsl(var(--ring));
-  }
-
-  .ring-ring {
-    --tw-ring-color: hsl(var(--ring));
-  }
-  .ring-primary {
-    --tw-ring-color: hsl(var(--primary));
-  }
-
-  .accent-primary {
-    accent-color: hsl(var(--primary));
-  }
-
   .bg-footer {
     background-color: hsl(var(--footer));
   }
