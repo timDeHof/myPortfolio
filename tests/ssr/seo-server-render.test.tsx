@@ -38,8 +38,8 @@ describe("seo rendering without a browser (prerender)", () => {
 
     const link = context.helmet?.link.toString() ?? "";
     const meta = context.helmet?.meta.toString() ?? "";
-    expect(link).toContain("href=\"https://timdehof.dev/projects?project=cognidocs\"");
-    expect(meta).toContain("content=\"https://timdehof.dev/projects?project=cognidocs\"");
+    expect(link).toContain("href=\"https://timdehof.dev/projects\"");
+    expect(meta).toContain("content=\"https://timdehof.dev/projects\"");
     expect(meta).toContain("content=\"https://timdehof.dev/og-image.jpg\"");
   });
 
@@ -54,5 +54,26 @@ describe("seo rendering without a browser (prerender)", () => {
 
     expect(context.helmet?.link.toString()).not.toContain("#gallery");
     expect(context.helmet?.meta.toString()).not.toContain("#gallery");
+  });
+
+  // Otherwise a shared ?utm_source= link declares itself the canonical page
+  it("leaves the query string out of canonical and og:url", () => {
+    vi.mocked(useLocation).mockReturnValue({
+      pathname: "/about",
+      searchStr: "?utm_source=linkedin",
+      search: { utm_source: "linkedin" },
+      hash: "",
+      href: "/about?utm_source=linkedin",
+    } as unknown as ReturnType<typeof useLocation>);
+    const context: { helmet?: HelmetServerState } = {};
+
+    renderToString(
+      <HelmetProvider context={context}>
+        <SEOHead seo={{ title: "About" }} />
+      </HelmetProvider>,
+    );
+
+    expect(context.helmet?.link.toString()).toContain("rel=\"canonical\" href=\"https://timdehof.dev/about\"");
+    expect(context.helmet?.meta.toString()).toContain("property=\"og:url\" content=\"https://timdehof.dev/about\"");
   });
 });
