@@ -52,6 +52,9 @@ export default defineConfig(({ mode }) => ({
     })] : []),
     VitePWA({
       registerType: 'autoUpdate',
+      // public/manifest.json is the manifest. Without this the plugin writes
+      // and links a second, generic one.
+      manifest: false,
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
         // Well-known URIs (RFC 8615) must reach the network, not the SPA shell.
