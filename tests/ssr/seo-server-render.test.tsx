@@ -38,8 +38,8 @@ describe("seo rendering without a browser (prerender)", () => {
 
     const link = context.helmet?.link.toString() ?? "";
     const meta = context.helmet?.meta.toString() ?? "";
-    expect(link).toContain("href=\"https://timdehof.dev/projects?project=cognidocs\"");
-    expect(meta).toContain("content=\"https://timdehof.dev/projects?project=cognidocs\"");
+    expect(link).toContain("href=\"https://timdehof.dev/projects\"");
+    expect(meta).toContain("content=\"https://timdehof.dev/projects\"");
     expect(meta).toContain("content=\"https://timdehof.dev/og-image.jpg\"");
   });
 
