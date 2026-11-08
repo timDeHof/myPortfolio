@@ -6,29 +6,29 @@
 @theme inline {
   --font-mono: "JetBrains Mono", "Fira Code", "SF Mono", ui-monospace, monospace;
 
-  /* Blueprint Palette - Light */
-  --color-background: 220 14% 96%; /* Snow */
-  --color-foreground: 222 47% 11%; /* Ink */
-  --color-muted: 220 13% 85%; /* Slate — clear separation from Snow */
-  --color-muted-foreground: 220 9% 46%; /* Slate */
-  --color-popover: 0 0% 100%;
-  --color-popover-foreground: 222 47% 11%;
-  --color-border: 220 13% 91%; /* Mist */
-  --color-input: 220 13% 91%;
-  --color-card: 0 0% 100%;
-  --color-card-foreground: 222 47% 11%;
-  --color-primary: 221 83% 53%; /* Cobalt */
-  --color-primary-foreground: 0 0% 100%;
-  --color-secondary: 220 13% 92%; /* Mist — matches muted */
-  --color-secondary-foreground: 222 47% 11%;
-  --color-accent: 174 60% 51%; /* Teal */
-  --color-accent-foreground: 0 0% 100%;
-  --color-destructive: 0 84% 60%;
-  --color-destructive-foreground: 0 0% 100%;
-  --color-ring: 221 83% 53%; /* Cobalt */
-  --color-cobalt: 221 83% 53%;
-  --color-teal: 174 60% 51%;
-  --color-amber: 32 95% 54%;
+  /* Blueprint Palette. :root and .dark set the HSL numbers, so utilities follow the theme */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-ring: hsl(var(--ring));
+  --color-cobalt: hsl(221 83% 53%);
+  --color-teal: hsl(174 60% 51%);
+  --color-amber: hsl(32 95% 54%);
   --radius: 0.5rem;
 
   /* Blueprint Palette - Dark */
@@ -75,7 +75,7 @@
 
 @layer base {
   * {
-    border-color: hsl(var(--color-border));
+    border-color: var(--color-border);
     @apply border-border outline-ring/50;
   }
 
@@ -84,25 +84,25 @@
     --btn-primary-shadow: 221 83% 40%;
     --btn-destructive-shadow: 0 72% 41%;
     --btn-secondary-shadow: 168 68% 28%;
-    --background: var(--color-background);
-    --foreground: var(--color-foreground);
-    --muted: var(--color-muted);
-    --muted-foreground: var(--color-muted-foreground);
-    --popover: var(--color-popover);
-    --popover-foreground: var(--color-popover-foreground);
-    --border: var(--color-border);
-    --input: var(--color-input);
-    --card: var(--color-card);
-    --card-foreground: var(--color-card-foreground);
-    --primary: var(--color-primary);
-    --primary-foreground: var(--color-primary-foreground);
-    --secondary: var(--color-secondary);
-    --secondary-foreground: var(--color-secondary-foreground);
-    --accent: var(--color-accent);
-    --accent-foreground: var(--color-accent-foreground);
-    --destructive: var(--color-destructive);
-    --destructive-foreground: var(--color-destructive-foreground);
-    --ring: var(--color-ring);
+    --background: 220 14% 96%; /* Snow */
+    --foreground: 222 47% 11%; /* Ink */
+    --muted: 220 13% 85%; /* Slate — clear separation from Snow */
+    --muted-foreground: 220 9% 46%; /* Slate */
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --border: 220 13% 91%; /* Mist */
+    --input: 220 13% 91%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --primary: 221 83% 53%; /* Cobalt */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 13% 92%; /* Mist — matches muted */
+    --secondary-foreground: 222 47% 11%;
+    --accent: 174 60% 51%; /* Teal */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 221 83% 53%; /* Cobalt */
     --radius: 0.5rem;
     --hero-grid: rgba(26, 140, 128, 0.06);
   }
@@ -479,7 +479,7 @@
       background: rgba(15, 15, 16, 0.92);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-left: 2px solid var(--color-accent, hsl(174 60% 51%));
+      border-left: 2px solid var(--color-teal);
       padding: 0 16px;
       box-shadow:
         0 1px 3px rgba(0, 0, 0, 0.12),
@@ -566,8 +566,8 @@
       }
 
       &.is-selected {
-        color: hsl(var(--color-accent, 174 60% 51%));
-        background: hsl(var(--color-accent, 174 60% 51%) / 0.06);
+        color: var(--color-teal);
+        background: color-mix(in oklab, var(--color-teal) 6%, transparent);
       }
     }
 
@@ -582,7 +582,7 @@
       display: inline-block;
       width: 2px;
       height: 14px;
-      background: hsl(var(--color-accent, 174 60% 51%));
+      background: var(--color-teal);
       margin-left: 2px;
       opacity: 0;
     }
@@ -594,7 +594,7 @@
     }
 
     .link:hover .link-prefix {
-      color: hsl(var(--color-accent, 174 60% 51%));
+      color: var(--color-teal);
       opacity: 1;
     }
 
@@ -810,8 +810,8 @@
     }
 
     &.is-selected {
-      color: hsl(var(--color-accent, 174 60% 51%));
-      background: hsl(var(--color-accent, 174 60% 51%) / 0.08);
+      color: var(--color-teal);
+      background: color-mix(in oklab, var(--color-teal) 8%, transparent);
     }
   }
 
@@ -858,6 +858,8 @@
   .footer {
     @apply text-white pt-16 pb-8;
     background-color: hsl(var(--footer));
+    /* The footer is ink in both themes, so its muted text keeps the dark-mode color */
+    --muted-foreground: var(--dark-muted-foreground);
 
     .inner {
       @apply mx-auto px-4;
