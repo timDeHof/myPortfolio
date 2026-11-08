@@ -30,10 +30,10 @@ pnpm coverage         # Run tests with coverage report
 
 # Run a single test file
 pnpm test src/services/api/__tests__/github.test.ts
-pnpm test tests/components/common/animated-icon.test.tsx
+pnpm test tests/components/common/title-block.test.tsx
 
 # Run tests matching a pattern
-pnpm test -- --run "AnimatedIcon"
+pnpm test -- --run "title block"
 pnpm test -- --run "github"
 ```
 
