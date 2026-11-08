@@ -151,27 +151,11 @@ export const GitHubStatsCard: React.FC = () => {
 
           {/* Activity Summary */}
           <hr className="my-6 border-border" />
-          <div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
-              <div>
-                <div className="text-lg font-bold text-foreground">
-                  {activity.currentStreak}
-                </div>
-                <div className="text-xs text-muted-foreground">Current Streak</div>
-              </div>
-              <div>
-                <div className="text-lg font-bold text-foreground">
-                  {activity.longestStreak}
-                </div>
-                <div className="text-xs text-muted-foreground">Longest Streak</div>
-              </div>
-              <div className="col-span-2 md:col-span-1">
-                <div className="text-lg font-bold text-foreground">
-                  {activity.contributionYears.length}
-                </div>
-                <div className="text-xs text-muted-foreground">Years Active</div>
-              </div>
+          <div className="text-center">
+            <div className="text-lg font-bold text-foreground">
+              {activity.contributionYears.length}
             </div>
+            <div className="text-xs text-muted-foreground">Years Active</div>
           </div>
         </CardContent>
       </Card>
