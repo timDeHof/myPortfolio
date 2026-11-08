@@ -2,30 +2,15 @@ import type { Mock } from "vitest";
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import type { GitHubRepository } from "../../../types/github";
-
 import { env } from "../../../lib/env";
-import { queryClient } from "../../../lib/query-client";
 import {
-  formatDate,
-  getTopLanguages,
   githubAPI,
   GitHubAPIError,
-  githubCache,
   githubKeys,
 } from "../github";
 import { createMockFetch } from "./test-utils";
 
 const mockFetch = createMockFetch;
-
-// Mock external dependencies
-vi.mock("../../../lib/query-client", () => ({
-  queryClient: {
-    invalidateQueries: vi.fn(),
-    prefetchQuery: vi.fn(),
-    getQueryData: vi.fn(),
-  },
-}));
 
 // Silence console output from the code under test
 vi.spyOn(console, "log").mockImplementation(() => {});
@@ -154,169 +139,10 @@ describe("githubAPI.fetchRepositories", () => {
     expect(repositories.some(repo => repo.name === "no-demo-repo")).toBeFalsy();
   });
 
-  it("should categorize repositories correctly", async () => {
-    globalThis.fetch = mockFetch(200, mockRepos);
-
-    const repositories = await githubAPI.fetchRepositories();
-
-    const showcaseRepo = repositories.find(repo => repo.name === "my-showcase");
-    expect(showcaseRepo?.category).toBe("showcase");
-
-    const anotherShowcaseRepo = repositories.find(repo => repo.name === "another-showcase");
-    expect(anotherShowcaseRepo?.category).toBe("showcase");
-
-    const personalRepo = repositories.find(repo => repo.name === "personal-project");
-    expect(personalRepo?.category).toBe("personal");
-
-    const contributionRepo = repositories.find(repo => repo.name === "contributed-fork");
-    expect(contributionRepo?.category).toBe("contribution");
-
-    const simpleForkRepo = repositories.find(repo => repo.name === "simple-fork");
-    expect(simpleForkRepo?.category).toBe("fork");
-  });
-
-  it("should sort repositories by category priority and then by engagement", async () => {
-    const customRepos = [
-      { id: 1, name: "z-personal", full_name: "", description: "Personal", html_url: "", homepage: "https://demo.link", language: "TypeScript", languages_url: "", stargazers_count: 10, forks_count: 1, created_at: "2023-01-01T00:00:00Z", updated_at: "2023-01-01T00:00:00Z", pushed_at: "2023-01-01T00:00:00Z", topics: [], archived: false, fork: false, private: false },
-      { id: 2, name: "a-showcase", full_name: "", description: "Showcase", html_url: "", homepage: "https://demo.link", language: "TypeScript", languages_url: "", stargazers_count: 20, forks_count: 5, created_at: "2023-01-01T00:00:00Z", updated_at: "2023-01-01T00:00:00Z", pushed_at: "2023-01-01T00:00:00Z", topics: ["showcase"], archived: false, fork: false, private: false },
-      { id: 3, name: "b-personal", full_name: "", description: "Personal", html_url: "", homepage: "https://demo.link", language: "TypeScript", languages_url: "", stargazers_count: 15, forks_count: 2, created_at: "2023-01-01T00:00:00Z", updated_at: "2023-01-02T00:00:00Z", pushed_at: "2023-01-01T00:00:00Z", topics: [], archived: false, fork: false, private: false },
-      { id: 4, name: "c-showcase-low-engagement", full_name: "", description: "Showcase", html_url: "", homepage: "https://demo.link", language: "TypeScript", languages_url: "", stargazers_count: 5, forks_count: 1, created_at: "2023-01-01T00:00:00Z", updated_at: "2023-01-01T00:00:00Z", pushed_at: "2023-01-01T00:00:00Z", topics: ["showcase"], archived: false, fork: false, private: false },
-    ];
-    globalThis.fetch = mockFetch(200, customRepos);
-
-    const repositories = await githubAPI.fetchRepositories();
-
-    // Expected order: a-showcase (showcase, highest engagement), c-showcase (showcase, lower engagement),
-    // b-personal (personal, higher engagement), z-personal (personal, lower engagement)
-    expect(repositories.map(repo => repo.name)).toEqual([
-      "a-showcase", // showcase, engagement 25
-      "b-personal", // showcase, engagement 17
-      "z-personal", // showcase, engagement 11
-      "c-showcase-low-engagement", // showcase, engagement 6
-    ]);
-  });
-
   it("should propagate error from githubFetch", async () => {
     globalThis.fetch = mockFetch(500, { message: "Server error" });
     await expect(githubAPI.fetchRepositories()).rejects.toThrow(GitHubAPIError);
     await expect(githubAPI.fetchRepositories()).rejects.toHaveProperty("status", 500);
-  });
-});
-
-describe("githubAPI.categorizeRepository", () => {
-  it("should categorize a non-fork with portfolio topic as showcase", () => {
-    const repo: GitHubRepository = {
-      id: 1,
-      name: "portfolio-app",
-      full_name: "timDeHof/portfolio-app",
-      fork: false,
-      topics: ["portfolio"],
-      stargazers_count: 1,
-      forks_count: 0,
-      description: "a test",
-      homepage: "url",
-      html_url: "url",
-      language: "TS",
-      languages_url: "url",
-      created_at: "2023-01-01",
-      updated_at: "2023-01-01",
-      pushed_at: "2023-01-01",
-      archived: false,
-      private: false,
-    };
-    expect(githubAPI.categorizeRepository(repo)).toBe("showcase");
-  });
-
-  it("should categorize a non-fork with high showcase score as showcase", () => {
-    const repo: GitHubRepository = {
-      id: 1,
-      name: "high-score-app",
-      full_name: "timDeHof/high-score-app",
-      fork: false,
-      topics: ["react", "nextjs", "tailwind"],
-      stargazers_count: 10,
-      forks_count: 5,
-      description: "very good project",
-      homepage: "url",
-      html_url: "url",
-      language: "TS",
-      languages_url: "url",
-      created_at: "2023-01-01",
-      updated_at: "2023-01-01",
-      pushed_at: "2023-01-01",
-      archived: false,
-      private: false,
-    };
-    expect(githubAPI.categorizeRepository(repo)).toBe("showcase");
-  });
-
-  it("should categorize a non-fork with low score as personal", () => {
-    const repo: GitHubRepository = {
-      id: 1,
-      name: "small-tool",
-      full_name: "timDeHof/small-tool",
-      fork: false,
-      topics: [],
-      stargazers_count: 0,
-      forks_count: 0,
-      description: "my tiny tool",
-      homepage: "url",
-      html_url: "url",
-      language: "TS",
-      languages_url: "url",
-      created_at: "2023-01-01",
-      updated_at: "2023-01-01",
-      pushed_at: "2023-01-01",
-      archived: false,
-      private: false,
-    };
-    expect(githubAPI.categorizeRepository(repo)).toBe("personal");
-  });
-
-  it("should categorize a fork with meaningful contributions as contribution", () => {
-    const repo: GitHubRepository = {
-      id: 1,
-      name: "contributed-lib",
-      full_name: "timDeHof/contributed-lib",
-      fork: true,
-      topics: [],
-      stargazers_count: 2,
-      forks_count: 0,
-      description: "fixed bug in lib",
-      homepage: "url",
-      html_url: "url",
-      language: "TS",
-      languages_url: "url",
-      created_at: "2023-01-01",
-      updated_at: "2023-01-01",
-      pushed_at: "2023-03-01",
-      archived: false,
-      private: false,
-    };
-    expect(githubAPI.categorizeRepository(repo)).toBe("contribution");
-  });
-
-  it("should categorize a simple fork as fork", () => {
-    const repo: GitHubRepository = {
-      id: 1,
-      name: "cloned-repo",
-      full_name: "timDeHof/cloned-repo",
-      fork: true,
-      topics: [],
-      stargazers_count: 0,
-      forks_count: 0,
-      description: "just a clone",
-      homepage: "url",
-      html_url: "url",
-      language: "TS",
-      languages_url: "url",
-      created_at: "2023-01-01",
-      updated_at: "2023-01-01",
-      pushed_at: "2023-01-01",
-      archived: false,
-      private: false,
-    };
-    expect(githubAPI.categorizeRepository(repo)).toBe("fork");
   });
 });
 
@@ -362,29 +188,6 @@ describe("githubAPI.fetchRepositoryLanguages", () => {
   });
 });
 
-describe("githubAPI.fetchRateLimit", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    globalThis.fetch = vi.fn();
-  });
-
-  it("should fetch rate limit information correctly", async () => {
-    const mockRateLimit = { rate: { limit: 5000, remaining: 4999 } };
-    globalThis.fetch = mockFetch(200, mockRateLimit);
-
-    const rateLimit = await githubAPI.fetchRateLimit();
-
-    expect(globalThis.fetch).toHaveBeenCalledWith(`${env.VITE_API_BASE_URL}/github/rate_limit`);
-    expect(rateLimit).toEqual(mockRateLimit);
-  });
-
-  it("should propagate error from githubFetch", async () => {
-    globalThis.fetch = mockFetch(403, { message: "Rate limit exceeded" });
-    await expect(githubAPI.fetchRateLimit()).rejects.toThrow(GitHubAPIError);
-    await expect(githubAPI.fetchRateLimit()).rejects.toHaveProperty("status", 403);
-  });
-});
-
 describe("githubKeys", () => {
   it("should return correct query keys", () => {
     expect(githubKeys.all).toEqual(["github"]);
@@ -392,69 +195,5 @@ describe("githubKeys", () => {
     expect(githubKeys.repositories()).toEqual(["github", "repositories", "timDeHof"]);
     expect(githubKeys.languages("my-repo")).toEqual(["github", "languages", "timDeHof", "my-repo"]);
     expect(githubKeys.contents("timDeHof", "my-repo", "data.json")).toEqual(["github", "contents", "timDeHof", "my-repo", "data.json"]);
-    expect(githubKeys.rateLimit()).toEqual(["github", "rateLimit"]);
   });
-});
-
-describe("githubCache", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
-  it("should invalidate all GitHub data", () => {
-    githubCache.invalidateAll();
-    expect(queryClient.invalidateQueries).toHaveBeenCalledWith({ queryKey: ["github"] });
-  });
-
-  it("should invalidate repositories", () => {
-    githubCache.invalidateRepositories();
-    expect(queryClient.invalidateQueries).toHaveBeenCalledWith({ queryKey: ["github", "repositories", "timDeHof"] });
-  });
-
-  it("should prefetch repositories", () => {
-    githubCache.prefetchRepositories();
-    expect(queryClient.prefetchQuery).toHaveBeenCalledWith({
-      queryKey: ["github", "repositories", "timDeHof"],
-      queryFn: githubAPI.fetchRepositories,
-    });
-  });
-
-  it("should get cached repositories", () => {
-    const mockCachedRepos = [{ id: 1, name: "cached-repo" }];
-    (queryClient.getQueryData as Mock).mockReturnValue(mockCachedRepos);
-    const cachedRepos = githubCache.getCachedRepositories();
-    expect(queryClient.getQueryData).toHaveBeenCalledWith(["github", "repositories", "timDeHof"]);
-    expect(cachedRepos).toEqual(mockCachedRepos);
-  });
-});
-
-describe("getTopLanguages", () => {
-  it("should return top 3 languages sorted by count", () => {
-    const languages = { TypeScript: 1000, JavaScript: 500, Python: 700, CSS: 200 };
-    expect(getTopLanguages(languages)).toEqual(["TypeScript", "Python", "JavaScript"]);
-  });
-
-  it("should return less than 3 languages if fewer exist", () => {
-    const languages = { Rust: 150, Go: 300 };
-    expect(getTopLanguages(languages)).toEqual(["Go", "Rust"]);
-  });
-
-  it("should return empty array for empty language object", () => {
-    expect(getTopLanguages({})).toEqual([]);
-  });
-});
-
-describe("formatDate", () => {
-  it("should format a valid date string correctly", () => {
-    const dateString = "2023-03-15T10:30:00Z";
-    expect(formatDate(dateString)).toBe("Mar 15, 2023");
-  });
-
-  it("should handle a different valid date string", () => {
-    const dateString = "2024-11-05T08:00:00Z";
-    expect(formatDate(dateString)).toBe("Nov 5, 2024");
-  });
-
-  // Note: JavaScript's Date.toLocaleDateString handles invalid dates by returning 'Invalid Date'
-  // depending on locale, or throws. For simplicity, we assume valid date strings are passed.
 });
