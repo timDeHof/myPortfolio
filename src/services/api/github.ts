@@ -1,7 +1,6 @@
 import type { GitHubLanguages, GitHubRepository, GitHubUser } from "../../types/github";
 
 import { env } from "../../lib/env";
-import { queryClient } from "../../lib/query-client";
 import { GitHubAPIError } from "../../types/github";
 
 // Re-export types and values for backward compatibility
@@ -129,7 +128,7 @@ export const githubAPI = {
     return githubFetch<GitHubUser>(`${GITHUB_API_BASE}/users/${GITHUB_USERNAME}`);
   },
 
-  // Fetch repositories with enhanced categorization
+  // Fetch repositories with demo links
   fetchRepositories: async (): Promise<GitHubRepository[]> => {
     const url = `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100&type=all`;
     const repositories = await githubFetch<GitHubRepository[]>(url);
@@ -144,72 +143,7 @@ export const githubAPI = {
       return isPublic && isNotArchived && isNotExcluded && hasDemo;
     });
 
-    // Categorize repositories
-    const categorized = publicRepos.map(repo => ({
-      ...repo,
-      category: githubAPI.categorizeRepository(repo),
-    }));
-
-    // Sort by category priority, then by engagement
-    return categorized.sort((a, b) => {
-      const categoryPriority = { showcase: 0, personal: 1, contribution: 2, fork: 3 };
-      const aPriority = categoryPriority[a.category];
-      const bPriority = categoryPriority[b.category];
-
-      if (aPriority !== bPriority)
-        return aPriority - bPriority;
-
-      // Within same category, sort by engagement (stars + forks)
-      const aEngagement = a.stargazers_count + a.forks_count;
-      const bEngagement = b.stargazers_count + b.forks_count;
-
-      if (bEngagement !== aEngagement)
-        return bEngagement - aEngagement;
-
-      return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
-    });
-  },
-
-  // Categorize repository based on various criteria
-  categorizeRepository: (repo: GitHubRepository): "showcase" | "personal" | "contribution" | "fork" => {
-    // Check for portfolio-ready topics
-    const portfolioTopics = ["portfolio", "showcase", "featured", "production", "demo"];
-    const hasPortfolioTopic = repo.topics?.some(topic => portfolioTopics.includes(topic.toLowerCase()));
-
-    // Showcase projects: High-quality original projects worth highlighting
-    const showcaseIndicators = [
-      repo.stargazers_count > 0,
-      repo.forks_count > 0,
-      repo.description && repo.description.length > 20,
-      repo.homepage,
-      repo.topics && repo.topics.length > 2,
-      hasPortfolioTopic, // Bonus for portfolio topics
-    ];
-
-    const showcaseScore = showcaseIndicators.filter(Boolean).length;
-
-    if (!repo.fork && (hasPortfolioTopic || showcaseScore >= 3)) {
-      return "showcase";
-    }
-
-    // Personal projects: Original work but maybe not showcase-ready
-    if (!repo.fork) {
-      return "personal";
-    }
-
-    // Contributions: Forks with meaningful changes
-    const contributionIndicators = [
-      repo.stargazers_count > 0,
-      new Date(repo.pushed_at) > new Date(repo.created_at),
-      repo.description && !repo.description.includes("fork"),
-    ];
-
-    if (contributionIndicators.filter(Boolean).length >= 2) {
-      return "contribution";
-    }
-
-    // Regular forks
-    return "fork";
+    return publicRepos;
   },
 
   // Fetch one repository, for its star count. The proxy does not expose
@@ -259,11 +193,6 @@ export const githubAPI = {
     );
     return JSON.parse(decoded) as T;
   },
-
-  // Fetch rate limit information
-  fetchRateLimit: async () => {
-    return githubFetch(`${GITHUB_API_BASE}/rate_limit`);
-  },
 };
 
 // Query Keys - Centralized for easy cache management
@@ -273,49 +202,4 @@ export const githubKeys = {
   repositories: () => [...githubKeys.all, "repositories", GITHUB_USERNAME] as const,
   languages: (repoName: string) => [...githubKeys.all, "languages", GITHUB_USERNAME, repoName] as const,
   contents: (owner: string, repo: string, path: string) => [...githubKeys.all, "contents", owner, repo, path] as const,
-  rateLimit: () => [...githubKeys.all, "rateLimit"] as const,
 };
-
-// Cache management utilities
-export const githubCache = {
-  // Invalidate all GitHub data
-  invalidateAll: () => {
-    return queryClient.invalidateQueries({ queryKey: githubKeys.all });
-  },
-
-  // Invalidate repositories
-  invalidateRepositories: () => {
-    return queryClient.invalidateQueries({ queryKey: githubKeys.repositories() });
-  },
-
-  // Prefetch repositories
-  prefetchRepositories: () => {
-    return queryClient.prefetchQuery({
-      queryKey: githubKeys.repositories(),
-      queryFn: githubAPI.fetchRepositories,
-    });
-  },
-
-  // Get cached repositories
-  getCachedRepositories: (): GitHubRepository[] | undefined => {
-    return queryClient.getQueryData(githubKeys.repositories());
-  },
-};
-
-// Utility functions
-export function getTopLanguages(languages: GitHubLanguages): string[] {
-  const sortedLanguages = Object.entries(languages)
-    .sort(([, a], [, b]) => b - a)
-    .map(([language]) => language);
-
-  return sortedLanguages.slice(0, 3);
-}
-
-export function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-}

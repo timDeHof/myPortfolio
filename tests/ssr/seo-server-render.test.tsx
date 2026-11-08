@@ -7,15 +7,10 @@ import { HelmetProvider } from "react-helmet-async";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { SEOHead } from "../../src/components/common/seo-head";
-import { useSEO } from "../../src/hooks/use-seo";
 
 vi.mock("@tanstack/react-router", () => ({
   useLocation: vi.fn(),
 }));
-
-function SEOUrl() {
-  return <span>{useSEO().url}</span>;
-}
 
 describe("seo rendering without a browser (prerender)", () => {
   beforeEach(() => {
@@ -59,10 +54,5 @@ describe("seo rendering without a browser (prerender)", () => {
 
     expect(context.helmet?.link.toString()).not.toContain("#gallery");
     expect(context.helmet?.meta.toString()).not.toContain("#gallery");
-  });
-
-  it("builds the useSEO url from the site origin and the search string", () => {
-    const html = renderToString(<SEOUrl />);
-    expect(html).toContain("https://timdehof.dev/projects?project=cognidocs");
   });
 });

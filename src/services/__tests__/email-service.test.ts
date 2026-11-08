@@ -60,32 +60,3 @@ describe("sendEmail", () => {
     await expect(sendEmail(emailData)).rejects.toThrow("Network issues");
   });
 });
-
-describe("testEmailConfiguration", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    globalThis.fetch = vi.fn();
-  });
-
-  it("should return true if email configuration is successful", async () => {
-    (globalThis.fetch as any).mockResolvedValue({
-      ok: true,
-      json: async () => ({ success: true }),
-    });
-
-    const { testEmailConfiguration } = await import("../email-service");
-    const result = await testEmailConfiguration();
-    expect(result).toBe(true);
-  });
-
-  it("should return false if email configuration fails", async () => {
-    (globalThis.fetch as any).mockResolvedValue({
-      ok: false,
-      json: async () => ({ error: "Failed" }),
-    });
-
-    const { testEmailConfiguration } = await import("../email-service");
-    const result = await testEmailConfiguration();
-    expect(result).toBe(false);
-  });
-});

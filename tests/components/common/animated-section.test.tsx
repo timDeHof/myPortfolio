@@ -11,12 +11,6 @@ vi.mock("../../../src/hooks/use-intersection-observer", () => ({
   }),
 }));
 
-vi.mock("../../../src/hooks/use-optimized-animations", () => ({
-  useOptimizedAnimations: () => ({
-    scheduleAnimation: vi.fn(),
-  }),
-}));
-
 describe("animatedSection", () => {
   it("renders children correctly", () => {
     render(
