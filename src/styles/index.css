@@ -891,7 +891,7 @@
             @apply flex flex-col;
 
             a {
-              @apply flex items-center text-muted-foreground hover:text-accent transition-all duration-300 py-3 px-4 md:py-2 md:px-0 rounded-xl md:rounded-none hover:bg-muted md:hover:bg-transparent text-center md:text-left font-medium hover:translate-x-1 md:hover:translate-x-2;
+              @apply flex items-center text-muted-foreground hover:text-accent transition-all duration-300 py-3 px-4 md:py-2 md:px-0 rounded-xl md:rounded-none hover:bg-white/10 md:hover:bg-transparent text-center md:text-left font-medium hover:translate-x-1 md:hover:translate-x-2;
             }
           }
           .contacts {
@@ -906,7 +906,7 @@
             .socials {
               @apply flex justify-center w-full space-x-4 pt-2 border-t border-muted md:border-t-0 md:pt-0 md:w-auto md:justify-start;
               a {
-                @apply text-muted-foreground hover:text-accent transition-all duration-300 p-3 hover:bg-muted rounded-xl hover:scale-110;
+                @apply text-muted-foreground hover:text-accent transition-all duration-300 p-3 hover:bg-white/10 rounded-xl hover:scale-110;
               }
             }
           }
@@ -926,7 +926,7 @@
         }
 
         .back-to-top {
-          @apply flex items-center space-x-2 text-muted-foreground hover:text-accent transition-all duration-300 py-3 px-5 rounded-lg hover:bg-muted min-h-[44px] min-w-[44px];
+          @apply flex items-center space-x-2 text-muted-foreground hover:text-accent transition-all duration-300 py-3 px-5 rounded-lg hover:bg-white/10 min-h-[44px] min-w-[44px];
           & .back-to-top-icon {
             @apply h-4 w-4 hover:-translate-y-1 transition-transform;
           }
