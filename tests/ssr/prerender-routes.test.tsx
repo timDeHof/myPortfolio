@@ -47,6 +47,36 @@ const fixtures: Record<string, unknown> = {
     difficulty: "Advanced",
     timeEstimate: "Ongoing",
   },
+  "cognidocs.json": {
+    number: "02",
+    name: "CogniDocs",
+    tagline: "Document Q&A",
+    description: "CogniDocs description",
+    useCase: "Teams ask questions of their documents.",
+    image: "",
+    accentColor: "#3568e8",
+    techStack: [{ category: "Frontend", tech: "React", purpose: "UI" }],
+    advancedFeatures: [],
+    resumePitch: "Built the document pipeline.",
+    tags: [],
+    difficulty: "Advanced",
+    timeEstimate: "4 weeks",
+  },
+  "habitgate-mobile.json": {
+    number: "04",
+    name: "HabitGate",
+    tagline: "Habit tracker for mobile",
+    description: "HabitGate description",
+    useCase: "People build habits on their phone.",
+    image: "",
+    accentColor: "#3568e8",
+    techStack: [{ category: "Mobile", tech: "React Native", purpose: "App" }],
+    advancedFeatures: [],
+    resumePitch: "Built the mobile app.",
+    tags: [],
+    difficulty: "Intermediate",
+    timeEstimate: "6 weeks",
+  },
   "testimonials.json": [
     { id: "fixture-1", name: "Fixture Colleague", role: "Engineering Manager", company: "Fixture Co", quote: "Fixture testimonial quote.", date: "2026-01-01" },
   ],
@@ -324,14 +354,14 @@ describe("prerendered routes contain their content, not the loading state", () =
     // Only shadcn-timeline has a case study, so the lead doesn't promise "what I'd do differently"
     expect(html).toContain("Each project lists the problem, my role, and the stack.");
     expect(html).not.toContain("do differently");
-    expect(html).toContain(">2 projects<");
+    expect(html).toContain(">4 projects<");
     // The lead project's title block uses the hero's drawing labels
     expect([...titleBlock.matchAll(/<dt[^>]*>([^<]+)<\/dt>/g)].map(match => match[1])).toEqual(["Part", "Function", "What I built", "Material"]);
     expect(titleBlock).toContain("Built and open-sourced the component.");
     expect(titleBlock).toContain("React 18 · TypeScript · Tailwind CSS · CSS Variables");
     expect(html).toMatch(/<a[^>]*href="\/projects\/shadcn-timeline"[^>]*>Read more/);
     // The rest are rows, not cards, and carry no project numbers
-    expect(index.match(/<li[\s>]/g)).toHaveLength(1);
+    expect(index.match(/<li[\s>]/g)).toHaveLength(3);
     expect(index).toMatch(/<h2[^>]*>TeamForward<\/h2>/);
     expect(index).toContain("Frontend Engineer at TeamForward since 2024.");
     expect(index).toMatch(/<a[^>]*href="\/projects\/teamforward"[^>]*>Read more/);
@@ -399,74 +429,6 @@ describe("prerendered routes contain their content, not the loading state", () =
 
     expect(button).toMatch(/class="[^"]*\bbtn--accent\b[^"]*"/);
     expect(button).not.toMatch(/\bbg-secondary\b/);
-  });
-
-  describe("when some project downloads fail", () => {
-    const failing = (files: string[]) => {
-      const fetchContents = vi.mocked(githubAPI.fetchContents);
-      const fixtureFetch = fetchContents.getMockImplementation()!;
-      fetchContents.mockImplementation(async (owner, repo, path) => {
-        if (files.some(file => path.endsWith(file))) {
-          throw new Error(`404: ${path}`);
-        }
-        return fixtureFetch(owner, repo, path);
-      });
-      return () => fetchContents.mockImplementation(fixtureFetch);
-    };
-
-    it("counts one project in the singular", async () => {
-      const restore = failing(["teamforward.json"]);
-      try {
-        const { html } = await renderPage("/projects");
-
-        expect(html).not.toContain(">1 projects<");
-        expect(html).toContain(">1 project<");
-      }
-      finally {
-        restore();
-      }
-    });
-
-    // The intro says the first is the one to walk through, so another project
-    // must not take shadcn-timeline's place
-    it("doesn't promote another project to the lead when the lead fails", async () => {
-      const restore = failing(["shadcn-timeline.json"]);
-      try {
-        const { html } = await renderPage("/projects");
-        const index = html.match(/<ol aria-label="More projects"[\s\S]*?<\/ol>/)?.[0] ?? "";
-
-        expect(html).not.toContain("TeamForward title block");
-        expect(index).toMatch(/<h2[^>]*>TeamForward<\/h2>/);
-        // With no lead, "the first" would point at an index row
-        expect(html).not.toContain("walk through in an interview");
-        expect(html).toContain("Each project lists the problem, my role, and the stack.");
-      }
-      finally {
-        restore();
-      }
-    });
-  });
-
-  it("says the projects didn't load, not that there are none, when every download fails", async () => {
-    const fetchContents = vi.mocked(githubAPI.fetchContents);
-    const fixtureFetch = fetchContents.getMockImplementation()!;
-    fetchContents.mockImplementation(async (_owner, _repo, path) => {
-      throw new Error(`404: ${path}`);
-    });
-
-    try {
-      const { html } = await renderPage("/projects");
-
-      expect(html).toContain("Projects didn&#x27;t load. They&#x27;re also on GitHub.");
-      const button = html.match(/<a href="https:\/\/github.com\/timDeHof"[^>]*>(?:<svg[\s\S]*?<\/svg>)?GitHub profile<\/a>/)?.[0] ?? "";
-      expect(button).not.toBe("");
-      // Same accent colors as the More on GitHub and footer Get In Touch buttons
-      expect(button).toMatch(/class="[^"]*\bbtn--accent\b[^"]*"/);
-      expect(html).not.toContain("No projects found");
-    }
-    finally {
-      fetchContents.mockImplementation(fixtureFetch);
-    }
   });
 
   it("renders the /about intro with one h1 and the v2 lead", async () => {
@@ -677,6 +639,25 @@ describe("prerendered routes contain their content, not the loading state", () =
 
     try {
       await expect(renderPage("/projects/shadcn-timeline")).rejects.toThrow(/project/);
+    }
+    finally {
+      fetchContents.mockImplementation(fixtureFetch);
+    }
+  });
+
+  // About 7s, for the same retries as the test above
+  it("fails the /projects build when one project's download fails", { timeout: 30000 }, async () => {
+    const fetchContents = vi.mocked(githubAPI.fetchContents);
+    const fixtureFetch = fetchContents.getMockImplementation()!;
+    fetchContents.mockImplementation(async (owner, repo, path) => {
+      if (path === "teamforward.json") {
+        throw new Error("rate limited");
+      }
+      return fixtureFetch(owner, repo, path);
+    });
+
+    try {
+      await expect(renderPage("/projects")).rejects.toThrow(/"project","teamforward"/);
     }
     finally {
       fetchContents.mockImplementation(fixtureFetch);
