@@ -6,6 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Tim DeHof" />
 
+    <!-- Theme class before the first paint, by the same rule as useTheme, so dark mode doesn't flash light -->
+    <script>
+      (function () {
+        try {
+          var stored = JSON.parse(localStorage.getItem("portfolio-storage") || "{}");
+          var theme = stored.state && stored.state.theme;
+          var isDark = theme === "dark" || (theme !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.add(isDark ? "dark" : "light");
+          document.documentElement.style.colorScheme = isDark ? "dark" : "light";
+        } catch (error) {
+          // Blocked storage or bad JSON: useTheme applies the theme after mount
+        }
+      })();
+    </script>
+
     <!-- Favicon -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
