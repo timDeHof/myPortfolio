@@ -178,6 +178,19 @@ describe("githubStatsAPI.calculateActivityStats", () => {
   });
 });
 
+describe("githubStatsAPI.fetchContributions", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  // A failure must reach the calendar's error state, not become a made-up history
+  it("rethrows when the contributions API fails instead of returning random data", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => ({ ok: false, status: 503, statusText: "Service Unavailable" })));
+
+    await expect(githubStatsAPI.fetchContributions("timDeHof")).rejects.toThrow("Failed to fetch contributions: 503 Service Unavailable");
+  });
+});
+
 describe("githubStatsAPI.generateContributionCalendar", () => {
   beforeEach(() => {
     vi.clearAllMocks();
