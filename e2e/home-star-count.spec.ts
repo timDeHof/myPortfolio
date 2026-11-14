@@ -4,6 +4,10 @@ import { expect, test } from "@playwright/test";
 
 const FALLBACK = "Open source";
 
+// GitHub can't return a negative star count, so the page shows this only when
+// the browser's fetch ran and its answer replaced the prerendered count
+const FETCHED_STARS = -1;
+
 declare global {
   interface Window {
     __starStats: string[];
@@ -43,22 +47,26 @@ test.describe("home star count", () => {
       test.skip(!hasStarCount, reason);
     }
     await recordStarStat(page);
+    // The prerendered count stays fresh for an hour (staleTime in
+    // src/hooks/use-repo-stars.ts), so set the page's clock two hours ahead to
+    // make the browser fetch it again
+    await page.clock.install({ time: Date.now() + 2 * 60 * 60 * 1000 });
   });
 
   test("keeps the prerendered count while the browser fetch is in flight", async ({ page }) => {
     let answered = false;
     await page.route("**/github/**", async (route) => {
       await new Promise(resolve => setTimeout(resolve, 800));
-      await route.fulfill({ json: [{ name: "shadcn-timeline", stargazers_count: 317 }] });
+      await route.fulfill({ json: [{ name: "shadcn-timeline", stargazers_count: FETCHED_STARS }] });
       answered = true;
     });
 
     await page.goto("/");
     await expect.poll(() => answered).toBe(true);
+    await expect.poll(async () => (await starStats(page)).at(-1)).toBe(`${FETCHED_STARS}★`);
 
     const stats = await starStats(page);
-    expect(stats[0]).toMatch(/\d+★/);
-    expect(stats.at(-1)).toBe(stats[0]);
+    expect(stats[0]).toMatch(/^\d+★$/);
     expect(stats).not.toContain(FALLBACK);
   });
 
