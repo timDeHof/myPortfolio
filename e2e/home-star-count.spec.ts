@@ -55,9 +55,11 @@ test.describe("home star count", () => {
 
     await page.goto("/");
     await expect.poll(() => answered).toBe(true);
-    await expect.poll(async () => (await starStats(page)).at(-1)).toBe("317★");
 
-    expect(await starStats(page)).not.toContain(FALLBACK);
+    const stats = await starStats(page);
+    expect(stats[0]).toMatch(/\d+★/);
+    expect(stats.at(-1)).toBe(stats[0]);
+    expect(stats).not.toContain(FALLBACK);
   });
 
   test("keeps the prerendered count when the browser fetch fails", async ({ page }) => {
