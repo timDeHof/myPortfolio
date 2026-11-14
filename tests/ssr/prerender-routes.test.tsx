@@ -88,7 +88,7 @@ const fixtures: Record<string, unknown> = {
   "teamforward-case-study.json": {
     challenges: { title: "Challenges Solved", items: [{ challenge: "Push notifications on iOS and Safari", solution: "Chose web-push-neo for aes128gcm" }] },
     impact: { title: "Results & Impact", metrics: [], achievements: ["Added CI on every pull request"] },
-    learnings: { title: "What I Learned", items: ["Test the property that matters"] },
+    learnings: { title: "What I Learned", items: ["A test that checks the exact property a platform requires catches more than a test that checks for success."] },
   },
 };
 
