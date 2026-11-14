@@ -179,9 +179,9 @@ export const githubAPI = {
   },
 
   // Fetch and decode base64-encoded JSON from GitHub Contents API
-  fetchContents: async <T>(owner: string, repo: string, path: string): Promise<T> => {
+  fetchContents: async <T>(owner: string, repo: string, path: string, signal?: AbortSignal): Promise<T> => {
     const url = `${GITHUB_API_BASE}/repos/${owner}/${repo}/contents/${path}`;
-    const data = await githubFetch<{ content?: string }>(url);
+    const data = await githubFetch<{ content?: string }>(url, signal);
 
     if (!data.content) {
       throw new GitHubAPIError(0, "Empty Content", url, `No content field in response for ${path}`);

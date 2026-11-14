@@ -14,8 +14,23 @@ export interface Testimonial {
   date: string;
 }
 
+/** How long the prerender waits for testimonials before building /about without them */
+export const TESTIMONIALS_PRERENDER_TIMEOUT_MS = 5000;
+
 async function fetchTestimonials(): Promise<Testimonial[]> {
-  return githubAPI.fetchContents<Testimonial[]>("timDeHof", "portfolio-metadata", "testimonials.json");
+  // The /about loader waits for this during the prerender, so a stalled request
+  // would hold the build. In the browser the loader stops waiting after 1s instead.
+  if (typeof window !== "undefined") {
+    return githubAPI.fetchContents<Testimonial[]>("timDeHof", "portfolio-metadata", "testimonials.json");
+  }
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(new Error(`Testimonials timed out after ${TESTIMONIALS_PRERENDER_TIMEOUT_MS}ms`)), TESTIMONIALS_PRERENDER_TIMEOUT_MS);
+  try {
+    return await githubAPI.fetchContents<Testimonial[]>("timDeHof", "portfolio-metadata", "testimonials.json", controller.signal);
+  }
+  finally {
+    clearTimeout(timer);
+  }
 }
 
 export const testimonialsQuery = queryOptions({
