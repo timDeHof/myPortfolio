@@ -10,4 +10,12 @@ describe("portfolio data", () => {
     const services: PortfolioData["services"] = [];
     expect(services).toEqual([]);
   });
+
+  // Page metadata comes from src/utils/seo.ts, so portfolio.json no longer
+  // carries an seo block
+  it("has no seo block", () => {
+    // @ts-expect-error seo was removed from portfolio.json
+    const seo: PortfolioData["seo"] | undefined = undefined as never;
+    expect(seo).toBeUndefined();
+  });
 });
