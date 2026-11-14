@@ -129,6 +129,8 @@ _Why this matters: "built the frontend" is what every candidate says. A number, 
 > \*\*Your answer:yes, I chose web-push-neo over regular web-push because it can work with the service worker and the notification service, which is important for our use case."
 >
 > **Clarified 2026-10-17:** chose web-push-neo because it uses the Web Crypto API and runs outside Node. Copy: "Chose web-push-neo over web-push for push notifications because it uses the Web Crypto API, so it runs outside Node."
+>
+> **Updated 2026-11-14:** the decision record adds a second reason. PushForge, the first replacement tried, encrypts with the legacy aesgcm encoding, which Apple's push service and Edge reject, so it would have cut off iOS and Safari. A test that checks for aes128gcm caught it on its first run. Copy: "Chose web-push-neo over web-push and PushForge for push notifications. It runs on the Web Crypto API outside Node, and it uses the aes128gcm encoding that Apple and Edge require, so iOS and Safari users still get notifications."
 
 ### I8a. Has Joe approved naming a Jokma project on your site (P3)?
 

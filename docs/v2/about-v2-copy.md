@@ -25,7 +25,7 @@ In manufacturing, a problem on the line had a cost you could count: scrapped par
 
 What pulled me toward software was the 3D-printing software itself. The first time I used it, I saw how much of our production process it could streamline.
 
-In 2022 I finished Fullstack Academy's full-stack web development bootcamp and started building full-time. Since 2024 I've been a Frontend Engineer at TeamForward, building an event-planning and networking platform in React, TypeScript, and Tailwind CSS, with a focus on accessible interfaces. Since 2026 I've also taken contract work through Jokma Web Solutions.
+In 2022 I finished Fullstack Academy's full-stack web development bootcamp and started building full-time. Since 2024 I've been a Frontend Engineer at TeamForward, an app that connects people through small, in-person gatherings near them. I build its frontend in React, TypeScript, and Tailwind CSS, with a focus on accessible interfaces. Since 2026 I've also taken contract work through Jokma Web Solutions.
 
 The habits carried over. I still measure before I optimize, trace bugs to their source, and write code for whoever maintains it next.
 
@@ -74,7 +74,7 @@ Group by how well you know each tool, not by category. An interviewer can ask ab
 | Years          | Role                                                                                                                                               |
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 2026 – present | **Contract developer, Jokma Web Solutions.** Client web and mobile apps. (The project line waits for Joe's OK, I8 and P3.)                         |
-| 2024 – present | **Frontend Engineer, TeamForward.** Event-planning and networking platform. React, TypeScript, Tailwind CSS.                                       |
+| 2024 – present | **Frontend Engineer, TeamForward.** Connects people through small, in-person gatherings near them. React, TypeScript, Tailwind CSS.                |
 | 2024 – 2026    | **AWS Cloud Institute.** Graduated from the Cloud Application Developer program, June 2026. AWS Certified Cloud Practitioner and AI Practitioner.  |
 | 2023           | **Full-stack developer.** Built CI/CD pipelines. IBM DevOps Essentials (Coursera, July 2023).                                                      |
 | 2022           | **Career change.** Finished Fullstack Academy's full-stack web development bootcamp.                                                               |

@@ -51,8 +51,8 @@ Intro: Each one covers the problem and my role. (D4: ships with two until Joe ap
 
 1. **shadcn-timeline**: An accessible timeline component for shadcn/ui. {stars} stars on GitHub. A timeline that fits shadcn/ui's design system out of the box, with ARIA attributes so screen readers announce each item's state.
    Links: Live demo · Source · Case study
-2. **TeamForward**: Frontend for an event-planning and networking platform. React, TypeScript, Tailwind. Chose web-push-neo over web-push for push notifications because it uses the Web Crypto API, so it runs outside Node.
-   Links: Details (no TeamForward case study yet, so the link says Details until teamforward-case-study.json exists)
+2. **TeamForward**: Frontend for an app that connects people through small, in-person gatherings near them. React, TypeScript, Tailwind. Chose web-push-neo over web-push for push notifications because it uses the Web Crypto API, so it runs outside Node.
+   Links: Case study
 
 Link below the list: All projects →
 

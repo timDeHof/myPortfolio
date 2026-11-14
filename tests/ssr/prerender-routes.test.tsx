@@ -85,6 +85,11 @@ const fixtures: Record<string, unknown> = {
     impact: { title: "Results & Impact", metrics: [{ value: "297", label: "GitHub Stars" }], achievements: ["Listed in awesome-shadcn-ui"] },
     learnings: { title: "What I Learned", items: ["Accessibility from the start beats retrofitting"] },
   },
+  "teamforward-case-study.json": {
+    challenges: { title: "Challenges Solved", items: [{ challenge: "Push notifications on iOS and Safari", solution: "Chose web-push-neo for aes128gcm" }] },
+    impact: { title: "Results & Impact", metrics: [], achievements: ["Added CI on every pull request"] },
+    learnings: { title: "What I Learned", items: ["Test the property that matters"] },
+  },
 };
 
 vi.mock("../../src/services/api/github", () => ({
@@ -120,6 +125,14 @@ describe("prerendered routes contain their content, not the loading state", () =
     expect(html).toContain("Built and open-sourced the component.");
     expect(html).toContain("Bill of materials");
     expect(html).toContain("Accessibility from the start beats retrofitting");
+    expect(html).not.toContain("animate-pulse");
+  });
+
+  it("renders the TeamForward case study on /projects/teamforward", async () => {
+    const { html } = await renderPage("/projects/teamforward");
+
+    expect(html).toContain("Attendees find events, RSVP, and connect with other attendees.");
+    expect(html).toContain("Push notifications on iOS and Safari");
     expect(html).not.toContain("animate-pulse");
   });
 

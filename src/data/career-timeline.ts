@@ -10,7 +10,7 @@ export interface CareerTimelineEntry {
 export const careerTimeline: CareerTimelineEntry[] = [
   // The sivs-platform line waits for Joe's OK (I8, P3)
   { years: "2026 – present", title: "Contract developer, Jokma Web Solutions", body: "Client web and mobile apps." },
-  { years: "2024 – present", title: "Frontend Engineer, TeamForward", homeTitle: "Frontend Engineer, TeamForward", body: "Event-planning and networking platform. React, TypeScript, Tailwind CSS." },
+  { years: "2024 – present", title: "Frontend Engineer, TeamForward", homeTitle: "Frontend Engineer, TeamForward", body: "Connects people through small, in-person gatherings near them. React, TypeScript, Tailwind CSS." },
   { years: "2024 – 2026", title: "AWS Cloud Institute", homeTitle: "AWS Cloud Institute graduate", body: "Graduated from the Cloud Application Developer program, June 2026. AWS Certified Cloud Practitioner and AI Practitioner." },
   { years: "2023", title: "Full-stack developer", body: "Built CI/CD pipelines. IBM DevOps Essentials (Coursera, July 2023)." },
   { years: "2022", title: "Career change", homeTitle: "Fullstack Academy, career change", body: "Finished Fullstack Academy's full-stack web development bootcamp." },

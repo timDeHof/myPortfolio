@@ -25,9 +25,9 @@ function Story() {
             </p>
             <p>
               In 2022 I finished Fullstack Academy's full-stack web development bootcamp and started building full-time.
-              Since 2024 I've been a Frontend Engineer at TeamForward, building an event-planning and networking platform
-              in React, TypeScript, and Tailwind CSS, with a focus on accessible interfaces. Since 2026 I've also taken
-              contract work through Jokma Web Solutions.
+              Since 2024 I've been a Frontend Engineer at TeamForward, an app that connects people through small,
+              in-person gatherings near them. I build its frontend in React, TypeScript, and Tailwind CSS, with a focus
+              on accessible interfaces. Since 2026 I've also taken contract work through Jokma Web Solutions.
             </p>
             <p>
               I still measure before I optimize, trace bugs to their source, and write code for whoever maintains it next.

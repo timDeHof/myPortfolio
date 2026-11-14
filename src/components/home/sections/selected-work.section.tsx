@@ -44,7 +44,7 @@ function getProjects(stars?: number): Project[] {
     {
       slug: "teamforward",
       name: "TeamForward",
-      description: "Frontend for an event-planning and networking platform. Chose web-push-neo over web-push for push notifications because it uses the Web Crypto API, so it runs outside Node.",
+      description: "Frontend for an app that connects people through small, in-person gatherings near them. Chose web-push-neo over web-push for push notifications because it uses the Web Crypto API, so it runs outside Node.",
       tags: ["React", "TypeScript", "Tailwind CSS"],
       stat: "2024–",
       statLines: ["Present", "Frontend Engineer"],

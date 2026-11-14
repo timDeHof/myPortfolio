@@ -26,11 +26,12 @@ describe("selected work", () => {
     }
   });
 
-  it("labels the other project links 'Details'", async () => {
+  it("links both home projects to their case studies", async () => {
     renderSelectedWork();
 
-    const links = await screen.findAllByRole("link", { name: "Details" });
+    const links = await screen.findAllByRole("link", { name: "Case study" });
 
-    expect(links.map(link => link.getAttribute("href"))).toEqual(["/projects/teamforward"]);
+    expect(links.map(link => link.getAttribute("href"))).toEqual(["/projects/shadcn-timeline", "/projects/teamforward"]);
+    expect(screen.queryAllByRole("link", { name: "Details" })).toEqual([]);
   });
 });
