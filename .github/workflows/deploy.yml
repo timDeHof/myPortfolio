@@ -33,7 +33,7 @@ concurrency:
 jobs:
   deploy:
     name: Verify and deploy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     # Public URL (VITE_ values are inlined into the bundle). Without it the
     # hero and navbar drop the Résumé button, and the prerender test fails.
