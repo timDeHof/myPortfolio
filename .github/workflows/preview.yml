@@ -1,0 +1,116 @@
+name: Preview
+
+# Uploads each pull request as a new version of the myportfolio Worker under a
+# pr-<number> preview alias, and comments the alias URL on the PR.
+# `wrangler versions upload` creates a version without deploying it, so
+# production keeps serving what it served before. The upload step checks that.
+#
+# NOTE: this repository is public. Never switch this to pull_request_target,
+# which would run fork-authored code next to the Cloudflare token. Under
+# pull_request, fork PRs get no secrets, and the job skips them anyway.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    name: Upload preview version
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # No lint or tests here: ci.yml already gates every PR.
+      - name: Build
+        run: pnpm build
+
+      - name: Upload preview version
+        id: upload
+        # Explicit shell for pipefail, so a failed wrangler call cannot hand
+        # jq empty input and pass the production check.
+        shell: bash
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          WRANGLER_OUTPUT_FILE_PATH: ${{ runner.temp }}/wrangler-output.ndjson
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          live_versions() {
+            pnpm exec wrangler deployments status --name myportfolio --json \
+              | jq -er '[.versions[] | "\(.version_id)@\(.percentage)"] | sort | join(",")'
+          }
+
+          before=$(live_versions)
+          echo "Production before upload: $before"
+
+          pnpm exec wrangler versions upload \
+            --preview-alias "pr-$PR_NUMBER" \
+            --message "PR #$PR_NUMBER at $HEAD_SHA"
+
+          after=$(live_versions)
+          if [ "$before" != "$after" ]; then
+            echo "::error::Production changed during the preview upload. Before: $before. After: $after."
+            exit 1
+          fi
+
+          version_id=$(jq -r 'select(.type == "version-upload") | .version_id' "$WRANGLER_OUTPUT_FILE_PATH")
+          url=$(jq -r 'select(.type == "version-upload") | .preview_alias_url // empty' "$WRANGLER_OUTPUT_FILE_PATH")
+          # Wrangler omits the alias URL without an error when the Worker's
+          # workers.dev subdomain has previews_enabled set to false.
+          if [ -z "$url" ]; then
+            echo "::error::Wrangler uploaded version $version_id but returned no preview URL. Preview URLs are off for the myportfolio Worker's workers.dev subdomain."
+            exit 1
+          fi
+
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "version_id=$version_id" >> "$GITHUB_OUTPUT"
+
+      - name: Comment the preview URL
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          URL: ${{ steps.upload.outputs.url }}
+          VERSION_ID: ${{ steps.upload.outputs.version_id }}
+        run: |
+          body=$(cat <<EOF
+          <!-- worker-preview -->
+          **Worker preview:** $URL
+
+          Version \`$VERSION_ID\`, built from $HEAD_SHA. Production is unchanged.
+          EOF
+          )
+
+          comment_id=$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" \
+            --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | startswith("<!-- worker-preview -->"))) | .id' \
+            | sed -n 1p)
+
+          if [ -n "$comment_id" ]; then
+            gh api --silent -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$comment_id" -f body="$body"
+          else
+            gh api --silent "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" -f body="$body"
+          fi
