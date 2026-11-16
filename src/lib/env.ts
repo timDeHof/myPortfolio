@@ -35,5 +35,4 @@ const definedEnv = Object.fromEntries(
   Object.entries(rawEnv).filter(([, value]) => typeof value === "string" && value !== ""),
 );
 
-tryParseEnv(EnvSchema, definedEnv);
-export const env = EnvSchema.parse(definedEnv);
+export const env = tryParseEnv(EnvSchema, definedEnv);

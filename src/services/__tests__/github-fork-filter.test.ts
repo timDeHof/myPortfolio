@@ -128,15 +128,4 @@ describe("gitHub Fork Filtering", () => {
     // Verify all returned repos have a homepage
     expect(result.every(repo => repo.homepage)).toBe(true);
   });
-
-  it("should maintain sorting by category and engagement", async () => {
-    mockGitHubApiResponse(mockRepositories);
-
-    const result = await githubAPI.fetchRepositories();
-
-    // owned-repo-1 has more stars, so it should come first in the 'showcase' category
-    // The sorting is by category first, then engagement. Both are 'showcase' here.
-    expect(result[0].name).toBe("owned-repo-1");
-    expect(result[1].name).toBe("owned-repo-2");
-  });
 });

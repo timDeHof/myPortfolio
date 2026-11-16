@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => ({
     visualizer({
       emitFile: true,
       filename: 'stats.html',
-      open: true
+      open: false
     }),
     // TanStack Router plugin must be before React plugin
     tanstackRouter({
@@ -52,8 +52,13 @@ export default defineConfig(({ mode }) => ({
     })] : []),
     VitePWA({
       registerType: 'autoUpdate',
+      // public/manifest.json is the manifest. Without this the plugin writes
+      // and links a second, generic one.
+      manifest: false,
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        // 138 KB used only when installing the app, so it is fetched then instead
+        globIgnores: ['**/icon-512.png'],
         // Well-known URIs (RFC 8615) must reach the network, not the SPA shell.
         // Without this, navigating to /.well-known/api-catalog returns index.html.
         navigateFallbackDenylist: [/^\/\.well-known\//],
@@ -68,23 +73,13 @@ export default defineConfig(({ mode }) => ({
           })),
           warnings: [],
         })],
-        runtimeCaching: [{
-          urlPattern: /^https:\/\/api\.github\.com\/.*/i,
-          handler: 'CacheFirst',
-          options: {
-            cacheName: 'github-api-cache',
-            expiration: { maxEntries: 10, maxAgeSeconds: 300 }
-          }
-        }]
       }
     }),
     viteImagemin({
-      gifsicle: { optimizationLevel: 7 },
-      mozjpeg: { quality: 80 },
-      pngquant: { quality: [0.65, 0.8] },
-      webp: { quality: 75 },
-      // Filter to include assets from the public directory and other image files
-      filter: /\.(jpg|jpeg|png|gif|svg)$/i,
+      // SVGs only. svgo runs in JS, but pngquant, mozjpeg and gifsicle need
+      // binaries their install scripts download, and pnpm doesn't run those
+      // scripts, so every PNG logged "imagemin error" and shipped unchanged.
+      filter: /\.svg$/i,
     })
   ],
   base: "/",

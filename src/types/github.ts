@@ -16,7 +16,6 @@ export interface GitHubRepository {
   archived: boolean;
   fork: boolean;
   private: boolean;
-  category?: "showcase" | "personal" | "contribution" | "fork";
 }
 
 export interface GitHubLanguages {

@@ -2,21 +2,15 @@
 import type { HelmetServerState } from "react-helmet-async";
 
 import { useLocation } from "@tanstack/react-router";
-import React from "react";
 import { renderToString } from "react-dom/server";
 import { HelmetProvider } from "react-helmet-async";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { SEOHead } from "../../src/components/common/seo-head";
-import { useSEO } from "../../src/hooks/use-seo";
 
 vi.mock("@tanstack/react-router", () => ({
   useLocation: vi.fn(),
 }));
-
-function SEOUrl() {
-  return <span>{useSEO().url}</span>;
-}
 
 describe("seo rendering without a browser (prerender)", () => {
   beforeEach(() => {
@@ -44,8 +38,8 @@ describe("seo rendering without a browser (prerender)", () => {
 
     const link = context.helmet?.link.toString() ?? "";
     const meta = context.helmet?.meta.toString() ?? "";
-    expect(link).toContain("href=\"https://timdehof.dev/projects?project=cognidocs\"");
-    expect(meta).toContain("content=\"https://timdehof.dev/projects?project=cognidocs\"");
+    expect(link).toContain("href=\"https://timdehof.dev/projects\"");
+    expect(meta).toContain("content=\"https://timdehof.dev/projects\"");
     expect(meta).toContain("content=\"https://timdehof.dev/og-image.jpg\"");
   });
 
@@ -62,8 +56,24 @@ describe("seo rendering without a browser (prerender)", () => {
     expect(context.helmet?.meta.toString()).not.toContain("#gallery");
   });
 
-  it("builds the useSEO url from the site origin and the search string", () => {
-    const html = renderToString(<SEOUrl />);
-    expect(html).toContain("https://timdehof.dev/projects?project=cognidocs");
+  // Otherwise a shared ?utm_source= link declares itself the canonical page
+  it("leaves the query string out of canonical and og:url", () => {
+    vi.mocked(useLocation).mockReturnValue({
+      pathname: "/about",
+      searchStr: "?utm_source=linkedin",
+      search: { utm_source: "linkedin" },
+      hash: "",
+      href: "/about?utm_source=linkedin",
+    } as unknown as ReturnType<typeof useLocation>);
+    const context: { helmet?: HelmetServerState } = {};
+
+    renderToString(
+      <HelmetProvider context={context}>
+        <SEOHead seo={{ title: "About" }} />
+      </HelmetProvider>,
+    );
+
+    expect(context.helmet?.link.toString()).toContain("rel=\"canonical\" href=\"https://timdehof.dev/about\"");
+    expect(context.helmet?.meta.toString()).toContain("property=\"og:url\" content=\"https://timdehof.dev/about\"");
   });
 });

@@ -4,7 +4,9 @@ import { Suspense } from "react";
 import type { ProjectWithSource } from "../hooks/use-projects";
 
 import { PageLoader } from "../components/common/page-loader";
-import { fetchAllProjects } from "../hooks/use-projects";
+import { projectsIndex } from "../data/projects-index";
+import { projectQuery } from "../hooks/use-projects";
+import { queryClient } from "../lib/query-client";
 import { ProjectsPage } from "../pages/projects-page";
 
 // Search params schema
@@ -36,9 +38,12 @@ export const Route = createFileRoute("/projects")({
       throw redirect({ to: "/projects/$slug", params: { slug: search.project }, replace: true });
     }
   },
+  // Through the query cache, so the prerender retries a failed download and
+  // then fails the build, instead of publishing the page without that project.
+  // The browser keeps the projects that loaded.
   loader: async (): Promise<{ projects: ProjectWithSource[] }> => {
-    const projects = await fetchAllProjects();
-    return { projects };
+    const results = await Promise.allSettled(projectsIndex.map(entry => queryClient.ensureQueryData(projectQuery(entry.slug))));
+    return { projects: results.flatMap(result => (result.status === "fulfilled" ? [result.value] : [])) };
   },
   component: () => (
     <Suspense fallback={<PageLoader />}>

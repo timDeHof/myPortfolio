@@ -57,7 +57,6 @@ const posts = postsData as BlogPost[];
 export const blogKeys = {
   all: ["blog"] as const,
   posts: () => [...blogKeys.all, "posts"] as const,
-  post: (slug: string) => [...blogKeys.all, "post", slug] as const,
 };
 
 export async function fetchBlogPosts(): Promise<BlogPost[]> {
@@ -70,21 +69,9 @@ export async function fetchBlogPosts(): Promise<BlogPost[]> {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-export async function fetchBlogPost(slug: string): Promise<BlogPost | undefined> {
-  return posts.find(p => p.slugAsParams === slug);
-}
-
 export function useBlogPosts() {
   return useQuery({
     queryKey: blogKeys.posts(),
     queryFn: fetchBlogPosts,
-  });
-}
-
-export function useBlogPost(slug: string) {
-  return useQuery({
-    queryKey: blogKeys.post(slug),
-    queryFn: () => fetchBlogPost(slug),
-    enabled: !!slug,
   });
 }

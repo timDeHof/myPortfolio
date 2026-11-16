@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import React from "react";
 // tests/components/ui/button.test.tsx
 import { describe, expect, it, vi } from "vitest";
 

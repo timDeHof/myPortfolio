@@ -73,6 +73,32 @@ describe("useTheme", () => {
     expect(mockSetTheme).toHaveBeenCalledWith("dark");
   });
 
+  // The page is already dark, so switching to "dark" would leave the first click with no effect
+  it("toggles to light when the theme is system and the OS is dark", () => {
+    (useAppStore as any).mockReturnValue({
+      theme: "system",
+      setTheme: mockSetTheme,
+    });
+    const matchMedia = window.matchMedia;
+    window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+      ...matchMedia(query),
+      matches: query === "(prefers-color-scheme: dark)",
+    }));
+
+    try {
+      const { result } = renderHook(() => useTheme());
+
+      act(() => {
+        result.current.toggleTheme();
+      });
+
+      expect(mockSetTheme).toHaveBeenCalledWith("light");
+    }
+    finally {
+      window.matchMedia = matchMedia;
+    }
+  });
+
   it("applies theme class to document element", () => {
     (useAppStore as any).mockReturnValue({
       theme: "dark",

@@ -8,10 +8,7 @@
   "ignoreDependencies": [
     "@radix-ui/react-separator",
     "@radix-ui/react-slot",
-    "@radix-ui/react-toast",
     "class-variance-authority",
-    "mini-svg-data-uri",
-    "radix-ui",
-    "react-intersection-observer"
+    "radix-ui"
   ]
 }

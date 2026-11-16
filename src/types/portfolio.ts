@@ -27,36 +27,7 @@ export interface Navigation {
   footerLinks: FooterLinks;
 }
 
-export interface SEOConfig {
-  siteName: string;
-  siteUrl: string;
-  author: string;
-  email: string;
-  social: {
-    twitter: string;
-    github: string;
-    linkedin: string;
-  };
-  images: {
-    ogImage: string;
-    favicon: string;
-    appleTouchIcon: string;
-  };
-  business: {
-    name: string;
-    jobTitle: string;
-    location: string;
-    skills: string[];
-  };
-  theme: {
-    primaryColor: string;
-    backgroundColor: string;
-    textColor: string;
-  };
-}
-
 export interface PortfolioData {
   certifications: Certification[];
   navigation: Navigation;
-  seo: SEOConfig;
 }

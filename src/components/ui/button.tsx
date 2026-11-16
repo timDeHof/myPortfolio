@@ -18,6 +18,8 @@ const buttonVariants = cva("btn", {
       secondary: "btn--secondary",
       ghost: "btn--ghost",
       link: "btn--link",
+      accent: "btn--accent",
+      line: "btn--line",
     },
     size: {
       default: "btn--default",

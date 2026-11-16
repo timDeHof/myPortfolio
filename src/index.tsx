@@ -3,9 +3,11 @@ import { createRoot } from "react-dom/client";
 
 // Force TypeScript refresh
 import App, { createAppRouter } from "./App";
+import { hydrateFromPrerender } from "./lib/query-client";
 import "./styles/index.css";
 
 if (typeof window !== "undefined") {
+  hydrateFromPrerender();
   createRoot(document.getElementById("app") as HTMLElement).render(
     <StrictMode>
       <App router={createAppRouter()} />

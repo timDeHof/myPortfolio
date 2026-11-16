@@ -38,21 +38,3 @@ export async function sendEmail(data: EmailData): Promise<void> {
     throw new Error("Failed to send email. Please try again later.");
   }
 };
-
-// Test function to verify email configuration
-export async function testEmailConfiguration(): Promise<boolean> {
-  try {
-    const testData: EmailData = {
-      from_name: "Test User",
-      from_email: "test@example.com",
-      message: "This is a test message to verify email configuration.",
-    };
-
-    await sendEmail(testData);
-    return true;
-  }
-  catch (error) {
-    console.error("Email configuration test failed:", error);
-    return false;
-  }
-};

@@ -1,7 +1,6 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryHistory, createRouter, RouterProvider } from "@tanstack/react-router";
 import { render, screen } from "@testing-library/react";
-import React from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { describe, expect, it, vi } from "vitest";
 

@@ -1,5 +1,7 @@
 import type { Project } from "../types/project";
 
+import { projectStack } from "./project-summary";
+
 export const SITE_URL = "https://timdehof.dev";
 
 export interface SEOData {
@@ -79,11 +81,7 @@ export const pageSEO = {
  * the only role text (resumePitch) is far longer than a meta description.
  */
 export function projectSEO(project: Project): Partial<SEOData> {
-  const stack = (project.techStack ?? [])
-    .flatMap(item => (typeof item === "string" ? item : item.tech).split("·"))
-    .map(name => name.trim())
-    .filter(Boolean)
-    .slice(0, 3);
+  const stack = projectStack(project, 3);
   const builtWith = stack.length > 1
     ? `${stack.slice(0, -1).join(", ")}, and ${stack[stack.length - 1]}`
     : stack[0];

@@ -42,3 +42,12 @@ GEMINI.md
 
 # Test coverage output
 coverage/
+
+# Playwright
+test-results
+playwright-report
+
+# Local agent and TanStack tool state
+.claude/save-points/
+.claude/launch.json
+.tanstack/
