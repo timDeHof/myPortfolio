@@ -66,6 +66,12 @@ jobs:
       - name: Build
         run: pnpm build
 
+      # Fails the run when the total gzipped client JS grows past the committed
+      # ceiling in scripts/check-bundle-size.mjs, so a bundle regression is
+      # caught here instead of in production. Runs after Build: it reads build/.
+      - name: Bundle-size gate
+        run: pnpm size
+
       # The e2e tests load the build in a real browser, so they need Chromium
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium

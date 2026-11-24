@@ -16,22 +16,22 @@ A modern, responsive portfolio website built with React, TypeScript, and Tailwin
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
-- npm or yarn
+- Node.js (v20 or higher)
+- pnpm (the repo pins pnpm@10.25.0)
 
 ### Installation
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/timDeHof/portfolio.git
-cd portfolio
+git clone https://github.com/timDeHof/myPortfolio.git
+cd myPortfolio
 ```
 
 2. Install dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
 3. Set up environment variables:
@@ -45,7 +45,7 @@ cp .env.example .env
 5. Start the development server:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 ## EmailJS Setup
@@ -167,49 +167,60 @@ The auto-reply is optional - if you don't configure the `VITE_EMAILJS_AUTO_REPLY
 
 ## Available Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm preview` - Preview production build
+- `pnpm lint` - Run ESLint
 
 ## Project Structure
 
 ```
 src/
-├── components/          # Reusable UI components
-│   ├── common/         # Common components
-│   ├── layout/         # Layout components
-│   └── ui/             # UI components
-├── data/               # Static data
-├── hooks/              # Custom React hooks
+├── components/          # React components, grouped by feature
+│   ├── about/          # About page sections
+│   ├── blog/           # Blog grid and post cards
+│   ├── common/         # Shared components (SEO, loaders, error boundary)
+│   ├── contact/        # Contact form and panels
+│   ├── github/         # GitHub stats and charts
+│   ├── home/           # Home page sections
+│   ├── kibo-ui/        # Contribution graph
+│   ├── layout/         # Navbar, footer, mobile drawer
+│   ├── projects/       # Project case study view
+│   └── ui/             # shadcn/Radix UI primitives
+├── content/            # Blog content (git submodule)
+├── data/               # Static data (career timeline, projects index)
+├── hooks/              # Custom React hooks and TanStack Query hooks
+├── lib/                # Shared utilities (env, query client, cn)
 ├── pages/              # Page components
-├── services/           # External services (EmailJS, etc.)
-├── store/              # State management
+├── routes/             # TanStack Router file-based routes
+├── services/           # External service clients (GitHub API, email)
+├── store/              # Zustand state
+├── styles/             # Global styles
 ├── types/              # TypeScript type definitions
-├── utils/              # Utility functions
-└── index.tsx           # App entry point
+├── utils/              # Helpers (SEO schema, form validation)
+├── App.tsx             # Root component and router factory
+├── index.tsx           # App entry point
+├── prerender.tsx       # Server-side render for prerendering (renderPage)
+├── routeTree.gen.ts    # Generated route tree (tsr generate)
+└── vite-env.d.ts       # Vite type declarations
 ```
 
 ## Technologies Used
 
-- **React 18** - UI library
+- **React 19** - UI library
 - **TypeScript** - Type safety
 - **Tailwind CSS** - Styling
 - **Framer Motion** - Animations
-- **React Router** - Routing
+- **TanStack Router** - File-based routing
 - **EmailJS** - Contact form functionality with auto-reply
 - **Vite** - Build tool
 - **Zustand** - State management
 
 ## Deployment
 
-The project is configured for easy deployment to platforms like:
-
-- Vercel
-- Netlify
-- GitHub Pages
-
-Simply connect your repository and the platform will automatically build and deploy your site.
+The site deploys to Cloudflare Workers with Wrangler. Pushes to `main` build and
+deploy automatically via `.github/workflows/deploy.yml`; from a local checkout,
+`pnpm deploy:worker` builds and deploys.
 
 ## License
 
@@ -219,4 +230,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 Tim DeHof - [tim@timdehof.dev](mailto:tim@timdehof.dev)
 
-Project Link: [https://github.com/timDeHof/portfolio](https://github.com/timDeHof/portfolio)
+Project Link: [https://github.com/timDeHof/myPortfolio](https://github.com/timDeHof/myPortfolio)

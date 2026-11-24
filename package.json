@@ -18,6 +18,7 @@
     "dev:pages": "pnpm run build && pnpm exec wrangler pages dev build --port 4173",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
+    "size": "node scripts/check-bundle-size.mjs",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "type-check": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.test.json --noEmit",

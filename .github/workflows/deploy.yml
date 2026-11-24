@@ -70,6 +70,11 @@ jobs:
       - name: Build
         run: pnpm build
 
+      # Same bundle-size gate as CI: a deploy should stand on its own. The
+      # workflows test enforces that every CI gate also runs here before Deploy.
+      - name: Bundle-size gate
+        run: pnpm size
+
       # The e2e tests load the build in a real browser, so they need Chromium
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
