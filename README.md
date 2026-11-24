@@ -16,8 +16,8 @@ A modern, responsive portfolio website built with React, TypeScript, and Tailwin
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
-- npm or yarn
+- Node.js (v20 or higher)
+- pnpm (the repo pins pnpm@10.25.0)
 
 ### Installation
 
@@ -31,7 +31,7 @@ cd myPortfolio
 2. Install dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
 3. Set up environment variables:
@@ -45,7 +45,7 @@ cp .env.example .env
 5. Start the development server:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 ## EmailJS Setup
@@ -167,10 +167,10 @@ The auto-reply is optional - if you don't configure the `VITE_EMAILJS_AUTO_REPLY
 
 ## Available Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm preview` - Preview production build
+- `pnpm lint` - Run ESLint
 
 ## Project Structure
 
@@ -211,20 +211,16 @@ src/
 - **TypeScript** - Type safety
 - **Tailwind CSS** - Styling
 - **Framer Motion** - Animations
-- **React Router** - Routing
+- **TanStack Router** - File-based routing
 - **EmailJS** - Contact form functionality with auto-reply
 - **Vite** - Build tool
 - **Zustand** - State management
 
 ## Deployment
 
-The project is configured for easy deployment to platforms like:
-
-- Vercel
-- Netlify
-- GitHub Pages
-
-Simply connect your repository and the platform will automatically build and deploy your site.
+The site deploys to Cloudflare Workers with Wrangler. Pushes to `main` build and
+deploy automatically via `.github/workflows/deploy.yml`; from a local checkout,
+`pnpm deploy:worker` builds and deploys.
 
 ## License
 
